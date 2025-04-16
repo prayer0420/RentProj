@@ -1,0 +1,32 @@
+@charset "UTF-8";
+/* 카테고리 */
+.categories {
+	background-color: rgb(253, 243, 230);
+	padding: 20px;
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+	gap: 20px;
+	border-bottom: 1px solid #e5e7eb;
+}
+
+.category-item {
+	text-align: center;
+	width: 80px;
+	height: 90px;
+	background-color: rgb(250, 233, 168);
+	border-radius: 10px;
+}
+
+.category-item img {
+	width: 30px;
+	height: 30px;
+	margin-bottom: 6px;
+	margin-left: 30%;
+	margin-top: 10px;
+}
+
+.category-item span {
+	font-size: 13px;
+	color: #374151;
+}
