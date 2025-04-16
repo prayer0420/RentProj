@@ -91,43 +91,43 @@
 </style>
 </head>
 <body>
-<jsp:include page="../Header/header1.jsp"></jsp:include>
+	<jsp:include page="../Header/header1.jsp"></jsp:include>
 	<section class="banner">
 		<div class="banner-container">
 			<h2 class="banner-h2">RE:NT에서 렌트하세요!</h2>
-			<a href="../service/service.jsp"><button>이용가이드 &gt;</button></a>
+			<a href="../Service/service.jsp"><button>이용가이드 &gt;</button></a>
 		</div>
 		<div class="banner-img">
-			<img src="../../image/rent.jpg" alt="배너 이미지">
+			<img src="<%=request.getContextPath()%>/img/rent.jpg" alt="이벤트 이미지">
 		</div>
 	</section>
-<jsp:include page="../Header/header2.jsp"></jsp:include>
+	<jsp:include page="../Header/header2.jsp"></jsp:include>
 
 	<section>
 		<div class="section-title">오늘의 인기 상품이에요!</div>
 		<div class="product-grid">
 			<div class="product-card">
-				<img src="../../image/shopping.jpg" alt="">
+				<img src="<%=request.getContextPath()%>/img/shopping.jpg" alt="">
 				<div class="product-name">아이폰 13 Pro</div>
 				<div class="product-price">월 40,000원</div>
 			</div>
 			<div class="product-card">
-				<img src="../../image/shopping.jpg" alt="">
+				<img src="<%=request.getContextPath()%>/img/shopping.jpg" alt="">
 				<div class="product-name">아이폰 13 Pro</div>
 				<div class="product-price">월 40,000원</div>
 			</div>
 			<div class="product-card">
-				<img src="../../image/shopping.jpg" alt="">
+				<img src="<%=request.getContextPath()%>/img/shopping.jpg" alt="">
 				<div class="product-name">아이폰 13 Pro</div>
 				<div class="product-price">월 40,000원</div>
 			</div>
 			<div class="product-card">
-				<img src="../../image/shopping.jpg" alt="">
+				<img src="<%=request.getContextPath()%>/img/shopping.jpg" alt="">
 				<div class="product-name">아이폰 13 Pro</div>
 				<div class="product-price">월 40,000원</div>
 			</div>
 			<div class="product-card">
-				<img src="../../image/shopping.jpg" alt="">
+				<img src="<%=request.getContextPath()%>/img/shopping.jpg" alt="">
 				<div class="product-name">아이폰 13 Pro</div>
 				<div class="product-price">월 40,000원</div>
 			</div>
@@ -137,27 +137,27 @@
 		<div class="section-title">내 동네에서 이런것도 빌릴 수 있어요!</div>
 		<div class="product-grid">
 			<div class="product-card">
-				<img src="../../image/shopping.jpg" alt="">
+				<img src="<%=request.getContextPath()%>/img/shopping.jpg" alt="">
 				<div class="product-name">아이폰 13 Pro</div>
 				<div class="product-price">월 40,000원</div>
 			</div>
 			<div class="product-card">
-				<img src="../../image/shopping.jpg" alt="">
+				<img src="<%=request.getContextPath()%>/img/shopping.jpg" alt="">
 				<div class="product-name">아이폰 13 Pro</div>
 				<div class="product-price">월 40,000원</div>
 			</div>
 			<div class="product-card">
-				<img src="../../image/shopping.jpg" alt="">
+				<img src="<%=request.getContextPath()%>/img/shopping.jpg" alt="">
 				<div class="product-name">아이폰 13 Pro</div>
 				<div class="product-price">월 40,000원</div>
 			</div>
 			<div class="product-card">
-				<img src="../../image/shopping.jpg" alt="">
+				<img src="<%=request.getContextPath()%>/img/shopping.jpg" alt="">
 				<div class="product-name">아이폰 13 Pro</div>
 				<div class="product-price">월 40,000원</div>
 			</div>
 			<div class="product-card">
-				<img src="../../image/shopping.jpg" alt="">
+				<img src="<%=request.getContextPath()%>/img/shopping.jpg" alt="">
 				<div class="product-name">아이폰 13 Pro</div>
 				<div class="product-price">월 40,000원</div>
 			</div>

@@ -180,7 +180,7 @@
     <div class="container-image">
       <h4>상품이미지</h4>
       <hr>
-      <img src="image/plus.jpg" alt="">
+      	<img alt="상품이미지" src="<%= request.getContextPath()%>/img/plus.jpg">
     </div>
 
     <div class="container-content">

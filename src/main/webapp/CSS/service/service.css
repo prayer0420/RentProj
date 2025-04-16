@@ -1,0 +1,98 @@
+@charset "UTF-8";
+/*container*/
+.container {
+	width: 800px;
+	margin: 0 auto;
+}
+
+.container h2 {
+	margin-top: 50px;
+	margin-bottom: 10px;
+}
+
+.intro {
+	font-size: 16px;
+	margin-bottom: 15px;
+}
+
+.intro strong {
+	font-weight: bold;
+	font-size: 18px;
+}
+
+.intro:last-child {
+	font-weight: bold;
+	margin-bottom: 30px;
+}
+
+.faq-search-box {
+	background-color: #d9f1f0;
+	padding: 20px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 40px;
+	border-radius: 8px;
+}
+
+.faq-search-box .text {
+	text-align: left;
+	font-size: 14px;
+	font-weight: 500;
+}
+
+.faq-search-box input {
+	width: 300px;
+	padding: 10px 15px;
+	border: none;
+	border-radius: 25px;
+	outline: none;
+}
+
+.faq-search-box button {
+	margin-left: -40px;
+	background: none;
+	border: none;
+	font-size: 16px;
+	cursor: pointer;
+}
+
+.content-grid {
+	display: flex;
+	justify-content: space-between;
+	gap: 40px;
+}
+
+.faq-section, .notice-section {
+	flex: 1;
+}
+
+.section-title {
+	font-weight: bold;
+	margin-bottom: 10px;
+	display: flex;
+	justify-content: space-between;
+}
+
+.faq-list, .notice-list {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.faq-list li, .notice-list li {
+	padding: 10px 0;
+	border-bottom: 1px solid #eee;
+	font-size: 14px;
+	cursor: pointer;
+}
+
+.faq-list li:hover, .notice-list li:hover {
+	text-decoration: underline;
+}
+
+.notice-list li span {
+	font-size: 12px;
+	color: #888;
+	margin-right: 10px;
+}
