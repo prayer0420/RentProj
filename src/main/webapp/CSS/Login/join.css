@@ -1,0 +1,110 @@
+    @charset "UTF-8";
+   body {
+      font-family: 'Noto Sans KR', sans-serif;
+      background-color: #f7f7f7;
+      margin: 0;
+      padding: 40px;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background-color: white;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      padding: 30px;
+    }
+
+    h2 {
+      font-weight: bold;
+      font-size: 24px;
+      border-left: 4px solid #6db184;
+      padding-left: 10px;
+      margin-bottom: 20px;
+    }
+
+    .input-group label {
+      margin: 10px 0 5px;
+      display: block;
+    }
+
+    .input-group input[type="text"],
+    .input-group input[type="password"],
+    .input-group input[type="file"] {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+
+    .input-inline {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    #doubleId {
+      padding: 6px 10px;
+      font-size: 12px;
+      background-color: #6db184;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .buttons {
+      margin-top: 30px;
+    }
+
+    .buttons button {
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      border: 2px solid #6db184;
+      border-radius: 8px;
+      background-color: white;
+      color: #6db184;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .buttons button:hover {
+      background-color: #6db184;
+      color: white;
+    }
+
+    .checkbox-group label {
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    #addrPostSearch {
+      margin-top: 6px;
+      padding: 8px 14px;
+      background-color: #4dd4ac;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    #regionList div, #addressList div {
+      display: inline-block;
+      margin: 6px 4px 0 0;
+      background: #f2f2f2;
+      padding: 6px 10px;
+      border-radius: 20px;
+      font-size: 13px;
+    }
+
+    .delete-btn {
+      margin-left: 6px;
+      color: #ff5555;
+      background: none;
+      border: none;
+      font-size: 13px;
+      cursor: pointer;
+    }
