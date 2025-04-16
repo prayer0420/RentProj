@@ -507,7 +507,7 @@
             background-color: rgb(228, 242, 220);
         }
 
-        .modal-addrPlus-body button {
+        .modal-addrPlus .modal-addrPlus-body .cancle-btn {
             margin: 30px auto;
             padding: 10px;
             border-radius: 5px;
@@ -516,6 +516,18 @@
             border: 1px solid rgb(228, 242, 220);
             background-color: rgb(228, 242, 220);
         }
+        
+        .modal-addrPlus .modal-addrPlus-body .ok-btn {
+            margin: 30px auto;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: none;
+            width: 200px;
+            border: 1px solid rgb(228, 242, 220);
+            background-color: rgb(228, 242, 220);
+        }
+        
+        
 
         .modal-addrPlus-body h3 {
             text-align: left;

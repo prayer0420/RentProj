@@ -48,21 +48,19 @@
                 addrPlus.style.display = "flex"
             });
             cancleBtn.addEventListener("click", () => {
-                addrPlus.style.display = "none";
                 addr.style.display = "flex";
+                addrPlus.style.display = "none";
             });
 
+                tooltipTrigger.addEventListener("click", () => {
+                    tooltipBox.style.display = tooltipBox.style.display === "block" ? "none" : "block";
+                });
 
-
-            tooltipTrigger.addEventListener("click", () => {
-                tooltipBox.style.display = tooltipBox.style.display === "block" ? "none" : "block";
-            });
-            // 클릭 외부 영역 클릭 시 툴팁 닫기
-            document.addEventListener("click", function (event) {
-                if (!tooltipTrigger.contains(event.target) && !tooltipBox.contains(event.target)) {
-                    tooltipBox.style.display = "none";
-                }
-            });
+                document.addEventListener("click", function (event) {
+                    if (!tooltipTrigger.contains(event.target) && !tooltipBox.contains(event.target)) {
+                        tooltipBox.style.display = "none";
+                    }
+                });
         };
     </script>
 </head>
@@ -173,7 +171,7 @@
                     <hr>
                     <button type="button" class="btn-open-modal-addrPlus">거래지역 추가</button>
                     <div class="addr-list"></div>
-                    <button class="cancle-addr">취소</button>
+                    <button type="button" class="cancle-addr">취소</button>
                 </div>
             </div>
             <div class="modal-addrPlus">
@@ -185,8 +183,8 @@
                     <button class="searchBtn">검색</button>
                     <input class="loadNum" placeholder="도로명 주소">
                     <h5>입력하신 거래지역의 상세주소는 표시되지 않습니다.</h5>
-                    <button>취소</button>
-                    <button>확인</button>
+                    <button type="button" class="cancle-btn">취소</button>
+                    <button type="button">확인</button>
                 </div>
             </div>
             <button type="button" class="btn-open-modal-addr">거래지역 등록/수정</button>
@@ -195,7 +193,7 @@
         <div class="container-image">
             <h4>상품이미지</h4>
             <hr>
-                            <img alt="상품이미지" src="<%= request.getContextPath()%>/img/plus.jpg">
+            <img alt="상품이미지" src="<%= request.getContextPath()%>/img/plus.jpg">
         </div>
 
         <div class="container-content">
@@ -205,4 +203,5 @@
         <button type="submit">확인</button>
     </form>
 </body>
+
 </html>
