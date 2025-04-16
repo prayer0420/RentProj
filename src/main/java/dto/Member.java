@@ -229,6 +229,14 @@ public class Member {
 		this.regDate = regDate;
 	}
 
+	public String getFcmToken() {
+		return fcmToken;
+	}
+
+	public void setFcmToken(String fcmToken) {
+		this.fcmToken = fcmToken;
+	}
+
 	public String getId() {
 		return id;
 	}
@@ -252,11 +260,22 @@ public class Member {
 	public String getRegion1() {
 		return region1;
 	}
-	public String getfcmToken() {
-		return fcmToken;
+	public void setPassword(String password) {
+		this.password = password;
 	}
-	
-	public void SetfcmToken(String fcmToken) {
-		this.fcmToken = fcmToken;
+	public void setId(String id) {
+		this.id = id;
+	}
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+	public void setNickname(String nickname) {
+		this.nickname= nickname;
+	}
+	public void setAddress1(String address1) {
+		this.address1 = address1;
+	}
+	public void setRegion1(String region1) {
+		this.region1 = region1;
 	}
 }
