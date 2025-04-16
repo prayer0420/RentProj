@@ -22,6 +22,7 @@ public class Member {
 	private int orderCount;
 	private int adminNo;
 	private int regDate;
+	private String fcmToken;
 	
 	// private 생성자
 	private Member(Builder builder) {
@@ -42,6 +43,7 @@ public class Member {
 		this.orderCount = builder.orderCount;
 		this.adminNo = builder.adminNo;
 		this.regDate = builder.regDate;
+		this.fcmToken = builder.fcmToken;
 	}
 
 	// Builder 클래스
@@ -64,6 +66,7 @@ public class Member {
 		private int orderCount;
 		private int adminNo;
 		private int regDate;
+		private String fcmToken;
 
 		public Builder(String id, String password, String nickname, String phone, String address1, String region1) {
 			this.id = id;
@@ -129,6 +132,11 @@ public class Member {
 			return this;
 		}
 
+		public Builder fcmToken(String fcmToken) {
+			this.fcmToken = fcmToken;
+			return this;
+		}
+		
 		public Member build() {
 			return new Member(this);
 		}
@@ -243,5 +251,12 @@ public class Member {
 
 	public String getRegion1() {
 		return region1;
+	}
+	public String getfcmToken() {
+		return fcmToken;
+	}
+	
+	public void SetfcmToken(String fcmToken) {
+		this.fcmToken = fcmToken;
 	}
 }

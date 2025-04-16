@@ -30,9 +30,7 @@ public class Join extends HttpServlet {
 		
 		//member의 필수값 파라미터 가져오기
 		String id = request.getParameter("id");
-		System.out.println(id);
 		String password = request.getParameter("password");
-		System.out.println(password);
 		String nickname = request.getParameter("nickname");
 		String phone = request.getParameter("phone");
 		String address1 = request.getParameter("address");

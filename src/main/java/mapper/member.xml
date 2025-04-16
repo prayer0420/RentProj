@@ -8,8 +8,8 @@
 <!--null허용이 되는값이라면 모든 파라미터를 지정-->
 <!--넘어온 Member객체의 getter메서드를 자동 호출하여 값 가져옴-->
 	<insert id="insertMember" parameterType="member">
-		Insert Into member (grade_id,id,password,nickname,phone,address1,address2,address3,region1,region2,region3,profileimage,location,orderCount,admin_no) 
-		values(#{gradeId},#{id},#{password},#{nickname},#{phone},#{address1},#{address2},#{address3},#{region1},#{region2},#{region3},#{profileImage},#{location},#{orderCount},#{adminNo})	
+		Insert Into member (gradeId,id,password,nickname,phone,address1,address2,address3,region1,region2,region3,profileimage,location,orderCount,adminNo,fcmToken) 
+		values(#{gradeId},#{id},#{password},#{nickname},#{phone},#{address1},#{address2},#{address3},#{region1},#{region2},#{region3},#{profileImage},#{location},#{orderCount},#{adminNo},#{fcmToken})	
 	</insert>
 	
 	<select id="selectMember" parameterType="String" resultType="member">
@@ -23,7 +23,7 @@
         phone = #{phone},address1 = #{address1},address2 = #{address2},
         address3 = #{address3},region1 = #{region1},region2 = #{region2},
         region3 = #{region3},profileImage = #{profileImage},location = #{location},
-        orderCount = #{orderCount},adminNo = #{adminNo}
+        orderCount = #{orderCount},adminNo = #{adminNo}, fcmToken=#{fcmToken}
     WHERE id = #{id}
 	</update>
 		
