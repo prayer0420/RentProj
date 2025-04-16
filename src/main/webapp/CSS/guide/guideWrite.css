@@ -1,0 +1,50 @@
+@charset "UTF-8";
+/*container*/
+h2 {
+	margin-top: 50px;
+	margin-bottom: 10px;
+	text-align: center;
+}
+
+.guide-grid {
+	display: grid;
+	background-color: rgb(242, 242, 242);
+	grid-template-columns: repeat(3, 1fr);
+	gap: 24px;
+	max-width: 600px;
+	margin: 40px auto;
+	padding-top: 30px;
+	padding-bottom: 30px;
+}
+
+.guide-step {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 8px;
+}
+
+.guide-box {
+	width: 100px;
+	height: 100px;
+	background-color: #ddd;
+	border-radius: 8px;
+	border: 2px solid transparent;
+	transition: all 0.2s;
+}
+
+.guide-box:hover {
+	border-color: #3399ff;
+	cursor: pointer;
+}
+
+.guide-step span {
+	font-size: 14px;
+	font-weight: 500;
+}
+
+@media ( max-width : 600px) {
+	.guide-grid {
+		grid-template-columns: repeat(2, 1fr);
+	}
+}

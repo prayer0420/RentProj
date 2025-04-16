@@ -1,0 +1,648 @@
+@charset "UTF-8";
+ /*컨테이너*/
+        .container {
+            text-align: center;
+        }
+
+        .container-header {
+            margin: 50px auto 10px 0;
+            text-align: center;
+        }
+
+        .container-admit {
+            margin: 50px auto;
+            width: 800px;
+            display: inline-block;
+
+        }
+
+        .container-admit input[type="checkbox"] {
+            float: left;
+            margin-top: 5px;
+            margin-right: 10px;
+        }
+
+        .container-admit h3 {
+            float: left;
+        }
+
+        .container-admit button {
+            float: right;
+            margin-bottom: 10px;
+            background-color: #f9fafb;
+            border: none;
+        }
+
+
+        .container-category {
+            margin: 0 auto;
+            width: 800px;
+            text-align: left;
+            margin-top: 10px;
+        }
+
+        .container-category select {
+            padding: 10px;
+            border-radius: 5px;
+            border-color: rgb(228, 242, 220);
+            margin-right: 20px;
+        }
+
+        .container-category select:focus {
+            border-color: rgb(228, 242, 220);
+            box-shadow: none;
+            outline: none;
+        }
+
+        .container-category input {
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: none;
+            width: 617px;
+            border: 1px solid rgb(228, 242, 220);
+        }
+
+        .container-category input:focus {
+            /* 포커스 시 테두리 색상 및 스타일 설정 */
+            border-color: rgb(228, 242, 220);
+            box-shadow: none;
+            outline: none;
+        }
+
+        .container-category input::placeholder {
+            color: lightgray;
+        }
+
+        .container-rent {
+            margin: 10px auto;
+            width: 800px;
+        }
+
+        .container-rent select:focus {
+            border-color: rgb(228, 242, 220);
+            box-shadow: none;
+            outline: none;
+        }
+
+        .container-rent h4 {
+            text-align: left;
+            margin-top: 5px;
+        }
+
+        .rent-radio {
+            display: none;
+        }
+
+        .rent-label {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            width: 266px;
+            height: 50px;
+            background-color: white;
+            border: 1px solid rgb(228, 242, 220);
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            user-select: none;
+            float: left;
+        }
+
+        .rent-radio:checked+.rent-label {
+            background-color: rgb(228, 242, 220);
+            color: #1a1a1a;
+        }
+
+        .rent-price {
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: none;
+            width: 800px;
+            border: 1px solid rgb(228, 242, 220);
+            margin-top: 5px;
+        }
+
+        .rent-price input:focus {
+            border-color: rgb(228, 242, 220);
+            box-shadow: none;
+            outline: none;
+        }
+
+        .rent-price::placeholder {
+            text-align: right;
+            color: lightgray;
+        }
+
+        .container-security {
+            margin: 10px auto;
+            width: 800px;
+        }
+
+        .container-security h4 {
+            text-align: left;
+            width: 800px;
+        }
+
+        .rent-security {
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: none;
+            width: 800px;
+            border: 1px solid rgb(228, 242, 220);
+            margin-top: 5px;
+        }
+
+        .rent-security::placeholder {
+            text-align: right;
+            color: lightgray;
+        }
+
+        .rent-security input:focus {
+            border-color: rgb(228, 242, 220);
+            box-shadow: none;
+            outline: none;
+        }
+
+        .container-charge {
+            margin: 0 auto;
+            width: 800px;
+        }
+
+        .container-charge h6 {
+            margin-top: 10px;
+            text-align: left;
+        }
+
+        .container-sale {
+            width: 800px;
+            margin: 10px auto;
+
+        }
+
+        .container-sale h4 {
+            text-align: left;
+            margin-top: 5px;
+            margin-right: -50px;
+
+        }
+
+        .container-sale input {
+            margin: 10px 0;
+            float: left;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: none;
+            width: 800px;
+            border: 1px solid rgb(228, 242, 220);
+        }
+
+        .container-sale input::placeholder {
+            text-align: right;
+            color: lightgray;
+        }
+
+        .container-sale input:focus {
+            /* 포커스 시 테두리 색상 및 스타일 설정 */
+            border-color: rgb(228, 242, 220);
+            box-shadow: none;
+            outline: none;
+        }
+
+        .container-delivery {
+            margin: 10px auto;
+            width: 800px;
+        }
+
+        .container-delivery h4 {
+            text-align: left;
+            margin-top: 5px;
+        }
+
+        .delivery-radio {
+            display: none;
+        }
+
+        .delivery-label {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            width: 400px;
+            height: 50px;
+            background-color: white;
+            border: 1px solid rgb(228, 242, 220);
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            user-select: none;
+            float: left;
+        }
+
+        .delivery-radio:checked+.delivery-label {
+            background-color: rgb(228, 242, 220);
+            color: #1a1a1a;
+        }
+
+        .container-delivery .deliv {
+            margin: 10px 0;
+            float: left;
+            padding: 10px;
+            border-top-right-radius: 5px;
+            border-bottom-left-radius: 5px;
+            box-shadow: none;
+            width: 400px;
+            border: 1px solid rgb(228, 242, 220);
+            background-color: white;
+        }
+
+        .container-prodstate {
+            margin: 10px auto;
+            width: 800px;
+        }
+
+        .container-prodstate h4 {
+            text-align: left;
+            margin-top: 5px;
+        }
+
+        .container-prodstate button[type="button"] {
+            margin: 10px 0;
+            float: left;
+            padding: 10px;
+            border-top-left-radius: 5px;
+            border-bottom-left-radius: 5px;
+            box-shadow: none;
+            width: 800px;
+            border: 1px solid rgb(228, 242, 220);
+            background-color: rgb(228, 242, 220);
+        }
+
+        .container-addr {
+            margin: 10px auto;
+            width: 800px;
+        }
+
+        .container-addr button[type="button"] {
+            margin: 10px 0 50px 0;
+            float: left;
+            padding: 10px;
+            border-top-left-radius: 5px;
+            border-bottom-left-radius: 5px;
+            box-shadow: none;
+            width: 800px;
+            border: 1px solid rgb(228, 242, 220);
+            background-color: rgb(228, 242, 220);
+        }
+
+        .container-image {
+            margin: 10px auto;
+            width: 800px;
+
+        }
+
+        .container-image h4 {
+            text-align: left;
+        }
+
+        .container-image img {
+            margin-top: 40px;
+            text-align: left;
+            width: 200px;
+            height: 200px;
+            background-color: white;
+            border: 1px solid rgb(228, 242, 220);
+        }
+
+        .container-content {
+            margin: 10px auto;
+            width: 800px;
+        }
+
+        .container-content textarea {
+            margin-top: 30px;
+            width: 800px;
+            height: 300px;
+            border: 1px solid rgb(228, 242, 220);
+            resize: none;
+        }
+
+        .container-content textarea:focus {
+            border-color: rgb(228, 242, 220);
+            box-shadow: none;
+            outline: none;
+        }
+
+        .container-content textarea::placeholder {
+            color: lightgray;
+            text-align: center;
+        }
+
+        button[type="submit"] {
+
+            background-color: rgb(228, 242, 220);
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+            width: 150px;
+            height: 50px;
+            margin-bottom: 50px;
+            margin-top: 30px;
+        }
+
+        /*상품등록동의 모달*/
+        .modal-admit {
+            position: fixed;
+            display: none;
+
+            justify-content: center;
+            top: 0;
+            left: 0;
+
+            width: 100%;
+            height: 100%;
+
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .modal-admit-body {
+            position: fixed;
+            top: 50%;
+
+            width: 500px;
+            height: 350px;
+
+            padding: 40px;
+            text-align: center;
+
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
+            /*테두리 그림자*/
+
+            transform: translateY(-50%);
+            /*모듈창 열었을 때 위치설정 가운데로*/
+        }
+
+        .modal-admit-body h5 {
+            margin: 20px auto;
+            width: 400px;
+        }
+
+        .modal-admit-body hr {
+            width: 400px;
+        }
+
+        .modal-admit-body button.cancle-admit {
+            margin: 30px auto;
+            padding: 10px;
+            border-top-left-radius: 5px;
+            border-bottom-left-radius: 5px;
+            box-shadow: none;
+            width: 100%;
+            border: 1px solid rgb(228, 242, 220);
+            background-color: rgb(228, 242, 220);
+        }
+
+        /*상품상태모달*/
+        .modal-prodState {
+            position: fixed;
+            display: none;
+
+            justify-content: center;
+            top: 0;
+            left: 0;
+
+            width: 100%;
+            height: 100%;
+
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .modal-prodState-body {
+            position: fixed;
+            top: 50%;
+
+            width: 500px;
+            height: 300px;
+
+            padding: 40px;
+            text-align: center;
+
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
+            /*테두리 그림자*/
+
+            transform: translateY(-50%);
+            /*모듈창 열었을 때 위치설정 가운데로*/
+
+        }
+
+        .modal-prodState-body hr {
+            width: 400px;
+            text-align: center;
+        }
+
+        .state-label {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            width: 150px;
+            height: 50px;
+            background-color: white;
+            border: 1px solid rgb(228, 242, 220);
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            user-select: none;
+            float: left;
+            margin-left: 40px;
+            margin-top: 10px;
+        }
+        .state-radio {
+            display: none;
+        }
+        .state-radio:checked+.state-label {
+            background-color: rgb(228, 242, 220);
+            color: #1a1a1a;
+        }
+
+        .modal-prodState-body button.cancle-prod {
+            margin: 30px auto;
+            padding: 10px;
+            border-top-left-radius: 5px;
+            border-bottom-left-radius: 5px;
+            box-shadow: none;
+            width: 100%;
+            border: 1px solid rgb(228, 242, 220);
+            background-color: rgb(228, 242, 220);
+        }
+
+        /*거래지역 모달*/
+        .modal-addr,
+        .modal-addrPlus {
+            position: fixed;
+            display: none;
+
+            align-items: center;
+            justify-content: center;
+            top: 0;
+            left: 0;
+
+            width: 100%;
+            height: 100%;
+
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .modal-addr-body,
+        .modal-addrPlus-body {
+            position: fixed;
+            top: 50%;
+
+            width: 500px;
+            height: 350px;
+
+            padding: 40px;
+            text-align: center;
+
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
+            /*테두리 그림자*/
+
+            transform: translateY(-50%);
+            /*모듈창 열었을 때 위치설정 가운데로*/
+        }
+
+        .modal-addr-body hr {
+            width: 400px;
+        }
+
+        .modal-addr-body button.cancle-addr {
+            margin: 30px auto;
+            padding: 10px;
+            border-top-left-radius: 5px;
+            border-bottom-left-radius: 5px;
+            box-shadow: none;
+            width: 400px;
+            border: 1px solid rgb(228, 242, 220);
+            background-color: rgb(228, 242, 220);
+        }
+
+        .modal-addr h3 {
+            margin-bottom: 10px;
+            text-align: left;
+            margin-left: 10px;
+        }
+
+        .modal-addr-body button.btn-open-modal-addrPlus {
+            margin: 20px auto 30px 10px;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: none;
+            width: 400px;
+            border: 1px solid rgb(228, 242, 220);
+            background-color: rgb(228, 242, 220);
+        }
+
+        .modal-addrPlus-body button {
+            margin: 30px auto;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: none;
+            width: 200px;
+            border: 1px solid rgb(228, 242, 220);
+            background-color: rgb(228, 242, 220);
+        }
+
+        .modal-addrPlus-body h3 {
+            text-align: left;
+            margin-left: 10px;
+        }
+
+        .modal-addrPlus-body h5 {
+            text-align: left;
+            margin-left: 10px;
+            margin-top: 20px;
+            float: left;
+        }
+
+        .modal-addrPlus-body hr {
+            width: 400px;
+            text-align: center;
+        }
+
+        .addrNum {
+            float: left;
+            margin-top: 15px;
+            margin-left: 50px;
+            width: 70px;
+            height: 30px;
+            border: 1px solid rgb(228, 242, 220);
+            border-radius: 5px;
+            padding-left: 7px;
+        }
+
+        .modal-addrPlus-body .searchBtn {
+            width: 70px;
+            height: 30px;
+            margin-top: 15px;
+            margin-right: 150px;
+            text-align: center;
+            vertical-align: middle;
+
+        }
+
+        .modal-addrPlus-body .loadNum {
+            width: 260px;
+            height: 30px;
+            text-align: right;
+            border: 1px solid rgb(228, 242, 220);
+            margin-left: 80px;
+            border-radius: 5px;
+        }
+
+
+
+
+        .addr-list {
+            margin-top: 60px;
+            margin-left: 10px;
+            width: 400px;
+            height: 100px;
+            border: 1px solid lightgray;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+
+
+        .tooltip {
+            position: absolute;
+            top: 30px;
+            left: 0;
+            background: rgb(228, 242, 220);
+            padding: 10px 15px;
+            border-radius: 5px;
+            color: black;
+            text-align: left;
+            display: none;
+            z-index: 999;
+            width: 110px;
+            font-size: 14px;
+        }
+
+        .tooltip::after {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: 20px;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-bottom: 8px solid rgb(228, 242, 220);
+        }

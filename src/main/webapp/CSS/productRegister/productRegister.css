@@ -1,0 +1,51 @@
+@charset "UTF-8";
+/*button wrapper*/
+.type-filter {
+	display: flex;
+	justify-content: center;
+	gap: 50px;
+	padding: 40px 0;
+	margin-top: 30px;
+}
+
+.type-link {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 150px;
+	height: 150px;
+	border-radius: 8px;
+	font-size: 16px;
+	font-weight: bold;
+	color: #444;
+	text-decoration: none;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+	transition: all 0.2s ease-in-out;
+}
+
+.type-link:hover {
+	filter: brightness(0.95);
+}
+
+/* 각각의 유형 색상 */
+.type-sell {
+	background-color: #fcd5b5;
+}
+
+.type-rent {
+	background-color: #d6f1df;
+}
+
+.type-both {
+	background-color: #e5def9;
+}
+
+.type-free {
+	background-color: #d6ecfb;
+}
+
+.container h2 {
+	text-align: center;
+	margin-top: 50px;
+	margin-bottom: 10px;
+}
