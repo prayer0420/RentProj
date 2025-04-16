@@ -1,11 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
   <meta charset="UTF-8">
   <title>카테고리등록</title>
-  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="JSP/Admin/css/common.css">
   <style>
     .category-section {
       border: 1px solid #ccc;
@@ -87,17 +89,34 @@
     }
   </style>
 </head>
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script> 
 <script>
-  // DOM이 로드되면 실행
-  document.addEventListener('DOMContentLoaded', function () {
-    const tbody = document.querySelector('.category-table tbody');
-    const totalCountEl = document.querySelector('.category-count');
-
-    if (tbody && totalCountEl) {
-      const rowCount = tbody.querySelectorAll('tr').length;
-      totalCountEl.innerHTML = `총 개수 ${rowCount} <button class="btn-save" style="margin-left: 10px;">✔ 저장</button>`;
-    }
-  });
+  
+  $(function() {
+	$("input:checkbox").change(function() {
+		$(this).prev().val(!$(this).is(":checked"))
+	})		  
+	
+	$("#regCategory").click(function() {
+		$.ajax({
+			url:"categoryCreate",
+			method:"post",
+			data:{name:$("#categoryName").val()},
+			success:function(result) {
+				let category = JSON.parse(result);
+				console.log(category);
+				$("table>tbody").append($(`<tr>
+							<td><input type="text" value="\${category.no }" name="no"></td>
+				        	<td><input type="text" value="\${category.name }" name="name"></td>
+				        	<td><input type="hidden"  name="isActive" value="false"/><input type="checkbox">카테고리 숨김</td>
+				        	<td><div class="sort-buttons"><button class="btn-up">위로↑</button><button class="btn-down">아래로↓</button></div></td>
+				        	</tr>`))
+				console.log($("#count").text())
+				$("#count").text(+$("#count").text()+1);
+			}
+		})
+	})
+  }) 
 </script>
 <body>
 	<%@ include file="header.jsp" %>
@@ -113,38 +132,55 @@
       <div class="category-row inline">
         <label for="categoryName">카테고리명</label>
         <input type="text" class="search-input" id="categoryName">
-        <button class="btn-save">✔ 저장</button>
+        <button class="btn-save" id="regCategory" >✔ 등록</button>
       </div>
     </div>
+    
+	<form  action="categoryUpdate" method="post">
+    <div class="category-count">총 <span id="count">${fn:length(categoryList) }</span>개<button class="btn-save" style="margin-left: 10px;">✔ 저장</button></div>
 
-    <div class="category-count">총 개수 0 <button class="btn-save" style="margin-left: 10px;">✔ 저장</button></div>
-
+	
     <table class="category-table">
       <thead>
       <tr>
         <th>번호</th>
-        <th>정렬</th>
         <th>카테고리명</th>
         <th>숨김 여부</th>
+        <th>정렬</th>
       </tr>
       </thead>
       <tbody>
-      <tr>
-        <td>001</td>
-        <td>
-          <div class="sort-buttons">
-            <button class="btn-up">위로↑</button>
-            <button class="btn-down">아래로↓</button>
-          </div>
-        </td>
-        <td>
-          <input type="text" value="의류/패션/악세사리">
-        </td>
-        <td><input type="checkbox"> 카테고리 숨김</td>
-      </tr>
-      <!-- 반복 항목 추가 가능 -->
+      <c:forEach items="${categoryList}" var="category">
+           <tr>
+        	<td><input type="text" value="${category.no }" name="no"></td>
+	        <td>
+    	      <input type="text" value="${category.name }" name="name">
+        	</td>
+        	<td>
+         	<c:choose>
+        		<c:when test="${category.isActive==true }">
+        			<input type="hidden"  name="isActive" value="true" />
+        			<input type="checkbox" >
+        		</c:when>
+        		<c:otherwise>
+        			<input type="hidden"  name="isActive" value="false"/>
+        			<input type="checkbox" checked="checked">
+        		</c:otherwise>
+        	</c:choose> 
+        	카테고리 숨김</td>
+        	<td>
+	          <div class="sort-buttons">
+    	        <button class="btn-up">위로↑</button>
+        	    <button class="btn-down">아래로↓</button>
+          	</div>
+        	</td>
+      	</tr>
+      </c:forEach>
+ 
+
       </tbody>
     </table>
+    </form>
   </main>
 </div>
 </body>

@@ -1,11 +1,18 @@
 package controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import dto.Category;
+import service.CategoryService;
+import service.CategoryServiceImpl;
 
 /**
  * Servlet implementation class CategoryUpdate
@@ -27,6 +34,25 @@ public class CategoryUpdate extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
+		String[] noList = request.getParameterValues("no");
+		String[] nameList = request.getParameterValues("name");
+		String[] isActiveList = request.getParameterValues("isActive");
+		
+		List<Category> categoryList = new ArrayList<>();
+		
+		for(int i=0; i<noList.length; i++) {
+			categoryList.add(new Category(Integer.parseInt(noList[i]),
+					nameList[i],i+1,Boolean.parseBoolean(isActiveList[i])));
+		}
+		
+		try {
+			CategoryService categoryService = new CategoryServiceImpl();
+			categoryService.categoryUpdate(categoryList);
+			response.sendRedirect("categoryList");
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 }

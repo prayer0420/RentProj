@@ -8,7 +8,7 @@
     </button>
     <nav>
       <div><a href="memberInfo">회원관리</a></div>
-      <div><a href="categoryCreate">카테고리관리</a></div>
+      <div><a href="categoryList">카테고리관리</a></div>
       <div><a href="reportedProductList">상품관리</a></div>
       <div><a href="orderList">정산관리</a></div>
       <div><a href="faqCategory">고객지원</a></div>

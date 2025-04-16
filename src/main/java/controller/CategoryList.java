@@ -9,12 +9,18 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import dto.Category;
+import service.CategoryService;
+import service.CategoryServiceImpl;
+
 /**
  * Servlet implementation class CategoryList
  */
 @WebServlet("/categoryList")
 public class CategoryList extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	
+	
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -28,7 +34,15 @@ public class CategoryList extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		 List<CategoryDTO> list = categoryService.getAllCategories();
+		try {
+			CategoryService categoryService = new CategoryServiceImpl();
+			List<Category> categoryList = categoryService.getAllCategories();
+			System.out.println(categoryList);
+			request.setAttribute("categoryList", categoryList);
+			request.getRequestDispatcher("JSP/Admin/categoryCreate.jsp").forward(request, response);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**

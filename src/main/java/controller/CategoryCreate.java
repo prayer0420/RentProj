@@ -1,11 +1,18 @@
 package controller;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.google.gson.Gson;
+
+import dto.Category;
+import service.CategoryService;
+import service.CategoryServiceImpl;
 
 /**
  * Servlet implementation class CategoryCreate
@@ -35,14 +42,21 @@ public class CategoryCreate extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
+		response.setCharacterEncoding("utf-8");
 		
-		Integer no = Integer.parseInt(request.getParameter("no"));
 		String name = request.getParameter("name");
-		Integer sort_order = Integer.parseInt(request.getParameter("sortOrder"));
-		boolean is_Active = Boolean.parseBoolean(request.getParameter("isActive"));
 		
-		
-		request.getRequestDispatcher("categoryCreate.jsp").forward(request, response);
+		try {
+			CategoryService categoryService = new CategoryServiceImpl();
+			Category category = new Category(name);
+			categoryService.registerCategory(category);
+			System.out.println(category);
+			Gson gson = new Gson();
+			String categoryJson = gson.toJson(category);
+			response.getWriter().write(categoryJson);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
 		
 		
 		

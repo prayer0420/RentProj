@@ -6,7 +6,10 @@ public class Category {
 	String name;
 	Integer sortOrder;
 	boolean isActive;
-	
+	public Category() {}
+	public Category(String name) {
+		this.name = name;
+	}
 	public Category(Integer no, String name, Integer sortOrder, boolean isActive) {
 		super();
 		this.no = no;
@@ -39,12 +42,17 @@ public class Category {
 		this.sortOrder = sortOrder;
 	}
 
-	public boolean isActive() {
+	public boolean getIsActive() {
 		return isActive;
 	}
 
-	public void setActive(boolean isActive) {
+	public void setIsActive(boolean isActive) {
 		this.isActive = isActive;
+	}
+
+	@Override
+	public String toString() {
+		return "Category [no=" + no + ", name=" + name + ", sortOrder=" + sortOrder + ", isActive=" + isActive + "]";
 	}
 	
 	
