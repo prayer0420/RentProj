@@ -42,25 +42,21 @@ public class Join extends HttpServlet {
 		String region1 = request.getParameter("region1");
 		
 		//builder시작(필수값 전달)
-		Member.Builder builder = new Member.Builder(id, password, name,nickname, phone, totalAddress, region1);
+		Member member= new Member(id, password, name,nickname, phone, totalAddress, region1);
 		
 		//선택값 있으면 추가
-		/* builder.gradeId(1);*/ 
-		builder.adminNo(0);
+		member.setAdminNo(0);
 		
 		
 		String region2 = request.getParameter("region2");
 		if(region2 != null && !region2.isEmpty()) {
-			builder.region2(region2);
+			member.setRegion2(region2);
 		}
 		
 		String region3 = request.getParameter("region3");
 		if(region3 != null && !region3.isEmpty()) {
-			builder.region3(region3);
+			member.setRegion3(region3);
 		}
-		
-		//최종 생성
-		Member member = builder.build();
 		
 		//서비스 로직
 		MemberService service = new MemberServiceImpl();

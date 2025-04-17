@@ -12,7 +12,7 @@
 <c:set var="contextPath" value="${pageContext.request.contextPath }" />
 </head>
 <body>
-	<jsp:include page="${contextPath}/Header/header.jsp"></jsp:include>
+	<jsp:include page="/JSP/Header/header.jsp"></jsp:include>
 		<div class="filter-sort-bar">
 			<div class="badge-bar">
 				<div class="badge 판매">판매</div>
@@ -187,7 +187,7 @@
 			</div>
 		</div>
 
-	<jsp:include page="${contextPath}/Header/footer.jsp"></jsp:include>
+	<jsp:include page="/JSP/Header/footer.jsp"></jsp:include>
 
 	<script>
   		const badges = document.querySelectorAll('.badge');
