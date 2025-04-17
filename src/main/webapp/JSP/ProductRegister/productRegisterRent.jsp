@@ -24,8 +24,28 @@
             const btnCancleAddr = document.querySelector('.cancle-addr');
             //const btnOpenAddrPlus = document.querySelector('.btn-open-modal-addrPlus');
             //const cancleBtn = document.querySelector('.cancle-btn');
-
-
+            
+            const registerForm = document.getElementById("registerForm");
+			const admitCheck = document.getElementById("admitCheck");
+			const categoryList = document.getElementById("categoryList");
+			const startDate = document.getElementById("startDate");
+			const endDate = document.getElementById("endDate");
+			const rentPrice = document.getElementById("rentPrice");
+			const secPrice = document.getElementById("secPrice");
+			const title = document.getElementById("title");
+			const hand = document.getElementById("hand");
+			const delvPrice = document.getElementById("delvPrice");
+			const state1 = document.getElementById("state1");
+			const state2 = document.getElementById("state2");
+			const state3 = document.getElementById("state3");
+			const state4 = document.getElementById("state4");
+			const ifile = document.getElementById("ifile");
+			const content = document.getElementById("content");
+			const deliveryPrice = document.getElementById("deliveryPrice");
+			
+			hand.addEventListener("change", toggleDeliveryPrice);
+	        delvPrice.addEventListener("change", toggleDeliveryPrice);
+			
             btnOpenProd.addEventListener("click", () => {
                 prod.style.display = "flex";
             });
@@ -61,6 +81,49 @@
                     tooltipBox.style.display = "none";
                 }
             });
+            
+            //필수등록 여부
+            registerForm.addEventListener("submit", function (e) {
+            	console.log(categoryList);
+                if (!admitCheck.checked) {
+                    e.preventDefault(); // 폼 제출 막기
+                    alert("상품등록을 위해 필수 동의를 체크해야 합니다.");
+                }else if(categoryList.value==="카테고리 선택"){
+                	e.preventDefault();
+                	alert("카테고리를 선택해야 합니다.");
+                }else if(title.value===""){
+                	e.preventDefault();
+                	alert("제목을 입력해주세요");
+                }else if(rentPrice.value === ""){
+                	e.preventDefault();
+                	alert("하루치 대여금액을 설정하셔야 합니다.");
+                }else if(secPrice.value === ""){
+                	e.preventDefault();
+                	alert("보증금을 설정하셔야 합니다.");
+                }else if(!hand.checked && !delvPrice.checked) {
+                    e.preventDefault();
+                    alert("거래방식을 선택해야 합니다.");
+                }else if(delvPrice.checked && deliveryPrice.value.trim() === ""){
+                	e.preventDefault();
+                	alert("배송비를 설정하셔야 합니다.");
+                }else if(startDate.value === ""){
+                	e.preventDefault();
+                	alert("대여시작일을 선택해야 합니다.");
+                }else if(endDate.value === ""){
+                	e.preventDefault();
+                	alert("대여반납일을 선택해야 합니다.");
+                }else if(!state1.checked && !state2.checked && !state3.checked && !state4.checked){
+                	e.preventDefault();
+                	alert("상품상태를 선택하셔야 합니다.");
+                }else if(ifile.files.length === 0){
+                	e.preventDefault();
+                	alert("상품 이미지를 선택하셔야 합니다.");
+                }else if(content.value.trim() === ""){
+                	e.preventDefault();
+                	alert("상품에 대한 내용을 입력하셔야 합니다.");
+                }
+            });
+            toggleDeliveryPrice();
         };
         //이미지 파일
         function readURL(input){
@@ -72,17 +135,30 @@
         		reader.readAsDataURL(input.files[0]);
         	}
         }
+        
+        function toggleDeliveryPrice() {
+            if (hand.checked) {
+                deliveryPrice.disabled = true;
+                deliveryPrice.value = 0;
+                
+            } else if (delvPrice.checked) {
+                deliveryPrice.disabled = false;
+            }
+        }
+        	
+        
     </script>
 </head>
 <body>
 	<jsp:include page="../Header/header.jsp"></jsp:include>
-	<form action="<%=request.getContextPath()%>/rent" method="post" enctype="multipart/form-data" class="container">
+	<form id="registerForm" action="<%=request.getContextPath()%>/rent" method="post" enctype="multipart/form-data" class="container">
+		<input type="hidden" name="tradeType" value="대여">
 		<div class="container-header">
-			<h2>판매등록</h2>
+			<h2>대여등록</h2>
 		</div>
 		<hr>
 		<div class="container-admit">
-			<input type="checkbox">
+			<input type="checkbox" id="admitCheck">
 			<h3>상품등록 필수 동의</h3>
 			<div class="modal-admit">
 				<div class="modal-admit-body">
@@ -93,14 +169,14 @@
 						서류들은 각 당사자들끼리 제공 받으셔야 합니다.</h5>
 					<h5>각 서류에 대해 빌리는 일체 관여하지 않음을 알려드립니다. 확인 부탁드립니다.</h5>
 					<hr>
-					<button class="cancle-admit">확인</button>
+					<button class="cancle-admit" type="button">확인</button>
 				</div>
 			</div>
 			<button type="button" class="btn-open-modal-admit">자세히 보기
 		</div>
 		<hr>
 		<div class="container-category">
-			<select name="categoryNo" id="" class="category-list">
+			<select name="categoryNo" id="categoryList" class="category-list">
 				<option selected="">카테고리 선택</option>
 				<option value="1">의류/패션/악세사리</option>
 				<option value="2">PC용품/디지털</option>
@@ -112,13 +188,11 @@
 				<option value="8">유아동/출산</option>
 				<option value="9">애완동물용품</option>
 				<option value="10">기타</option>
-			</select> <input type="text" name="title" placeholder="제목을 입력하세요">
+			</select> <input type="text" id="title" name="title" placeholder="제목을 입력하세요">
 		</div>
 		<div class="container-charge">
-			<div class="wrap"
-				style="position: relative; display: inline-block; margin-top: 5px;">
-				<h6 id="tooltipTrigger"
-					style="cursor: pointer; margin-right: 740px;">수수료안내</h6>
+			<div class="wrap" style="position: relative; display: inline-block; margin-top: 5px;">
+				<h6 id="tooltipTrigger" style="cursor: pointer; margin-right: 740px;">수수료안내</h6>
 				<div class="tooltip" id="tooltipBox">
 					브론즈 : 5%<br> 실버 : 4.5%<br> 골드 : 4%<br> 플레 : 3.5%<br>
 					다이아 : 3%<br> Re:NT : 2.5%
@@ -126,27 +200,28 @@
 			</div>
 		</div>
 		<div class="container-rent">
-			<h4>Re:NT금액</h4>
-			<input type="text" class="rent-price" placeholder="빌리기 가격" name="rentPrice">
+			<h4>대여1일 기준 금액</h4>
+			<input type="text" id="rentPrice" class="rent-price" placeholder="빌리기 가격" name="rentPrice">
 		</div>
 		<div class="container-security">
 			<h4>보증금</h4>
-			<input type="text" class="rent-security" placeholder="보증금 가격" id="secPrice" name="secPrice">
+			<input type="text" id="secPrice" class="rent-security" placeholder="보증금 가격" id="secPrice" name="secPrice">
 		</div>
 		<div class="container-delivery">
 			<h4>배송비</h4>
 			<input type="radio" id="hand" name="deliveryStatus" class="delivery-radio" value="직거래" >
 			<label for="hand" class="delivery-label">결제 후 직접거래</label> 
-			<input type="radio" id="deliv" name="deliveryStatus" class="delivery-radio" id="deliveryPrice" value="택배거래">
-			<label for="deliv" class="delivery-label">택배거래</label>
+			<input type="radio" name="deliveryStatus" class="delivery-radio" id="delvPrice" value="택배거래">
+			<label for="delvPrice" class="delivery-label">택배거래</label>
+			<input type="text" class="rent-security" id="deliveryPrice" name="deliveryPrice" placeholder="배송비" disabled>
 		</div>
 		<div class="container-date">
 			<h4>대여가능 날짜</h4>
 			<label>대여시작일</label>
-			<input type="date" class="dateinput" placeholder="대여시작일" name="startDate">
+			<input type="date" id="startDate" class="dateinput" placeholder="대여시작일" name="startDate">
 			<span>~</span>
 			<label>대여반납일</label>
-			<input type="date" class="dateinput" placeholder="대여반납일" name="endDate">
+			<input type="date" id="endDate" class="dateinput" placeholder="대여반납일" name="endDate">
 		</div>
 		<div class="container-prodstate">
 			<h4>상품상태</h4>
@@ -162,7 +237,7 @@
 					<label for="state3" class="state-label">사용감 많음</label> 
 					<input type="radio" id="state4" name="state" class="state-radio" value="파손">
 					<label for="state4" class="state-label">고장/파손</label>
-					<button type="button" class="cancle-prod">취소</button>
+					<button type="button" class="cancle-prod">확인</button>
 				</div>
 			</div>
 			<button type="button" class="btn-open-modal-prodState">상품상태선택</button>
@@ -176,7 +251,7 @@
 					<button type="button" class="btn-open-modal-addrPlus">거래지역
 						추가</button>
 					<div class="addr-list"></div>
-					<button class="cancle-addr" type="button">취소</button>
+					<button class="cancle-addr" type="button">확인</button>
 				</div>
 			</div>
 			<!-- 

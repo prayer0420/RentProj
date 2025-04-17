@@ -34,29 +34,31 @@ input[type="text"] {
     </aside>
     <main>
       <div class="breadcrumb">HOME > 회원관리 > 회원정보관리</div>
+      <form action="memberInfo" method="post">
       <div class="search-box">
         <label>검색어
-          <select>
-            <option>회원명</option>
-            <option>아이디</option>
-            <option>핸드폰번호</option>
-            <option>이메일</option>
-            <option>가입일시</option>
+          <select name="type">
+            <option value="name">회원명</option>
+            <option value="id">아이디</option>
+            <option value="phone">핸드폰번호</option>
+
           </select>
         </label>
-        <input type="text">
-        <button>검색</button>
+        <input type="text" name="word">
+        <input type="submit" value="검색">
         <br><br>
         회원등급:
-        <label><input type="radio" name="grade" checked> 전체</label>
-        <label><input type="radio" name="grade"> 브론즈</label>
-        <label><input type="radio" name="grade"> 실버</label>
-        <label><input type="radio" name="grade"> 골드</label>
-        <label><input type="radio" name="grade"> 플래</label>
-        <label><input type="radio" name="grade"> 다이아</label>
-        <label><input type="radio" name="grade"> Re:NT</label>
+        <label><input type="radio" name="gradeId" value="" checked> 전체</label>
+        <label><input type="radio" name="gradeId" value="bronze" > 브론즈</label>
+        <label><input type="radio" name="gradeId" value="silver"> 실버</label>
+        <label><input type="radio" name="gradeId" value="gold"> 골드</label>
+        <label><input type="radio" name="gradeId" value="platinum"> 플래티넘</label>
+        <label><input type="radio" name="gradeId" value="dia"> 다이아</label>
+        <label><input type="radio" name="gradeId" value="rent"> Re:NT</label>
       </div>
-  <%--     <div class="total-count">총 회원<span id="count">${fn:length() }</span>명</div> --%>
+      </form>
+  <c:if test="${not empty memberList}">
+  <div class="total-count">총 회원<span id="count">${fn:length(memberList) }</span>명</div>
       <table id="adminListTable" border="1">
         <thead>
           <tr>
@@ -86,9 +88,7 @@ input[type="text"] {
 		    </tr>
 		  </c:forEach>
 		</c:if>
-        
         </tbody>
-        
       </table>
       <!-- 페이징 처리 추가 예정 -->
 		<div class="pagination">
@@ -96,6 +96,7 @@ input[type="text"] {
 		  <span class="page-numbers">1 2 3 4 5</span>
 		  <button class="next">다음</button>
 		</div>
+      </c:if>
     </main>
   </div>
 </body>

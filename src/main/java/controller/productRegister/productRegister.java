@@ -19,13 +19,13 @@ import service.product.ProductServiceImpl;
  * Servlet implementation class productRegisterRent
  */
 @WebServlet("/rent")
-public class productRegisterRent extends HttpServlet {
+public class productRegister extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public productRegisterRent() {
+    public productRegister() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -46,7 +46,6 @@ public class productRegisterRent extends HttpServlet {
 		String path = request.getServletContext().getRealPath("upload");
 		int size = 10*1024*1024;
 		
-		System.out.println(path);
 		MultipartRequest multi = new MultipartRequest(request, path,size,"utf-8",new DefaultFileRenamePolicy());
 		
 		Integer categoryNo = Integer.parseInt(multi.getParameter("categoryNo"));
@@ -58,20 +57,22 @@ public class productRegisterRent extends HttpServlet {
 //		String img = "123.jpg";
 //		String deliveryAddr = multi.getParameter("deliveryAddr");
 		String deliveryAddr = "장곡동";
-//		Integer deliveryPrice = Integer.parseInt(multi.getParameter("deliveryPrice"));
-		Integer deliveryPrice = 1000;
+		
+		Integer deliveryPrice = 0;
+		if((multi.getParameter("deliveryPrice")) != null) {
+			deliveryPrice = Integer.parseInt(multi.getParameter("deliveryPrice"));
+		}
+//		deliveryPrice = Integer.parseInt(multi.getParameter("deliveryPrice"));
 		String tradeType = multi.getParameter("tradeType");
-//		Integer secPrice = Integer.parseInt(multi.getParameter("secPrice"));
-		Integer secPrice = 10000;
+		Integer secPrice = Integer.parseInt(multi.getParameter("secPrice"));
 //		Integer memberNo = Integer.parseInt(multi.getParameter("memberNo"));
 		Integer memberNo = 1;
 		String startDate = multi.getParameter("startDate");
 		String endDate = multi.getParameter("endDate");
-//		Integer rentPrice = Integer.parseInt(multi.getParameter("rentPrice"));
-		Integer rentPrice = 1000;
+		Integer rentPrice = Integer.parseInt(multi.getParameter("rentPrice"));
 		String deliveryStatus = multi.getParameter("deliveryStatus");
 		
-		Product product = new Product(categoryNo, title, content, state, img, deliveryAddr, deliveryPrice, tradeType, secPrice, memberNo, startDate, endDate, rentPrice, deliveryStatus);
+		Product product= new Product(categoryNo, title, content, state, img, deliveryAddr, deliveryPrice, tradeType, secPrice, memberNo, startDate, endDate, rentPrice, deliveryStatus);			
 		
 		System.out.println(product);
 		ProductService service = new ProductServiceImpl();
@@ -82,12 +83,6 @@ public class productRegisterRent extends HttpServlet {
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
-		
-		
-		
-		
-		
-		
 	}
 
 }
