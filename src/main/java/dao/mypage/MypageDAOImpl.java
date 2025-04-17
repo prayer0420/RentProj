@@ -13,7 +13,7 @@ public class MypageDAOImpl implements MypageDAO {
 	@Override
 	public Integer selectProductCount() throws Exception {
 		
-		return sqlSession.selectOne("mapper.mypage.selectProductcnt");
+		return sqlSession.selectOne("mapper.mypage.selectProductCnt");
 	}
 
 	@Override
