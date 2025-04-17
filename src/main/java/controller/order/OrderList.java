@@ -1,8 +1,6 @@
-<<<<<<<< HEAD:src/main/java/controller/admin/OrderList.java
-package controller.admin;
-========
 package controller.order;
->>>>>>>> dev:src/main/java/controller/order/OrderList.java
+
+
 
 import java.io.IOException;
 import javax.servlet.ServletException;

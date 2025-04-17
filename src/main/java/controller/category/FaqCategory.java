@@ -1,8 +1,6 @@
-<<<<<<<< HEAD:src/main/java/controller/admin/FaqCategory.java
-package controller.admin;
-========
 package controller.category;
->>>>>>>> dev:src/main/java/controller/category/FaqCategory.java
+
+
 
 import java.io.IOException;
 import javax.servlet.ServletException;

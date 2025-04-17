@@ -12,8 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import dto.Member;
-import service.MemberService;
-import service.MemberServiceImpl;
+import service.member.MemberService;
+import service.member.MemberServiceImpl;
 
 
 /**

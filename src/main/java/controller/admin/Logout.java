@@ -1,10 +1,9 @@
-<<<<<<<< HEAD:src/main/java/controller/admin/Logout.java
 package controller.admin;
-========
-package controller.login;
->>>>>>>> dev:src/main/java/controller/login/Logout.java
+
+
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;

@@ -1,8 +1,6 @@
-<<<<<<<< HEAD:src/main/java/controller/admin/CategoryUpdate.java
-package controller.admin;
-========
 package controller.category;
->>>>>>>> dev:src/main/java/controller/category/CategoryUpdate.java
+
+
 
 import java.io.IOException;
 import java.util.ArrayList;
