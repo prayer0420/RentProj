@@ -47,7 +47,7 @@ public class MySell extends HttpServlet {
 			List<Product> productList = service.productListByPage(pageInfo);
 			request.setAttribute("pageInfo", pageInfo);
 			request.setAttribute("productList", productList);
-			request.getRequestDispatcher("mySellList.jsp").forward(request, response);
+			request.getRequestDispatcher("/JSP/MyPage/mySell.jsp").forward(request, response);
 		}catch (Exception e) {
 			e.printStackTrace();
 			request.setAttribute("err",	"나의 판매상품 목록 조회를 실패했습니다.");
