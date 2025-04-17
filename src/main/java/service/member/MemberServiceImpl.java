@@ -261,10 +261,9 @@ private Member getNaverUserInfo(String token) throws Exception {
 		return member;
 	}
 
-@Override
-public List<Member> searchMembers(Map<String, Object> params) throws Exception {
-	// TODO Auto-generated method stub
-	return null;
-}
+		@Override
+		public List<Member> searchMembers(Map<String, Object> params) throws Exception {
+		    return memberDao.searchMembers(params);
+		}
 
 }

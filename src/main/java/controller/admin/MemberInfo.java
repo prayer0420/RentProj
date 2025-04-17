@@ -35,17 +35,18 @@ public class MemberInfo extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+
+			request.getRequestDispatcher("JSP/Admin/memberInfo.jsp").forward(request, response);
+
+	}
+	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Map<String, Object> params = new HashMap<>();
-		params.put("gradeId", request.getParameter("gradeId") != null ? Integer.parseInt(request.getParameter("gradeId")) : 0);
-		params.put("name", request.getParameter("name"));
-		params.put("id", request.getParameter("id"));
-		params.put("password", request.getParameter("password"));
-		params.put("nickname", request.getParameter("nickname"));
-		params.put("phone", request.getParameter("phone"));
-		params.put("address1", request.getParameter("address1"));
-		params.put("region1", request.getParameter("region1"));
-		
+		params.put("type", request.getParameter("type"));
+		params.put("gradeId", request.getParameter("gradeId"));
+		params.put("word", request.getParameter("word"));
+
+		System.out.println(params);
 		try {
 			MemberService memberSevice = new MemberServiceImpl();
 			List<Member> memberList = memberSevice.searchMembers(params);
@@ -53,7 +54,7 @@ public class MemberInfo extends HttpServlet {
 			request.getRequestDispatcher("JSP/Admin/memberInfo.jsp").forward(request, response);
 		}catch (Exception e) {
 			e.printStackTrace();
-		}
+		}		
 	}
 
 }
