@@ -3,7 +3,7 @@
   <div class="logo-nav">
     <!-- 로고 버튼 (로고 크기 조정) -->
     <button class="logo-btn" title="로고" onclick="location.href='${pageContext.request.contextPath}/main'">
-      <img src="${pageContext.request.contextPath}/JSP/Admin/image/logo.png" alt="RE:NT Logo">
+      <img src="${pageContext.request.contextPath}/img/logo.png" alt="RE:NT Logo">
       
     </button>
     <nav>
