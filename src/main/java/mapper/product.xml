@@ -2,9 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 	
-<mapper namespace="mapper.article">
+<mapper namespace="mapper.product">
+	<select id="test" resultType="int">
+    SELECT 1
+	</select>
 	<insert id="insertProductRent" parameterType="product" useGeneratedKeys="true" keyProperty="num">
-		insert into product (no,categoryNo,title,content,state,img,deliveryAddr,deliveryAddr,
+		insert into product (no,categoryNo,title,content,state,img,deliveryAddr,
 		deliveryPrice,tradeType,secPrice,memberNo,startDate,endDate,salePrice,rentPrice,deliveryStatus)
 		values (#{no},#{categoryNo},#{title},#{content},#{state},#{img},#{deliveryAddr},#{deliveryPrice},#{tradeType},
 		#{secPrice},#{memberNo},#{startDate},#{endDate},#{salePrice},#{rentPrice},#{deliveryStatus})
