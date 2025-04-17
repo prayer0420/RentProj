@@ -22,7 +22,6 @@ if (cookieHeader != null) {
 }
 %>
 
-<%-- 프로젝트의 contextPath를 JSTL 변수에 저장 --%>
 <c:set var="contextPath" value="${pageContext.request.contextPath }" />
 <%-- 외부 CSS 파일 연결 --%>
 <link rel="stylesheet" href="${contextPath}/CSS/Login/login.css" />
