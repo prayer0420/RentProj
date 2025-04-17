@@ -1,4 +1,4 @@
-package controller;
+package controller.admin;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -8,16 +8,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class ReportedProductList
+ * Servlet implementation class AlarmMessage
  */
-@WebServlet("/reportedProductList")
-public class ReportedProductList extends HttpServlet {
+@WebServlet("/alarmMessage")
+public class AlarmMessage extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ReportedProductList() {
+    public AlarmMessage() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -26,7 +26,7 @@ public class ReportedProductList extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("reportedProductList.jsp").forward(request, response);
+		request.getRequestDispatcher("alarmMessage.jsp").forward(request, response);
 	
 	}
 

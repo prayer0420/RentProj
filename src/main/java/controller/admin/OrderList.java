@@ -1,4 +1,4 @@
-package controller;
+package controller.admin;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -8,16 +8,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class AdminInfo
+ * Servlet implementation class OrderList
  */
-@WebServlet("/adminInfo")
-public class AdminInfo extends HttpServlet {
+@WebServlet(asyncSupported = true, urlPatterns = { "/orderList" })
+public class OrderList extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AdminInfo() {
+    public OrderList() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -26,15 +26,9 @@ public class AdminInfo extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("AdminInfo,jsp").forward(request, response);
-	}
+		request.getRequestDispatcher("orderList.jsp").forward(request, response);
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("utf-8");
-		
+	
 	}
 
 }

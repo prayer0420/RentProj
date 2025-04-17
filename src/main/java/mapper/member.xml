@@ -26,5 +26,29 @@
         orderCount = #{orderCount},adminNo = #{adminNo}, fcmToken=#{fcmToken}
     WHERE id = #{id}
 	</update>
+	
+	<select id="searchMembers" parameterType="map" resultType="member">
+		  SELECT * FROM member
+		    <where>
+		    <choose>
+		      <when test="type == 'id'">
+		        id = #{word}
+		      </when>
+		      <when test="type == 'name'">
+		        nickname = #{word}
+		      </when>
+		      <when test="type == 'phone'">
+		        phone = #{word}
+		      </when>
+		    </choose>
+		
+		    <if test="gradeId != null and gradeId != ''">
+		      AND gradeId = #{gradeId}
+		    </if>
+		  </where>
+		 
+		  ORDER BY no DESC
+	</select>
+	
 		
 </mapper>

@@ -1,5 +1,7 @@
 package dto;
 
+import java.sql.Date;
+
 public class Member {
 
 	//필수 매개변수
@@ -21,7 +23,7 @@ public class Member {
 	private String location;
 	private int orderCount;
 	private int adminNo;
-	private int regDate;
+	private Date regDate;
 	private String fcmToken;
 	
 	// private 생성자
@@ -46,6 +48,7 @@ public class Member {
 		this.fcmToken = builder.fcmToken;
 	}
 
+	public Member () {}
 	// Builder 클래스
 	public static class Builder {
 		private final String id;
@@ -65,8 +68,10 @@ public class Member {
 		private String location;
 		private int orderCount;
 		private int adminNo;
-		private int regDate;
+		private Date regDate;
 		private String fcmToken;
+		
+
 
 		public Builder(String id, String password, String nickname, String phone, String address1, String region1) {
 			this.id = id;
@@ -127,7 +132,7 @@ public class Member {
 			return this;
 		}
 
-		public Builder regDate(int regDate) {
+		public Builder regDate(Date regDate) {
 			this.regDate = regDate;
 			return this;
 		}
@@ -221,11 +226,11 @@ public class Member {
 		this.adminNo = adminNo;
 	}
 
-	public int getRegDate() {
+	public Date getRegDate() {
 		return regDate;
 	}
 
-	public void setRegDate(int regDate) {
+	public void setRegDate(Date regDate) {
 		this.regDate = regDate;
 	}
 

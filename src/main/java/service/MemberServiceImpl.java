@@ -1,5 +1,8 @@
 package service;
 
+import java.util.List;
+import java.util.Map;
+
 import dao.MemberDAO;
 import dao.MemberDAOImpl;
 import dto.Member;
@@ -45,6 +48,12 @@ public class MemberServiceImpl implements MemberService {
 	public Member NaverLogin(String code) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	//관리자 리스트 조회용
+	@Override
+	public List<Member> searchMembers(Map<String, Object> params) throws Exception {
+		return memberDao.searchMembers(params);
 	}
 
 }

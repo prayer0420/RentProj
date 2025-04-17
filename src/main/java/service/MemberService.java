@@ -1,5 +1,8 @@
 package service;
 
+import java.util.List;
+import java.util.Map;
+
 import dto.Member;
 
 public interface MemberService {
@@ -8,4 +11,7 @@ public interface MemberService {
 	boolean checkDoubleId(String id) throws Exception;
 	Member KakaoLogin(String code) throws Exception;
 	Member NaverLogin(String code) throws Exception;
+	
+	//관리자 조회용
+	List<Member> searchMembers(Map<String, Object> params) throws Exception;
 }

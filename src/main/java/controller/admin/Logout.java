@@ -1,4 +1,4 @@
-package controller;
+package controller.admin;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -8,16 +8,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class OrderList
+ * Servlet implementation class Logout
  */
-@WebServlet(asyncSupported = true, urlPatterns = { "/orderList" })
-public class OrderList extends HttpServlet {
+@WebServlet("/logout")
+public class Logout extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public OrderList() {
+    public Logout() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -26,9 +26,8 @@ public class OrderList extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("orderList.jsp").forward(request, response);
+		request.getRequestDispatcher("main.jsp").forward(request, response);
 
-	
 	}
 
 }

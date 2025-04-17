@@ -1,6 +1,7 @@
-package controller;
+package controller.admin;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -8,23 +9,23 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.gson.Gson;
-
 import dto.Category;
 import service.CategoryService;
 import service.CategoryServiceImpl;
 
 /**
- * Servlet implementation class CategoryCreate
+ * Servlet implementation class CategoryList
  */
-@WebServlet("/categoryCreate")
-public class CategoryCreate extends HttpServlet {
+@WebServlet("/categoryList")
+public class CategoryList extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	
+	
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public CategoryCreate() {
+    public CategoryList() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,33 +34,23 @@ public class CategoryCreate extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("categoryCreate.jsp").forward(request, response);
-
+		try {
+			CategoryService categoryService = new CategoryServiceImpl();
+			List<Category> categoryList = categoryService.getAllCategories();
+			System.out.println(categoryList);
+			request.setAttribute("categoryList", categoryList);
+			request.getRequestDispatcher("JSP/Admin/categoryCreate.jsp").forward(request, response);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("utf-8");
-		response.setCharacterEncoding("utf-8");
-		
-		String name = request.getParameter("name");
-		
-		try {
-			CategoryService categoryService = new CategoryServiceImpl();
-			Category category = new Category(name);
-			categoryService.registerCategory(category);
-			System.out.println(category);
-			Gson gson = new Gson();
-			String categoryJson = gson.toJson(category);
-			response.getWriter().write(categoryJson);
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
-		
-		
-		
+		// TODO Auto-generated method stub
+		doGet(request, response);
 	}
 
 }

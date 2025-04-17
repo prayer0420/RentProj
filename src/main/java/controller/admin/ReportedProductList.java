@@ -1,31 +1,23 @@
-package controller;
+package controller.admin;
 
 import java.io.IOException;
-import java.util.List;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import dto.Category;
-import service.CategoryService;
-import service.CategoryServiceImpl;
-
 /**
- * Servlet implementation class CategoryList
+ * Servlet implementation class ReportedProductList
  */
-@WebServlet("/categoryList")
-public class CategoryList extends HttpServlet {
+@WebServlet("/reportedProductList")
+public class ReportedProductList extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
-	
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public CategoryList() {
+    public ReportedProductList() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,15 +26,8 @@ public class CategoryList extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		try {
-			CategoryService categoryService = new CategoryServiceImpl();
-			List<Category> categoryList = categoryService.getAllCategories();
-			System.out.println(categoryList);
-			request.setAttribute("categoryList", categoryList);
-			request.getRequestDispatcher("JSP/Admin/categoryCreate.jsp").forward(request, response);
-		}catch (Exception e) {
-			e.printStackTrace();
-		}
+		request.getRequestDispatcher("reportedProductList.jsp").forward(request, response);
+	
 	}
 
 	/**
