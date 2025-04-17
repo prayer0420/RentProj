@@ -1,0 +1,74 @@
+@charset "UTF-8";
+
+.sidebar {
+        width: 150px;
+        background-color: #fff;
+        border: 1px solid #ddd;
+        padding: 20px;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.05);
+      }
+      .profile-section {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+      .profile-section img {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-bottom: 10px;
+      }
+      .profile-section .user-id {
+        font-weight: bold;
+        margin-bottom: 4px;
+        color: forestgreen;
+      }
+      .profile-section .membership {
+        font-size: 13px;
+        margin-bottom: 4px;
+      }
+      .profile-section .total-count {
+        font-size: 13px;
+        color: forestgreen;
+      }
+      .menu-item {
+        margin-bottom: 8px;
+      }
+      .menu-title {
+        font-size: 14px;
+        font-weight: bold;
+        cursor: pointer;
+        padding: 6px;
+        border-radius: 4px;
+      }
+      .menu-title:hover {
+        background-color: #ddd;
+      }
+      .submenu {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+        padding-left: 10px;
+      }
+      .submenu-item {
+        padding: 6px 0;
+        font-size: 12px;
+        color: #444;
+        cursor: pointer;
+      }
+      .submenu-item:hover {
+        color: forestgreen;
+      }
+      .menu-item.active .submenu {
+        max-height: 200px;
+      }
+      .simple-item {
+        padding: 8px;
+        cursor: pointer;
+        font-size: 14px;
+        color: #333;
+        border-radius: 4%;
+      }
+      .simple-item:hover {
+        background-color: #eee;
+      }
