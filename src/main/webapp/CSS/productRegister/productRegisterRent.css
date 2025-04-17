@@ -166,6 +166,7 @@
             box-shadow: none;
             outline: none;
         }
+       
         .container-delivery {
             margin: 10px auto;
             width: 800px;
@@ -174,6 +175,24 @@
         .container-delivery h4 {
             text-align: left;
             margin-top: 5px;
+        }
+        
+        .rent-delvPrice{
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: none;
+            width: 800px;
+            border: 1px solid rgb(228, 242, 220);
+            margin-top: 5px;
+            text-align: right;
+        }
+        .rent-delvPrice input:focus{
+            border-color: rgb(228, 242, 220);
+            box-shadow: none;
+            outline: none;
+        }
+        .rent-delvPrice::placeholder{
+            color: lightgray;
         }
 
         .delivery-radio {

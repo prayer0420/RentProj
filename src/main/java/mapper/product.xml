@@ -6,10 +6,16 @@
 	<select id="test" resultType="int">
     SELECT 1
 	</select>
-	<insert id="insertProductRent" parameterType="product" useGeneratedKeys="true" keyProperty="num">
+	<insert id="insertProductRent" parameterType="product" useGeneratedKeys="true" keyProperty="no">
 		insert into product (no,categoryNo,title,content,state,img,deliveryAddr,
-		deliveryPrice,tradeType,secPrice,memberNo,startDate,endDate,salePrice,rentPrice,deliveryStatus)
+		deliveryPrice,tradeType,secPrice,memberNo,startDate,endDate,rentPrice,deliveryStatus)
 		values (#{no},#{categoryNo},#{title},#{content},#{state},#{img},#{deliveryAddr},#{deliveryPrice},#{tradeType},
-		#{secPrice},#{memberNo},#{startDate},#{endDate},#{salePrice},#{rentPrice},#{deliveryStatus})
+		#{secPrice},#{memberNo},#{startDate},#{endDate},#{rentPrice},#{deliveryStatus})
+	</insert>
+	<insert id="insertProductSell" parameterType="product" useGeneratedKeys="true" keyProperty="no">
+		insert into product(no,categoryNo,title,content,state,img,deliveryAddr,
+		deliveryPrice,tradeType,memberNo,salePrice,deliveryStatus) values 
+		(#{no},#{categoryNo},#{title},#{content},#{state},#{img},#{deliveryAddr},#{deliveryPrice},#{tradeType},
+		#{memberNo},#{salePrice},#{deliveryStatus})
 	</insert>
 </mapper>

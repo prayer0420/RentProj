@@ -9,7 +9,7 @@ public class ProductDAOImpl implements ProductDAO {
 	SqlSession sqlSession = MybatisSqlSessionFactory.getSqlSessionFactory().openSession();
 	
 	@Override
-	public Product insertProduct(Product product) throws Exception {
+	public Product insertProductRent(Product product) throws Exception {
 		sqlSession.insert("mapper.product.insertProductRent",product);
 		sqlSession.commit();
 		

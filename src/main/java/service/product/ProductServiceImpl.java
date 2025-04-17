@@ -12,7 +12,7 @@ public class ProductServiceImpl implements ProductService {
 	}
 	@Override
 	public void registRent(Product product) throws Exception {
-		productDao.insertProduct(product);
+		productDao.insertProductRent(product);
 	}
 
 }

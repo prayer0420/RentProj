@@ -21,8 +21,8 @@
       const btnCancleAdmit = document.querySelector('.cancle-admit');
       const btnOpenAddr = document.querySelector('.btn-open-modal-addr');
       const btnCancleAddr = document.querySelector('.cancle-addr');
-      const btnOpenAddrPlus = document.querySelector('.btn-open-modal-addrPlus');
-      const cancleBtn = document.querySelector('.cancle-btn');
+      //const btnOpenAddrPlus = document.querySelector('.btn-open-modal-addrPlus');
+      //const cancleBtn = document.querySelector('.cancle-btn');
 
 
       btnOpenProd.addEventListener("click", () => {
@@ -44,13 +44,13 @@
       btnCancleAddr.addEventListener("click", () => {
         addr.style.display = "none";
       });
-      btnOpenAddrPlus.addEventListener("click", () => {
-        addrPlus.style.display = "flex"
-      });
-      cancleBtn.addEventListener("click", () => {
-        addrPlus.style.display = "none";
-        addr.style.display = "flex";
-      });
+      //btnOpenAddrPlus.addEventListener("click", () => {
+      //  addrPlus.style.display = "flex"
+      //});
+      //cancleBtn.addEventListener("click", () => {
+      //  addrPlus.style.display = "none";
+      //  addr.style.display = "flex";
+      //});
 
 
 
@@ -83,7 +83,7 @@
           <h5>특히 렌탈시 발생할 수 있는 문제에 대하여 빌리는 판매자가 정해놓은 보증금으로 처리해드리며 필요한 서류들은 각 당사자들끼리 제공 받으셔야 합니다.</h5>
           <h5>각 서류에 대해 빌리는 일체 관여하지 않음을 알려드립니다. 확인 부탁드립니다.</h5>
           <hr>
-          <button class="cancle-admit">확인</button>
+          <button class="cancle-admit" type="button">확인</button>
         </div>
       </div>
       <button type="button" class="btn-open-modal-admit">자세히 보기
