@@ -1,14 +1,14 @@
-package dao;
+package dao.member;
 
 import org.apache.ibatis.session.SqlSession;
 
 import dto.Member;
-import utils.mybatisSqlSessionFactory;
+import utils.MybatisSqlSessionFactory;
 
 public class MemberDAOImpl implements MemberDAO {
 
-	SqlSession sqlSession = mybatisSqlSessionFactory.getSqlSessionFactory().openSession();
-	
+	SqlSession sqlSession = MybatisSqlSessionFactory.getSqlSessionFactory().openSession();
+			
 	@Override
 	public void insertMember(Member member) throws Exception {
 		sqlSession.insert("mapper.member.insertMember",member);

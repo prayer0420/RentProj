@@ -1,4 +1,4 @@
-package dao;
+package dao.member;
 
 import dto.Member;
 

@@ -1,7 +1,7 @@
-package service;
+package service.member;
 
-import dao.MemberDAO;
-import dao.MemberDAOImpl;
+import dao.member.MemberDAO;
+import dao.member.MemberDAOImpl;
 import dto.Member;
 
 public class MemberServiceImpl implements MemberService {

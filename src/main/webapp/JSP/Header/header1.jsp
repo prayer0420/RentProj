@@ -5,13 +5,13 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="<%= request.getContextPath() %>/CSS/header1.css">
+<link rel="stylesheet" href="<%= request.getContextPath() %>/CSS/header/header1.css">
 </head>
 <body>
 	<header class="top-nav">
 		<div class="left-header">
-			<a href="../main/main.jsp"><div class="logo">RE:NT</div></a> 
-			<a href="../product_regist/product_regist.jsp" class="product-add">상품 등록</a>
+			<a href="${pageContext.request.contextPath}/JSP/Main/main.jsp"><div class="logo">RE:NT</div></a> 
+			<a href="${pageContext.request.contextPath}/JSP/ProductRegister/productRegister.jsp" class="product-add">상품 등록</a>
 		</div>
 		<div class="search-box">
 			<input type="text" placeholder="검색어를 입력해주세요" />

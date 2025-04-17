@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="<%= request.getContextPath() %>/CSS/header2.css">
+<link rel="stylesheet" href="<%= request.getContextPath() %>/CSS/header/header2.css">
 </head>
 <body>
 <section class="categories">

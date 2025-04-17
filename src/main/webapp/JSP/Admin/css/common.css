@@ -1,0 +1,124 @@
+/* common-style.css */
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/* Layout */
+.container {
+  display: flex;
+}
+
+aside {
+  width: 200px;
+  border-right: 1px solid #ccc;
+  background: #f9f9f9;
+}
+
+aside h3 {
+  background: #e8e8e8;
+  padding: 10px;
+  margin: 0;
+}
+
+.menu {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.menu.active {
+  background: #26c6da;
+  color: white;
+  font-weight: bold;
+}
+
+.menu.inactive {
+  background: #e0e0e0;
+  color: #777;
+}
+
+main {
+  padding: 20px;
+  flex: 1;
+}
+
+.breadcrumb {
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+/* Search Box */
+.search-box {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+.search-box select,
+.search-box input,
+.search-box button {
+  margin-right: 5px;
+}
+
+/* Table */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 10px;
+}
+
+th, td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: center;
+  font-size: 13px;
+}
+
+th {
+  background: #e0e6ed;
+  font-weight: bold;
+}
+
+/* Inputs */
+input[type="text"] {
+  width: 80%;
+  padding: 4px;
+  font-size: 13px;
+  text-align: center;
+}
+
+select {
+  padding: 4px;
+}
+
+/* Note Text */
+.info-note {
+  font-size: 12px;
+  color: #555;
+  margin-top: 10px;
+}
+
+/* Save Button */
+.save-button {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.save-button button {
+  background-color: #26c6da;
+  color: white;
+  padding: 8px 20px;
+  border: none;
+  border-radius: 3px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+/* Total count */
+.total-count {
+  margin: 10px 0;
+  font-weight: bold;
+}
