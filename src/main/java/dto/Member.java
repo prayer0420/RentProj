@@ -53,7 +53,7 @@ public class Member {
 		this.fcmToken = builder.fcmToken;
 	}
 
-	public Member () {}
+
 	// Builder 클래스
 	public static class Builder {
 		private final String id;

@@ -1,8 +1,5 @@
-<<<<<<<< HEAD:src/main/java/controller/admin/CategoryCreate.java
-package controller.admin;
-========
 package controller.category;
->>>>>>>> dev:src/main/java/controller/category/CategoryCreate.java
+
 
 import java.io.IOException;
 

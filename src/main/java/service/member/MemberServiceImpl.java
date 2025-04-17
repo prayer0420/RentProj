@@ -6,6 +6,8 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.List;
+import java.util.Map;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -258,5 +260,11 @@ private Member getNaverUserInfo(String token) throws Exception {
 		System.out.println("naverMember"+member);
 		return member;
 	}
+
+@Override
+public List<Member> searchMembers(Map<String, Object> params) throws Exception {
+	// TODO Auto-generated method stub
+	return null;
+}
 
 }

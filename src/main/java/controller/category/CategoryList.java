@@ -1,8 +1,6 @@
-<<<<<<<< HEAD:src/main/java/controller/admin/CategoryList.java
-package controller.admin;
-========
 package controller.category;
->>>>>>>> dev:src/main/java/controller/category/CategoryList.java
+
+
 
 import java.io.IOException;
 import java.util.List;
