@@ -1,5 +1,8 @@
 package dao.member;
 
+import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.session.SqlSession;
 
 import dto.Member;
@@ -24,6 +27,12 @@ public class MemberDAOImpl implements MemberDAO {
 	public void updateMember(Member member) throws Exception {
 		sqlSession.update("mapper.member.updateMember",member);
 		sqlSession.commit();
+	}
+
+	//관리자 리스트 조회용	
+	@Override
+	public List<Member> searchMembers(Map<String, Object> params) throws Exception {
+		    return sqlSession.selectList("mapper.member.searchMembers", params);
 	}
 
 }

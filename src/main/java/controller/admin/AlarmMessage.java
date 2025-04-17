@@ -1,8 +1,8 @@
-<<<<<<<< HEAD:src/main/java/controller/admin/FaqCategory.java
+<<<<<<<< HEAD:src/main/java/controller/admin/AlarmMessage.java
 package controller.admin;
 ========
-package controller.category;
->>>>>>>> dev:src/main/java/controller/category/FaqCategory.java
+package controller.alarm;
+>>>>>>>> dev:src/main/java/controller/alarm/AlarmMessage.java
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -12,16 +12,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class FaqCategory
+ * Servlet implementation class AlarmMessage
  */
-@WebServlet("/faqCategory")
-public class FaqCategory extends HttpServlet {
+@WebServlet("/alarmMessage")
+public class AlarmMessage extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public FaqCategory() {
+    public AlarmMessage() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,8 +30,8 @@ public class FaqCategory extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("fagCategory.jsp").forward(request, response);
-
+		request.getRequestDispatcher("alarmMessage.jsp").forward(request, response);
+	
 	}
 
 	/**
