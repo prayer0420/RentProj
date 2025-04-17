@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import dto.Member;
-import service.MemberService;
-import service.MemberServiceImpl;
+import service.member.MemberService;
+import service.member.MemberServiceImpl;
 
 @WebServlet("/login")
 public class Login extends HttpServlet {

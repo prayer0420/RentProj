@@ -8,8 +8,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import service.MemberService;
-import service.MemberServiceImpl;
+import service.member.MemberService;
+import service.member.MemberServiceImpl;
 
 @WebServlet("/memberDoubleId")
 public class MemberIdCheck extends HttpServlet {
