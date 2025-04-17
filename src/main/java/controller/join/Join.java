@@ -1,4 +1,4 @@
-package controller.login;
+package controller.join;
 
 import java.io.IOException;
 
@@ -34,15 +34,20 @@ public class Join extends HttpServlet {
 		String nickname = request.getParameter("nickname");
 		String name = request.getParameter("name");
 		String phone = request.getParameter("phone");
-		String address1 = request.getParameter("address");
+		String addrAlias = request.getParameter("addrAlias");
+		String address = request.getParameter("address");
+		String postcode = request.getParameter("postcode");
+		String detailAddress = request.getParameter("detailAddress");
+		String totalAddress = addrAlias+"@@"+address+"@@"+postcode+"@@"+detailAddress;
 		String region1 = request.getParameter("region1");
 		
 		//builder시작(필수값 전달)
-		Member.Builder builder = new Member.Builder(id, password, name,nickname, phone, address1, region1);
+		Member.Builder builder = new Member.Builder(id, password, name,nickname, phone, totalAddress, region1);
 		
 		//선택값 있으면 추가
 		/* builder.gradeId(1);*/ 
 		builder.adminNo(0);
+		
 		
 		String region2 = request.getParameter("region2");
 		if(region2 != null && !region2.isEmpty()) {
