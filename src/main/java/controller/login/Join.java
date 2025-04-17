@@ -9,8 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import dto.Member;
-import service.MemberService;
-import service.MemberServiceImpl;
+import service.member.MemberService;
+import service.member.MemberServiceImpl;
 
 @WebServlet("/join")
 public class Join extends HttpServlet {
@@ -32,26 +32,26 @@ public class Join extends HttpServlet {
 		String id = request.getParameter("id");
 		String password = request.getParameter("password");
 		String nickname = request.getParameter("nickname");
+		String name = request.getParameter("name");
 		String phone = request.getParameter("phone");
 		String address1 = request.getParameter("address");
 		String region1 = request.getParameter("region1");
 		
 		//builder시작(필수값 전달)
-		Member.Builder builder = new Member.Builder(id, password, nickname, phone, address1, region1);
+		Member.Builder builder = new Member.Builder(id, password, name,nickname, phone, address1, region1);
 		
 		//선택값 있으면 추가
-		
-		builder.gradeId(1);
+		/* builder.gradeId(1);*/ 
 		builder.adminNo(0);
 		
 		String region2 = request.getParameter("region2");
 		if(region2 != null && !region2.isEmpty()) {
-			builder.address2(region2);
+			builder.region2(region2);
 		}
 		
 		String region3 = request.getParameter("region3");
 		if(region3 != null && !region3.isEmpty()) {
-			builder.address2(region3);
+			builder.region3(region3);
 		}
 		
 		//최종 생성

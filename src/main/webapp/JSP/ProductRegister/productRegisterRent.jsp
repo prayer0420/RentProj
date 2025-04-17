@@ -62,6 +62,7 @@
                 }
             });
         };
+        //이미지 파일
         function readURL(input){
         	if(input.files && input.files[0]){
         		var reader = new FileReader();
@@ -75,7 +76,7 @@
 </head>
 <body>
 	<jsp:include page="../Header/header.jsp"></jsp:include>
-	<form action="<%=request.getContextPath()%>/rent" method="post" class="container">
+	<form action="<%=request.getContextPath()%>/rent" method="post" enctype="multipart/form-data" class="container">
 		<div class="container-header">
 			<h2>판매등록</h2>
 		</div>
@@ -125,26 +126,27 @@
 			</div>
 		</div>
 		<div class="container-rent">
-			<h4>상품금액 유형 및 가격을 지정해주세요</h4>
-			<input type="radio" id="day" name="delivery" class="rent-radio">
-			<label for="day" class="rent-label">1일 가격</label> 
-			<input type="radio" id="week" name="delivery" class="rent-radio"> 
-			<label for="week" class="rent-label">1주 가격</label> 
-			<input type="radio" id="month" name="delivery" class="rent-radio"> 
-			<label for="month" class="rent-label">1달 가격</label> 
+			<h4>Re:NT금액</h4>
 			<input type="text" class="rent-price" placeholder="빌리기 가격" name="rentPrice">
 		</div>
 		<div class="container-security">
 			<h4>보증금</h4>
 			<input type="text" class="rent-security" placeholder="보증금 가격" id="secPrice" name="secPrice">
 		</div>
-
 		<div class="container-delivery">
 			<h4>배송비</h4>
 			<input type="radio" id="hand" name="deliveryStatus" class="delivery-radio" value="직거래" >
 			<label for="hand" class="delivery-label">결제 후 직접거래</label> 
 			<input type="radio" id="deliv" name="deliveryStatus" class="delivery-radio" id="deliveryPrice" value="택배거래">
 			<label for="deliv" class="delivery-label">택배거래</label>
+		</div>
+		<div class="container-date">
+			<h4>대여가능 날짜</h4>
+			<label>대여시작일</label>
+			<input type="date" class="dateinput" placeholder="대여시작일" name="startDate">
+			<span>~</span>
+			<label>대여반납일</label>
+			<input type="date" class="dateinput" placeholder="대여반납일" name="endDate">
 		</div>
 		<div class="container-prodstate">
 			<h4>상품상태</h4>

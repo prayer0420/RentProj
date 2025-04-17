@@ -1,4 +1,8 @@
+<<<<<<<< HEAD:src/main/java/controller/admin/AlarmMessage.java
 package controller.admin;
+========
+package controller.alarm;
+>>>>>>>> dev:src/main/java/controller/alarm/AlarmMessage.java
 
 import java.io.IOException;
 import javax.servlet.ServletException;

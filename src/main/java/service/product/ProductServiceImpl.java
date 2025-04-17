@@ -1,7 +1,7 @@
-package service;
+package service.product;
 
-import dao.ProductDAO;
-import dao.ProductDAOImpl;
+import dao.product.ProductDAO;
+import dao.product.ProductDAOImpl;
 import dto.Product;
 
 public class ProductServiceImpl implements ProductService {

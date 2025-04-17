@@ -1,4 +1,4 @@
-package service;
+package service.member;
 
 import java.util.List;
 import java.util.Map;

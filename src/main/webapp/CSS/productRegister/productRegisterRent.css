@@ -308,6 +308,18 @@
             margin-bottom: 50px;
             margin-top: 30px;
         }
+        
+        .container-date{
+         	margin: 10px auto;
+            width: 800px;
+        }
+        .container-date h4{
+        	text-align: left;
+        }
+        .container-date .dateinput{
+        	padding: 10px 10px;
+        }
+        
 
         /*상품등록동의 모달*/
         .modal-admit {
@@ -615,3 +627,5 @@
             border-right: 8px solid transparent;
             border-bottom: 8px solid rgb(228, 242, 220);
         }
+        
+        

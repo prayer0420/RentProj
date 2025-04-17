@@ -25,12 +25,11 @@ public class Product {
 	
 	public Product() {}
 	public Product(
-			Integer no,Integer categoryNo,String title,
+			Integer categoryNo,String title,
 			String content,String state,String img,String deliveryAddr,
 			Integer deliveryPrice,String tradeType,Integer secPrice,Integer memberNo,
-			String startDate,String endDate,Integer salePrice,Integer rentPrice,
+			String startDate,String endDate,Integer rentPrice,
 			String deliveryStatus) {
-		this.no = no;
 		this.categoryNo = categoryNo;
 		this.title = title;
 		this.content = content;
@@ -43,7 +42,6 @@ public class Product {
 		this.memberNo = memberNo;
 		this.startDate = startDate;
 		this.endDate = endDate;
-		this.salePrice = salePrice;
 		this.rentPrice = rentPrice;
 		this.deliveryStatus = deliveryStatus;
 	}

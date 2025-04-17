@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import dto.Member;
-import service.MemberService;
-import service.MemberServiceImpl;
+import service.member.MemberService;
+import service.member.MemberServiceImpl;
 
 @WebServlet("/login")
 public class Login extends HttpServlet {
@@ -37,6 +37,8 @@ public class Login extends HttpServlet {
 		MemberService service = new MemberServiceImpl();
 		try {
 			Member member = service.login(id, password);
+			System.out.println(member.getId());
+			System.out.println(member.getPassword());
 			member.setPassword("");
 			HttpSession session = request.getSession();
 			session.setAttribute("member", member);
@@ -47,9 +49,13 @@ public class Login extends HttpServlet {
 			Cookie cookie3 = null;
 			
 			if(type==null || type.equals("")) {
-				cookie1 = new Cookie("type", type);
-				cookie2 = new Cookie("id", id);
-				cookie3 = new Cookie("password", password);
+				cookie1 = new Cookie("type","");
+				cookie2 = new Cookie("id","");
+				cookie3 = new Cookie("password","");
+			}else {
+				cookie1 = new Cookie("type",type);
+				cookie2 = new Cookie("id",id);
+				cookie3 = new Cookie("password",password);
 			}
 			
 			response.addCookie(cookie1);
@@ -57,7 +63,8 @@ public class Login extends HttpServlet {
 			response.addCookie(cookie3);
 		
 			//로그인 성공하면 이동할 홈페이지~
-			response.sendRedirect("list");
+			response.sendRedirect("join");
+			
 		}catch(Exception e) {
 			e.printStackTrace();
 			request.setAttribute("err", "로그인에 실패했습니다.");

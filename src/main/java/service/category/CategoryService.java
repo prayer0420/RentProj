@@ -1,4 +1,4 @@
-package service;
+package service.category;
 
 import java.util.List;
 

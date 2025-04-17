@@ -1,4 +1,4 @@
-package dao;
+package dao.member;
 
 import java.util.List;
 import java.util.Map;
