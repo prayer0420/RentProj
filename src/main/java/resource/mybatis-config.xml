@@ -6,7 +6,7 @@
 	
 <configuration>
 	<typeAliases>
-		<typeAlias type="dto.Product" alias ="product"/>
+		<typeAlias type="dto.Member" alias ="member"/>
 	</typeAliases>
 	
 	<environments default="development">
@@ -24,6 +24,6 @@
 	
 	<!--수정 필요-->
 	<mappers>
-		<mapper resource="mapper/product.xml"/>
+		<mapper resource="mapper/member.xml"/>
 	</mappers>
 </configuration>
