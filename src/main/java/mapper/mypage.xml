@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="mapper.mapage">
+	<select id="selectProductcnt" resultType="Integer">
+		select count(p.*) from Product p join Member m
+		on p.memberNo = m.no
+		where m.id=#{m.id}	
+	</select>
+	
+	<select id="selectProductListByPage" parameterType="Integer" resultType="product">
+		select p.no, p.title, p.salePrice, p.deliveryprice
+        from Product p join Member m
+        on (p.member_no=m.no)
+        where m.id=#{m.id} 
+        order by no desc limit #{row},5
+	</select>
+	
+</mapper>
