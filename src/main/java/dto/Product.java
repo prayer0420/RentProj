@@ -46,6 +46,24 @@ public class Product {
 		this.deliveryStatus = deliveryStatus;
 	}
 	
+	public Product(Integer categoryNo,String title,String content,String state,String img,
+			String deliveryAddr,Integer deliveryPrice,String tradeType,Integer memberNo,
+			Integer salePrice,String deliveryStatus) {
+		this.categoryNo = categoryNo;
+		this.title = title;
+		this.content = content;
+		this.state = state;
+		this.img = img;
+		this.deliveryAddr = deliveryAddr;
+		this.deliveryPrice = deliveryPrice;
+		this.tradeType = tradeType;
+		this.memberNo = memberNo;
+		this.salePrice = salePrice;
+		this.deliveryStatus = deliveryStatus;
+	}
+	
+	
+	
 	public Integer getNo() {
 		return no;
 	}

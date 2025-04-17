@@ -2,8 +2,8 @@ package service.category;
 
 import java.util.List;
 
-import dao.CategoryDAO;
-import dao.CategoryDAOImpl;
+import dao.category.CategoryDAO;
+import dao.category.CategoryDAOImpl;
 import dto.Category;
 
 public class CategoryServiceImpl implements CategoryService {

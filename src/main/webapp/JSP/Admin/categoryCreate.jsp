@@ -7,7 +7,7 @@
 <head>
   <meta charset="UTF-8">
   <title>카테고리등록</title>
-  <link rel="stylesheet" href="JSP/Admin/css/common.css">
+  <link rel="stylesheet" href="CSS/Admin/common.css">
   <style>
     .category-section {
       border: 1px solid #ccc;
@@ -93,8 +93,13 @@
 <script>
   
   $(function() {
-	$("input:checkbox").change(function() {
-		$(this).prev().val(!$(this).is(":checked"))
+	$("input:checkbox").click(function() {
+		let checked = $(this).is(":checked");
+		if(checked==true) {
+			$(this).prev().val("false")
+		} else {
+			$(this).prev().val("true")
+		}
 	})		  
 	
 	$("#regCategory").click(function() {
@@ -117,6 +122,16 @@
 		})
 	})
   }) 
+  
+ function moveUp(el){
+	var $tr = $(el).parent().parent().parent(); // 클릭한 버튼이 속한 tr 요소
+	$tr.prev().before($tr); // 현재 tr 의 이전 tr 앞에 선택한 tr 넣기
+ }
+
+ function moveDown(el){
+	var $tr = $(el).parent().parent().parent(); // 클릭한 버튼이 속한 tr 요소
+	$tr.next().after($tr); // 현재 tr 의 다음 tr 뒤에 선택한 tr 넣기
+ }
 </script>
 <body>
 	<%@ include file="header.jsp" %>
@@ -152,7 +167,7 @@
       <tbody>
       <c:forEach items="${categoryList}" var="category">
            <tr>
-        	<td><input type="text" value="${category.no }" name="no"></td>
+        	<td><input type="text" value="${category.no }" name="no" readonly="readonly"></td>
 	        <td>
     	      <input type="text" value="${category.name }" name="name">
         	</td>
@@ -170,8 +185,8 @@
         	카테고리 숨김</td>
         	<td>
 	          <div class="sort-buttons">
-    	        <button class="btn-up">위로↑</button>
-        	    <button class="btn-down">아래로↓</button>
+    	        <button class="btn-up" onclick="moveUp(this)">위로↑</button>
+        	    <button class="btn-down"onclick="moveDown(this)">아래로↓</button>
           	</div>
         	</td>
       	</tr>
