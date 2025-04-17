@@ -7,7 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>My Product List</title>
-<link rel="stylesheet" href="${contextPath}/css/mypage/mySell.css">
+<link rel="stylesheet" href="${contextPath}/CSS/mypage/mySell.css">
 </head>
 <body>
 	 <div class="wrapper">
@@ -42,11 +42,11 @@
           </div>
 
           <!-- 상품 카드 1 -->
-          <div class="product-card">
+          <div class="product-card" id="product">
             <!-- 주문 정보 상단 영역 -->
             <div class="order-info">
               <div class="order-meta">
-                <span class="order-number">주문번호: 2025040801</span>
+                <span class="order-number">주문번호: 1234568</span>
                 <span class="order-date">주문일: 2025-04-08</span>
               </div>
               <div class="order-status-area">
