@@ -47,6 +47,9 @@
         <label for="confirmPassword">비밀번호 확인</label>
         <input type="password" id="confirmPassword" placeholder="비밀번호 확인">
 
+		<label for="name">이름</label>
+        <input type="text" id="name" name="name" placeholder="이름을 입력하세요">
+
         <label for="nickname">닉네임</label>
         <input type="text" id="nickname" name="nickname" placeholder="닉네임을 입력하세요">
 
@@ -109,9 +112,9 @@
           id: $('#userId').val()
         },
         success: function (result) {
-          if (result === 'true') {
+          if (result === 'false') {
             alert("사용중인 아이디 입니다.");
-          } else if (result === 'false') {
+          } else if (result === 'true') {
             alert("사용가능한 아이디 입니다.");
           } else {
             alert(result);

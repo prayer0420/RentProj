@@ -25,7 +25,6 @@
 	
 	<!--수정 필요-->
 	<mappers>
-
 		<mapper resource="mapper/category.xml"/>
 		<mapper resource="mapper/member.xml"/>
 	</mappers>
