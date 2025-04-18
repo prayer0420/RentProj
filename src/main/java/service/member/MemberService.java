@@ -12,6 +12,10 @@ public interface MemberService {
 	Member KakaoLogin(String code) throws Exception;
 	Member NaverLogin(String code) throws Exception;
 	
-	//관리자 조회용
+	//관리자 회원리스트 조회용
 	List<Member> searchMembers(Map<String, Object> params) throws Exception;
+    List<Member> searchMembersPaging(Map<String, Object> params);
+    int countMembers(Map<String, Object> params);
+    //관리자 정보 조회용
+    Member selectAdmin();
 }

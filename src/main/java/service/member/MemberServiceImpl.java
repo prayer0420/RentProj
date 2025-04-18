@@ -264,9 +264,30 @@ public class MemberServiceImpl implements MemberService {
 		return member;
 	}
 
+		//관리자 회원리스트 조회용
 		@Override
 		public List<Member> searchMembers(Map<String, Object> params) throws Exception {
 		    return memberDao.searchMembers(params);
 		}
+
+		@Override
+		public List<Member> searchMembersPaging(Map<String, Object> params) {
+		    return memberDao.searchMembersPaging(params);
+		}
+		
+		@Override
+		public int countMembers(Map<String, Object> params) {
+		    return memberDao.countMembers(params);
+		}
+
+		//관리자정보 조회용
+		@Override
+		public Member selectAdmin() {
+		    return memberDao.selectAdmin();
+		}
+
+
+
+
 
 }

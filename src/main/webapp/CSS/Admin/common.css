@@ -1,5 +1,9 @@
 /* common-style.css */
 
+* {
+  box-sizing: border-box;
+}
+
 body {
   font-family: Arial, sans-serif;
   margin: 0;
@@ -9,12 +13,16 @@ body {
 /* Layout */
 .container {
   display: flex;
+  max-width: 100%;
+  overflow-x: hidden;
+  justify-content: flex-start; /* 왼쪽 정렬 */
 }
 
 aside {
   width: 200px;
   border-right: 1px solid #ccc;
   background: #f9f9f9;
+  flex-shrink: 0;
 }
 
 aside h3 {
@@ -42,6 +50,8 @@ aside h3 {
 main {
   padding: 20px;
   flex: 1;
+  min-width: 0;
+  align-self: flex-start; 
 }
 
 .breadcrumb {
@@ -67,6 +77,8 @@ table {
   width: 100%;
   border-collapse: collapse;
   margin-bottom: 10px;
+  table-layout: fixed;
+  word-break: break-word;
 }
 
 th, td {
@@ -74,6 +86,9 @@ th, td {
   padding: 8px;
   text-align: center;
   font-size: 13px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 th {
@@ -81,12 +96,20 @@ th {
   font-weight: bold;
 }
 
+td a {
+  display: inline-block;
+  max-width: 120px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 /* Inputs */
 input[type="text"] {
-  width: 80%;
+  width: 140px !important;
   padding: 4px;
   font-size: 13px;
-  text-align: center;
+  text-align: left;
 }
 
 select {

@@ -216,6 +216,23 @@ public class Product {
 		this.deliveryStatus = deliveryStatus;
 	}
 	
-	
+	public String getTimeAgo() {
+        if (createDate == null) return "";
+        long diff = System.currentTimeMillis() - createDate.getTime();
+        long seconds = diff / 1000;
+        if (seconds < 60) {
+            return seconds + "초 전";
+        }
+        long minutes = seconds / 60;
+        if (minutes < 60) {
+            return minutes + "분 전";
+        }
+        long hours = minutes / 60;
+        if (hours < 24) {
+            return hours + "시간 전";
+        }
+        long days = hours / 24;
+        return days + "일 전";
+    }
 	
 }
