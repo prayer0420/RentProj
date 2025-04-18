@@ -62,6 +62,37 @@ public class Product {
 		this.deliveryStatus = deliveryStatus;
 	}
 	
+	public Product(Integer categoryNo,String title,
+			String content,String state,String img,String deliveryAddr,
+			Integer deliveryPrice,String tradeType,Integer secPrice,Integer memberNo,
+			String startDate,String endDate,Integer rentPrice,Integer salePrice,
+			String deliveryStatus) {
+		this.categoryNo = categoryNo;
+		this.title = title;
+		this.content = content;
+		this.state = state;
+		this.img = img;
+		this.deliveryAddr = deliveryAddr;
+		this.deliveryPrice = deliveryPrice;
+		this.tradeType = tradeType;
+		this.secPrice = secPrice;
+		this.memberNo = memberNo;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.rentPrice = rentPrice;
+		this.salePrice = salePrice;
+		this.deliveryStatus = deliveryStatus;
+	}
+	
+	public Product(Integer categoryNo,String title,String content, String img,String deliveryAddr, String tradeType,Integer memberNo) {
+		this.categoryNo = categoryNo;
+		this.title = title;
+		this.content = content;
+		this.img = img;
+		this.deliveryAddr = deliveryAddr;
+		this.tradeType = tradeType;
+		this.memberNo = memberNo;
+	}
 	
 	
 	public Integer getNo() {
@@ -172,7 +203,36 @@ public class Product {
 	public void setViewCnt(Integer viewCnt) {
 		this.viewCnt = viewCnt;
 	}
+	public String getEndDate() {
+		return endDate;
+	}
+	public void setEndDate(String endDate) {
+		this.endDate = endDate;
+	}
+	public String getDeliveryStatus() {
+		return deliveryStatus;
+	}
+	public void setDeliveryStatus(String deliveryStatus) {
+		this.deliveryStatus = deliveryStatus;
+	}
 	
-	
+	public String getTimeAgo() {
+        if (createDate == null) return "";
+        long diff = System.currentTimeMillis() - createDate.getTime();
+        long seconds = diff / 1000;
+        if (seconds < 60) {
+            return seconds + "초 전";
+        }
+        long minutes = seconds / 60;
+        if (minutes < 60) {
+            return minutes + "분 전";
+        }
+        long hours = minutes / 60;
+        if (hours < 24) {
+            return hours + "시간 전";
+        }
+        long days = hours / 24;
+        return days + "일 전";
+    }
 	
 }

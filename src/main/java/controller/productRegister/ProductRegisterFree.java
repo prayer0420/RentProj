@@ -16,16 +16,16 @@ import service.product.ProductService;
 import service.product.ProductServiceImpl;
 
 /**
- * Servlet implementation class productRegisterRent
+ * Servlet implementation class ProductRegisterFree
  */
-@WebServlet("/rent")
-public class productRegister extends HttpServlet {
+@WebServlet("/free")
+public class ProductRegisterFree extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public productRegister() {
+    public ProductRegisterFree() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,7 +34,7 @@ public class productRegister extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("/JSP/ProductRegister/productRegisterRent.jsp").forward(request, response);
+		request.getRequestDispatcher("/JSP/ProductRegister/ProductRegisterFree.jsp").forward(request, response);
 	}
 
 	/**
@@ -47,42 +47,31 @@ public class productRegister extends HttpServlet {
 		int size = 10*1024*1024;
 		
 		MultipartRequest multi = new MultipartRequest(request, path,size,"utf-8",new DefaultFileRenamePolicy());
-		
+	
 		Integer categoryNo = Integer.parseInt(multi.getParameter("categoryNo"));
 		String title = multi.getParameter("title");
 		String content = multi.getParameter("content");
-		String state = multi.getParameter("state");
 		String img = multi.getFilesystemName("img");
-		System.out.println(img);
-//		String img = "123.jpg";
 //		String deliveryAddr = multi.getParameter("deliveryAddr");
 		String deliveryAddr = "장곡동";
-		
-		Integer deliveryPrice = 0;
-		if((multi.getParameter("deliveryPrice")) != null) {
-			deliveryPrice = Integer.parseInt(multi.getParameter("deliveryPrice"));
-		}
-//		deliveryPrice = Integer.parseInt(multi.getParameter("deliveryPrice"));
 		String tradeType = multi.getParameter("tradeType");
-		Integer secPrice = Integer.parseInt(multi.getParameter("secPrice"));
+		
 //		Integer memberNo = Integer.parseInt(multi.getParameter("memberNo"));
 		Integer memberNo = 1;
-		String startDate = multi.getParameter("startDate");
-		String endDate = multi.getParameter("endDate");
-		Integer rentPrice = Integer.parseInt(multi.getParameter("rentPrice"));
-		String deliveryStatus = multi.getParameter("deliveryStatus");
 		
-		Product product= new Product(categoryNo, title, content, state, img, deliveryAddr, deliveryPrice, tradeType, secPrice, memberNo, startDate, endDate, rentPrice, deliveryStatus);			
+		Product product = new Product(categoryNo, title, content, img,deliveryAddr ,tradeType, memberNo);
 		
-		System.out.println(product);
 		ProductService service = new ProductServiceImpl();
-		try{
-			service.registRent(product);
+		
+		try {
+			service.registFree(product);
 			request.setAttribute("product", product);
 			response.sendRedirect(request.getContextPath()+"/main");
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
+		
+		
 	}
 
 }

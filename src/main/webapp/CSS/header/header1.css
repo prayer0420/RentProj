@@ -10,7 +10,7 @@ body {
 	font-family: 'Noto Sans KR', sans-serif;
 	background-color: #f9fafb;
 	color: #1a202c;
-	text-align:center;
+	
 }
 
 a {
@@ -94,3 +94,26 @@ header.top-nav {
 	margin-right: 50px;
 }
 
+.search-category-bar {
+  background-color: rgb(253, 243, 230);
+  padding: 20px 8%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.search-category-bar input {
+  width: 400px;
+  padding: 10px 16px;
+  border: 1px solid #d1d5db;
+  border-radius: 40px;
+  font-size: 14px;
+}
+
+.search-category-bar button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+}

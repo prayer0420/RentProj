@@ -258,6 +258,10 @@
             margin: 10px auto;
             width: 800px;
         }
+        
+        .container-addr h4{
+        	text-align:left;
+        }
 
         .container-addr button[type="button"] {
             margin: 10px 0 50px 0;
