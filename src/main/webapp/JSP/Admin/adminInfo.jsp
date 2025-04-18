@@ -51,8 +51,19 @@
 		url:"adminInfo",
 		method:"post",
 		data:{
-			name:$("# ").val()},
-		}
+	        password: $("#adminPassword").val(),
+	        name: $("#adminName").val(),
+	        nickname: $("#adminNickname").val()
+	      },
+	      success: function (response) {
+	        alert("관리자 정보가 저장되었습니다.");
+	      },
+	      error: function () {
+	        alert("저장 중 오류가 발생했습니다.");
+	      }
+	    });
+	  });
+	});
 </script>
 
 <body>
@@ -67,12 +78,23 @@
     <div class="breadcrumb">HOME > 관리정보 > 관리자 정보 확인</div>
 
     <table class="user-info-table" border="1">
-    <tr><th>아이디</th><td>${admin.id}</td></tr>
-    <tr><th>비밀번호</th><td>${admin.password}</td></tr>
-    <tr><th>이름</th><td>${admin.name}</td></tr>
-    <tr><th>닉네임</th><td>${admin.nickname}</td></tr>
-
-  </table>
+	  <tr>
+	    <th>아이디</th>
+	    <td><input type="text" id="adminId" value="${admin.id}" readonly></td>
+	  </tr>
+	  <tr>
+	    <th>비밀번호</th>
+	    <td><input type="password" id="adminPassword" value="${admin.password}"></td>
+	  </tr>
+	  <tr>
+	    <th>이름</th>
+	    <td><input type="text" id="adminName" value="${admin.name}"></td>
+	  </tr>
+	  <tr>
+	    <th>닉네임</th>
+	    <td><input type="text" id="adminNickname" value="${admin.nickname}"></td>
+	  </tr>
+	</table>	
 
     <div class="save-button">
       <button id="updateAdmin">저장</button>
