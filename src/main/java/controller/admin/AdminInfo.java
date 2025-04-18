@@ -1,11 +1,16 @@
 package controller.admin;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import dto.Member;
+import service.member.MemberService;
+import service.member.MemberServiceImpl;
 
 /**
  * Servlet implementation class AdminInfo
@@ -26,7 +31,11 @@ public class AdminInfo extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("AdminInfo,jsp").forward(request, response);
+        MemberService memberService = new MemberServiceImpl();
+        Member admin = memberService.selectAdmin();
+
+        request.setAttribute("admin", admin);
+        request.getRequestDispatcher("JSP/Admin/adminInfo.jsp").forward(request, response);
 	}
 
 	/**
