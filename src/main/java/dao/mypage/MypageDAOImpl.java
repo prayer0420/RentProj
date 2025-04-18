@@ -1,6 +1,7 @@
 package dao.mypage;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
@@ -11,15 +12,15 @@ public class MypageDAOImpl implements MypageDAO {
 	private SqlSession sqlSession = MybatisSqlSessionFactory.getSqlSessionFactory().openSession();
 
 	@Override
-	public Integer selectProductCount() throws Exception {
+	public Integer selectProductCountById(String id) throws Exception {
 		
-		return sqlSession.selectOne("mapper.mypage.selectProductCnt");
+		return sqlSession.selectOne("mapper.mypage.selectProductCnt",id);
 	}
 
 	@Override
-	public List<Product> selectProductListByPage(Integer row) throws Exception {
+	public List<Product> selectProductListByPage(Map<String, Object> paramMap) throws Exception {
 		
-		return sqlSession.selectList("mapper.mypage.selectProductListByPage", row);
+		return sqlSession.selectList("mapper.mypage.selectProductListByPage", paramMap);
 	}
 
 }

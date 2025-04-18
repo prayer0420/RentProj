@@ -1,23 +1,23 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>   
-<c:set var="contextPath" value="${pageContext.request.contextPath }" />
+ <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>   
+<c:set var="contextPath" value="${pageContext.request.contextPath }" />    
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>My Product List</title>
-<link rel="stylesheet" href="${contextPath}/CSS/mypage/mySell.css">
+<title>My Order List</title>
+<link rel="stylesheet" href="${contextPath}/CSS/mypage/myOrder.css">
 </head>
 <body>
-	 <div class="wrapper">
+	<div class="wrapper">
       <div class="container">
         <!-- 사이드바 -->
         <jsp:include page="/JSP/MyPage/mypageSidebar.jsp" />
 
         <!-- 콘텐츠 영역 -->
         <section class="content">
-          <h2>판매 상품</h2>
+          <h2>구매한 상품</h2>
           <div class="divider"></div>
 
           <!-- 드롭다운 메뉴 영역 -->
@@ -34,56 +34,55 @@
             <select class="filter-dropdown" name="status">
               <option value="">배송 상태 선택</option>
               <option value="all">전체</option>
-              <option value="">상품준비중</option>
-              <option value="">배송중</option>
-              <option value="">배송완료</option>
-              <option value="">거래완료</option>
+              <option value="preparing">배송준비중</option>
+              <option value="shipping">배송중</option>
+              <option value="delivered">배송완료</option>
+              <option value="cancelled">주문취소</option>
             </select>
           </div>
 
           <!-- 상품 카드 1 -->
-          <c:forEach var="product" items="${productList }">
-          <form action="">
-	          <div class="product-card" id="product">
-	            <!-- 주문 정보 상단 영역 -->
-	            <div class="order-info">
-	              <div class="order-meta">
-	                <span class="order-date">상품등록일: ${product.createDate}</span>
-	                <span class="status-text">거래중</span>
-	              </div>
-	              <div class="order-status-area">
-	                <a href="detail?no=${product.no }" class="order-detail-link">거래 상세보기 &gt;</a>
-	              </div>
-	            </div>
-	
-	            <!-- 구분선 -->
-	            <div class="card-divider"></div>
-	
-	            <!-- 상품 정보 영역 -->
-	            <div class="card-content">
-	              <img
-	                src="${contextPath }/img/camera.jpg"
-	                alt="상품 이미지"
-	                class="product-image"
-	              />
-	              <div class="product-info">
-	                <p>${product.no }</p>
-	                <h3>${product.title }</h3>
-	                <p>가격: ${product.salePrice }원</p>
-	                <p>배송비: ${product.deliveryprice}원</p>
-	              </div>
-	              <div class="status-change-btns">
-	                <button type="submit" id="confrim-order">송장번호입력</button>
-	                <button
-	                  onclick="openModalWith('주문을 취소하시겠습니까?', cancelOrder)"
-	                >
-	                  주문취소
-	                </button>
-	              </div>
-	            </div>
-	          </div>
-          </form>
-          </c:forEach>
+          <div class="product-card">
+            <!-- 주문 정보 상단 영역 -->
+            <div class="order-info">
+              <div class="order-meta">
+                <span class="order-number">주문번호: 2025040801</span>
+                <span class="order-date">주문일: 2025-04-08</span>
+              </div>
+              <div class="order-status-area">
+                <span class="status-text">주문완료</span>
+                <a href="#" class="order-detail-link">주문 상세보기 &gt;</a>
+              </div>
+            </div>
+
+            <!-- 구분선 -->
+            <div class="card-divider"></div>
+
+            <!-- 상품 정보 영역 -->
+            <div class="card-content">
+              <img
+                src="${contextPath }/img/camera.jpg"
+                alt="상품 이미지"
+                class="product-image"
+              />
+              <div class="product-info">
+                <p>7890123456</p>
+                <h3>
+                  앤디워홀 카메라! 1975년 생산된 Konica35EF 필름카메라
+                  판매(생활기스 있음)
+                </h3>
+                <p>가격: 200,000원</p>
+                <p>배송비: 2,500원</p>
+              </div>
+              <div class="status-change-btns">
+                <button
+                  onclick="openModalWith('주문을 취소하시겠습니까?', cancelOrder)"
+                >
+                  주문취소
+                </button>
+              </div>
+            </div>
+          </div>
 
           <!-- 상품 카드 2 -->
           <div class="product-card">
@@ -94,8 +93,8 @@
                 <span class="order-date">주문일: 2025-04-08</span>
               </div>
               <div class="order-status-area">
-                <span class="status-text">상품게시중</span>
-                <a href="#" class="order-detail-link">거래 상세보기 &gt;</a>
+                <span class="status-text">상품준비중</span>
+                <a href="#" class="order-detail-link">주문 상세보기 &gt;</a>
               </div>
             </div>
 
@@ -117,14 +116,9 @@
               </div>
               <div class="status-change-btns">
                 <button
-                  onclick="openModalWith('상품을 숨김 처리하시겠습니까?', hideProduct)"
+                  onclick="openModalWith('주문을 취소하시겠습니까?', cancelOrder)"
                 >
-                  상품 숨기기
-                </button>
-                <button
-                  onclick="openModalWith('상품을 삭제하시겠습니까?', deleteProduct)"
-                >
-                  상품 삭제
+                  주문 취소
                 </button>
               </div>
             </div>
@@ -135,13 +129,12 @@
             <!-- 주문 정보 상단 영역 -->
             <div class="order-info">
               <div class="order-meta">
+                <span class="order-number">주문번호: 2365478965</span>
                 <span class="order-date">주문일: 2025-02-08</span>
-                <span class="status-text">거래완료</span>
-                
               </div>
               <div class="order-status-area">
-                <span class=""></span>
-                <a href="#" class="order-detail-link">거래 상세보기 &gt;</a>
+                <span class="status-text">거래완료</span>
+                <a href="#" class="order-detail-link">주문 상세보기 &gt;</a>
               </div>
             </div>
 
@@ -160,6 +153,10 @@
                 <h3>화분 물뿌리개(새 제품)</h3>
                 <p>가격: 5,000원</p>
                 <p>배송비: 2,500원</p>
+              </div>
+              <div class="status-change-btns">
+                <button onclick="openModalWith('구매를 확정하시겠습니까?', confirmOrder)">구매확정</button>
+                <button onclick="openModalWith('주문을 취소하시겠습니까?', cancelOrder)">주문취소</button>
               </div>
             </div>
           </div>
@@ -214,18 +211,14 @@
       }
 
       // 각각의 동작 정의
-      function deleteProduct() {
-        alert("상품을 삭제합니다");
-        // 실제 삭제 API 호출 등
-      }
-
-      function hideProduct() {
-        alert("상품을 숨깁니다");
-      }
-
+      
       function cancelOrder() {
         alert("주문을 취소합니다");
       }
+      
+      function confirmOrder() {
+          alert("구매를 확정합니다");
+        }
     </script>
 
 </body>

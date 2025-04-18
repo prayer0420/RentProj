@@ -1,0 +1,86 @@
+@charset "UTF-8";
+
+body {
+	font-family: 'Noto Sans KR', sans-serif;
+	background: #eee;
+}
+
+.report {
+	width: 400px;
+	margin: 50px auto;
+	background: #fff;
+	border-radius: 8px;
+	padding: 20px;
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.report h3 {
+	margin-top: 0;
+}
+
+.report select, .report input, .report textarea {
+	width: 100%;
+	padding: 10px;
+	margin-top: 10px;
+	box-sizing: border-box;
+	border: 1px solid #ccc;
+	border-radius: 6px;
+}
+
+.report textarea {
+	resize: vertical;
+	height: 100px;
+}
+
+.report .btn-submit {
+	margin-top: 20px;
+	background: #38b8ab;
+	border: none;
+	color: white;
+	font-weight: bold;
+	padding: 12px;
+	width: 100%;
+	border-radius: 6px;
+	cursor: pointer;
+}
+
+.report .btn-cancel {
+	background: #ccc;
+	color: #333;
+}
+
+.error-text {
+	color: red;
+	font-size: 13px;
+	margin-top: 5px;
+}
+
+.hidden {
+	display: none;
+}
+
+.confirm-box, .complete-box {
+	text-align: center;
+	padding: 30px 10px;
+}
+
+.confirm-box button, .complete-box button {
+	padding: 10px 20px;
+	margin: 10px;
+	border: none;
+	border-radius: 5px;
+}
+
+.confirm-box .cancel {
+	background: #ccc;
+}
+
+.confirm-box .ok {
+	background: #e53935;
+	color: white;
+	cursor: pointer;
+}
+
+.complete-box .close {
+	cursor: pointer;
+}
