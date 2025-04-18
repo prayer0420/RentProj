@@ -50,7 +50,7 @@
               판매 상품
             </div>
             <div class="submenu">
-              <div class="submenu-item"><a href="mysell">> 판매 상품</a></div>
+              <div class="submenu-item"><a href="mySell">> 판매 상품</a></div>
               <div class="submenu-item"><a href="myLend">> 대여 상품</a></div>
             </div>
           </div>
