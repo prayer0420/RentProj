@@ -34,56 +34,56 @@
             <select class="filter-dropdown" name="status">
               <option value="">배송 상태 선택</option>
               <option value="all">전체</option>
-              <option value="preparing">배송준비중</option>
-              <option value="shipping">배송중</option>
-              <option value="delivered">배송완료</option>
-              <option value="cancelled">주문취소</option>
+              <option value="">상품준비중</option>
+              <option value="">배송중</option>
+              <option value="">배송완료</option>
+              <option value="">거래완료</option>
             </select>
           </div>
 
           <!-- 상품 카드 1 -->
-          <div class="product-card" id="product">
-            <!-- 주문 정보 상단 영역 -->
-            <div class="order-info">
-              <div class="order-meta">
-                <span class="order-number">주문번호: 1234568</span>
-                <span class="order-date">주문일: 2025-04-08</span>
-              </div>
-              <div class="order-status-area">
-                <span class="status-text">상품준비중</span>
-                <a href="#" class="order-detail-link">거래 상세보기 &gt;</a>
-              </div>
-            </div>
-
-            <!-- 구분선 -->
-            <div class="card-divider"></div>
-
-            <!-- 상품 정보 영역 -->
-            <div class="card-content">
-              <img
-                src="${contextPath }/img/camera.jpg"
-                alt="상품 이미지"
-                class="product-image"
-              />
-              <div class="product-info">
-                <p>7890123456</p>
-                <h3>
-                  앤디워홀 카메라! 1975년 생산된 Konica35EF 필름카메라
-                  판매(생활기스 있음)
-                </h3>
-                <p>가격: 200,000원</p>
-                <p>배송비: 2,500원</p>
-              </div>
-              <div class="status-change-btns">
-                <button type="submit" id="confrim-order">송장번호입력</button>
-                <button
-                  onclick="openModalWith('주문을 취소하시겠습니까?', cancelOrder)"
-                >
-                  주문취소
-                </button>
-              </div>
-            </div>
-          </div>
+          <c:forEach var="product" items="${productList }">
+          <form action="">
+	          <div class="product-card" id="product">
+	            <!-- 주문 정보 상단 영역 -->
+	            <div class="order-info">
+	              <div class="order-meta">
+	                <span class="order-date">상품등록일: ${product.createDate}</span>
+	                <span class="status-text">거래중</span>
+	              </div>
+	              <div class="order-status-area">
+	                <a href="detail?no=${product.no }" class="order-detail-link">거래 상세보기 &gt;</a>
+	              </div>
+	            </div>
+	
+	            <!-- 구분선 -->
+	            <div class="card-divider"></div>
+	
+	            <!-- 상품 정보 영역 -->
+	            <div class="card-content">
+	              <img
+	                src="${contextPath }/img/camera.jpg"
+	                alt="상품 이미지"
+	                class="product-image"
+	              />
+	              <div class="product-info">
+	                <p>${product.no }</p>
+	                <h3>${product.title }</h3>
+	                <p>가격: ${product.salePrice }원</p>
+	                <p>배송비: ${product.deliveryprice}원</p>
+	              </div>
+	              <div class="status-change-btns">
+	                <button type="submit" id="confrim-order">송장번호입력</button>
+	                <button
+	                  onclick="openModalWith('주문을 취소하시겠습니까?', cancelOrder)"
+	                >
+	                  주문취소
+	                </button>
+	              </div>
+	            </div>
+	          </div>
+          </form>
+          </c:forEach>
 
           <!-- 상품 카드 2 -->
           <div class="product-card">
@@ -135,11 +135,12 @@
             <!-- 주문 정보 상단 영역 -->
             <div class="order-info">
               <div class="order-meta">
-                <span class="order-number">주문번호: 2365478965</span>
                 <span class="order-date">주문일: 2025-02-08</span>
+                <span class="status-text">거래완료</span>
+                
               </div>
               <div class="order-status-area">
-                <span class="status-text">거래완료</span>
+                <span class=""></span>
                 <a href="#" class="order-detail-link">거래 상세보기 &gt;</a>
               </div>
             </div>
