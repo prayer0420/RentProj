@@ -2,7 +2,6 @@ package service.mypage;
 
 import java.util.List;
 
-import controller.mypage.MyOrder;
 import dto.Product;
 import utils.PageInfo;
 

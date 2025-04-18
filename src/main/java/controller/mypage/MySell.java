@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import dto.Product;
+import service.mypage.MypageService;
 import service.mypage.MypageServiceImpl;
 import utils.PageInfo;
 
