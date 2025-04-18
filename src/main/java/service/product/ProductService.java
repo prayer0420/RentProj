@@ -18,4 +18,8 @@ public interface ProductService {
     PageInfo getPageInfo(String searchText, String categoryNo, String tradeType, String sort, int page);
     List<Category> getAllCategories();
     List<Product> getProducts(String searchText,Integer categoryNo,String tradeType,String sort,PageInfo pageInfo);
+	void registSell(Product product) throws Exception;
+	void registRentSell(Product product) throws Exception;
+	void registFree(Product product) throws Exception;
+
 }

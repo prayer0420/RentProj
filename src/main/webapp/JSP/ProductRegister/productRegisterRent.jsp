@@ -151,7 +151,8 @@
 </head>
 <body>
 	<jsp:include page="../Header/header.jsp"></jsp:include>
-	<form id="registerForm" action="<%=request.getContextPath()%>/rent" method="post" enctype="multipart/form-data" class="container">
+	<form id="registerForm" action="<%=request.getContextPath()%>/rent"
+		method="post" enctype="multipart/form-data" class="container">
 		<input type="hidden" name="tradeType" value="대여">
 		<div class="container-header">
 			<h2>대여등록</h2>
@@ -191,8 +192,10 @@
 			</select> <input type="text" id="title" name="title" placeholder="제목을 입력하세요">
 		</div>
 		<div class="container-charge">
-			<div class="wrap" style="position: relative; display: inline-block; margin-top: 5px;">
-				<h6 id="tooltipTrigger" style="cursor: pointer; margin-right: 740px;">수수료안내</h6>
+			<div class="wrap"
+				style="position: relative; display: inline-block; margin-top: 5px;">
+				<h6 id="tooltipTrigger"
+					style="cursor: pointer; margin-right: 740px;">수수료안내</h6>
 				<div class="tooltip" id="tooltipBox">
 					브론즈 : 5%<br> 실버 : 4.5%<br> 골드 : 4%<br> 플레 : 3.5%<br>
 					다이아 : 3%<br> Re:NT : 2.5%
@@ -201,27 +204,30 @@
 		</div>
 		<div class="container-rent">
 			<h4>대여1일 기준 금액</h4>
-			<input type="text" id="rentPrice" class="rent-price" placeholder="빌리기 가격" name="rentPrice">
+			<input type="text" id="rentPrice" class="rent-price"
+				placeholder="빌리기 가격" name="rentPrice">
 		</div>
 		<div class="container-security">
 			<h4>보증금</h4>
-			<input type="text" id="secPrice" class="rent-security" placeholder="보증금 가격" id="secPrice" name="secPrice">
+			<input type="text" id="secPrice" class="rent-security"
+				placeholder="보증금 가격" id="secPrice" name="secPrice">
 		</div>
 		<div class="container-delivery">
 			<h4>배송비</h4>
-			<input type="radio" id="hand" name="deliveryStatus" class="delivery-radio" value="직거래" >
-			<label for="hand" class="delivery-label">결제 후 직접거래</label> 
-			<input type="radio" name="deliveryStatus" class="delivery-radio" id="delvPrice" value="택배거래">
-			<label for="delvPrice" class="delivery-label">택배거래</label>
-			<input type="text" class="rent-security" id="deliveryPrice" name="deliveryPrice" placeholder="배송비" disabled>
+			<input type="radio" id="hand" name="deliveryStatus"
+				class="delivery-radio" value="직거래"> <label for="hand"
+				class="delivery-label">결제 후 직접거래</label> <input type="radio"
+				name="deliveryStatus" class="delivery-radio" id="delvPrice"
+				value="택배거래"> <label for="delvPrice" class="delivery-label">택배거래</label>
+			<input type="text" class="rent-security" id="deliveryPrice"
+				name="deliveryPrice" placeholder="배송비" disabled>
 		</div>
 		<div class="container-date">
 			<h4>대여가능 날짜</h4>
-			<label>대여시작일</label>
-			<input type="date" id="startDate" class="dateinput" placeholder="대여시작일" name="startDate">
-			<span>~</span>
-			<label>대여반납일</label>
-			<input type="date" id="endDate" class="dateinput" placeholder="대여반납일" name="endDate">
+			<label>대여시작일</label> <input type="date" id="startDate"
+				class="dateinput" placeholder="대여시작일" name="startDate"> <span>~</span>
+			<label>대여반납일</label> <input type="date" id="endDate"
+				class="dateinput" placeholder="대여반납일" name="endDate">
 		</div>
 		<div class="container-prodstate">
 			<h4>상품상태</h4>
@@ -229,14 +235,15 @@
 				<div class="modal-prodState-body">
 					<h3>상품의 상태를 선택하세요</h3>
 					<hr>
-					<input type="radio" id="state1" name="state" class="state-radio" value="새상품">
-					<label for="state1" class="state-label">새상품(미사용)</label> 
-					<input type="radio" id="state2" name="state" class="state-radio" value="사용감적음">
-					<label for="state2" class="state-label">사용감 적음</label> 
-					<input type="radio" id="state3" name="state" class="state-radio" value="사용감 많음">
-					<label for="state3" class="state-label">사용감 많음</label> 
-					<input type="radio" id="state4" name="state" class="state-radio" value="파손">
-					<label for="state4" class="state-label">고장/파손</label>
+					<input type="radio" id="state1" name="state" class="state-radio"
+						value="새상품"> <label for="state1" class="state-label">새상품(미사용)</label>
+					<input type="radio" id="state2" name="state" class="state-radio"
+						value="사용감적음"> <label for="state2" class="state-label">사용감
+						적음</label> <input type="radio" id="state3" name="state"
+						class="state-radio" value="사용감 많음"> <label for="state3"
+						class="state-label">사용감 많음</label> <input type="radio" id="state4"
+						name="state" class="state-radio" value="파손"> <label
+						for="state4" class="state-label">고장/파손</label>
 					<button type="button" class="cancle-prod">확인</button>
 				</div>
 			</div>
@@ -269,20 +276,21 @@
 				</div>
 			</div>
 			 -->
+			<h4>거래지역</h4>
 			<button type="button" class="btn-open-modal-addr">거래지역 선택</button>
 		</div>
 
 		<div class="container-image">
 			<h4>상품이미지</h4>
 			<hr>
-			<img alt="상품이미지" src="<%=request.getContextPath()%>/img/plus.jpg" id="preview" 
-			onclick="document.getElementById('ifile').click();">
-			<input type="file" name="img" id="ifile" accept="image/*" style="display:none" 
-			onchange="readURL(this)">
+			<img alt="상품이미지" src="<%=request.getContextPath()%>/img/plus.jpg"
+				id="preview" onclick="document.getElementById('ifile').click();">
+			<input type="file" name="img" id="ifile" accept="image/*"
+				style="display: none" onchange="readURL(this)">
 		</div>
 
 		<div class="container-content">
-			<textarea name="content" id="content" placeholder="내용을 입력하세요" ></textarea>
+			<textarea name="content" id="content" placeholder="내용을 입력하세요"></textarea>
 		</div>
 
 		<button type="submit">확인</button>

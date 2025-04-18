@@ -37,6 +37,7 @@ public class MemberInfo extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 			request.getRequestDispatcher("JSP/Admin/memberInfo.jsp").forward(request, response);
+			request.setAttribute("memberList", null);
 
 	}
 	
@@ -51,7 +52,7 @@ public class MemberInfo extends HttpServlet {
 			MemberService memberSevice = new MemberServiceImpl();
 			List<Member> memberList = memberSevice.searchMembers(params);
 			request.setAttribute("memberList", memberList);
-			request.getRequestDispatcher("JSP/Admin/memberInfo.jsp").forward(request, response);
+			request.getRequestDispatcher("/JSP/Admin/memberInfo.jsp").forward(request, response);
 		}catch (Exception e) {
 			e.printStackTrace();
 		}		

@@ -224,4 +224,5 @@ public class Member {
 	public void setRegion1(String region1) {
 		this.region1 = region1;
 	}
+
 }

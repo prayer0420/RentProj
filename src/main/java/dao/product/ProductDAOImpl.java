@@ -80,4 +80,25 @@ public class ProductDAOImpl implements ProductDAO {
 	    public List<Product> selectProducts(Map<String, Object> params) {
 	        return sqlSession.selectList("mapper.product.selectProducts", params);
 	    }
+	@Override
+	public Product insertProductSell(Product product) throws Exception {
+		sqlSession.insert("mapper.product.insertProductSell",product);
+		sqlSession.commit();
+		return product;
+	}
+
+	@Override
+	public Product insertProductRentSell(Product product) throws Exception {
+		sqlSession.insert("mapper.product.insertProductRentSell",product);
+		sqlSession.commit();
+		return product;
+	}
+
+	@Override
+	public Product insertProductFree(Product product) throws Exception {
+		sqlSession.insert("mapper.product.insertProductFree",product);
+		sqlSession.commit();
+		return product;
+	}
+
 }

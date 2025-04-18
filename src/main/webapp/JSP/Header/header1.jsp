@@ -13,10 +13,15 @@
 <body>
 	<header class="top-nav">
 		<div class="left-header">
-			<a href="${pageContext.request.contextPath}/JSP/Main/main.jsp"><div
-					class="logo">RE:NT</div></a> <a
-				href="${pageContext.request.contextPath}/JSP/ProductRegister/productRegister.jsp"
-				class="product-add">상품 등록</a>
+			<a href="${pageContext.request.contextPath}/JSP/Main/main.jsp">
+				<divclass="logo">RE:NT</div>
+			</a> 
+			<a href="${pageContext.request.contextPath}/JSP/ProductRegister/productRegister.jsp" class="product-add">
+				상품 등록
+			</a>
+		</div>
+		<div class="search-box">
+			<input type="text" placeholder="검색어를 입력해주세요" />
 		</div>
 
 		<!-- 검색은 GET /list?searchText=키워드 로 -->

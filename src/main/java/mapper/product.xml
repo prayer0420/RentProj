@@ -12,6 +12,7 @@
 		values (#{no},#{categoryNo},#{title},#{content},#{state},#{img},#{deliveryAddr},#{deliveryPrice},#{tradeType},
 		#{secPrice},#{memberNo},#{startDate},#{endDate},#{rentPrice},#{deliveryStatus})
 	</insert>
+	
 	<insert id="insertProductSell" parameterType="product" useGeneratedKeys="true" keyProperty="no">
 		insert into product(no,categoryNo,title,content,state,img,deliveryAddr,
 		deliveryPrice,tradeType,memberNo,salePrice,deliveryStatus) values 
@@ -115,4 +116,15 @@
     </choose>
     LIMIT #{offset}, #{limit}
   </select>
+	<insert id="insertProductRentSell" parameterType="product" useGeneratedKeys="true" keyProperty="no">
+		insert into product (no,categoryNo,title,content,state,img,deliveryAddr,
+		deliveryPrice,tradeType,secPrice,memberNo,salePrice,startDate,endDate,rentPrice,deliveryStatus)
+		values (#{no},#{categoryNo},#{title},#{content},#{state},#{img},#{deliveryAddr},#{deliveryPrice},#{tradeType},
+		#{secPrice},#{memberNo},#{salePrice},#{startDate},#{endDate},#{rentPrice},#{deliveryStatus})
+	</insert>
+	
+	<insert id="insertProductFree" parameterType="product" useGeneratedKeys="true" keyProperty="no">
+		insert into product(no,categoryNo,title,content,img,deliveryAddr,tradeType,memberNo)
+		values (#{no},#{categoryNo},#{title},#{content},#{img},#{deliveryAddr},#{tradeType},#{memberNo})
+	</insert>
 </mapper>

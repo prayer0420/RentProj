@@ -2,12 +2,14 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ page isELIgnored="false" %>
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8">M
   <title>회원정보</title>
   <link rel="stylesheet" href="${pageContext.request.contextPath}/CSS/Admin/common.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/CSS/Admin/modal.css"> 
   <style>
   /* Inputs */
 input[type="text"] {
@@ -18,10 +20,6 @@ input[type="text"] {
 }
   
   </style>
-<script>
-
-
-</script>
 
 </head>
 <body>
@@ -57,47 +55,125 @@ input[type="text"] {
         <label><input type="radio" name="gradeId" value="rent"> Re:NT</label>
       </div>
       </form>
-  <c:if test="${not empty memberList}">
-  <div class="total-count">총 회원<span id="count">${fn:length(memberList) }</span>명</div>
-      <table id="adminListTable" border="1">
-        <thead>
-          <tr>
-            <th>번호</th>
-            <th>등급</th>
-            <th>회원명</th>
-            <th>아이디</th>
-            <th>닉네임</th>
-            <th>핸드폰번호</th>
-            <th>거래지역1</th>
-            <th>배송지1</th>
-          </tr>
-        </thead>
-        <tbody id="adminListBody">
-        
-		<c:if test="${not empty memberList}">
-		  <c:forEach var="member" items="${memberList}">
-		    <tr>
-		      <td>${member.no}</td>
-		      <td>${member.gradeId}</td>
-		      <td>${member.name}</td>
-		      <td>${member.id}</td>
-		      <td>${member.nickname}</td>
-		      <td>${member.phone}</td>
-		      <td>${member.region1}</td>
-		      <td>${member.address1}</td>
-		    </tr>
-		  </c:forEach>
-		</c:if>
-        </tbody>
-      </table>
-      <!-- 페이징 처리 추가 예정 -->
-		<div class="pagination">
-		  <button class="prev">이전</button>
-		  <span class="page-numbers">1 2 3 4 5</span>
-		  <button class="next">다음</button>
-		</div>
-      </c:if>
-    </main>
+<c:if test="${not empty memberList}">
+  <div class="total-count">총 회원 <span id="count">${fn:length(memberList)}</span>명</div>
+  <table id="adminListTable" border="1">
+    <thead>
+      <tr>
+        <th>번호</th>
+        <th>등급</th>
+        <th>회원명</th>
+        <th>아이디</th>
+        <th>닉네임</th>
+        <th>핸드폰번호</th>
+        <th>거래지역1</th>
+        <th>배송지1</th>
+      </tr>
+    </thead>
+    <tbody id="adminListBody">
+      <c:forEach var="member" items="${memberList}">
+        <tr>
+          <td>${member.no}</td>
+          <td>${member.gradeId}</td>
+          <td>
+            <a href="#" class="open-modal"
+               data-no="${member.no}"
+               data-gradeid="${member.gradeId}"
+               data-name="${member.name}"
+               data-id="${member.id}"
+               data-nickname="${member.nickname}"
+               data-phone="${member.phone}"
+               data-address1="${member.address1}"
+               data-address2="${member.address2}"
+               data-address3="${member.address3}"
+               data-region1="${member.region1}"
+               data-region2="${member.region2}"
+               data-region3="${member.region3}"
+               data-ordercount="${member.orderCount}"
+               data-regdate="${member.regDate}"
+               data-bs-toggle="modal" data-bs-target="#myModal">
+              ${member.name}
+            </a>
+          </td>
+          <td>
+            <a href="#" class="open-modal"
+               data-no="${member.no}"
+               data-gradeid="${member.gradeId}"
+               data-name="${member.name}"
+               data-id="${member.id}"
+               data-nickname="${member.nickname}"
+               data-phone="${member.phone}"
+               data-address1="${member.address1}"
+               data-address2="${member.address2}"
+               data-address3="${member.address3}"
+               data-region1="${member.region1}"
+               data-region2="${member.region2}"
+               data-region3="${member.region3}"
+               data-ordercount="${member.orderCount}"
+               data-regdate="${member.regDate}"
+               data-bs-toggle="modal" data-bs-target="#myModal">
+              ${member.id}
+            </a>
+          </td>
+          <td>${member.nickname}</td>
+          <td>${member.phone}</td>
+          <td>${member.region1}</td>
+          <td>${member.address1}</td>
+        </tr>
+      </c:forEach>
+    </tbody>
+  </table>
+
+  <!-- The Modal -->
+  <div class="modal fade" id="myModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">회원 정보 상세</h4>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <div><strong>회원번호:</strong> <span id="modalNo"></span></div>
+          <div><strong>등급:</strong> <span id="modalGradeId"></span></div>
+          <div><strong>이름:</strong> <span id="modalName"></span></div>
+          <div><strong>아이디:</strong> <span id="modalId"></span></div>
+          <div><strong>닉네임:</strong> <span id="modalNickname"></span></div>
+          <div><strong>전화번호:</strong> <span id="modalPhone"></span></div>
+          <div><strong>주소:</strong> <span id="modalAddr"></span></div>
+          <div><strong>거래지역:</strong> <span id="modalRegion"></span></div>
+          <div><strong>주문횟수:</strong> <span id="modalOrder"></span></div>
+          <div><strong>가입일:</strong> <span id="modalRegDate"></span></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn-confirm" data-bs-dismiss="modal">✔ 확인</button>
+        </div>
+      </div>
+    </div>
   </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      document.querySelectorAll(".open-modal").forEach(el => {
+        el.addEventListener("click", function () {
+          document.getElementById("modalNo").innerText = this.dataset.no;
+          document.getElementById("modalGradeId").innerText = this.dataset.gradeid;
+          document.getElementById("modalName").innerText = this.dataset.name;
+          document.getElementById("modalId").innerText = this.dataset.id;
+          document.getElementById("modalNickname").innerText = this.dataset.nickname;
+          document.getElementById("modalPhone").innerText = this.dataset.phone;
+          document.getElementById("modalAddr").innerText = this.dataset.address1 + ' ' + this.dataset.address2 + ' ' + this.dataset.address3;
+          document.getElementById("modalRegion").innerText = this.dataset.region1 + ' ' + this.dataset.region2 + ' ' + this.dataset.region3;
+          document.getElementById("modalOrder").innerText = this.dataset.ordercount;
+          document.getElementById("modalRegDate").innerText = this.dataset.regdate;
+        });
+      });
+    });
+  </script>
+</c:if>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  
+
 </body>
 </html>
