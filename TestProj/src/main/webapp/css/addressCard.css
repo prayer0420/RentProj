@@ -1,0 +1,86 @@
+@charset "UTF-8";
+
+.address-card {
+  border: 1px solid #dcd9f3;
+  border-radius: 12px;
+  padding: 20px;
+  background-color: #fafaff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  font-family: 'Noto Sans KR', sans-serif;
+  margin-bottom: 16px;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.card-header strong {
+  font-size: 16px;
+  color: #111;
+}
+
+.badge {
+  background-color: #f0f4ff;
+  color: #4d62dc;
+  padding: 2px 8px;
+  font-size: 12px;
+  border-radius: 12px;
+  margin-left: 6px;
+  font-weight: 500;
+  border: 1px solid #cbd6ff;
+}
+
+.card-body {
+  font-size: 14px;
+  color: #333;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.card-body p {
+  margin: 2px 0;
+  line-height: 1.5;
+}
+
+.edit-btn, .delete-btn {
+  background: transparent;
+  border: 1px solid #ccc;
+  padding: 4px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background-color 0.2s, border-color 0.2s;
+}
+
+.edit-btn:hover, .delete-btn:hover {
+  background-color: #f5f5f5;
+  border-color: #999;
+}
+
+.modal-add-btn {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 20px;
+  font-size: 14px;
+  border-radius: 10px;
+  background: #f9f9f9;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.modal-add-btn:hover {
+  background: #eee;
+}
+
+.empty-text {
+  font-size: 14px;
+  color: #999;
+  text-align: center;
+  margin-top: 30px;
+}

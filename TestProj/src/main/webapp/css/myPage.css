@@ -1,0 +1,89 @@
+@charset "UTF-8";
+@charset "UTF-8";
+
+.mypage-container {
+  display: flex;
+  max-width: 1200px;
+  margin: 40px auto;
+  gap: 40px;
+  font-family: 'Noto Sans KR', sans-serif;
+  padding: 0 20px;
+}
+
+/* 사이드바 */
+.mypage-sidebar {
+  width: 250px;
+  background: #fff;
+  border: 1px solid #e5e5e5;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 30px;
+}
+
+.profile-img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid #ccc;
+}
+
+.profile-info strong {
+  font-size: 16px;
+  color: #111;
+  display: block;
+}
+
+.profile-info .grade {
+  font-size: 13px;
+  color: #666;
+}
+
+.profile-info .summary {
+  font-size: 13px;
+  color: #999;
+  margin-top: 2px;
+}
+
+.menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.menu li {
+  margin-bottom: 12px;
+}
+
+.menu li a {
+  display: block;
+  padding: 8px 12px;
+  font-size: 14px;
+  color: #333;
+  text-decoration: none;
+  border-radius: 6px;
+  transition: background 0.2s;
+}
+
+.menu li a:hover,
+.menu li.active a {
+  background-color: #f0f0f0;
+  font-weight: 600;
+}
+
+/* 본문 영역 */
+.mypage-main {
+  flex: 1;
+  background: #fff;
+  padding: 20px;
+  border: 1px solid #e5e5e5;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+}

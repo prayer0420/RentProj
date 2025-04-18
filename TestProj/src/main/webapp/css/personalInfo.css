@@ -1,0 +1,129 @@
+@charset "UTF-8";
+
+body {
+	font-family: 'Segoe UI', sans-serif;
+	background: #f9f9f9;
+	padding: 40px;
+}
+
+.form-wrapper {
+	max-width: 600px;
+	margin: 0 auto;
+	background: #fff;
+	padding: 30px 40px;
+	border-radius: 12px;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.form-title {
+	font-size: 22px;
+	font-weight: bold;
+	margin-bottom: 30px;
+}
+
+.form-group {
+	margin-bottom: 18px;
+}
+
+.form-group label {
+	display: block;
+	margin-bottom: 6px;
+	font-weight: 600;
+	font-size: 14px;
+}
+
+.form-group input[type="text"], .form-group input[type="password"],
+	.form-group input[type="tel"] {
+	width: 100%;
+	padding: 10px;
+	border: 1px solid #ddd;
+	border-radius: 8px;
+	font-size: 14px;
+}
+
+.account-row {
+	display: flex;
+	gap: 10px;
+}
+
+.account-row input {
+	flex: 1;
+}
+
+.profile-upload {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	margin-top: 12px;
+}
+
+.profile-upload img {
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+	object-fit: cover;
+	border: 1px solid #ccc;
+}
+
+.btn-row {
+	display: flex;
+	justify-content: center;
+	gap: 16px;
+	margin-top: 30px;
+}
+
+.btn {
+	padding: 10px 24px;
+	font-size: 15px;
+	border: none;
+	border-radius: 8px;
+	cursor: pointer;
+}
+
+.btn.cancel {
+	background: #f0f0f0;
+	color: #444;
+}
+
+.btn.confirm {
+	background: #4dd4ac;
+	color: white;
+}
+
+/* 거래지역 관련 스타일 */
+#postSearch {
+	margin-top: 6px;
+	padding: 8px 14px;
+	background-color: #4dd4ac;
+	color: white;
+	border: none;
+	border-radius: 6px;
+	cursor: pointer;
+}
+
+#regionList div {
+	display: inline-block;
+	margin: 6px 4px 0 0;
+	background: #f2f2f2;
+	padding: 6px 10px;
+	border-radius: 20px;
+	font-size: 13px;
+}
+
+.delete-btn {
+	margin-left: 6px;
+	color: #ff5555;
+	background: none;
+	border: none;
+	font-size: 13px;
+	cursor: pointer;
+}
+
+.region-badge {
+	display: inline-block;
+	background: #f2f2f2;
+	padding: 6px 12px;
+	border-radius: 20px;
+	font-size: 13px;
+	margin: 6px 4px;
+}
