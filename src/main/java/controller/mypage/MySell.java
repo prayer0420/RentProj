@@ -10,7 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import dto.Member;
 import dto.Product;
+import service.mypage.MypageService;
 import service.mypage.MypageServiceImpl;
 import utils.PageInfo;
 
@@ -43,7 +45,7 @@ public class MySell extends HttpServlet {
 		}
 		PageInfo pageInfo = new PageInfo(page);
 		HttpSession session = request.getSession();
-		String id = (String) session.getAttribute("id");
+		String id = (String)session.getAttribute("id");
 		System.out.println("로그인ID: "+id);
 		MypageService service = new MypageServiceImpl();
 		try {
