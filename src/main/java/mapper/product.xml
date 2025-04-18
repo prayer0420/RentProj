@@ -26,4 +26,9 @@
 		values (#{no},#{categoryNo},#{title},#{content},#{state},#{img},#{deliveryAddr},#{deliveryPrice},#{tradeType},
 		#{secPrice},#{memberNo},#{salePrice},#{startDate},#{endDate},#{rentPrice},#{deliveryStatus})
 	</insert>
+	
+	<insert id="insertProductFree" parameterType="product" useGeneratedKeys="true" keyProperty="no">
+		insert into product(no,categoryNo,title,content,img,deliveryAddr,tradeType,memberNo)
+		values (#{no},#{categoryNo},#{title},#{content},#{img},#{deliveryAddr},#{tradeType},#{memberNo})
+	</insert>
 </mapper>

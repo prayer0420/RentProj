@@ -7,6 +7,8 @@ input:focus, textarea:focus, select:focus {
     outline: none;
 }
 
+
+
 ::placeholder {
     color: lightgray;
     text-align: right;
@@ -15,6 +17,10 @@ input:focus, textarea:focus, select:focus {
 /* 컨테이너 */
 .container {
     text-align: center;
+}
+
+.container h4{
+	text-align : left;
 }
 
 .container-header {
@@ -78,6 +84,9 @@ input:focus, textarea:focus, select:focus {
 .container-date {
     margin: 10px auto;
     width: 800px;
+}
+.container-addr h4{
+	text-align:left;
 }
 
 /* 대여 금액, 보증금, 판매 금액 입력 */

@@ -247,7 +247,8 @@
           <button>확인</button>
         </div>
       </div>
-       -->
+       -->	
+			<h4>거래지역</h4>
 			<button type="button" class="btn-open-modal-addr">거래지역 등록/수정</button>
 		</div>
 

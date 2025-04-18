@@ -30,4 +30,11 @@ public class ProductDAOImpl implements ProductDAO {
 		return product;
 	}
 
+	@Override
+	public Product insertProductFree(Product product) throws Exception {
+		sqlSession.insert("mapper.product.insertProductFree",product);
+		sqlSession.commit();
+		return product;
+	}
+
 }

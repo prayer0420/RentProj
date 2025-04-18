@@ -29,12 +29,53 @@
                 addrPlus.style.display = "none";
                 addr.style.display = "flex";
             });
+            
+            //필수등록 여부
+            registerForm.addEventListener("submit", function (e) {
+            	console.log(categoryList);
+                if(categoryList.value==="카테고리 선택"){
+                	e.preventDefault();
+                	alert("카테고리를 선택해야 합니다.");
+                }else if(title.value===""){
+                	e.preventDefault();
+                	alert("제목을 입력해주세요");
+                }else if(ifile.files.length === 0){
+                	e.preventDefault();
+                	alert("상품 이미지를 선택하셔야 합니다.");
+                }else if(content.value.trim() === ""){
+                	e.preventDefault();
+                	alert("상품에 대한 내용을 입력하셔야 합니다.");
+                }
+            });
+            toggleDeliveryPrice();
+        };
+        //이미지 파일
+        function readURL(input){
+        	if(input.files && input.files[0]){
+        		var reader = new FileReader();
+        		reader.onload = function(e){
+        			document.getElementById("preview").src = e.target.result;
+        		}
+        		reader.readAsDataURL(input.files[0]);
+        	}
+        }
+        
+        function toggleDeliveryPrice() {
+            if (hand.checked) {
+                deliveryPrice.disabled = true;
+                deliveryPrice.value = 0;
+                
+            } else if (delvPrice.checked) {
+                deliveryPrice.disabled = false;
+            }
         }
     </script>
 </head>
 <body>
 <jsp:include page="../Header/header.jsp"></jsp:include>
- <form action="">
+ <form action="<%=request.getContextPath()%>/free"
+		method="post" enctype="multipart/form-data" class="container">
+		<input type="hidden" name="tradeType" value="무료나눔">
         <div class="container">
             <div class="container-header">
                 <h2>무료나눔등록</h2>
@@ -53,7 +94,7 @@
                     <option value="9">애완동물용품</option>
                     <option value="10">기타</option>
                 </select>
-                <input type="text" placeholder="제목을 입력하세요">
+                <input type="text" placeholder="제목을 입력하세요" name="title">
             </div>
             <div class="container-addr">
                 <div class="modal-addr">
@@ -62,9 +103,10 @@
                         <hr>
                         <button type="button" class="btn-open-modal-addrPlus">거래지역 추가</button>
                         <div class="addr-list"></div>
-                        <button class="cancle-addr">취소</button>
+                        <button class="cancle-addr" type="button">확인</button>
                     </div>
                 </div>
+                <!-- 
                 <div class="modal-addrPlus">
                     <div class="modal-addrPlus-body">
                         <h3>거래지역 추가</h3>
@@ -78,16 +120,20 @@
                         <button>확인</button>
                     </div>
                 </div>
+                 -->
                 <button type="button" class="btn-open-modal-addr">거래지역 등록/수정</button>
             </div>
             <div class="container-image">
                 <h4>상품이미지</h4>
                 <hr>
-                <img alt="상품이미지" src="<%= request.getContextPath()%>/img/plus.jpg">
+                 <img alt="상품이미지" src="<%=request.getContextPath()%>/img/plus.jpg"
+				id="preview" onclick="document.getElementById('ifile').click();">
+			<input type="file" name="img" id="ifile" accept="image/*"
+				style="display: none" onchange="readURL(this)">
             </div>
 
             <div class="container-content">
-                <textarea name="" id="" placeholder="내용을 입력하세요"></textarea>
+                <textarea name="content" id="content" placeholder="내용을 입력하세요"></textarea>
             </div>
 
             <button type="submit">확인</button>

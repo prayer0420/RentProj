@@ -22,5 +22,9 @@ public class ProductServiceImpl implements ProductService {
 	public void registRentSell(Product product) throws Exception {
 		productDao.insertProductRentSell(product);
 	}
+	@Override
+	public void registFree(Product product) throws Exception {
+		productDao.insertProductFree(product);
+	}
 
 }
