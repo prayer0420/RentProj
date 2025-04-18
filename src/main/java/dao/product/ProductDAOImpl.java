@@ -16,4 +16,18 @@ public class ProductDAOImpl implements ProductDAO {
 		return product;
 	}
 
+	@Override
+	public Product insertProductSell(Product product) throws Exception {
+		sqlSession.insert("mapper.product.insertProductSell",product);
+		sqlSession.commit();
+		return product;
+	}
+
+	@Override
+	public Product insertProductRentSell(Product product) throws Exception {
+		sqlSession.insert("mapper.product.insertProductRentSell",product);
+		sqlSession.commit();
+		return product;
+	}
+
 }

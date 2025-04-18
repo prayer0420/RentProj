@@ -62,6 +62,27 @@ public class Product {
 		this.deliveryStatus = deliveryStatus;
 	}
 	
+	public Product(Integer categoryNo,String title,
+			String content,String state,String img,String deliveryAddr,
+			Integer deliveryPrice,String tradeType,Integer secPrice,Integer memberNo,
+			String startDate,String endDate,Integer rentPrice,Integer salePrice,
+			String deliveryStatus) {
+		this.categoryNo = categoryNo;
+		this.title = title;
+		this.content = content;
+		this.state = state;
+		this.img = img;
+		this.deliveryAddr = deliveryAddr;
+		this.deliveryPrice = deliveryPrice;
+		this.tradeType = tradeType;
+		this.secPrice = secPrice;
+		this.memberNo = memberNo;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.rentPrice = rentPrice;
+		this.salePrice = salePrice;
+		this.deliveryStatus = deliveryStatus;
+	}
 	
 	
 	public Integer getNo() {
@@ -171,6 +192,18 @@ public class Product {
 	}
 	public void setViewCnt(Integer viewCnt) {
 		this.viewCnt = viewCnt;
+	}
+	public String getEndDate() {
+		return endDate;
+	}
+	public void setEndDate(String endDate) {
+		this.endDate = endDate;
+	}
+	public String getDeliveryStatus() {
+		return deliveryStatus;
+	}
+	public void setDeliveryStatus(String deliveryStatus) {
+		this.deliveryStatus = deliveryStatus;
 	}
 	
 	

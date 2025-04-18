@@ -16,16 +16,16 @@ import service.product.ProductService;
 import service.product.ProductServiceImpl;
 
 /**
- * Servlet implementation class productRegisterRent
+ * Servlet implementation class ProductRegisterRentSell
  */
-@WebServlet("/rent")
-public class productRegister extends HttpServlet {
+@WebServlet("/rentSell")
+public class ProductRegisterRentSell extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public productRegister() {
+    public ProductRegisterRentSell() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,14 +34,15 @@ public class productRegister extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("/JSP/ProductRegister/productRegisterRent.jsp").forward(request, response);
+		// TODO Auto-generated method stub
+		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("utf-8");
+request.setCharacterEncoding("utf-8");
 		
 		String path = request.getServletContext().getRealPath("upload");
 		int size = 10*1024*1024;
@@ -53,8 +54,6 @@ public class productRegister extends HttpServlet {
 		String content = multi.getParameter("content");
 		String state = multi.getParameter("state");
 		String img = multi.getFilesystemName("img");
-		System.out.println(img);
-//		String img = "123.jpg";
 //		String deliveryAddr = multi.getParameter("deliveryAddr");
 		String deliveryAddr = "장곡동";
 		
@@ -65,6 +64,7 @@ public class productRegister extends HttpServlet {
 //		deliveryPrice = Integer.parseInt(multi.getParameter("deliveryPrice"));
 		String tradeType = multi.getParameter("tradeType");
 		Integer secPrice = Integer.parseInt(multi.getParameter("secPrice"));
+		Integer salePrice = Integer.parseInt(multi.getParameter("salePrice"));
 //		Integer memberNo = Integer.parseInt(multi.getParameter("memberNo"));
 		Integer memberNo = 1;
 		String startDate = multi.getParameter("startDate");
@@ -72,17 +72,17 @@ public class productRegister extends HttpServlet {
 		Integer rentPrice = Integer.parseInt(multi.getParameter("rentPrice"));
 		String deliveryStatus = multi.getParameter("deliveryStatus");
 		
-		Product product= new Product(categoryNo, title, content, state, img, deliveryAddr, deliveryPrice, tradeType, secPrice, memberNo, startDate, endDate, rentPrice, deliveryStatus);			
-		
-		System.out.println(product);
+		Product product = new Product(categoryNo, title, content, state, img, deliveryAddr, deliveryPrice, tradeType, secPrice, memberNo, startDate, endDate, rentPrice, salePrice, deliveryStatus);
 		ProductService service = new ProductServiceImpl();
-		try{
-			service.registRent(product);
+		try {
+			service.registRentSell(product);
 			request.setAttribute("product", product);
 			response.sendRedirect(request.getContextPath()+"/main");
+			
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
+		
 	}
 
 }
