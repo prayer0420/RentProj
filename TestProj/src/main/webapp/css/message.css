@@ -1,0 +1,203 @@
+@charset "UTF-8";
+
+.mypage-container {
+  display: flex;
+  max-width: 1200px;
+  margin: 40px auto;
+  gap: 40px;
+  font-family: 'Noto Sans KR', sans-serif;
+  padding: 0 20px;
+}
+
+/* 사이드바 */
+.mypage-sidebar {
+  width: 250px;
+  background: #fff;
+  border: 1px solid #e5e5e5;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 30px;
+}
+
+.profile-img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid #ccc;
+}
+
+.profile-info strong {
+  font-size: 16px;
+  color: #111;
+  display: block;
+}
+
+.profile-info .grade {
+  font-size: 13px;
+  color: #666;
+}
+
+.profile-info .summary {
+  font-size: 13px;
+  color: #999;
+  margin-top: 2px;
+}
+
+.menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.menu li {
+  margin-bottom: 12px;
+}
+
+.menu li a {
+  display: block;
+  padding: 8px 12px;
+  font-size: 14px;
+  color: #333;
+  text-decoration: none;
+  border-radius: 6px;
+  transition: background 0.2s;
+}
+
+.menu li a:hover,
+.menu li.active a {
+  background-color: #f0f0f0;
+  font-weight: 600;
+}
+
+/* 본문 영역 */
+.mypage-main {
+  flex: 1;
+  background: #fff;
+  padding: 20px;
+  border: 1px solid #e5e5e5;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+}
+
+/* 쪽지함 영역 */
+.message-tabs {
+  display: flex;
+  border-bottom: 2px solid #ccc;
+  margin-bottom: 20px;
+}
+
+.message-tabs button {
+  padding: 10px 20px;
+  font-size: 14px;
+  background: #f6f6f6;
+  border: none;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+  margin-right: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  color: #555;
+  transition: background 0.2s;
+}
+
+.message-tabs button.active {
+  background: #fff;
+  border: 1px solid #ccc;
+  border-bottom: none;
+  color: #000;
+  font-weight: 600;
+}
+
+.message-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  font-size: 14px;
+  color: #333;
+}
+
+.message-table thead {
+  background: #f9f9f9;
+  border-bottom: 1px solid #ddd;
+}
+
+.message-table th, .message-table td {
+  padding: 12px 10px;
+  border-bottom: 1px solid #eee;
+  text-align: left;
+}
+
+.message-table td .product {
+  font-weight: 600;
+  margin-top: 4px;
+  color: #111;
+}
+
+.message-table td .message-preview {
+  margin-top: 6px;
+  font-size: 13px;
+  color: #666;
+}
+
+.message-table td .link {
+  font-size: 13px;
+  color: #4d66ff;
+  text-decoration: underline;
+  margin-left: 6px;
+}
+
+.message-delete {
+  float: right;
+  padding: 6px 14px;
+  font-size: 13px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+.message-delete:hover {
+  background-color: #f5f5f5;
+}
+/* 펼쳐진 쪽지 내용 박스 */
+.message-detail-inner {
+  background-color: #f9f9f9;
+  padding: 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  color: #333;
+  line-height: 1.6;
+}
+
+/* message-row 마우스 hover 시 */
+.message-row:hover {
+  background-color: #f4f7ff;
+  cursor: pointer;
+}
+
+/* 열려 있는 message-row 강조 (선택적) */
+.message-row.active {
+  background-color: #eef3ff;
+  font-weight: 500;
+}
+
+.toggle-icon {
+	margin-left: 4px;
+	font-size: 12px;
+	cursor: pointer;
+	color: #555;
+}
+
+.message-tabs button.active {
+	background-color: #00b894;
+	color: white;
+}
