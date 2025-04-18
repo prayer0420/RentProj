@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import dto.Product;
-import service.mypage.MypageService;
 import service.mypage.MypageServiceImpl;
 import utils.PageInfo;
 
@@ -51,11 +50,10 @@ public class MySell extends HttpServlet {
 		}catch (Exception e) {
 			e.printStackTrace();
 			request.setAttribute("err",	"나의 판매상품 목록 조회를 실패했습니다.");
-			request.getRequestDispatcher("/JSP/MyPage/error.jsp").forward(request, response);
+			request.getRequestDispatcher("error.jsp").forward(request, response);
 		}
 		
 	}
-	
 	
 
 }

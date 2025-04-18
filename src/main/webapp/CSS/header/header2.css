@@ -1,5 +1,6 @@
 @charset "UTF-8";
 /* 카테고리 */
+
 .categories {
 	background-color: rgb(253, 243, 230);
 	padding: 20px;
@@ -16,6 +17,13 @@
 	height: 90px;
 	background-color: rgb(250, 233, 168);
 	border-radius: 10px;
+	text-align: center;
+  	cursor: pointer;
+  	display: flex;
+  	flex-direction: column;
+  	align-items: center;
+  	justify-content: center;
+  	transition: background-color 0.3s;
 }
 
 .category-item img {
@@ -29,4 +37,37 @@
 .category-item span {
 	font-size: 13px;
 	color: #374151;
+	transition: background-color 0.3s, color 0.3s;
+}
+.category-item.active {
+  background-color: #f5a623;
+}
+.category-item.active span {
+  color: #fff;
+}
+
+.category-bar {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-left: 8%;
+  margin-right: 8%;
+}
+
+
+
+.category-item span {
+  font-size: 13px;
+  color: #374151;
+}
+
+.category-item.active,
+.category-item:hover {
+  background-color: #f5a623;
+}
+
+.category-item.active span,
+.category-item:hover span {
+  color: #fff;
 }

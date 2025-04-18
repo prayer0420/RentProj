@@ -18,4 +18,101 @@
 		(#{no},#{categoryNo},#{title},#{content},#{state},#{img},#{deliveryAddr},#{deliveryPrice},#{tradeType},
 		#{memberNo},#{salePrice},#{deliveryStatus})
 	</insert>
+	
+	
+	
+	
+  <!-- 전체 조회 (필터·정렬로 별도 메서드에서 제어) -->
+  <select id="selectAll" parameterType="map" resultType="dto.Product">
+    SELECT *
+      FROM product
+    ORDER BY ${orderBy}
+    LIMIT #{offset}, #{limit}
+  </select>
+
+  <!-- 이름 검색 -->
+  <select id="selectByName" parameterType="map" resultType="dto.Product">
+    SELECT *
+      FROM product
+     WHERE title LIKE CONCAT('%', #{name}, '%')
+    ORDER BY ${orderBy}
+    LIMIT #{offset}, #{limit}
+  </select>
+
+  <!-- 카테고리 검색 -->
+  <select id="selectByCategory" parameterType="map" resultType="dto.Product">
+    SELECT *
+      FROM product
+     WHERE categoryNo = #{categoryNo}
+    ORDER BY ${orderBy}
+    LIMIT #{offset}, #{limit}
+  </select>
+
+  <!-- 전체 개수 -->
+  <select id="countAll" parameterType="map" resultType="int">
+    SELECT COUNT(*)
+      FROM product
+  </select>
+
+  <!-- 이름 검색 개수 -->
+  <select id="countByName" parameterType="map" resultType="int">
+    SELECT COUNT(*)
+      FROM product
+     WHERE title LIKE CONCAT('%', #{name}, '%')
+  </select>
+
+  <!-- 카테고리 검색 개수 -->
+  <select id="countByCategory" parameterType="map" resultType="int">
+    SELECT COUNT(*)
+      FROM product
+     WHERE categoryNo = #{categoryNo}
+  </select>
+  
+  <resultMap id="productMap" type="dto.Product">
+    <id property="no" column="no" />
+    <result property="title" column="title" />
+    <result property="img" column="img" />
+    <result property="salePrice" column="salePrice" />
+    <result property="rentPrice" column="rentPrice" />
+    <result property="secPrice" column="secPrice" />
+    <result property="tradeType" column="tradeType" />
+    <result property="createDate" column="createDate" />
+  </resultMap>
+
+  <select id="selectProducts" resultMap="productMap" parameterType="map">
+    SELECT
+      no, title, img,
+      salePrice,
+      rentPrice,
+      secPrice,
+      tradeType,
+      createDate
+    FROM product
+    <where>
+      <if test="searchText != null">
+        AND title LIKE CONCAT('%', #{searchText}, '%')
+      </if>
+      <if test="categoryNo != null">
+        AND categoryNo = #{categoryNo}
+      </if>
+      <if test="tradeType != null">
+        AND tradeType = #{tradeType}
+      </if>
+    </where>
+    <choose>
+      <when test="sort == 'recommend'">
+        ORDER BY view_cnt DESC
+      </when>
+      <when test="sort == 'priceAsc'">
+        ORDER BY COALESCE(salePrice, rentPrice) ASC
+      </when>
+      <when test="sort == 'priceDesc'">
+        ORDER BY COALESCE(salePrice, rentPrice) DESC
+      </when>
+      <otherwise>
+        ORDER BY createDate DESC
+      </otherwise>
+    </choose>
+    LIMIT #{offset}, #{limit}
+  </select>
 </mapper>

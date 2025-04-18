@@ -5,7 +5,8 @@ public class PageInfo {
 	private Integer allPage;
 	private Integer startPage;
 	private Integer endPage;
-	
+	private int pageSize = 10; // 한 페이지당 12개 설정
+
 	public PageInfo() {}
 	
 	public PageInfo(Integer curPage) {
@@ -43,5 +44,10 @@ public class PageInfo {
 	public void setEndPage(Integer endPage) {
 		this.endPage = endPage;
 	} 
-
+	public Integer getPageSize() {
+	    return pageSize;
+	}
+	public void setPageSize(Integer pageSize) {
+	    this.pageSize = pageSize;
+	}
 }

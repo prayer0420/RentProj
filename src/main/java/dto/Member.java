@@ -224,12 +224,4 @@ public class Member {
 	public void setRegion1(String region1) {
 		this.region1 = region1;
 	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
 }

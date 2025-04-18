@@ -9,5 +9,4 @@ public interface CategoryDAO {
     void updateCategory(Category category) throws Exception;
     void insertCategory(Category category)  throws Exception;
     Integer categoryMaxNo() throws Exception;
-
 }
