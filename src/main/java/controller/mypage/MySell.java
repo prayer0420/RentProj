@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import dto.Product;
 import service.mypage.MypageService;
@@ -17,7 +18,7 @@ import utils.PageInfo;
 /**
  * Servlet implementation class MySell
  */
-@WebServlet("/mysell")
+@WebServlet("/mySell")
 public class MySell extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -42,11 +43,15 @@ public class MySell extends HttpServlet {
 			page = Integer.parseInt(pageStr);
 		}
 		PageInfo pageInfo = new PageInfo(page);
+		HttpSession session = request.getSession();
+		String id = (String) session.getAttribute("id");
+		System.out.println("로그인ID: "+id);
 		MypageService service = new MypageServiceImpl();
 		try {
-			List<Product> productList = service.productListByPage(pageInfo);
+			List<Product> productList = service.productListByPage(pageInfo,id);
 			request.setAttribute("pageInfo", pageInfo);
 			request.setAttribute("productList", productList);
+			System.out.println(productList);
 			request.getRequestDispatcher("/JSP/MyPage/mySell.jsp").forward(request, response);
 		}catch (Exception e) {
 			e.printStackTrace();
