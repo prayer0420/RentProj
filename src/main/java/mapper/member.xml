@@ -27,6 +27,7 @@
     WHERE id = #{id}
 	</update>
 	
+			<!-- 관리자 회원 검색 -->
 	<select id="searchMembers" parameterType="map" resultType="member">
 		  SELECT * FROM member
 		    <where>
@@ -49,6 +50,39 @@
 		 
 		  ORDER BY no DESC
 	</select>
+	
+				<!-- 관리자 회원 페이징 리스트 -->
+			<select id="searchMembersPaging" parameterType="map" resultType="member">
+			  SELECT * FROM member
+			  <where>
+			    <if test="type != null and word != null and word != ''">
+			      ${type} LIKE CONCAT('%', #{word}, '%')
+			    </if>
+			    <if test="gradeId != null and gradeId != ''">
+			      AND gradeId = #{gradeId}
+			    </if>
+			  </where>
+			  ORDER BY no DESC
+			  LIMIT #{start}, #{pageSize}
+			</select>
+			
+			<!-- 관리자 회원리스트 총 회원 수 -->
+			<select id="countMembers" parameterType="map" resultType="int">
+			  SELECT COUNT(*) FROM member
+			  <where>
+			    <if test="type != null and word != null and word != ''">
+			      ${type} LIKE CONCAT('%', #{word}, '%')
+			    </if>
+			    <if test="gradeId != null and gradeId != ''">
+			      AND gradeId = #{gradeId}
+			    </if>
+			  </where>
+			</select> 
+			
+			<select id="selectAdmin" resultType="member">
+  				SELECT * FROM member
+ 				 WHERE adminNo = 1
+			</select>
 	
 		
 </mapper>

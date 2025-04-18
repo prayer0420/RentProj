@@ -1,11 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 <!DOCTYPE html>
 <html>
 <head>
   <meta charset="UTF-8">
   <title>관리자 정보 확인</title>
-  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/CSS/Admin/common.css">
   <style>
 
     .user-info-table {
@@ -43,6 +44,17 @@
     }
   </style>
 </head>
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script> 
+<script>
+	$("#updateAdmin").click(function() {
+	$.ajax({
+		url:"adminInfo",
+		method:"post",
+		data:{
+			name:$("# ").val()},
+		}
+</script>
+
 <body>
 	<%@ include file="header.jsp" %>
 <div class="container">
@@ -54,27 +66,16 @@
   <main>
     <div class="breadcrumb">HOME > 관리정보 > 관리자 정보 확인</div>
 
-    <table class="user-info-table">
-      <tr>
-        <th>이름</th>
-        <td><input type="text" value="홍길동"></td>
-      </tr>
-      <tr>
-        <th>아이디</th>
-        <td><input type="text" value="hong001"></td>
-      </tr>
-      <tr>
-        <th>패스워드</th>
-        <td><input type="text" value="hong001password"></td>
-      </tr>
-       <tr>
-        <th>이메일</th>
-        <td><input type="text" value="hong001@kosta.com"></td>
-      </tr>     
-    </table>
+    <table class="user-info-table" border="1">
+    <tr><th>아이디</th><td>${admin.id}</td></tr>
+    <tr><th>비밀번호</th><td>${admin.password}</td></tr>
+    <tr><th>이름</th><td>${admin.name}</td></tr>
+    <tr><th>닉네임</th><td>${admin.nickname}</td></tr>
+
+  </table>
 
     <div class="save-button">
-      <button>저장</button>
+      <button id="updateAdmin">저장</button>
     </div>
   </main>
 </div>
