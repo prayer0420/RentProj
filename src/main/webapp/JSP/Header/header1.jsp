@@ -10,7 +10,7 @@
 <body>
 	<header class="top-nav">
 		<div class="left-header">
-			<a href="${pageContext.request.contextPath}/main"><div class="logo">RE:NT</div></a> 
+			<a href="${pageContext.request.contextPath}/JSP/Main/main.jsp"><div class="logo">RE:NT</div></a> 
 			<a href="${pageContext.request.contextPath}/JSP/ProductRegister/productRegister.jsp" class="product-add">상품 등록</a>
 		</div>
 		<div class="search-box">
