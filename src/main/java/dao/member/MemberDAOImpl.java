@@ -35,4 +35,21 @@ public class MemberDAOImpl implements MemberDAO {
 		    return sqlSession.selectList("mapper.member.searchMembers", params);
 	}
 
+	//관리자 회원리스트 페이징
+	@Override
+	public List<Member> searchMembersPaging(Map<String, Object> params) {
+		return sqlSession.selectList("mapper.member.searchMembersPaging", params);
+	}
+	@Override
+	public int countMembers(Map<String, Object> params) {
+		return sqlSession.selectOne("mapper.member.countMembers", params);
+	}
+
+	//관리자정보확인
+	@Override
+	public Member selectAdmin() {
+	    return sqlSession.selectOne("mapper.member.selectAdmin");
+	}
+
+
 }

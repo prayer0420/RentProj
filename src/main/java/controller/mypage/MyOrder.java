@@ -8,23 +8,23 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import dto.Product;
+import service.mypage.MypageService;
 import service.mypage.MypageServiceImpl;
 import utils.PageInfo;
 
 /**
- * Servlet implementation class MySell
+ * Servlet implementation class MyOrder
  */
-@WebServlet("/mySell")
-public class MySell extends HttpServlet {
+@WebServlet("/myOrder")
+public class MyOrder extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MySell() {
+    public MyOrder() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -42,23 +42,17 @@ public class MySell extends HttpServlet {
 			page = Integer.parseInt(pageStr);
 		}
 		PageInfo pageInfo = new PageInfo(page);
-		HttpSession session = request.getSession();
-		String id = (String) session.getAttribute("id");
-		System.out.println("로그인ID: "+id);
 		MypageService service = new MypageServiceImpl();
 		try {
-			List<Product> productList = service.productListByPage(pageInfo,id);
+//			List<Order> orderList = service.orderListByPage(pageInfo);
 			request.setAttribute("pageInfo", pageInfo);
-			request.setAttribute("productList", productList);
-			System.out.println(productList);
-			request.getRequestDispatcher("/JSP/MyPage/mySell.jsp").forward(request, response);
+//			request.setAttribute("orderList", orderList);
+			request.getRequestDispatcher("/JSP/MyPage/myOrder.jsp").forward(request, response);
 		}catch (Exception e) {
 			e.printStackTrace();
 			request.setAttribute("err",	"나의 판매상품 목록 조회를 실패했습니다.");
-			request.getRequestDispatcher("error.jsp").forward(request, response);
+			request.getRequestDispatcher("/JSP/MyPage/error.jsp").forward(request, response);
 		}
-		
 	}
-	
 
 }
