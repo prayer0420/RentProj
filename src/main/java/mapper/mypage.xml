@@ -4,9 +4,9 @@
 	
 <mapper namespace="mapper.mypage">
 	<select id="selectProductCnt" resultType="Integer">
-		select count(p.*) from product p join member m
+		select count(*) from product p join member m
 		on (p.memberNo = m.no)
-		where m.id=#{m.id}	
+		where m.id=#{id}	
 	</select>
 	
 	<select id="selectProductListByPage" parameterType="Integer" resultType="product">
