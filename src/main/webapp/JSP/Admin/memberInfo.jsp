@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page isELIgnored="false" %>
 <!DOCTYPE html>
 <html>
@@ -33,6 +32,26 @@ input[type="text"] {
   cursor: pointer;
 }
   
+  .pagination {
+  margin-top: 20px;
+  text-align: center;
+}
+.pagination button {
+  margin: 0 3px;
+  padding: 6px 10px;
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
+  cursor: pointer;
+}
+.pagination button:hover {
+  background-color: #e2e2e2;
+}
+.pagination button[style*="bold"] {
+  background-color: #007bff;
+  color: white;
+  font-weight: bold;
+  border-color: #007bff;
+}
   </style>
 
 </head>
@@ -42,8 +61,8 @@ input[type="text"] {
   <div class="container">
     <aside>
       <h3>회원관리</h3>
-      <div class="menu active">회원정보</div>
-      <div class="menu inactive">회원등급</div>
+      <div class="menu active"><a href="memberInfo" style="color: inherit; text-decoration: none;">회원정보</a></div>
+      <div class="menu inactive"><a href="memberGrade" style="color: inherit; text-decoration: none;">회원등급</a></div>
     </aside>
     
     <main>
@@ -62,7 +81,7 @@ input[type="text"] {
         <input type="submit" value="검색">
         <br><br>
         회원등급:
-        <label><input type="radio" name="gradeId" value="" checked> 전체</label>
+        <label><input type="radio" name="gradeId" value="all" checked> 전체</label>
         <label><input type="radio" name="gradeId" value="bronze" > 브론즈</label>
         <label><input type="radio" name="gradeId" value="silver"> 실버</label>
         <label><input type="radio" name="gradeId" value="gold"> 골드</label>
@@ -73,7 +92,9 @@ input[type="text"] {
       </form>
       
 		<c:if test="${not empty memberList}">
-		  <div class="total-count">총 회원 <span id="count">${fn:length(memberList)}</span>명</div>
+		<div style="margin-bottom:10px; font-weight:bold;">
+		    🔍 검색된 총 회원 수: <span style="color:#007bff;">${pageInfo.totalCount}</span>명
+		</div>
 		  <table id="adminListTable" border="1">
 		    <thead>
 		      <tr>
@@ -142,39 +163,47 @@ input[type="text"] {
  		 </table>
  </c:if>
 	 <br>
-	<div id="paging">
-		<c:choose>
-			<c:when test="${pageInfo.curPage > 1}">
-				<a href="list?page=${pageInfo.curPage-1 }">&lt;</a>
-			</c:when>
-			<c:otherwise>
-				<a>&lt;</a>
-			</c:otherwise>
-		</c:choose>
-		
-		<c:forEach begin="${pageInfo.startPage }" end="${pageInfo.endPage }" step="1" var="page">
-			<c:choose>
-				<c:when test="${page eq pageInfo.curPage }">
-					<a href="list?page=${page }" class="select">${page }</a>
-				</c:when>
-				<c:otherwise>
-					<a href="list?page=${page }" class="btn">${page }</a>
-				</c:otherwise>
-			</c:choose>
-		</c:forEach>
-		
-		<c:choose>
-			<c:when test="${pageInfo.curPage<pageInfo.allPage }">
-				<a href="list?page=${pageInfo.curPage+1 }">&gt;</a>
-			</c:when>
-			<c:otherwise>
-				<a>&gt;</a>
-			</c:otherwise>
-		</c:choose>
-	</div>
-	
-  </main>
-</div>
+<c:if test="${not empty pageInfo and not empty memberList}">
+  <div class="pagination">
+  
+    <!-- 이전 페이지 -->
+    <c:if test="${pageInfo.startPage > 1}">
+      <form method="post" action="memberInfo" style="display:inline;">
+        <input type="hidden" name="page" value="${pageInfo.startPage - 1}" />
+        <input type="hidden" name="type" value="${param.type}" />
+        <input type="hidden" name="word" value="${param.word}" />
+        <input type="hidden" name="gradeId" value="${param.gradeId}" />
+        <button type="submit">이전</button>
+      </form>
+    </c:if>
+
+    <!-- 페이지 번호 -->
+    <c:forEach var="p" begin="${pageInfo.startPage}" end="${pageInfo.endPage}">
+      <form method="post" action="memberInfo" style="display:inline;">
+        <input type="hidden" name="page" value="${p}" />
+        <input type="hidden" name="type" value="${param.type}" />
+        <input type="hidden" name="word" value="${param.word}" />
+        <input type="hidden" name="gradeId" value="${param.gradeId}" />
+        <button type="submit"
+          <c:if test="${p == pageInfo.curPage}">style="font-weight:bold;"</c:if>>
+          ${p}
+        </button>
+      </form>
+    </c:forEach>
+
+    <!-- 다음 페이지 -->
+    <c:if test="${pageInfo.endPage < pageInfo.allPage}">
+      <form method="post" action="memberInfo" style="display:inline;">
+        <input type="hidden" name="page" value="${pageInfo.endPage + 1}" />
+        <input type="hidden" name="type" value="${param.type}" />
+        <input type="hidden" name="word" value="${param.word}" />
+        <input type="hidden" name="gradeId" value="${param.gradeId}" />
+        <button type="submit">다음</button>
+      </form>
+    </c:if>
+    
+  </div>
+</c:if>
 
   <!-- The Modal -->
   <div class="modal fade" id="myModal">

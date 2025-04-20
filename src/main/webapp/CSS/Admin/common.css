@@ -18,6 +18,7 @@ body {
   justify-content: flex-start; /* 왼쪽 정렬 */
 }
 
+
 aside {
   width: 200px;
   border-right: 1px solid #ccc;
@@ -36,10 +37,18 @@ aside h3 {
   cursor: pointer;
 }
 
+.menu a {
+  display: block;
+  width: 100%;
+  text-decoration: none !important;
+  color: inherit !important;
+}
+
 .menu.active {
   background: #26c6da;
   color: white;
   font-weight: bold;
+  
 }
 
 .menu.inactive {
@@ -145,3 +154,14 @@ select {
   margin: 10px 0;
   font-weight: bold;
 }
+
+    .section-title {
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    .info-note {
+      font-size: 12px;
+      color: #555;
+      margin-top: 10px;
+    }
+

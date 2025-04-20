@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * Servlet implementation class Logout
@@ -29,7 +30,12 @@ public class Logout extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("main.jsp").forward(request, response);
+		// 1. 현재 세션 가져오기
+		HttpSession session = request.getSession();
+		// 2. 세션에서 로그인 정보(id) 제거
+		session.removeAttribute("id");
+		// 3. 메인 페이지로 리디렉션
+		response.sendRedirect("main"); 
 
 	}
 
