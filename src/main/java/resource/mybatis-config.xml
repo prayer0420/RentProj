@@ -9,6 +9,7 @@
 		<typeAlias type="dto.Product" alias ="product"/>
 		<typeAlias type="dto.Category" alias ="category"/>
 		<typeAlias type="dto.Member" alias ="member"/>
+		<typeAlias type="dto.Grade" alias ="grade"/>
 	</typeAliases>
 	
 	<environments default="development">
@@ -31,5 +32,6 @@
 		<mapper resource="mapper/category.xml"/>
 		<mapper resource="mapper/member.xml"/>
 		<mapper resource="mapper/mypage.xml"/>
+		<mapper resource="mapper/grade.xml"/>
 	</mappers>
 </configuration>

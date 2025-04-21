@@ -36,54 +36,57 @@ public class MemberInfo extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-			request.getRequestDispatcher("JSP/Admin/memberInfo.jsp").forward(request, response);
-			request.setAttribute("memberList", null);
+		// JSP로 진입만, 검색 결과는 초기에는 없음
+		request.getRequestDispatcher("JSP/Admin/memberInfo.jsp").forward(request, response);
+		request.setAttribute("memberList", null);
 
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	    int page = 1;
-	    try {
-	        page = request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1;
-	    } catch (NumberFormatException e) {
-	        page = 1; // 기본값 fallback
+		// 회원 검색 및 페이징 처리 요청 (검색어, 필터 등 포함)
+		
+	    request.setCharacterEncoding("UTF-8");
+
+		// 1. 검색 조건 추출
+	    String type = request.getParameter("type");        // 검색 대상 (id, name, phone)
+	    String word = request.getParameter("word");        // 검색어
+	    String gradeIdParam = request.getParameter("gradeId"); // 회원등급 문자열 (bronze, silver 등)
+		// 2. 등급 문자열 → 숫자 ID로 변환    
+	    Integer gradeId = null;
+	    if (gradeIdParam != null && !"all".equals(gradeIdParam)) {
+	        switch (gradeIdParam) {
+	            case "bronze": gradeId = 1; break;
+	            case "silver": gradeId = 2; break;
+	            case "gold": gradeId = 3; break;
+	            case "platinum": gradeId = 4; break;
+	            case "dia": gradeId = 5; break;
+	            case "rent": gradeId = 6; break;
+	        }
 	    }
+		// 3. 페이지 번호 처리
+	    String pageStr = request.getParameter("page");
+	    int page = (pageStr != null) ? Integer.parseInt(pageStr) : 1;
 
-	    int pageSize = 10;
-	    int start = (page - 1) * pageSize;
+	    PageInfo pageInfo = new PageInfo(page);
 	    
-	    // 검색 조건 
-		Map<String, Object> params = new HashMap<>();
-		params.put("type", request.getParameter("type"));
-		params.put("gradeId", request.getParameter("gradeId"));
-		params.put("word", request.getParameter("word"));
-	    params.put("start", start);
-	    params.put("pageSize", pageSize);
+		// 4. 검색 파라미터들을 Map에 담기
+	    Map<String, Object> params = new HashMap<>();
+	    params.put("type", type);
+	    params.put("word", word);
+	    params.put("gradeId", gradeId);
 
-	    
-		try {
-			MemberService memberService = new MemberServiceImpl();
-		    List<Member> memberList = memberService.searchMembersPaging(params);
-			int totalCount = memberService.countMembers(params);
+	    try {
+			// 5. 서비스 호출하여 검색 결과 + 페이징 처리
+	        MemberService memberService = new MemberServiceImpl();
+	        List<Member> memberList = memberService.searchMembersWithPaging(params, pageInfo);
 
-		    // 페이지 정보 계산
-		    int allPage = (int) Math.ceil((double) totalCount / pageSize);
-		    int block = 10; // 페이지네이션 한 화면에 보여줄 블럭 수
-		    int startPage = ((page - 1) / block) * block + 1;
-		    int endPage = Math.min(startPage + block - 1, allPage);
+			// 6. 검색 결과 JSP에 전달
+	        request.setAttribute("memberList", memberList);
+	        request.setAttribute("pageInfo", pageInfo);
+	        request.getRequestDispatcher("/JSP/Admin/memberInfo.jsp").forward(request, response);
 
-		    PageInfo pageInfo = new PageInfo();
-		    pageInfo.setCurPage(page);
-		    pageInfo.setAllPage(allPage);
-		    pageInfo.setStartPage(startPage);
-		    pageInfo.setEndPage(endPage);
-		    
-			request.setAttribute("memberList", memberList);
-		    request.setAttribute("pageInfo", pageInfo);
-			request.getRequestDispatcher("/JSP/Admin/memberInfo.jsp").forward(request, response);
-		}catch (Exception e) {
-			e.printStackTrace();
+	    } catch (Exception e) {
+	        e.printStackTrace(); // 예외 디버깅용
 		}		
 	}
 

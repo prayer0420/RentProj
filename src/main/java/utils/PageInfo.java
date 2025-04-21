@@ -6,6 +6,7 @@ public class PageInfo {
 	private Integer startPage;
 	private Integer endPage;
 	private int pageSize = 10; // 한 페이지당 12개 설정
+	private Integer totalCount;  // 총 데이터 수
 
 	public PageInfo() {}
 	
@@ -50,4 +51,14 @@ public class PageInfo {
 	public void setPageSize(Integer pageSize) {
 	    this.pageSize = pageSize;
 	}
+
+	public Integer getTotalCount() {
+		return totalCount;
+	}
+
+	public void setTotalCount(Integer totalCount) {
+		this.totalCount = totalCount;
+	}
+	
+	
 }

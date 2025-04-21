@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import dto.Member;
+import utils.PageInfo;
 
 public interface MemberService {
 	void join(Member member) throws Exception;
@@ -12,10 +13,10 @@ public interface MemberService {
 	Member KakaoLogin(String code) throws Exception;
 	Member NaverLogin(String code) throws Exception;
 	
-	//관리자 회원리스트 조회용
-	List<Member> searchMembers(Map<String, Object> params) throws Exception;
-    List<Member> searchMembersPaging(Map<String, Object> params);
-    int countMembers(Map<String, Object> params);
-    //관리자 정보 조회용
+	//관리자 회원 목록 조회 (검색 조건 + 페이징 처리)
+	List<Member> searchMembersWithPaging(Map<String, Object> params, PageInfo pageInfo) throws Exception;
+
+    //관리자 정보 조회 및 업데이트
     Member selectAdmin();
+    void updateAdminInfo(Member member) throws Exception;
 }
