@@ -23,39 +23,40 @@ public class ListBody extends HttpServlet {
 		super();
 	}
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
 		ProductService productService = new ProductServiceImpl();
 
+		// 1) 파라미터 수집
 		String searchText = request.getParameter("searchText");
-	    String categoryNo = request.getParameter("categoryNo");
-	    String tradeType = request.getParameter("tradeType"); // 필터
-	    String sort      = request.getParameter("sort");      // 정렬
-	    int page         = parse(request.getParameter("page"), 1);
+		String categoryNo = request.getParameter("categoryNo");
+		String tradeType = request.getParameter("tradeType");
+		String sort = request.getParameter("sort");
+		int page = parseInt(request.getParameter("page"), 1);
 
-	    // 1) 검색 vs 2) 카테고리 vs 3) 전체
-	    List<Product> list;
-	    if (searchText != null && !searchText.isBlank()) {
-	      list = productService.searchByName(searchText, tradeType, sort, page);
-	    } else if (categoryNo != null && !categoryNo.isBlank()) {
-	      list = productService.searchByCategory(
-	        Integer.parseInt(categoryNo), tradeType, sort, page);
-	    } else {
-	      list = productService.getAll(tradeType, sort, page);
-	    }
+		// 2) 페이지 정보 계산
+		PageInfo pageInfo = productService.getPageInfo(searchText, categoryNo, tradeType, sort, page);
 
-        PageInfo pageInfo = productService.getPageInfo(searchText, categoryNo, tradeType, sort, page);
-        List<Category> categories = productService.getAllCategories();
+		// 3) 상품 목록 조회
+		Integer categoryInt = (categoryNo != null && !"0".equals(categoryNo)) ? Integer.valueOf(categoryNo) : null;
+		List<Product> list = productService.getProducts(searchText, categoryInt, tradeType, sort, pageInfo);
 
-        
-        request.setAttribute("productList", list);
-        request.setAttribute("pageInfo", pageInfo);
-        request.setAttribute("categories", categories);
-        request.getRequestDispatcher("/JSP/ProductList/list.jsp").forward(request, response);
-	  }
+		// 4) 카테고리 목록
+		List<Category> categories = productService.getAllCategories();
 
-    private int parse(String s, int def) {
-        try { return Integer.parseInt(s); }
-        catch (Exception e) { return def; }
-    }
+		// 5) 데이터 전달
+		request.setAttribute("productList", list);
+		request.setAttribute("pageInfo", pageInfo);
+		request.setAttribute("categories", categories);
+		request.getRequestDispatcher("/JSP/ProductList/list.jsp").forward(request, response);
+	}
+
+	private int parseInt(String s, int def) {
+		try {
+			return Integer.parseInt(s);
+		} catch (Exception e) {
+			return def;
+		}
+	}
 }

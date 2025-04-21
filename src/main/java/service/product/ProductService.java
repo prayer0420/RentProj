@@ -8,18 +8,17 @@ import utils.PageInfo;
 
 public interface ProductService {
 	void registRent(Product product) throws Exception;
-	
-	
-	
-	
-	List<Product> getAll(String tradeType, String sort, int page);
-    List<Product> searchByName(String name, String tradeType, String sort, int page);
-    List<Product> searchByCategory(int categoryNo, String tradeType, String sort, int page);
-    PageInfo getPageInfo(String searchText, String categoryNo, String tradeType, String sort, int page);
-    List<Category> getAllCategories();
-    List<Product> getProducts(String searchText,Integer categoryNo,String tradeType,String sort,PageInfo pageInfo);
 	void registSell(Product product) throws Exception;
 	void registRentSell(Product product) throws Exception;
 	void registFree(Product product) throws Exception;
-
+	
+	//페이징
+    PageInfo getPageInfo(String searchText, String categoryNo, String tradeType, String sort, int page);
+    //상품 목록 불러오기
+    List<Category> getAllCategories();
+    List<Product> getProducts(String searchText,Integer categoryNo,String tradeType,String sort,PageInfo pageInfo);
+    //메인페이지
+	List<Product> getPopularProducts(int limit);
+	//근처상품
+    public List<Product> getProductsNearby(double userLat, double userLng, double radiusKm);
 }

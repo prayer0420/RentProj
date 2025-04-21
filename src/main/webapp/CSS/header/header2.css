@@ -1,73 +1,62 @@
 @charset "UTF-8";
-/* 카테고리 */
 
+/* 카테고리 전체 레이아웃 */
 .categories {
-	background-color: rgb(253, 243, 230);
-	padding: 20px;
-	display: flex;
-	justify-content: center;
-	flex-wrap: wrap;
-	gap: 20px;
-	border-bottom: 1px solid #e5e7eb;
-}
-
-.category-item {
-	text-align: center;
-	width: 80px;
-	height: 90px;
-	background-color: rgb(250, 233, 168);
-	border-radius: 10px;
-	text-align: center;
-  	cursor: pointer;
-  	display: flex;
-  	flex-direction: column;
-  	align-items: center;
-  	justify-content: center;
-  	transition: background-color 0.3s;
-}
-
-.category-item img {
-	width: 30px;
-	height: 30px;
-	margin-bottom: 6px;
-	margin-left: 30%;
-	margin-top: 10px;
-}
-
-.category-item span {
-	font-size: 13px;
-	color: #374151;
-	transition: background-color 0.3s, color 0.3s;
-}
-.category-item.active {
-  background-color: #f5a623;
-}
-.category-item.active span {
-  color: #fff;
-}
-
-.category-bar {
+  background-color: rgb(253, 243, 230);
+  padding: 20px;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  gap: 16px;
-  margin-left: 8%;
-  margin-right: 8%;
+  gap: 20px;
+  border-bottom: 1px solid #e5e7eb;
 }
 
+/* 각 카테고리 항목 스타일 */
+.category-item {
+  width: 90px;
+  height: 90px;
+  background-color: rgb(250, 233, 168);
+  border-radius: 10px;
+  text-align: center;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  color: inherit;
+  transition: background-color 0.3s ease;
+}
 
+/* 카테고리 이미지 */
+.category-item img {
+  width: 30px;
+  height: 30px;
+  margin-bottom: 6px;
+  margin-top: 10px;
+}
 
+/* 카테고리 텍스트 */
 .category-item span {
   font-size: 13px;
   color: #374151;
+  transition: color 0.3s ease;
 }
 
-.category-item.active,
+/* 활성화 상태 (선택된 카테고리) */
+.category-item.active {
+  background-color: #f5a623;
+}
+
+.category-item.active span {
+  color: #ffffff;
+}
+
+/* hover 효과 */
 .category-item:hover {
   background-color: #f5a623;
 }
 
-.category-item.active span,
 .category-item:hover span {
-  color: #fff;
+  color: #ffffff;
 }

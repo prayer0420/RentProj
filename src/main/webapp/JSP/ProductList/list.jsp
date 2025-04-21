@@ -1,169 +1,135 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>상품 목록</title>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/CSS/ProductList/list.css" />
+  <meta charset="UTF-8">
+  <title>상품 목록</title>
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <!-- 상품 리스트 CSS -->
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/CSS/ProductList/list.css">
 </head>
 <body>
 
-	<!-- 1) 검색 헤더 -->
-	<jsp:include page="/JSP/Header/header1.jsp" />
+  <!-- 1. 상단 공통 헤더 (로고 + 검색창) -->
+  <jsp:include page="/JSP/Header/header1.jsp" />
 
-	<!-- 2) 카테고리 헤더 -->
-	<jsp:include page="/JSP/Header/header2.jsp" />
+  <!-- 2. 카테고리 헤더 (카테고리 버튼 영역) -->
+  <jsp:include page="/JSP/Header/header2.jsp" />
 
-	<!-- 3) 필터 & 정렬 바 (AJAX) -->
-	<div class="filter-sort-bar">
-		<div class="badge-bar">
-			<div
-				class="badge badge_total ${empty param.tradeType ? 'active' : ''}"
-				data-type="전체">전체</div>
-			<div
-				class="badge badge_sell ${param.tradeType=='판매' ? 'active' : ''}"
-				data-type="판매">판매</div>
-			<div
-				class="badge badge_rent ${param.tradeType=='대여' ? 'active' : ''}"
-				data-type="대여">대여</div>
-			<div
-				class="badge badge_sell_rent ${param.tradeType=='판매대여' ? 'active' : ''}"
-				data-type="판매대여">판매/대여</div>
-			<div
-				class="badge badge_free ${param.tradeType=='나눔' ? 'active' : ''}"
-				data-type="나눔">나눔</div>
+  <!-- 3. 거래유형 필터 + 정렬 버튼 영역 -->
+  <div class="filter-sort-bar">
+    <!-- 거래유형 필터 뱃지 -->
+    <div class="badge-bar">
+      <div class="badge badge_total ${empty param.tradeType ? 'active' : ''}" data-type="전체">전체</div>
+      <div class="badge badge_sell ${param.tradeType=='판매' ? 'active' : ''}" data-type="판매">판매</div>
+      <div class="badge badge_rent ${param.tradeType=='대여' ? 'active' : ''}" data-type="대여">대여</div>
+      <div class="badge badge_sell_rent ${param.tradeType=='판매대여' ? 'active' : ''}" data-type="판매대여">판매/대여</div>
+      <div class="badge badge_free ${param.tradeType=='나눔' ? 'active' : ''}" data-type="나눔">나눔</div>
+    </div>
 
-		</div>
-		<div class="sort-options">
-			<span class="${param.sort=='recommend'?'active':''}"
-				data-sort="recommend">추천순</span> <span
-				class="${param.sort=='latest' or empty param.sort?'active':''}"
-				data-sort="latest">최신순</span> <span
-				class="${param.sort=='priceAsc'?'active':''}" data-sort="priceAsc">낮은가격순</span>
-			<span class="${param.sort=='priceDesc'?'active':''}"
-				data-sort="priceDesc">높은가격순</span>
-		</div>
-	</div>
+    <!-- 정렬 옵션 -->
+    <div class="sort-options">
+      <span class="${param.sort=='recommend' ? 'active' : ''}" data-sort="recommend">추천순</span>
+      <span class="${param.sort=='latest' or empty param.sort ? 'active' : ''}" data-sort="latest">최신순</span>
+      <span class="${param.sort=='priceAsc' ? 'active' : ''}" data-sort="priceAsc">낮은가격순</span>
+      <span class="${param.sort=='priceDesc' ? 'active' : ''}" data-sort="priceDesc">높은가격순</span>
+    </div>
+  </div>
 
-	<!-- 4) AJAX로 교체될 상품 목록 프래그먼트 -->
-	<div id="productList">
-		<jsp:include page="/JSP/ProductList/productList.jsp" />
-	</div>
+  <!-- 4. 상품 목록 영역 (AJAX로 바뀌는 영역) -->
+  <div id="productList">
+    <jsp:include page="/JSP/ProductList/productList.jsp" />
+  </div>
 
-	<jsp:include page="/JSP/Header/footer.jsp" />
+  <!-- 5. 푸터 -->
+  <jsp:include page="/JSP/Header/footer.jsp" />
 
-	<script>
-  // 1. 상태 객체: 필터/정렬/검색/카테고리/페이지 저장소
-  const state = {
-	searchText: '${empty param.searchText ? "" : param.searchText}',
-    categoryNo: '${empty param.categoryNo ? "" : param.categoryNo}',
-    tradeType:  '${empty param.tradeType ? "" : param.tradeType}',
-    sort: 		"${empty param.sort ? 'latest' : param.sort}",
-    page: 		1
-  };
+  <!-- 6. 필터, 정렬, 페이징, 상품목록 AJAX 처리 JS -->
+  <script>
+    // 1. 상태 저장용 객체 (서버에 보낼 파라미터)
+    const state = {
+      searchText: '${fn:escapeXml(param.searchText)}',
+      categoryNo: '${empty param.categoryNo ? "0" : param.categoryNo}',
+      tradeType: '${param.tradeType}',
+      sort: '${empty param.sort ? "latest" : param.sort}',
+      page: 1
+    };
 
-  // 2. Context path
-  const base = '${pageContext.request.contextPath}';
+    // 2. contextPath (URL 경로 앞에 붙이기용)
+    const base = '${pageContext.request.contextPath}';
 
-  // 3. 공통 기능: 클릭 시 active 클래스 관리 + state 갱신 + 목록 로드
-  function activateAndUpdateState(selectorGroup, targetEl, stateKey, newValue) {
-    document.querySelectorAll(selectorGroup).forEach(el => el.classList.remove('active'));
-    targetEl.classList.add('active');
-    state[stateKey] = newValue;
-    state.page = 1;
-    loadProducts();
-  }
+    // 3. 상품 목록을 서버에서 AJAX로 불러오기
+    function loadProducts() {
+      // "전체"는 tradeType null로 처리
+      if (state.tradeType === "전체" || !state.tradeType) state.tradeType = null;
 
-  // 4. 상품 목록 비동기 로드
-function loadProducts() {
-	  /* if (state.categoryNo === "") state.categoryNo = null; */
-	  if (state.tradeType === "전체" || state.tradeType === "") state.tradeType = null;
-  $.ajax({
-    url: base + '/productList',
-    type: 'GET',
-    data: state, // state 객체 전체를 쿼리스트링으로 전달
-    success: function(html) {
-      // 서버로부터 받은 상품 목록 HTML을 지정된 영역에 삽입
-      document.getElementById('productList').innerHTML = html;
-
-      // 동적으로 추가된 요소에 다시 이벤트 연결
-      attachPaging();
-      attachAllEventHandlers();
-
-   	  // tradeType이 있으면 해당 필터 뱃지 활성화, 없으면 '전체' 뱃지
-      if (state.tradeType) {
-    	  updateActive('.badge', 'data-type', state.tradeType || '전체');
-      }
-
-      // 정렬 옵션 활성화
-      if (state.sort) {
-        updateActive('.sort-options span', 'data-sort', state.sort);
-      }
-
-      // categoryNo가 존재할 때만 active 처리
-      if (state.categoryNo) {
-        updateActive('.category-item', 'data-categoryNo', String(state.categoryNo));
-      }
-
-    },
-    error: function(xhr, status, error) {
-      console.error('AJAX 오류 발생:', error);
+      $.ajax({
+        url: base + '/productList', // 서블릿 or 컨트롤러
+        type: 'GET',
+        data: state,
+        success: function(html) {
+          // 받아온 HTML로 상품 목록 영역 교체
+          document.getElementById('productList').innerHTML = html;
+          // 이벤트 재연결
+          attachPaging();
+          attachFilterEvents();
+          attachSortEvents();
+        },
+        error: function(xhr, status, error) {
+          console.error('AJAX 오류:', error);
+        }
+      });
     }
-  });
-}
 
+    // 4. 페이징 버튼 이벤트 연결
+    function attachPaging() {
+      document.querySelectorAll('#paging a[data-page]').forEach(a => {
+        a.onclick = e => {
+          e.preventDefault();
+          state.page = a.dataset.page;
+          loadProducts();
+        };
+      });
+    }
 
-  // 5. active 클래스 갱신 유틸
-  function updateActive(selector, attr, value) {
-    if (!selector || !attr || !value) return;
-    document.querySelectorAll(selector).forEach(e => e.classList.remove('active'));
-    const target = document.querySelector(`${selector}[${attr}="${value}"]`);
-    if (target) target.classList.add('active');
-  }
+    // 5. 거래유형 필터 버튼 이벤트 연결
+    function attachFilterEvents() {
+      document.querySelectorAll('.badge').forEach(el => {
+        el.onclick = () => {
+          // 모든 필터 버튼 비활성화 → 클릭된 필터만 active
+          document.querySelectorAll('.badge').forEach(b => b.classList.remove('active'));
+          el.classList.add('active');
+          state.tradeType = el.dataset.type;
+          state.page = 1;
+          loadProducts();
+        };
+      });
+    }
 
-  // 6. 페이징 이벤트 연결
-  function attachPaging() {
-    document.querySelectorAll('#paging a[data-page]').forEach(a => {
-      a.onclick = e => {
-        e.preventDefault();
-        state.page = a.dataset.page;
-        loadProducts();
-      };
+    // 6. 정렬 버튼 이벤트 연결
+    function attachSortEvents() {
+      document.querySelectorAll('.sort-options span').forEach(el => {
+        el.onclick = () => {
+          // 모든 정렬 옵션 비활성화 → 클릭된 정렬만 active
+          document.querySelectorAll('.sort-options span').forEach(s => s.classList.remove('active'));
+          el.classList.add('active');
+          state.sort = el.dataset.sort;
+          state.page = 1;
+          loadProducts();
+        };
+      });
+    }
+
+    // 7. 페이지 최초 로딩 시 실행
+    document.addEventListener("DOMContentLoaded", () => {
+      attachFilterEvents();
+      attachSortEvents();
+      attachPaging(); // 첫 페이지에서도 동작 가능하게
     });
-  }
-
-  // 7. 필터 / 정렬 / 카테고리 클릭 이벤트 연결
-  function attachAllEventHandlers() {
-    // 필터 (badge)
-    document.querySelectorAll('.badge').forEach(el => {
-      el.onclick = () => {
-        activateAndUpdateState('.badge', el, 'tradeType', el.dataset.type);
-      };
-    });
-
-    // 정렬 (sort span)
-    document.querySelectorAll('.sort-options span').forEach(el => {
-      el.onclick = () => {
-        activateAndUpdateState('.sort-options span', el, 'sort', el.dataset.sort);
-      };
-    });
-
-    // 카테고리 (category-item)
-    document.querySelectorAll('.category-item').forEach(el => {
-      el.onclick = () => {
-        activateAndUpdateState('.category-item', el, 'categoryNo', el.dataset.categoryNo || '');
-      };
-    });
-  }
-
-  // 8. 최초 로딩 시 실행
-  loadProducts();
-</script>
+  </script>
 
 </body>
 </html>

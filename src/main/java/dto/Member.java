@@ -23,7 +23,8 @@ public class Member {
 	Integer adminNo;
 	Date regDate;
 	String fcmToken;
-	
+	private Double latitude;
+	private Double longitude;
 	//기본생성자(myBatis용)
 	public Member() {}
 	
@@ -223,6 +224,22 @@ public class Member {
 	}
 	public void setRegion1(String region1) {
 		this.region1 = region1;
+	}
+	
+	public Double getLatitude() {
+	    return latitude;
+	}
+
+	public void setLatitude(Double latitude) {
+	    this.latitude = latitude;
+	}
+
+	public Double getLongitude() {
+	    return longitude;
+	}
+
+	public void setLongitude(Double longitude) {
+	    this.longitude = longitude;
 	}
 
 }
