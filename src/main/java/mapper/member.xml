@@ -87,6 +87,14 @@
 	    nickname = #{nickname}
 	  WHERE id = #{id}
 	</update>
-	
+
+	<!-- 회원 위치 업데이트 -->
+	<update id="updateLocation" parameterType="map">
+  		UPDATE member
+     		SET latitude = #{lat},
+         	longitude = #{lng},
+         	location = #{location}
+   		WHERE no = #{no}
+	</update>
 		
 </mapper>

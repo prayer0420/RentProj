@@ -1,5 +1,6 @@
 package dao.member;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -53,7 +54,15 @@ public class MemberDAOImpl implements MemberDAO {
 		
 	}
 
-
-
-
+	//위치 업데이트
+    @Override
+    public void updateLocation(int memberNo, double lat, double lng, String address) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("no", memberNo);
+        map.put("lat", lat);
+        map.put("lng", lng);
+        map.put("location", address);
+        sqlSession.update("mapper.member.updateLocation", map);
+        sqlSession.commit();
+      }
 }
