@@ -17,9 +17,9 @@ public class MypageDAOImpl implements MypageDAO {
 	public Integer selectProductCountById(String id) throws Exception {
 		return sqlSession.selectOne("mapper.mypage.selectProductCnt",id);
 	}
-
+	
 	@Override
-	public List<Product> selectProductListByPage(Map<String, Object> paramMap) throws Exception {
+	public List<Map<String, Object>> selectProductListByPage(Map<String, Object> paramMap) throws Exception {
 		return sqlSession.selectList("mapper.mypage.selectProductListByPage", paramMap);
 	}
 	
@@ -41,6 +41,7 @@ public class MypageDAOImpl implements MypageDAO {
 		param.put("id",id);
 		return sqlSession.selectOne("mapper.mypage.selectMySellDetail",param);
 	}
+
 
 	
 

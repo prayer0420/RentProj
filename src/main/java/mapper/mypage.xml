@@ -9,10 +9,12 @@
 		where m.id=#{id}	
 	</select>
 	
-	<select id="selectProductListByPage" parameterType="map" resultType="product">
-		select p.no, p.createDate, p.title, p.salePrice, p.deliveryprice 
-		from product p join member m
-        on (p.memberNo=m.no)
+	<select id="selectProductListByPage" parameterType="map" resultType="map">
+		select 
+		p.no, p.createDate, p.title, p.img, p.salePrice, p.deliveryprice, o.orderNo
+		from product p 
+		left join `order` o on (p.no = o.productNo)
+		join member m on (p.memberNo=m.no)
         where m.id=#{id} 
         order by p.no desc limit #{row},5
 	</select>

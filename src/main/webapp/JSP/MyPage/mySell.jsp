@@ -46,17 +46,17 @@
           </div>
 
           <!-- 상품 카드 1 -->
-          <c:forEach var="product" items="${productList }">
+          <c:forEach var="item" items="${productList }">
           <form action="">
 	          <div class="product-card" id="product">
 	            <!-- 주문 정보 상단 영역 -->
 	            <div class="order-info">
 	              <div class="order-meta">
-	                <span class="order-date">상품등록일: ${product.createDate}</span>
+	                <span class="order-date">상품등록일: ${item.createDate}</span>
 	                <span class="status-text">거래중</span>
 	              </div>
 	              <div class="order-status-area">
-	                <a href="${contextPath }/mySellDetail?orderNo=${product.no }" class="order-detail-link">거래 상세보기 &gt;</a>
+	                <a href="${contextPath }/mySellDetail?orderNo=${item.orderNo }" class="order-detail-link">거래 상세보기 &gt;</a>
 	              </div>
 	            </div>
 	
@@ -71,10 +71,10 @@
 	                class="product-image"
 	              />
 	              <div class="product-info">
-	                <p>${product.no }</p>
-	                <h3>${product.title }</h3>
-	                <p>가격: ${product.salePrice }원</p>
-	                <p>배송비: ${product.deliveryPrice}원</p>
+	                <p>${item.no }</p>
+	                <h3>${item.title }</h3>
+	                <p>가격: ${item.salePrice }원</p>
+	                <p>배송비: ${item.deliveryPrice}원</p>
 	              </div>
 	              <div class="status-change-btns">
 	                <button type="submit" id="confrim-order">송장번호입력</button>
