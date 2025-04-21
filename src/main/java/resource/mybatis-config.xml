@@ -9,6 +9,7 @@
 		<typeAlias type="dto.Product" alias ="product"/>
 		<typeAlias type="dto.Category" alias ="category"/>
 		<typeAlias type="dto.Member" alias ="member"/>
+		<typeAlias type="dto.Order" alias ="order"/>
 	</typeAliases>
 	
 	<environments default="development">
