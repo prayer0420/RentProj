@@ -52,7 +52,7 @@
 	                <span class="status-text">거래중</span>
 	              </div>
 	              <div class="order-status-area">
-	                <a href="detail?no=${product.no }" class="order-detail-link">거래 상세보기 &gt;</a>
+	                <a href="mySellDetail?no=${product.no }" class="order-detail-link">거래 상세보기 &gt;</a>
 	              </div>
 	            </div>
 	
@@ -70,7 +70,7 @@
 	                <p>${product.no }</p>
 	                <h3>${product.title }</h3>
 	                <p>가격: ${product.salePrice }원</p>
-	                <p>배송비: ${product.deliveryprice}원</p>
+	                <p>배송비: ${product.deliveryPrice}원</p>
 	              </div>
 	              <div class="status-change-btns">
 	                <button type="submit" id="confrim-order">송장번호입력</button>
