@@ -1,1 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+	<mapper namespace="mapper.report">
+	
+	 <!-- 신고 상품 목록 조회 : 신고유형, 시작날짜, 종료날짜 (ReportQueryParams) -->
+  <select id="selectReportedProductList"
+          resultType="dto.ReportedProduct"
+          parameterType="dto.ReportQueryParams">
+    SELECT 
+      r.no AS reportNo,
+      r.type,
+      r.contents,
+      r.title,
+      r.date,
+      p.no AS productNo,
+      p.title AS productTitle,
+      p.tradeType,
+      p.state,
+      p.memberNo,
+      p.isHide
+    FROM report r
+    JOIN product p ON r.productNo = p.no
+	<where>
+	  <if test="type != null and type != '' and type != '전체'">
+	    r.type = #{type}
+	  </if>
+	
+	  <if test="start != null and start != '' and end != null and end != ''">
+	    AND r.date BETWEEN #{start} AND #{end}
+	  </if>
+	</where>
+    ORDER BY r.date DESC
+  </select>
+
+  <!-- 신고 삭제 쿼리 : 신고번호  -->
+  <delete id="deleteReport" parameterType="int">
+    DELETE FROM report WHERE no = #{no}
+  </delete>
+
+  <!-- 상품 활성화 쿼리 :상품번호 -->
+  <update id="activateProduct" parameterType="int">
+    UPDATE product
+    SET isHide = false
+    WHERE no = #{no}
+  </update>
+
+  <!-- 상품 숨김 처리 : 상품번호 -->
+  <update id="hideProduct" parameterType="int">
+    UPDATE product
+    SET isHide = true
+    WHERE no = #{no}
+  </update>
+	
+	</mapper>
+	
+	

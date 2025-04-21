@@ -2,8 +2,8 @@ package service.member;
 
 import java.util.List;
 
-import dao.member.GradeDAO;
-import dao.member.GradeDAOImpl;
+import dao.grade.GradeDAO;
+import dao.grade.GradeDAOImpl;
 import dto.Grade;
 
 public class GradeServiceImpl implements GradeService {
