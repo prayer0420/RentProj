@@ -27,4 +27,5 @@ public interface ProductService {
 	List<Product> getPopularProducts(int limit);
 	//근처상품
     public List<Product> getProductsNearby(double userLat, double userLng, double radiusKm);
+
 }

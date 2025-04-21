@@ -23,4 +23,6 @@ public interface MemberService {
     //위치
     public String updateLocationAndGetAddress(int memberNo, double lat, double lng);
 
+    //회원정보 업데이트
+    void updateMember(Member member) throws Exception;
 }

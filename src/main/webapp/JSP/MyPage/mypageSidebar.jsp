@@ -64,7 +64,7 @@
 
           <div class="divider"></div>
 
-          <div class="simple-item"><a href="memberInfoModify">개인정보 수정</a></div>
+          <div class="simple-item"><a href="myInfoModify">개인정보 수정</a></div>
           <div class="simple-item"><a href="#">배송지 관리</a></div>
         </div>
 
