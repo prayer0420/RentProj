@@ -1,4 +1,4 @@
-package dao.member;
+package dao.grade;
 
 import java.util.List;
 
