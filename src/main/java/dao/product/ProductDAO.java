@@ -11,6 +11,8 @@ public interface ProductDAO {
 	Product insertProductRentSell(Product product) throws Exception;
 	Product insertProductFree(Product product) throws Exception;
 
+	Product SelectProductOne(Integer no) throws Exception;
+	
 	
     List<Product> selectAll(String tradeType, String orderBy, int offset, int limit);
     List<Product> selectByName(String name, String tradeType, String orderBy, int offset, int limit);
@@ -20,5 +22,6 @@ public interface ProductDAO {
     int countByName(String name, String tradeType);
     int countByCategory(int categoryNo, String tradeType);
     List<Product> selectProducts(Map<String, Object> params);
+    
 
 }

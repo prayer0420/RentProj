@@ -32,13 +32,10 @@ public class Login extends HttpServlet {
 		String password = request.getParameter("password");
 		String type = request.getParameter("type");
 		
-		System.out.println(type);
 		
 		MemberService service = new MemberServiceImpl();
 		try {
 			Member member = service.login(id, password);
-			System.out.println(member.getId());
-			System.out.println(member.getPassword());
 			member.setPassword("");
 			HttpSession session = request.getSession();
 			session.setAttribute("member", member);
@@ -63,7 +60,7 @@ public class Login extends HttpServlet {
 			response.addCookie(cookie3);
 		
 			//로그인 성공하면 이동할 홈페이지~
-			response.sendRedirect("join");
+			response.sendRedirect("main");
 			
 		}catch(Exception e) {
 			e.printStackTrace();

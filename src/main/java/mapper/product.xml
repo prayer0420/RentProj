@@ -20,9 +20,6 @@
 		#{memberNo},#{salePrice},#{deliveryStatus})
 	</insert>
 	
-	
-	
-	
   <!-- 전체 조회 (필터·정렬로 별도 메서드에서 제어) -->
   <select id="selectAll" parameterType="map" resultType="dto.Product">
     SELECT *
@@ -127,4 +124,11 @@
 		insert into product(no,categoryNo,title,content,img,deliveryAddr,tradeType,memberNo)
 		values (#{no},#{categoryNo},#{title},#{content},#{img},#{deliveryAddr},#{tradeType},#{memberNo})
 	</insert>
+	
+	<!-- product상세 검색 -->
+	<select id="selectProductOne" parameterType="Integer" resultType="product">
+		select p.*,m.nickname from product p join member m on (p.memberNo=m.no) where p.no=#{no}
+	</select>
+	
+	
 </mapper>

@@ -1,6 +1,7 @@
 package controller.productDetail;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -9,6 +10,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import dto.Member;
+import dto.Product;
+import service.product.ProductService;
+import service.product.ProductServiceImpl;
 
 @WebServlet("/productDetail")
 public class ProductDetail extends HttpServlet {
@@ -20,22 +24,24 @@ public class ProductDetail extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		
+		request.setCharacterEncoding("utf-8");
 
-		HttpSession session = request.getSession(false);
-
-		if (session == null) {
-			System.out.println("[DEBUG] 세션 없음");
-		} else {
-			Member member = (Member) session.getAttribute("member");
-			if (member == null) {
-				System.out.println("[DEBUG] 세션 있음, but 로그인 안됨 (member == null)");
-			} else {
-				System.out.println("[DEBUG] 로그인됨 - ID: " + member.getId() + ", 닉네임: " + member.getNickname());
-			}
+		Integer no = Integer.parseInt(request.getParameter("no"));
+		System.out.println(no);
+		
+		ProductService service = new ProductServiceImpl();
+		try {
+			Product product = service.selectProductOne(no);
+			request.setAttribute("product", product);
+			System.out.println("product : "+product);	
+			System.out.println("no : "+no);	
+		}catch (Exception e) {
+			e.printStackTrace();
 		}
-
-		// forward to JSP
 		request.getRequestDispatcher("/JSP/ProductDetail/productDetail.jsp").forward(request, response);
+
+
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)

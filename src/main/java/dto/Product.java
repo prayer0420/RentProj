@@ -22,6 +22,7 @@ public class Product {
 	private Integer isHide;
 	private Integer viewCnt;
 	private String deliveryStatus;
+	private String nickname;
 	
 	public Product() {}
 	public Product(
@@ -216,6 +217,12 @@ public class Product {
 		this.deliveryStatus = deliveryStatus;
 	}
 	
+	public String getNickname() {
+		return nickname;
+	}
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
 	public String getTimeAgo() {
         if (createDate == null) return "";
         long diff = System.currentTimeMillis() - createDate.getTime();

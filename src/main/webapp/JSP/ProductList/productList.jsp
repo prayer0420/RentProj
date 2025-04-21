@@ -7,6 +7,7 @@
 <div class="products-container">
   <div class="products">
     <c:forEach var="p" items="${productList}">
+    <a href="${pageContext.request.contextPath}/productDetail?no=${p.no}&tradeType=${p.tradeType}">
       <div class="product-card">
         <!-- 상품 이미지 -->
         <img src="${p.img}" alt="${p.title}" />
@@ -36,7 +37,7 @@
     </c:forEach>
   </div>
 </div>
-
+</a>
 <!-- 페이징 -->
 <div id="paging">
   <c:if test="${pageInfo.curPage > 1}">

@@ -146,4 +146,10 @@ public class ProductServiceImpl implements ProductService {
 			return "createDate DESC";
 		}
 	}
+	@Override
+	public Product selectProductOne(Integer no) throws Exception {
+		
+		
+		return productDAO.SelectProductOne(no);
+	}
 }

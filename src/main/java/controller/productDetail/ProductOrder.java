@@ -31,6 +31,7 @@ public class ProductOrder extends HttpServlet {
 		HttpSession session = request.getSession(false);
 		if(session == null || session.getAttribute("member")==null) {
 			response.sendRedirect(request.getContextPath()+"/login");
+			
 			return;
 		}
 		request.getRequestDispatcher("/JSP/ProductDetail/order.jsp").forward(request, response);;

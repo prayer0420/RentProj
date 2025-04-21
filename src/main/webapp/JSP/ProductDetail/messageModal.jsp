@@ -8,13 +8,16 @@
       <div class="modal-sub">상품 상세페이지 - 쪽지보내기</div>
 
       <!-- 서버에서 넘긴 변수 사용 -->
-      <input type="hidden" name="receiver" value="${sellerName}">
+      <input type="hidden" name="receiver" value="${product.nickname}">
       <input type="hidden" name="productTitle" value="${product.title}">
-
+      <input type="hidden" name="productNo" value="${product.no}">
+      <input type="hidden" name="no" value="${product.no}">
+	  <input type="hidden" name="tradeType" value="${param.tradeType}">
+	  
       <div class="info-box">
         <div class="info-row">
           <div class="label">받는 사람</div>
-          <div class="value">${param.id}</div>
+          <div class="value" name="receiver">${product.nickname}</div>
         </div>
         <div class="info-row">
           <div class="label">상품 이름</div>
@@ -24,7 +27,7 @@
 
       <div class="textarea-box">
         <label for="message">쪽지 보내기</label>
-        <textarea id="message" name="message" placeholder="내용을 입력하세요." required></textarea>
+        <textarea id="message" name="noteContent" placeholder="내용을 입력하세요." required></textarea>
       </div>
 
       <div class="modal-actions">

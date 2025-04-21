@@ -1,1 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="mapper.note">
+	<insert id="insertNote" parameterType="Note" useGeneratedKeys="true" keyProperty="no">
+		insert into note (noteNo,productNo,memberNo,noteContent,receiver) values (#{noteNo},#{productNo},#{memberNo},#{noteContent},#{receiver})
+	</insert>
+	
+</mapper>

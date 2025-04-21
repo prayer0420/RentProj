@@ -65,18 +65,25 @@ body {
   margin-top: 30px;
 }
 
-.price {
+.rent-price {
   color: #d14b00;
   font-weight: bold;
   font-size: 22px;
   margin-top: 10px;
 }
 
-.sale-price {
+.sec-price {
   color: #197c54;
   font-weight: bold;
   font-size: 18px;
   margin-top: 4px;
+}
+
+.sale-price {
+  color: #d14b00;
+  font-weight: bold;
+  font-size: 22px;
+  margin-top: 10px;
 }
 
 .seller-profile {
