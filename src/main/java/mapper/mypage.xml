@@ -17,4 +17,15 @@
         order by p.no desc limit #{row},5
 	</select>
 	
+	<select id="selectMySellDetail" parameterType="map" resultType="map">
+		select 
+		p.*, o.orderNo, o.orderDate, o.deliveryAddr, o.paymentType, o.invoiceNo, o.deliveryComp,
+		m1.name, m1.id, m1.phone
+        from Product p 
+        join `Order` o On (o.productNo = p.no)
+        join member m1 On (o.memberNo = m1.no)
+		  JOIN member m2 ON p.memberNo = m2.no
+		  where o.orderNo=#{orderNo} and m2.id=#{id}
+	</select>
+	
 </mapper>
