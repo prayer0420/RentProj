@@ -20,9 +20,6 @@
 				상품 등록
 			</a>
 		</div>
-		<div class="search-box">
-			<input type="text" placeholder="검색어를 입력해주세요" />
-		</div>
 
 		<!-- 검색은 GET /list?searchText=키워드 로 -->
 		<form id="mainSearchForm"
