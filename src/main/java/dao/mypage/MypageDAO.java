@@ -11,4 +11,6 @@ public interface MypageDAO {
 
 	List<Product> selectProductListByPage(Map<String, Object> paramMap) throws Exception;
 
+	public void updateLocation(String memberId, double latitude, double longitude);
+
 }

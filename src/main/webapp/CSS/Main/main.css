@@ -1,0 +1,143 @@
+@charset "UTF-8";
+
+/* 기본 폰트 및 배경 */
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #fafafa;
+  color: #333;
+}
+
+/* 배너 스타일 */
+.banner {
+  background-color: rgb(228, 242, 220);
+  padding: 40px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.banner-container {
+  max-width: 500px;
+  margin-left: 100px;
+}
+
+.banner-container h2 {
+  font-size: 26px;
+  font-weight: 700;
+  color: #2f855a;
+  margin-bottom: 12px;
+}
+
+.banner-container button {
+  padding: 10px 18px;
+  font-size: 14px;
+  background-color: #2f855a;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.banner-container button:hover {
+  background-color: #276749;
+}
+
+.banner-img {
+  margin-right: 150px;
+}
+
+.banner-img img {
+  width: 280px;
+  border-radius: 10px;
+}
+
+/* 섹션 제목 */
+.section-title {
+  font-size: 24px;
+  font-weight: 700;
+  margin: 20px 0 20px 400px;
+  text-align: left;
+}
+
+/* 상품 목록 그리드 */
+.product-grid {
+  padding: 0 80px 40px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  justify-content: center;
+}
+
+/* 상품 카드 */
+.product-card {
+  width: 220px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  padding: 14px;
+  transition: transform 0.2s ease;
+  position: relative;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+}
+
+.product-card img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.product-name {
+  font-size: 16px;
+  font-weight: 600;
+  margin-top: 12px;
+}
+
+/* 가격 정보 */
+.product-price {
+  font-size: 15px;
+  color: #6b7280;
+  margin-top: 8px;
+  line-height: 1.5;
+}
+
+.product-price .sale {
+  color: #e53935;
+  font-weight: bold;
+}
+
+.product-price .rent {
+  color: #1e88e5;
+  font-weight: bold;
+}
+
+/* 거래유형 뱃지 */
+.product-type {
+  font-size: 14px;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 20px;
+  display: inline-block;
+  margin-top: 10px;
+  color: #fff;
+}
+
+/* 거래유형별 배경색 */
+.product-type.판매 {
+  background-color: #f5a623;
+}
+.product-type.대여 {
+  background-color: #2196f3;
+}
+.product-type.판매대여 {
+  background-color: #2ecc71;
+}
+.product-type.나눔 {
+  background-color: #e91e63;
+}

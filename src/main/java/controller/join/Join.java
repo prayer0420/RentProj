@@ -63,7 +63,7 @@ public class Join extends HttpServlet {
 		
 		try {
 			service.join(member);
-			//response.sendRedirect("login"); //servlet의 login호출, doGet으로 호출
+			response.sendRedirect("login"); //servlet의 login호출, doGet으로 호출
 		}catch(Exception e) {
 			e.printStackTrace();
 			if(e instanceof Exception) {

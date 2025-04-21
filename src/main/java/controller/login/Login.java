@@ -37,11 +37,11 @@ public class Login extends HttpServlet {
 		MemberService service = new MemberServiceImpl();
 		try {
 			Member member = service.login(id, password);
-			System.out.println(member.getId());
-			System.out.println(member.getPassword());
 			member.setPassword("");
+			
 			HttpSession session = request.getSession();
 			session.setAttribute("member", member);
+			System.out.println(member.getNo());
 			
 			//자동로그인 체크에 따른 쿠키 설정
 			Cookie cookie1 = null;
@@ -63,7 +63,7 @@ public class Login extends HttpServlet {
 			response.addCookie(cookie3);
 		
 			//로그인 성공하면 이동할 홈페이지~
-			response.sendRedirect("join");
+			response.sendRedirect("main");
 			
 		}catch(Exception e) {
 			e.printStackTrace();

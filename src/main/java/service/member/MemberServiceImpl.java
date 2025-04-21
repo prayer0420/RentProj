@@ -13,6 +13,9 @@ import java.util.Map;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
 import dao.member.MemberDAO;
 import dao.member.MemberDAOImpl;
 import dto.Member;
@@ -266,56 +269,80 @@ public class MemberServiceImpl implements MemberService {
 		return member;
 	}
 
-		// 관리자: 회원 목록 조회 + 페이징 처리
-		@Override
-		public List<Member> searchMembersWithPaging(Map<String, Object> params, PageInfo pageInfo) throws Exception {
-		    // 검색 조건에 맞는 총 회원 수를 DB에서 조회함
-			Integer totalCnt = memberDao.selectMembersCountWithFilter(params);
-		    // 검색 결과가 없으면, 페이지 정보도 0으로 초기화하고 빈 리스트를 반환함
-		    if (totalCnt == 0) {
-		        pageInfo.setAllPage(0);
-		        pageInfo.setStartPage(0);
-		        pageInfo.setEndPage(0);
-		        return new ArrayList<>(); // 빈 리스트 반환
-		    }
-			// 페이징 정보 계산
-		    // 전체 데이터 개수를 페이지당 게시물 수로 나눠서 총 페이지 수를 구함
-		    // 페이지 블록의 시작 페이지, 끝 페이지 계산
-		    Integer allPage = (int)Math.ceil((double)totalCnt / pageInfo.getPageSize());
-		    Integer startPage = (pageInfo.getCurPage()-1)/10*10 + 1;
-		    Integer endPage = startPage + 10 - 1;
-		    if(endPage > allPage) endPage = allPage;
-		    // PageInfo에 페이징 정보 저장
-		    pageInfo.setAllPage(allPage);
-		    pageInfo.setStartPage(startPage);
-		    pageInfo.setEndPage(endPage);
-		    pageInfo.setTotalCount(totalCnt); 
-			// DB 조회용 페이징 파라미터 준비 (eg. 페이지 1 → row = 0, 페이지 2 → row = 10)
-		    int row = (pageInfo.getCurPage() - 1) * pageInfo.getPageSize();
-		    params.put("row", row);
-		    params.put("size", pageInfo.getPageSize());
-		    // 최종 DAO 호출
-		    return memberDao.searchMembersWithPaging(params);
+	// 관리자: 회원 목록 조회 + 페이징 처리
+	@Override
+	public List<Member> searchMembersWithPaging(Map<String, Object> params, PageInfo pageInfo) throws Exception {
+		// 검색 조건에 맞는 총 회원 수를 DB에서 조회함
+		Integer totalCnt = memberDao.selectMembersCountWithFilter(params);
+		// 검색 결과가 없으면, 페이지 정보도 0으로 초기화하고 빈 리스트를 반환함
+		if (totalCnt == 0) {
+			pageInfo.setAllPage(0);
+			pageInfo.setStartPage(0);
+			pageInfo.setEndPage(0);
+			return new ArrayList<>(); // 빈 리스트 반환
 		}
+		// 페이징 정보 계산
+		// 전체 데이터 개수를 페이지당 게시물 수로 나눠서 총 페이지 수를 구함
+		// 페이지 블록의 시작 페이지, 끝 페이지 계산
+		Integer allPage = (int) Math.ceil((double) totalCnt / pageInfo.getPageSize());
+		Integer startPage = (pageInfo.getCurPage() - 1) / 10 * 10 + 1;
+		Integer endPage = startPage + 10 - 1;
+		if (endPage > allPage)
+			endPage = allPage;
+		// PageInfo에 페이징 정보 저장
+		pageInfo.setAllPage(allPage);
+		pageInfo.setStartPage(startPage);
+		pageInfo.setEndPage(endPage);
+		pageInfo.setTotalCount(totalCnt);
+		// DB 조회용 페이징 파라미터 준비 (eg. 페이지 1 → row = 0, 페이지 2 → row = 10)
+		int row = (pageInfo.getCurPage() - 1) * pageInfo.getPageSize();
+		params.put("row", row);
+		params.put("size", pageInfo.getPageSize());
+		// 최종 DAO 호출
+		return memberDao.searchMembersWithPaging(params);
+	}
 
-		
+	// 관리자정보 조회용
+	@Override
+	public Member selectAdmin() {
+		return memberDao.selectAdmin();
+	}
 
-		// 관리자정보 조회용
-		@Override
-		public Member selectAdmin() {
-		    return memberDao.selectAdmin();
-		}
-		// 관리자정보 수정용
-		@Override
-		public void updateAdminInfo(Member member) throws Exception {
-		    memberDao.updateAdminInfo(member);
-			
-		}
+	// 관리자정보 수정용
+	@Override
+	public void updateAdminInfo(Member member) throws Exception {
+		memberDao.updateAdminInfo(member);
 
+	}
+	
+    //네이버 위치 요청 및 위치 업데이트
+    public String updateLocationAndGetAddress(int memberNo, double lat, double lng) {
+        try {
+    	  String kakaoKey = "KakaoAK 26cbd2829d45a2e79ba779ab7d6c059c";
+          String apiUrl = "https://dapi.kakao.com/v2/local/geo/coord2address.json?x=" + lng + "&y=" + lat;
+          HttpURLConnection conn = (HttpURLConnection) new URL(apiUrl).openConnection();
+          conn.setRequestMethod("GET");
+          conn.setRequestProperty("Authorization", kakaoKey);
 
+          BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+          StringBuilder sb = new StringBuilder();
+          String line;
+          while ((line = br.readLine()) != null) sb.append(line);
+          br.close();
 
+          String json = sb.toString();
+          JsonObject jsonObj = JsonParser.parseString(json).getAsJsonObject();
+          String address = jsonObj.getAsJsonArray("documents")
+                                 .get(0).getAsJsonObject()
+                                 .get("address").getAsJsonObject()
+                                 .get("address_name").getAsString();
 
-
-
+          memberDao.updateLocation(memberNo, lat, lng, address);
+          return address;
+        } catch (Exception e) {
+          e.printStackTrace();
+          return "";
+        }
+      }
 
 }
