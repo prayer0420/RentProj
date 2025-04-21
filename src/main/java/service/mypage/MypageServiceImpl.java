@@ -4,11 +4,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpSession;
-
 import dao.mypage.MypageDAO;
 import dao.mypage.MypageDAOImpl;
-import dto.Member;
+import dto.Order;
 import dto.Product;
 import utils.PageInfo;
 
@@ -43,6 +41,13 @@ public class MypageServiceImpl implements MypageService {
 		List<Product> productList = mypageDao.selectProductListByPage(paramMap);
 		
 		return productList;
+	}
+
+	@Override
+	public Map<String, Object> mySellDetail(Integer orderNo, String id) throws Exception {
+		
+		
+		return mypageDao.selectMySellDetail(orderNo,id);
 	}
 
 //	@Override

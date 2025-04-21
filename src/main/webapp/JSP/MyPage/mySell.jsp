@@ -1,6 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>   
+    <%@ page import="dto.Member" %>
+    <% 
+    	Member id = (Member) request.getAttribute("loginId");
+    %>
 <c:set var="contextPath" value="${pageContext.request.contextPath }" />
 <!DOCTYPE html>
 <html>
@@ -52,7 +56,7 @@
 	                <span class="status-text">거래중</span>
 	              </div>
 	              <div class="order-status-area">
-	                <a href="detail?no=${product.no }" class="order-detail-link">거래 상세보기 &gt;</a>
+	                <a href="${contextPath }/mySellDetail?orderNo=${product.no }" class="order-detail-link">거래 상세보기 &gt;</a>
 	              </div>
 	            </div>
 	
@@ -70,7 +74,7 @@
 	                <p>${product.no }</p>
 	                <h3>${product.title }</h3>
 	                <p>가격: ${product.salePrice }원</p>
-	                <p>배송비: ${product.deliveryprice}원</p>
+	                <p>배송비: ${product.deliveryPrice}원</p>
 	              </div>
 	              <div class="status-change-btns">
 	                <button type="submit" id="confrim-order">송장번호입력</button>
@@ -84,85 +88,6 @@
 	          </div>
           </form>
           </c:forEach>
-
-          <!-- 상품 카드 2 -->
-          <div class="product-card">
-            <!-- 주문 정보 상단 영역 -->
-            <div class="order-info">
-              <div class="order-meta">
-                <span class="order-number">주문번호: 2025040801</span>
-                <span class="order-date">주문일: 2025-04-08</span>
-              </div>
-              <div class="order-status-area">
-                <span class="status-text">상품게시중</span>
-                <a href="#" class="order-detail-link">거래 상세보기 &gt;</a>
-              </div>
-            </div>
-
-            <!-- 구분선 -->
-            <div class="card-divider"></div>
-
-            <!-- 상품 정보 영역 -->
-            <div class="card-content">
-              <img
-                src="${contextPath }/img/bicycle.jpg"
-                alt="상품 이미지"
-                class="product-image"
-              />
-              <div class="product-info">
-                <p>7890123456</p>
-                <h3>빈티지 감성의 성인용 자전거 팝니다 (사용감 조금 있음)</h3>
-                <p>가격: 100,000원</p>
-                <p>배송비: 무료</p>
-              </div>
-              <div class="status-change-btns">
-                <button
-                  onclick="openModalWith('상품을 숨김 처리하시겠습니까?', hideProduct)"
-                >
-                  상품 숨기기
-                </button>
-                <button
-                  onclick="openModalWith('상품을 삭제하시겠습니까?', deleteProduct)"
-                >
-                  상품 삭제
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <!-- 상품 카드 3 -->
-          <div class="product-card">
-            <!-- 주문 정보 상단 영역 -->
-            <div class="order-info">
-              <div class="order-meta">
-                <span class="order-date">주문일: 2025-02-08</span>
-                <span class="status-text">거래완료</span>
-                
-              </div>
-              <div class="order-status-area">
-                <span class=""></span>
-                <a href="#" class="order-detail-link">거래 상세보기 &gt;</a>
-              </div>
-            </div>
-
-            <!-- 구분선 -->
-            <div class="card-divider"></div>
-
-            <!-- 상품 정보 영역 -->
-            <div class="card-content">
-              <img
-                src="${contextPath }/img/watering-can.jpg"
-                alt="상품 이미지"
-                class="product-image"
-              />
-              <div class="product-info">
-                <p>4567890987</p>
-                <h3>화분 물뿌리개(새 제품)</h3>
-                <p>가격: 5,000원</p>
-                <p>배송비: 2,500원</p>
-              </div>
-            </div>
-          </div>
         </section>
       </div>
     </div>
