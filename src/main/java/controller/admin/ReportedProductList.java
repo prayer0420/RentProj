@@ -44,11 +44,13 @@ public class ReportedProductList extends HttpServlet {
 		System.out.println("종료일: " + end);
 
 		List<ReportedProduct> list = new ArrayList<>();
-		if (type != null && start != null && end != null) {
+		if (type != null) {
 		    ReportDAO dao = new ReportDAOImpl();
 		    list = dao.getReportedProductList(type, start, end);
+			
 		}
 		
+	
 		request.setAttribute("list", list);
 		request.getRequestDispatcher("JSP/Admin/reportedProductList.jsp").forward(request, response);
 		

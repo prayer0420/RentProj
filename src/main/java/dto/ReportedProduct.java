@@ -17,6 +17,10 @@ public class ReportedProduct {
     private String tradeType;
     private String state;
     private int memberNo;
+    
+	 // 상품의 노출 여부를 나타내는 필드
+	 // boolean 타입의 필드는 필드명을 isXXX로 하면, MyBatis에서 getter를 isIsXXX로 찾는 문제가 발생 가능하므로
+	 // 필드명은 'hide'로 하고 getter는 'isHide()'로 작성하는 것이 일반적인 패턴
     private boolean hide;
     
 	public int getReportNo() {

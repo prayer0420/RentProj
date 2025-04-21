@@ -4,9 +4,33 @@
 	
 	<mapper namespace="mapper.report">
 	
+	
+  	<!-- ✅ [resultMap] 커스텀 매핑 정의
+       - DB 컬럼명과 Java DTO 필드명이 다를 경우 수동으로 매핑 필요
+       - 특히 boolean 타입 필드(hide)처럼 getter 이름이 isHide()인 경우, MyBatis가 자동 매핑 실패할 수 있어
+       - 이 문제를 해결하기 위해 명시적으로 resultMap 정의 -->
+	  <resultMap id="reportedProductMap" type="dto.ReportedProduct">
+	    <!-- 신고 정보 -->
+	    <result property="reportNo" column="reportNo"/>
+	    <result property="type" column="type"/>
+	    <result property="contents" column="contents"/>
+	    <result property="title" column="title"/>
+	    <result property="date" column="date"/>
+	
+	    <!-- 상품 정보 -->
+	    <result property="productNo" column="productNo"/>
+	    <result property="productTitle" column="productTitle"/>
+	    <result property="tradeType" column="tradeType"/>
+	    <result property="state" column="state"/>
+	    <result property="memberNo" column="memberNo"/>
+	
+	    <!-- ✅ boolean 필드 매핑 (getter: isHide()) → 컬럼명은 반드시 소문자 isHide -->
+	    <result property="hide" column="isHide"/>
+	  </resultMap>		
+	
 	 <!-- 신고 상품 목록 조회 : 신고유형, 시작날짜, 종료날짜 (ReportQueryParams) -->
   <select id="selectReportedProductList"
-          resultType="dto.ReportedProduct"
+          resultMap="reportedProductMap"
           parameterType="dto.ReportQueryParams">
     SELECT 
       r.no AS reportNo,
@@ -22,15 +46,20 @@
       p.isHide
     FROM report r
     JOIN product p ON r.productNo = p.no
-	<where>
-	  <if test="type != null and type != '' and type != '전체'">
-	    r.type = #{type}
-	  </if>
+  		<where>
+	 	<!-- 신고유형 조건: 전체가 아니고 null/빈값 아닐 때만 적용 -->
+	    <if test="type != null and type != '' and type != '전체'">
+	      r.type = #{type}
+	    </if>
 	
-	  <if test="start != null and start != '' and end != null and end != ''">
-	    AND r.date BETWEEN #{start} AND #{end}
-	  </if>
-	</where>
+	    <!-- 날짜 조건: 둘 다 있을 경우만 BETWEEN 적용 -->
+	    <if test="start != null and start != '' and end != null and end != ''">
+	      <if test="type != null and type != '' and type != '전체'">
+	        AND
+	      </if>
+	      r.date BETWEEN #{start} AND #{end}
+	    </if>
+	  </where>	
     ORDER BY r.date DESC
   </select>
 

@@ -76,9 +76,14 @@ main {
 }
 
 .search-box select,
-.search-box input,
-.search-box button {
+.search-box input{
   margin-right: 5px;
+}
+
+.search-box button {
+  width: auto !important;      /* 기본은 auto */
+  min-width: 60px !important;  /* 너무 작아지지 않도록 최소 너비 설정 */
+  padding: 4px 10px !important;
 }
 
 /* Table */
@@ -164,4 +169,81 @@ select {
       color: #555;
       margin-top: 10px;
     }
+/* 버튼 덮어쓰기 */
+button, .btn-action {
+  background-color: #26c6da;
+  color: white !important;
+  border: none; 
+  font-size: 13px !important;
+  padding: 6px 12px !important;
+}
 
+/* 라디오 버튼 및 폰트 사이즈 */
+input[type="radio"] {
+  transform: scale(1.2);
+  margin-right: 4px;
+}
+
+/* 테이블 폰트 크기 및 정렬 덮어쓰기 */
+table th, table td {
+  font-size: 13px !important;
+  text-align: center !important;
+}
+
+
+
+ .search-box label,
+    .search-box input,
+    .search-box select,
+    .search-box button {
+      margin-right: 6px;
+      font-size: 13px;
+    }
+    .search-box input[type="text"] {
+      padding: 3px 6px;
+      width: 120px; /* 날짜 포맷에 맞게 줄임 */
+    }
+    .search-box .radio-group {
+      display: inline-block;
+      margin: 0 10px;
+    }
+    .tab {
+      margin-bottom: 10px;
+    }
+    .tab button {
+      padding: 6px 12px;
+      border: 1px solid #ccc;
+      background: #f0f0f0;
+      cursor: pointer;
+      margin-right: 5px;
+    }
+    .tab button.active {
+      background: #26c6da;
+      color: white;
+    }
+    .total-count {
+      font-size: 14px;
+      margin: 10px 0;
+    }
+    .report-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .report-table th, .report-table td {
+      border: 1px solid #ccc;
+      padding: 6px;
+      font-size: 13px;
+      text-align: center;
+    }
+    .report-table th {
+      background: #e0e6ed; 
+    }
+
+    .badge {
+      background: red;
+      color: white;
+      border-radius: 50%;
+      padding: 0 6px;
+      font-size: 12px;
+      margin-left: 5px;
+    }
