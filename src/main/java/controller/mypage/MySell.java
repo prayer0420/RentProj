@@ -45,14 +45,16 @@ public class MySell extends HttpServlet {
 		}
 		PageInfo pageInfo = new PageInfo(page);
 		HttpSession session = request.getSession();
-		String id = (String)session.getAttribute("id");
-		System.out.println("로그인ID: "+id);
+//		String id = (String)session.getAttribute("id");
+		Member member = (Member) session.getAttribute("member");
+		String id = member.getId();
+//		System.out.println("로그인ID: "+id);
 		MypageService service = new MypageServiceImpl();
 		try {
 			List<Product> productList = service.productListByPage(pageInfo,id);
 			request.setAttribute("pageInfo", pageInfo);
 			request.setAttribute("productList", productList);
-			System.out.println(productList);
+//			System.out.println(productList);
 			request.getRequestDispatcher("/JSP/MyPage/mySell.jsp").forward(request, response);
 		}catch (Exception e) {
 			e.printStackTrace();
