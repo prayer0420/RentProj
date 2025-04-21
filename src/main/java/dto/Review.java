@@ -12,10 +12,9 @@ public class Review {
 	Date date;
 	Integer productNo;
 	
-	Review(){}
-	Review(Integer memberNo,String title,String contents,Integer score,Integer productNo){
+	public Review(){}
+	public Review(Integer memberNo,String contents,Integer score,Integer productNo){
 		this.memberNo = memberNo;
-		this.title = title;
 		this.contents = contents;
 		this.score = score;
 		this.productNo = productNo;

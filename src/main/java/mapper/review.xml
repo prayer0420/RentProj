@@ -1,1 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="mapper.review">
+	<insert id="insertReview" parameterType="Review" useGeneratedKeys="true" keyProperty="no">
+		insert into review (no,memberNo,contents,score,productNo) 
+		values(#{no},#{memberNo},#{contents},#{score},#{productNo})
+	</insert>
+	
+	<select id="selectReview" parameterType="Integer" resultType="Review">
+		select r.*,m.nickname from review r join member m on r.memberNo = m.no 
+		where r.productNo = #{productNo} order by r.no DESC
+	</select>
+	
+</mapper>

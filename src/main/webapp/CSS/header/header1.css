@@ -28,92 +28,83 @@ hr {
 	margin: 0 auto;
 }
 
-/* 헤더 */
 header.top-nav {
-	background-color: rgb(253, 251, 247);
-	margin: 0 auto;
-	height: 100px;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	padding: 16px 24px;
-	border-bottom: 1px solid #e2e8f0;
-	width: 100%;
+  background-color: rgb(253, 251, 247);
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1px solid #e2e8f0;
 }
 
-.left-header {
-	display: flex;
-	align-items: center;
-	gap: 16px;
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 60px;
+  max-width: 1200px;
+  width: 100%;
+}
+
+.logo-area {
+  display: flex;
+  align-items: center;
+  gap: 20px;
 }
 
 .logo {
-	font-size: 50px;
-	font-weight: bold;
-	color: #1f2937;
-	margin-left: 300px;
-}
-
-.product-register {
-	padding: 6px 12px;
-	background-color: #2f855a;
-	color: #fff;
-	border: none;
-	border-radius: 6px;
-	font-size: 14px;
-	cursor: pointer;
-}
-
-.search-box input {
-	width: 500px;
-	padding: 10px 16px;
-	border: 1px solid #d1d5db;
-	border-radius: 40px;
-	font-size: 14px;
-	margin-left: -300px;
-	margin-right: -300px;
-}
-
-.header-actions {
-	display: flex;
-	gap: 20px;
-	align-items: center;
-	font-size: 14px;
-	color: #4b5563;
-	margin-right: 500px;
-}
-
-.header-actions button {
-	background: none;
-	border: none;
-	cursor: pointer;
-	font-size: 14px;
+  font-size: 32px;
+  font-weight: bold;
+  color: #1f2937;
 }
 
 .product-add {
-	margin-right: 50px;
+  font-size: 16px;
+  color: #1f2937;
+  text-decoration: none;
 }
 
-.search-category-bar {
-  background-color: rgb(253, 243, 230);
-  padding: 20px 8%;
+.search-box {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid #e5e7eb;
+  gap: 8px;
 }
 
-.search-category-bar input {
-  width: 400px;
+.search-box input {
+  width: 360px;
   padding: 10px 16px;
   border: 1px solid #d1d5db;
   border-radius: 40px;
   font-size: 14px;
 }
 
-.search-category-bar button {
+.search-box button {
+  border: none;
+  background: none;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.header-actions button {
   background: none;
   border: none;
+  font-size: 14px;
   cursor: pointer;
-  font-size: 18px;
 }
+.header-actions button#btn-logout {
+  color: #f44336; /* 빨간 글씨 */
+  font-weight: bold;
+}
+
+.location-display {
+  font-size: 12px;
+  color: #1e90ff; /* 파란색 */
+  margin-top: 4px;
+}
+

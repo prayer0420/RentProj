@@ -19,9 +19,18 @@ public interface ProductService {
     Product selectProductOne(Integer no) throws Exception;
     
     PageInfo getPageInfo(String searchText, String categoryNo, String tradeType, String sort, int page);
-    
+    //상품 목록 불러오기
     List<Category> getAllCategories();
     List<Product> getProducts(String searchText,Integer categoryNo,String tradeType,String sort,PageInfo pageInfo);
     
 
+	//페이징
+    PageInfo getPageInfo(String searchText, String categoryNo, String tradeType, String sort, int page);
+    //상품 목록 불러오기
+    List<Category> getAllCategories();
+    List<Product> getProducts(String searchText,Integer categoryNo,String tradeType,String sort,PageInfo pageInfo);
+    //메인페이지
+	List<Product> getPopularProducts(int limit);
+	//근처상품
+    public List<Product> getProductsNearby(double userLat, double userLng, double radiusKm);
 }

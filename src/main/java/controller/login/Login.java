@@ -37,8 +37,10 @@ public class Login extends HttpServlet {
 		try {
 			Member member = service.login(id, password);
 			member.setPassword("");
+			
 			HttpSession session = request.getSession();
 			session.setAttribute("member", member);
+			System.out.println(member.getNo());
 			
 			//자동로그인 체크에 따른 쿠키 설정
 			Cookie cookie1 = null;

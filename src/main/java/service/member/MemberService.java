@@ -19,4 +19,8 @@ public interface MemberService {
     //관리자 정보 조회 및 업데이트
     Member selectAdmin();
     void updateAdminInfo(Member member) throws Exception;
+    
+    //위치
+    public String updateLocationAndGetAddress(int memberNo, double lat, double lng);
+
 }

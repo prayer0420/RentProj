@@ -17,5 +17,6 @@ public interface MemberDAO {
     Member selectAdmin();
     //관리자 기본 정보 (비밀번호, 이름, 닉네임) 수정 
     void updateAdminInfo(Member member) throws Exception;
-
+    //위치
+    public void updateLocation(int memberNo, double lat, double lng, String address);
 }

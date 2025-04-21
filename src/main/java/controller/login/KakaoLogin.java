@@ -29,9 +29,9 @@ public class KakaoLogin extends HttpServlet {
 		try {
 			Member member = service.KakaoLogin(code);
 			HttpSession session = request.getSession();
-			session.setAttribute("member", member.getId());
+			session.setAttribute("member", member);
 			
-			response.sendRedirect("join");
+			response.sendRedirect("main");
 		}catch(Exception e) {
 			e.printStackTrace();
 			request.setAttribute("err", "로그인에 실패했습니다.");

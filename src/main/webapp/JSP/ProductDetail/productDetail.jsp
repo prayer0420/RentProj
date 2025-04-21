@@ -35,14 +35,14 @@
 					<c:choose>
 						<c:when test="${product.tradeType == '무료나눔' }"></c:when>
 						<c:when test="${product.tradeType == '대여' }">
-							<div class="rent-price">${product.rentPrice}원/ 1일</div>
+							<div class="rent-price">${product.rentPrice}원/1일</div>
 							<div class="sec-price">보증금 ${product.secPrice}</div>
 						</c:when>
 						<c:when test="${product.tradeType == '판매' }">
 							<div class="sale-price">${product.salePrice}원</div>
 						</c:when>
 						<c:when test="${product.tradeType == '대여/판매' }">
-							<div class="rent-price">${product.rentPrice}원/ 1일</div>
+							<div class="rent-price">${product.rentPrice}원/1일</div>
 							<div class="sec-price">보증금 ${product.secPrice}원</div>
 							<div class="sale-price">판매가 ${product.salePrice}원</div>
 						</c:when>
@@ -71,9 +71,10 @@
 						</c:if>
 						<c:choose>
 							<c:when test="${product.tradeType=='판매' }">
-								<form action="${pageContext.request.contextPath}/productOrder?no=${product.no}">
-									method="get">
-									<input type="hidden" name="productNo" value="${product.no}" />
+								<form
+									action="${pageContext.request.contextPath}/productOrder?no=${product.no}">
+									method="get"> <input type="hidden" name="productNo"
+										value="${product.no}" />
 
 									<button class="btn btn-sell">구매하기</button>
 								</form>
@@ -143,23 +144,23 @@
 					</div>
 				</form>
 				<!--리뷰조회-->
-				<jsp:include page="reviewList.jsp"></jsp:include>
+				<div id="review-list-container">
+					<jsp:include page="reviewList.jsp" />
+				</div>
+
 
 			</div>
 		</div>
 	</div>
-	
 </body>
-<footer>
-<%@ include file="footer.jsp"%>
-</footer>
+
 <jsp:include page="messageModal.jsp">
 	<jsp:param value="${product.no }" name="productNo" />
 	<jsp:param value="${product.tradeType }" name="tradeType" />
 </jsp:include>
 
 
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     const tabItems = document.querySelectorAll('.tab-item');
     const tabPanes = document.querySelectorAll('.tab-pane');
@@ -188,6 +189,33 @@
 	function closeMessageModal() {
 	  document.getElementById('messageModal').style.display = 'none';
 	}
+	
+	 $('#review-form').on('submit', function (e) {
+		    e.preventDefault(); // 기본 제출 막기
+
+		    const formData = {
+		      content: $('textarea[name="content"]').val(),
+		      rating: $('select[name="rating"]').val(),
+		      productNo: '${product.no}'
+		    };
+
+		    $.ajax({
+		      type: 'POST',
+		      url: '${pageContext.request.contextPath}/reviewWrite', // ← 리뷰 등록 서블릿
+		      data: formData,
+		      success: function () {
+		        alert('리뷰가 등록되었습니다!');
+		        $('#review-form')[0].reset();
+		        $('#review-form').hide();
+
+		        // 🔁 리뷰 리스트를 다시 불러오기
+		        $('#review-list-container').load('${pageContext.request.contextPath}/review/list?productNo=${product.no}');
+		      },
+		      error: function () {
+		        alert('리뷰 등록에 실패했습니다.');
+		      }
+		    });
+		  });
 	
 	
 	
