@@ -12,6 +12,7 @@
 <meta charset="UTF-8">
 <title>My Product List</title>
 <link rel="stylesheet" href="${contextPath}/CSS/mypage/mySell.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
 <!-- 헤더 (로고 + 검색창 + 카테고리) -->
@@ -80,30 +81,14 @@
 	              </div>
 	              <div class="status-change-btns">
 	               <c:if test="${item.orderStatus eq '결제완료'}">
-				        <button class="open-invoice-btn" data-orderno="${item.orderNo}">송장번호입력</button>
+				        <button type="button" class="open-invoice-btn" data-orderno="${item.orderNo}">송장번호입력</button>
 				   </c:if> 
 	              </div>
 	            </div>
 	          </div>
           </form>
           </c:forEach>
-          
-          <!-- 송장번호입력 모달 -->
-          <div id="invoceModal" class="modal">
-					  <div class="modal-content">
-					    <span class="close-tracking">&times;</span>
-					    <form id="invoiceForm">
-					      <input type="hidden" id="orderNo" value="${item.orderNo}" />
-					      <label for="deliveryComp">택배사</label>
-					      <input type="text" id="deliveryComp" required />
-					      <label for="invoiceNo">송장번호</label>
-					      <input type="text" id="invoiceNo" required />
-					      <button type="button" id="submitInvoiceBtn">등록</button>
-					    </form>
-					  </div>
-					</div>
-					
-					
+          		
           <!-- 페이징 처리 --> 
           <br>
 			<jsp:include page="/JSP/MyPage/mypagePaging.jsp" />
@@ -111,55 +96,13 @@
         </section>
       </div>
     </div>
-    
 					
-<!-- 푸터 -->
-  <jsp:include page="/JSP/Header/footer.jsp" />
-  
+		<!-- 푸터 -->
+		  <jsp:include page="/JSP/Header/footer.jsp" />
+
+
+          <!-- 송장번호입력 모달 -->
+          <jsp:include page="/JSP/MyPage/mypageModal.jsp" />
+					
 </body>
-
-	<script type="text/javascript">
-	
-		<!-- modal.js (jQuery) -->
-		$(document).ready(function () {
-			
-		  // 송장번호 입력 모달 열기
-		  $(".open-invoice-btn").on("click", function () {
-		    const orderNo = $(this).data("order");
-		    $("#orderNo").val(orderNo); // hidden input에 세팅
-		    $("#invoiceModal").fadeIn();
-		  });
-		
-		    $.ajax({
-		        type: "POST",
-		        url: "/InvoiceSetting", // 서블릿 매핑 경로
-		        data: {
-		            orderNo: orderNo,
-		            deliveryComp: deliveryComp,
-		            invoiceNo: invoiceNo
-		        },
-		        success: function (res) {
-		            // 성공 시 페이지 리다이렉트
-		            window.location.href = "/mySellDetail";
-		        },
-		        error: function (xhr, status, error) {
-		            alert("송장 입력에 실패했습니다. 다시 시도해주세요.");
-		        }
-		    });
-		});
-		  
-		  // 닫기
-		  $(".close").on("click", function () {
-		    $("#invoiceModal").fadeOut();
-		  });
-				
-		  // 외부 클릭 시 모달 닫기
-		  $(window).on("click", function (e) {
-		    if ($(e.target).is("#invoiceModal")) {
-		      $("#invoiceModal").fadeOut();
-		    }
-		  });
-		});
-	</script>
-
 </html>
