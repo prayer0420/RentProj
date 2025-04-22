@@ -2,6 +2,7 @@ package controller.mypage;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import dto.Member;
-import dto.Product;
 import service.mypage.MypageService;
 import service.mypage.MypageServiceImpl;
 import utils.PageInfo;
@@ -60,7 +60,7 @@ public class MySell extends HttpServlet {
 //		System.out.println("로그인ID: "+id);
 		MypageService service = new MypageServiceImpl();
 		try {
-			List<Product> productList = service.productListByPage(pageInfo,id);
+			List<Map<String,Object>> productList = service.productListByPage(pageInfo,id);
 			request.setAttribute("pageInfo", pageInfo);
 			request.setAttribute("productList", productList);
 //			System.out.println(productList);

@@ -7,6 +7,12 @@
 <title>Insert title here</title>
 </head>
 <body>
+<!-- 헤더 (로고 + 검색창 + 카테고리) -->
+  <jsp:include page="/JSP/Header/header.jsp" />
+  
 <%= request.getAttribute("err") %>
+
+<!-- 푸터 -->
+  <jsp:include page="/JSP/Header/footer.jsp" />
 </body>
 </html>

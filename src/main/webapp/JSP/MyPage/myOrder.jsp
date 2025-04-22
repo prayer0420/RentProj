@@ -10,6 +10,9 @@
 <link rel="stylesheet" href="${contextPath}/CSS/mypage/myOrder.css">
 </head>
 <body>
+<!-- 헤더 (로고 + 검색창 + 카테고리) -->
+  <jsp:include page="/JSP/Header/header.jsp" />
+  
 	<div class="wrapper">
       <div class="container">
         <!-- 사이드바 -->
@@ -164,6 +167,10 @@
       </div>
     </div>
 
+<!-- 푸터 -->
+  <jsp:include page="/JSP/Header/footer.jsp" />
+  
+  
     <!-- 재사용 가능한 모달 -->
     <div id="universalModal" class="modal-overlay">
       <div class="modal-content">
