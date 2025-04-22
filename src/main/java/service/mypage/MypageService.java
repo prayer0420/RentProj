@@ -10,6 +10,7 @@ public interface MypageService {
 
 	List<Map<String,Object>> productListByPage(PageInfo pageInfo, String id) throws Exception;
 	Map<String, Object> mySellDetail(Integer orderNo, String id) throws Exception;
+	boolean updateInvoiceInfo(Integer orderNo, String deliveryComp, String invoiceNo) throws Exception;
 
 //	List<Order> orderListByPage(PageInfo pageInfo) throws Exception;
 

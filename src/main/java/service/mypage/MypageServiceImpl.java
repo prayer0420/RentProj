@@ -48,6 +48,12 @@ public class MypageServiceImpl implements MypageService {
 		return mypageDao.selectMySellDetail(orderNo,id);
 	}
 
+	@Override
+	public boolean updateInvoiceInfo(Integer orderNo, String deliveryComp, String invoiceNo) throws Exception {
+		
+		return mypageDao.updateInvoiceInfo(orderNo, deliveryComp, invoiceNo);
+	}
+
 //	@Override
 //	public List<Order> orderListByPage(PageInfo pageInfo) {
 //		

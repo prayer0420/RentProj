@@ -11,7 +11,7 @@
 	
 	<select id="selectProductListByPage" parameterType="map" resultType="map">
 		select 
-		p.no, p.createDate, p.title, p.img, p.salePrice, p.deliveryprice, o.orderNo
+		p.no, p.createDate, p.title, p.img, p.salePrice, p.deliveryprice, p.deliveryStatus, o.orderNo, o.orderStatus
 		from product p 
 		left join `order` o on (p.no = o.productNo)
 		join member m on (p.memberNo=m.no)
@@ -29,5 +29,12 @@
 		  JOIN member m2 ON p.memberNo = m2.no
 		  where o.orderNo=#{orderNo} and m2.id=#{id}
 	</select>
+	
+	<!-- 송장번호, 택배사 정보 업데이트 -->
+	<update id="updateInvoiceNo" parameterType="map">
+		 UPDATE `Order` 
+		 SET deliveryComp=#{deliveryComp}, invoiceNo=#{invoiceNo}, orderStatus='배송중' 
+		 WHERE orderNo=#{orderNo}
+	</update>
 	
 </mapper>
