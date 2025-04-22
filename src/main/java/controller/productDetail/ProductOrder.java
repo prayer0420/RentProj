@@ -9,6 +9,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import dto.Product;
+import service.product.ProductService;
+import service.product.ProductServiceImpl;
+
 /**
  * Servlet implementation class ProductOrder
  */
@@ -28,21 +32,25 @@ public class ProductOrder extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession(false);
-		if(session == null || session.getAttribute("member")==null) {
-			response.sendRedirect(request.getContextPath()+"/login");
-			
-			return;
+		request.setCharacterEncoding("utf-8");
+		
+		int productNo = Integer.parseInt(request.getParameter("productNo"));
+		ProductService service = new ProductServiceImpl();
+		
+		try {
+			Product product = service.selectProductOne(productNo);			
+			HttpSession session = request.getSession(false);
+			if(session == null || session.getAttribute("member")==null) {
+				response.sendRedirect(request.getContextPath()+"/login");
+				return;
+			}
+			request.setAttribute("product", product);
+			request.getRequestDispatcher("/JSP/ProductDetail/order.jsp").forward(request, response);
+		}catch(Exception e) {
+			e.printStackTrace();
 		}
-		request.getRequestDispatcher("/JSP/ProductDetail/order.jsp").forward(request, response);;
+		
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
-	}
 
 }
