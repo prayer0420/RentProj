@@ -22,7 +22,7 @@ public class Order {
 	// 기본생성자
 	public Order() {}
 	
-	// 매개변수 모두 포함한 생성자
+	// 매개변수 모두 포함한 생성자 (대여거래 경우)
 	public Order(Integer orderNo, Integer memberNo, Date orderDate, String orderType, 
 			Integer price, Integer secPrice, String deliveryAddr, Integer deliveryPrice,
 			String orderStatus, Date startDate, Date endDate,Integer productNo, 
