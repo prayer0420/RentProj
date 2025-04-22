@@ -108,8 +108,11 @@ body {
 }
 
 .btn.confirm {
-  background-color: forestgreen;
-  color: white;
+    background-color: forestgreen;
+    margin: 0 230px;
+    color: white;
+    width: 200px;
+    height: 50px;
 }
 
 .btn.cancel {
@@ -126,5 +129,6 @@ body {
 }
 
 #regionList div {
+  display:inline;
   margin-top: 5px;
 }
