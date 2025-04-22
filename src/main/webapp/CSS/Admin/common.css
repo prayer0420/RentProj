@@ -32,6 +32,12 @@ aside h3 {
   margin: 0;
 }
 
+.leftMenu {
+  background: #e8e8e8;
+  padding: 10px;
+  margin: 0;
+}
+
 .menu {
   padding: 10px;
   cursor: pointer;

@@ -10,6 +10,7 @@ public class ReportedProduct {
     private String contents;
     private String title;     // 신고 제목
     private Date date;
+    private String status;  // 뱃지 표시 위한 상태 추가 (new, hidden, active 등)
 
     // 상품 정보
     private int productNo;
@@ -89,7 +90,13 @@ public class ReportedProduct {
 	public void setHide(boolean hide) {
 	    this.hide = hide;
 	}
-    
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
     
     
 }

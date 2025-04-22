@@ -32,32 +32,32 @@
   <select id="selectReportedProductList"
           resultMap="reportedProductMap"
           parameterType="dto.ReportQueryParams">
-    SELECT 
-      r.no AS reportNo,
-      r.type,
-      r.contents,
-      r.title,
-      r.date,
-      p.no AS productNo,
-      p.title AS productTitle,
-      p.tradeType,
-      p.state,
-      p.memberNo,
-      p.isHide
-    FROM report r
-    JOIN product p ON r.productNo = p.no
-  		<where>
+		SELECT 
+		    r.no AS reportNo,
+		    r.type,
+		    r.contents,
+		    r.title,
+		    r.date,
+		    p.no AS productNo,
+		    p.title AS productTitle,
+		    p.tradeType,
+		    p.state,
+		    p.memberNo,
+		    p.isHide,
+		    r.status -- 여기서는 status 컬럼을 바로 사용
+		FROM report r
+		JOIN product p ON r.productNo = p.no
+		<where>
 	 	<!-- 신고유형 조건: 전체가 아니고 null/빈값 아닐 때만 적용 -->
 	    <if test="type != null and type != '' and type != '전체'">
-	      r.type = #{type}
-	    </if>
-	
+	        r.type = #{type}
+	    </if>	
 	    <!-- 날짜 조건: 둘 다 있을 경우만 BETWEEN 적용 -->
 	    <if test="start != null and start != '' and end != null and end != ''">
 	      <if test="type != null and type != '' and type != '전체'">
 	        AND
 	      </if>
-	      r.date BETWEEN #{start} AND #{end}
+   			 DATE(r.date) BETWEEN #{start} AND #{end}
 	    </if>
 	  </where>	
     ORDER BY r.date DESC
@@ -81,6 +81,21 @@
     SET isHide = true
     WHERE no = #{no}
   </update>
+  
+  <!-- 신고 상태 건수 조회 (뱃지 추가) 'new' 상태인 신고 건만 카운트 -->  
+  <select id="getNewReportsCount" resultType="int">
+    SELECT COUNT(*)
+    FROM report r
+    WHERE r.status = 'new' 
+</select>
+  
+  
+  <!-- 신고 상태 변경 (뱃지) -->
+	<update id="updateReportStatus" parameterType="int">
+	    UPDATE report 
+	    SET status = 'processed' 
+	    WHERE productNo = #{no}  <!-- productNo로 해당 신고된 상품을 찾기 -->
+	</update>
 	
 	</mapper>
 	

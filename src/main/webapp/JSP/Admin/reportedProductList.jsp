@@ -25,19 +25,20 @@
 <body>
 	<%@ include file="header.jsp" %>
 <div class="container">
-  <aside>
-    <h3>상품관리</h3>
-    <div class="menu active"><a href="reportedProductList" style="color: inherit; text-decoration: none;">신고상품조회 <span class="badge">1</span></a></div>
+  <aside style="width: 200px; border-right: 1px solid #ccc; background: #f9f9f9; flex-shrink: 0;">
+    <h3 style='font-size: 19px;font-weight: bold;'>상품관리</h3>
+    <div class="menu active"><a href="reportedProductList" style="color: inherit; text-decoration: none;">신고상품조회 
+    <span class="badge">${newReportsCount}</span></a></div> <!-- 신고상품의 'new' 상태 카운트 표시 -->
   </aside>
 
   <main>
     <div class="breadcrumb">HOME > 상품관리 > 신고상품조회</div>
 
-    <form action="reportedProductList" method="get">
+    <form action="reportedProductList" method="post">
     <div class="search-box">
       <div class="row">
-		<label>신고유형:
-			<input type="radio" name="report_type" value="전체"
+		<label><b>신고유형:</b>&nbsp;&nbsp;
+			<input type="radio" name="report_type" value="전체" checked="checked"
 			  ${param.report_type == '전체' || empty param.report_type ? 'checked' : ''}> 전체
 			
 			<input type="radio" name="report_type" value="금지품목"
@@ -51,11 +52,11 @@
 		</label>
       </div>
       <div class="row" style="display: flex; align-items: center; gap: 6px;">
-      <label class="ms-4">신고일자:
+      <label><b>신고일자:</b>&nbsp;&nbsp;
         <input type="date" id="startdate" name="startdate" value="${param.startdate}"> ~
         <input type="date"  id="enddate"  name="enddate" value="${param.enddate}">
+	  	<button class="btn-action" type="submit" style="height: 30px;">검색</button>
       </label>
-  	<button class="btn-action" type="submit" style="height: 30px;">검색</button>
       </div>
     </div>
 	</form>
@@ -104,7 +105,7 @@
 				<button class="btn btn-link"
 				        data-bs-toggle="modal"
 				        data-bs-target="#modal"
-		        		data-title="${fn:escapeXml(item.title)}"
+		        		data-title="${item.title}"
 		        		data-contents="${fn:escapeXml(item.contents)}">
 				  ${item.type}
 				</button>
@@ -132,13 +133,35 @@
    
        <div class="notice">
       ※신고 상품 관리 시 새로운 신고 건 LNB 상에 뱃지 표시<br>
-      ※조회하여 1건 체크 시 하단 선택 후 판매여부로 전환/중지처리 가능<br>
       ※상품번호 및 상품명 선택 시 해당 상품 게시글로 화면 이동
     </div>
     
   </main>
 </div>
-    
+			<!-- 모달 구조 -->
+			<div class="modal fade" id="modal" tabindex="-1" aria-hidden="true">
+			  <div class="modal-dialog">
+			    <div class="modal-content">
+			    
+			      <!-- ✅ Modal Header -->
+			      <div class="modal-header">
+			        <h5 class="modal-title">신고 정보 상세</h5>
+			        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="닫기"></button>
+			      </div>
+			
+			      <!-- ✅ Modal Body -->
+			      <div class="modal-body" id="modalContents">
+			        <!-- 자바스크립트에서 데이터가 들어올 부분 -->
+			      </div>
+			
+			      <!-- ✅ Modal Footer -->
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-info" data-bs-dismiss="modal">확인</button>
+			      </div>
+			
+			    </div>
+			  </div>
+			</div>    
 		<!-- 💡 스크립트 영역 -->
 		<script>
 		  document.addEventListener('DOMContentLoaded', function () {
@@ -199,43 +222,20 @@
 				
 				  const title = button.getAttribute('data-title') || '제목 없음';
 				  const contents = button.getAttribute('data-contents') || '내용 없음';
-				
 				  const html = `
 				    <div>
 				      <strong>신고 제목:</strong>
-				      <div style="margin-bottom: 10px;">${title}</div>
+				      <div style="margin-bottom: 10px;">\${title}</div>
 				      <strong>신고 내용:</strong>
-				      <div>${contents}</div>
+				      <div>\${contents}</div>
 				    </div>
 				  `;
-				
+					
+				  console.log(modal.querySelector('#modalContents'))
 				  modal.querySelector('#modalContents').innerHTML = html;
 				});
 		</script>
-			<!-- 모달 구조 -->
-			<div class="modal fade" id="modal" tabindex="-1" aria-hidden="true">
-			  <div class="modal-dialog">
-			    <div class="modal-content">
-			    
-			      <!-- ✅ Modal Header -->
-			      <div class="modal-header">
-			        <h5 class="modal-title">신고 정보 상세</h5>
-			        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="닫기"></button>
-			      </div>
-			
-			      <!-- ✅ Modal Body -->
-			      <div class="modal-body" id="modalContents">
-			        <!-- 자바스크립트에서 데이터가 들어올 부분 -->
-			      </div>
-			
-			      <!-- ✅ Modal Footer -->
-			      <div class="modal-footer">
-			        <button type="button" class="btn btn-info" data-bs-dismiss="modal">확인</button>
-			      </div>
-			
-			    </div>
-			  </div>
-			</div>
+
 		
 
 </body>

@@ -136,7 +136,6 @@ CREATE TABLE `report` (
     `date` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP() DEFAULT CURRENT_TIMESTAMP(),
     `title` VARCHAR(100) NOT NULL,
     `productNo` INT NOT NULL,
-    `Field` VARCHAR(255) NULL,
     PRIMARY KEY (`no`)
 );
 
@@ -230,7 +229,8 @@ ADD CONSTRAINT `FK_mark_member` FOREIGN KEY (`memberNo`) REFERENCES `member`(`no
 ALTER TABLE `product`
 ADD COLUMN `view_cnt` INT NOT NULL DEFAULT 0 COMMENT '조회수';
 
-
+ALTER TABLE report
+ADD COLUMN status VARCHAR(20) DEFAULT 'new';
 
 INSERT INTO grade(gradeNo,gradeName,gradeRate,gradeCount)
 VALUES(1,"1",1.0,1.0);
