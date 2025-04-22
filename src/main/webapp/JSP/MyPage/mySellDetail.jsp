@@ -11,6 +11,9 @@
 <link rel="stylesheet" href="${contextPath}/CSS/mypage/mySellDetail.css">
 </head>
 <body>
+<!-- 헤더 (로고 + 검색창 + 카테고리) -->
+  <jsp:include page="/JSP/Header/header.jsp" />
+  
 <div class="wrapper">
       <div class="container">
         <!-- 사이드바 -->
@@ -65,5 +68,8 @@
           </section>
         </div>
     </div>
+    
+    <!-- 푸터 -->
+  <jsp:include page="/JSP/Header/footer.jsp" />
 </body>
 </html>
