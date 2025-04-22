@@ -52,7 +52,11 @@ public class ReportDAOImpl implements ReportDAO {
 	public boolean activeReport(String[] productNo) {
 		  try {
 	            for (String no : productNo) {
+	                // 상품 활성화
 	                sqlSession.update("mapper.report.activateProduct", Integer.parseInt(no));
+	                
+	                // 신고 상태 업데이트
+	                updateReportStatus(Integer.parseInt(no));  // 상태 업데이트 호출
 	            }
 	            sqlSession.commit();
 	            return true;
@@ -68,7 +72,11 @@ public class ReportDAOImpl implements ReportDAO {
 	public boolean hideReport(String[] productNo) {
 		 try {
 	            for (String no : productNo) {
+	                // 상품 숨김
 	                sqlSession.update("mapper.report.hideProduct", Integer.parseInt(no));
+	                
+	                // 신고 상태 업데이트
+	                updateReportStatus(Integer.parseInt(no));  // 상태 업데이트 호출
 	            }
 	            sqlSession.commit();
 	            return true;
@@ -78,4 +86,33 @@ public class ReportDAOImpl implements ReportDAO {
 	            return false;
 	        }
 	    }
+
+	
+    @Override
+	public int getNewReportsCount() {
+        int count = 0;
+
+        try (SqlSession session = MybatisSqlSessionFactory.getSqlSessionFactory().openSession()) {
+            count = session.selectOne("mapper.report.getNewReportsCount");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return count;
+    
+    }
+
+	@Override
+	public boolean updateReportStatus(int productNo) {
+	    try {
+	        // 신고 상품의 상태를 'processed'로 업데이트
+	        sqlSession.update("mapper.report.updateReportStatus", productNo);
+	        sqlSession.commit();
+	        return true;
+	    } catch (Exception e) {
+	        sqlSession.rollback();
+	        e.printStackTrace();
+	        return false;
+	    }
 	}
+}

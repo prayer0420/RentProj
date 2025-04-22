@@ -38,7 +38,7 @@
     align-items: center;
     padding: 14px 30px;
     border-bottom: 1px solid #ccc;
-    background: white;
+    background: white; 
   }
 
   .logo-nav {

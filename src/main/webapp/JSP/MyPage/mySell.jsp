@@ -14,6 +14,8 @@
 <link rel="stylesheet" href="${contextPath}/CSS/mypage/mySell.css">
 </head>
 <body>
+<!-- 헤더 (로고 + 검색창 + 카테고리) -->
+  <jsp:include page="/JSP/Header/header.jsp" />
 	 <div class="wrapper">
       <div class="container">
         <!-- 사이드바 -->
@@ -46,17 +48,17 @@
           </div>
 
           <!-- 상품 카드 1 -->
-          <c:forEach var="product" items="${productList }">
+          <c:forEach var="item" items="${productList }">
           <form action="">
 	          <div class="product-card" id="product">
 	            <!-- 주문 정보 상단 영역 -->
 	            <div class="order-info">
 	              <div class="order-meta">
-	                <span class="order-date">상품등록일: ${product.createDate}</span>
-	                <span class="status-text">거래중</span>
+	                <span class="order-date">상품등록일: ${item.createDate}</span>
+	                <span class="status-text">${item.orderStatus }</span>
 	              </div>
 	              <div class="order-status-area">
-	                <a href="${contextPath }/mySellDetail?orderNo=${product.no }" class="order-detail-link">거래 상세보기 &gt;</a>
+	                <a href="${contextPath }/mySellDetail?orderNo=${item.orderNo }" class="order-detail-link">거래 상세보기 &gt;</a>
 	              </div>
 	            </div>
 	
@@ -71,87 +73,93 @@
 	                class="product-image"
 	              />
 	              <div class="product-info">
-	                <p>${product.no }</p>
-	                <h3>${product.title }</h3>
-	                <p>가격: ${product.salePrice }원</p>
-	                <p>배송비: ${product.deliveryPrice}원</p>
+	                <p>${item.no }</p>
+	                <h3>${item.title }</h3>
+	                <p>가격: ${item.salePrice }원</p>
+	                <p>배송비: ${item.deliveryPrice}원</p>
 	              </div>
 	              <div class="status-change-btns">
-	                <button type="submit" id="confrim-order">송장번호입력</button>
-	                <button
-	                  onclick="openModalWith('주문을 취소하시겠습니까?', cancelOrder)"
-	                >
-	                  주문취소
-	                </button>
+	               <c:if test="${item.orderStatus eq '결제완료'}">
+				        <button class="open-invoice-btn" data-orderno="${item.orderNo}">송장번호입력</button>
+				   </c:if> 
 	              </div>
 	            </div>
 	          </div>
           </form>
           </c:forEach>
+          
+          <!-- 송장번호입력 모달 -->
+          <div id="invoceModal" class="modal">
+					  <div class="modal-content">
+					    <span class="close-tracking">&times;</span>
+					    <form id="invoiceForm">
+					      <input type="hidden" id="orderNo" value="${item.orderNo}" />
+					      <label for="deliveryComp">택배사</label>
+					      <input type="text" id="deliveryComp" required />
+					      <label for="invoiceNo">송장번호</label>
+					      <input type="text" id="invoiceNo" required />
+					      <button type="button" id="submitInvoiceBtn">등록</button>
+					    </form>
+					  </div>
+					</div>
+					
+					
+          <!-- 페이징 처리 --> 
+          <br>
+			<jsp:include page="/JSP/MyPage/mypagePaging.jsp" />
+			
         </section>
       </div>
     </div>
-
-    <!-- 재사용 가능한 모달 -->
-    <div id="universalModal" class="modal-overlay">
-      <div class="modal-content">
-        <p id="modalMessage">여기에 메시지가 들어갑니다</p>
-        <div class="modal-buttons">
-          <button onclick="handleModalConfirm()">확인</button>
-          <button onclick="closeModal()">취소</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- 자바스크립트 코드 -->
-    <script>
-      function toggleSubmenu(clickedTitle) {
-        const menuItem = clickedTitle.parentElement;
-
-        if (menuItem.classList.contains("active")) {
-          menuItem.classList.remove("active");
-        } else {
-          document
-            .querySelectorAll(".menu-item")
-            .forEach((item) => item.classList.remove("active"));
-          menuItem.classList.add("active");
-        }
-      }
-
-      /* 모달창 관련: 메시지, 콜백 함수 코드 */
-      let modalConfirmCallback = null;
-
-      function openModalWith(message, onConfirmCallback) {
-        document.getElementById("modalMessage").textContent = message;
-        modalConfirmCallback = onConfirmCallback;
-        document.getElementById("universalModal").style.display = "flex";
-      }
-
-      function handleModalConfirm() {
-        if (typeof modalConfirmCallback === "function") {
-          modalConfirmCallback();
-        }
-        closeModal();
-      }
-
-      function closeModal() {
-        document.getElementById("universalModal").style.display = "none";
-      }
-
-      // 각각의 동작 정의
-      function deleteProduct() {
-        alert("상품을 삭제합니다");
-        // 실제 삭제 API 호출 등
-      }
-
-      function hideProduct() {
-        alert("상품을 숨깁니다");
-      }
-
-      function cancelOrder() {
-        alert("주문을 취소합니다");
-      }
-    </script>
-
+    
+					
+<!-- 푸터 -->
+  <jsp:include page="/JSP/Header/footer.jsp" />
+  
 </body>
+
+	<script type="text/javascript">
+	
+		<!-- modal.js (jQuery) -->
+		$(document).ready(function () {
+			
+		  // 송장번호 입력 모달 열기
+		  $(".open-invoice-btn").on("click", function () {
+		    const orderNo = $(this).data("order");
+		    $("#orderNo").val(orderNo); // hidden input에 세팅
+		    $("#invoiceModal").fadeIn();
+		  });
+		
+		    $.ajax({
+		        type: "POST",
+		        url: "/InvoiceSetting", // 서블릿 매핑 경로
+		        data: {
+		            orderNo: orderNo,
+		            deliveryComp: deliveryComp,
+		            invoiceNo: invoiceNo
+		        },
+		        success: function (res) {
+		            // 성공 시 페이지 리다이렉트
+		            window.location.href = "/mySellDetail";
+		        },
+		        error: function (xhr, status, error) {
+		            alert("송장 입력에 실패했습니다. 다시 시도해주세요.");
+		        }
+		    });
+		});
+		  
+		  // 닫기
+		  $(".close").on("click", function () {
+		    $("#invoiceModal").fadeOut();
+		  });
+				
+		  // 외부 클릭 시 모달 닫기
+		  $(window).on("click", function (e) {
+		    if ($(e.target).is("#invoiceModal")) {
+		      $("#invoiceModal").fadeOut();
+		    }
+		  });
+		});
+	</script>
+
 </html>

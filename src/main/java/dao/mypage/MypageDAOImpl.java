@@ -17,9 +17,9 @@ public class MypageDAOImpl implements MypageDAO {
 	public Integer selectProductCountById(String id) throws Exception {
 		return sqlSession.selectOne("mapper.mypage.selectProductCnt",id);
 	}
-
+	
 	@Override
-	public List<Product> selectProductListByPage(Map<String, Object> paramMap) throws Exception {
+	public List<Map<String, Object>> selectProductListByPage(Map<String, Object> paramMap) throws Exception {
 		return sqlSession.selectList("mapper.mypage.selectProductListByPage", paramMap);
 	}
 	
@@ -34,6 +34,7 @@ public class MypageDAOImpl implements MypageDAO {
 	    sqlSession.commit();
 	}
 
+	// 마이페이지 판매상품 거래내역 상세 불러오기
 	@Override
 	public Map<String, Object> selectMySellDetail(Integer orderNo, String id) {
 		Map<String,Object> param = new HashMap<String, Object>();
@@ -41,6 +42,19 @@ public class MypageDAOImpl implements MypageDAO {
 		param.put("id",id);
 		return sqlSession.selectOne("mapper.mypage.selectMySellDetail",param);
 	}
+
+	// 송장번호/택배사 업데이트
+	@Override
+	public boolean updateInvoiceInfo(Integer orderNo, String deliveryComp, String invoiceNo) throws Exception {
+		Map<String,Object> param = new HashMap<>();
+		param.put("orderNo", orderNo);
+		param.put("deliveryComp", deliveryComp);
+		param.put("invoiceNo", invoiceNo);
+		Integer result = sqlSession.update("mapper.mypage.updateInvoiceNo",param);
+		sqlSession.commit();
+		return result == 1;
+	}
+
 
 	
 
