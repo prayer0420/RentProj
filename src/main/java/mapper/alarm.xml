@@ -2,3 +2,18 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 	
+	
+<mapper namespace="mapper.alarm">
+	<insert id="insertAlarm" parameterType ="alarm" useGeneratedKeys="true" keyProperty="num">
+			insert into alarm (sendId,sendName,recvId,title,body)
+				values (#{sendId}, #{sendName}, #{recvId}, #{title}, #{body})
+	</insert>
+	
+	<select id="selectAlarmList" parameterType="String" resultType="alarm">
+		select * from alarm where recvId=#{id} and confirm= false order by num desc
+	</select>
+	
+	<update id="updateAlarmConfirm" parameterType="Integer">
+		update alarm set confirm=1 where num=#{num}
+	</update>
+</mapper>

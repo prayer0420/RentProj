@@ -41,6 +41,7 @@
 		<mapper resource="mapper/note.xml"/>
 		<mapper resource="mapper/report.xml"/>
 		<mapper resource="mapper/alarmList.xml"/>
+		<mapper resource="mapper/alarm.xml"/>
 		
 	</mappers>
 </configuration>

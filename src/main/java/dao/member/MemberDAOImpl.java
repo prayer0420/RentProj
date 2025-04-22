@@ -20,7 +20,7 @@ public class MemberDAOImpl implements MemberDAO {
 	}
 
 	@Override
-	public Member SelectMember(String id) throws Exception {
+	public Member selectMemberById(String id) throws Exception {
 		return sqlSession.selectOne("mapper.member.selectMember",id);
 	}
 
@@ -71,5 +71,15 @@ public class MemberDAOImpl implements MemberDAO {
     public List<String> selectRawAddressList(int memberNo) throws Exception {
         return sqlSession.selectList("mapper.member.selectRawAddressList", memberNo);
     }
+    
+    //fcm토큰
+	@Override
+	public void updateFcmToken(String id, String fcmToken) throws Exception {
+		Map<String,String> param = new HashMap<>();
+		param.put("id", id);
+		param.put("fcmToken", fcmToken);
+		sqlSession.update("mapper.user.updateFcmToken", param);
+		sqlSession.commit();
+	}
     
 }

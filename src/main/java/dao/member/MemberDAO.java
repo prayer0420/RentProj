@@ -7,7 +7,7 @@ import dto.Member;
 
 public interface MemberDAO {
 	void insertMember(Member member) throws Exception;
-	Member SelectMember(String id) throws Exception;
+	Member selectMemberById(String id) throws Exception;
 	void updateMember(Member member)throws Exception;
 	
 	//관리자 리스트 조회용 - 회원 검색 + 페이징된 리스트  
@@ -21,5 +21,7 @@ public interface MemberDAO {
     public void updateLocation(int memberNo, double lat, double lng, String address);
     //배송지
     public List<String> selectRawAddressList(int memberNo) throws Exception;
+    //fcm토큰
+	public void updateFcmToken(String id, String fcmToken) throws Exception;
 
 }

@@ -146,8 +146,8 @@
 	</select>
 
 	<!-- 전체 상품 조회 -->
-<!-- 	<select id="selectAll" resultMap="productMap">
+	<select id="selectAll" resultMap="productMap">
   		SELECT * FROM product
-	</select> -->
+	</select>
 
 </mapper>
