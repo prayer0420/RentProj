@@ -75,6 +75,8 @@
 			document.getElementById('addressAddModal').style.display = 'none';
 		}
 		
+		 
+		
 		
 	      // ------  SDK 초기화 ------
 	      // @docs https://docs.tosspayments.com/sdk/v2/js#토스페이먼츠-초기화
@@ -95,6 +97,20 @@
 	      // ------ '결제하기' 버튼 누르면 결제창 띄우기 ------
 	      // @docs https://docs.tosspayments.com/sdk/v2/js#paymentrequestpayment
 	      async function requestPayment() {
+	    	  const mCheck = document.querySelector('.mCheck');
+			  const pCheck = document.querySelector('.pCheck');
+
+			  // ❗ 체크 안 했으면 경고창 띄우고 함수 종료
+			  if (!mCheck.checked) {
+			    alert("개인정보 수집 이용에 동의해 주세요.");
+			    return;
+			  }
+			  if (!pCheck.checked) {
+			    alert("상품정보 안내에 동의해 주세요.");
+			    return;
+			  }
+	    	  
+	    	  
 	        // 결제를 요청하기 전에 orderId, amount를 서버에 저장하세요.
 	        // 결제 과정에서 악의적으로 결제 금액이 바뀌는 것을 확인하는 용도입니다.
 	        await payment.requestPayment({
