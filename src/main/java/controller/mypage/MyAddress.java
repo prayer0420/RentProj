@@ -1,3 +1,4 @@
+// MyAddressServlet.java
 package controller.mypage;
 
 import java.io.IOException;
@@ -177,7 +178,7 @@ public class MyAddress extends HttpServlet {
         public void setPhone(String phone) { this.phone = phone; }
         public String getRecipient() { return recipient; }
         public void setRecipient(String recipient) { this.recipient = recipient; }
-        public boolean isDefault() { return defaultAddress; }
+        public boolean getDefaultAddress() { return defaultAddress; }
         public void setDefault(boolean isDefault) { this.defaultAddress = isDefault; }
     }
 }
