@@ -32,14 +32,6 @@
 		#{rentPrice}, #{deliveryStatus})
 	</insert>
 	
-  <!-- 전체 조회 (필터·정렬로 별도 메서드에서 제어) -->
-  <select id="selectAll" parameterType="map" resultType="dto.Product">
-    SELECT *
-      FROM product
-    ORDER BY ${orderBy}
-    LIMIT #{offset}, #{limit}
-  </select>
-
 	<!-- 판매+대여 상품 등록 -->
 	<insert id="insertProductRentSell" parameterType="product"
 		useGeneratedKeys="true" keyProperty="no">

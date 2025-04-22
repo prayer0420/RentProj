@@ -48,6 +48,7 @@ CREATE TABLE `member` (
     `adminNo` INT NULL DEFAULT 0,
     `regDate` DATETIME DEFAULT CURRENT_TIMESTAMP() DEFAULT CURRENT_TIMESTAMP(),
     `fcmToken` VARCHAR(255) NULL,
+    `
     PRIMARY KEY (`no`)
 );
 
@@ -273,8 +274,21 @@ VALUES
 (107, 7, '책상', '심플한 책상', 'USED', 'desk.jpg', '광주 북구', 5000, '판매대여', 5000, 7, '2025-04-22', '2025-04-26', 20000, 3000, 0, 90, '가능', NOW() - INTERVAL 7 DAY),
 (108, 8, '아기옷', '귀여운 아기옷', 'USED', 'baby.jpg', '울산 남구', 1000, '판매', NULL, 8, NULL, NULL, 8000, NULL, 0, 15, '가능', NOW() - INTERVAL 8 DAY),
 (109, 9, '강아지 장난감', '사용감 거의 없음', 'USED', 'dog.jpg', '제주 제주시', 1000, '대여', 2000, 9, '2025-04-19', '2025-04-22', NULL, 1000, 0, 5, '가능', NOW() - INTERVAL 9 DAY),
-(110, 10, '기타 품목', '기타 기타', 'NEW', 'etc.jpg', '경기 수원시', 2500, '판매', NULL, 10, NULL, NULL, 6000, NULL, 0, 200, '가능', NOW() - INTERVAL 10 DAY);
+(110, 10, '기타 품목', '기타 기타', 'NEW', 'etc.jpg', '경기 수원시', 2500, '판매', NULL, 10, NULL, NULL, 6000, NULL, 0, 200, '가능', NOW() - INTERVAL 10 DAY),
+(111, 1, '여름 반팔 티셔츠', '시원하고 가벼움', 'NEW', 'shirt.jpg', '서울시 강남구', 2000, '판매', NULL, 3, NULL, NULL, 15000, NULL, 12, 3, '가능', NOW() - INTERVAL 1 DAY),
+(112, 2, '아이폰 12 대여', '생활기스 있음', 'USED', 'iphone.jpg', '부산시  해운대구', 3000, '대여', 50000, 2, '2025-04-22', '2025-04-25', NULL, 8000, 30, 12, '가능', NOW() - INTERVAL 2 DAY),
+(113, 3, '에어프라이어', '거의 새상품', 'USED', 'airfryer.jpg', '대구시 달서구', 5000, '판매', NULL, 1, NULL, NULL, 45000, NULL, 7, 1, '가능', NOW() - INTERVAL 3 DAY),
+(114, 4, '드라이기 대여', '머리 말릴 때 최고', 'USED', 'dryer.jpg', '서울시 관악구', 1500, '대여', 10000, 5, '2025-04-21', '2025-04-23', NULL, 2000, 9, 5, '가능', NOW() - INTERVAL 4 DAY),
+(115, 5, '캠핑 텐트', '3인용, 방수 좋음', 'USED', 'tent.jpg', '경남시 창원시', 3000, '판매대여', 20000, 6, '2025-04-25', '2025-04-28', 70000, 8000, 22, 7, '가능', NOW() - INTERVAL 5 DAY),
+(116, 6, '주방용 칼세트', '잘 들어요', 'NEW', 'knife.jpg', '광주시 북구', 2500, '판매', NULL, 4, NULL, NULL, 22000, NULL, 5, 2, '가능', NOW() - INTERVAL 6 DAY),
+(117, 7, '책상 세트', '책상 + 의자 포함', 'USED', 'desk.jpg', '서울시 마포구', 10000, '판매', NULL, 7, NULL, NULL, 120000, NULL, 11, 6, '가능', NOW() - INTERVAL 7 DAY),
+(118, 8, '아기용 카시트', '깨끗하게 사용함', 'USED', 'carseat.jpg', '전북 전주시', 4000, '대여', 30000, 8, '2025-04-24', '2025-04-27', NULL, 5000, 18, 8, '가능', NOW() - INTERVAL 8 DAY),
+(119, 9, '강아지 집', '접이식, 휴대용', 'NEW', 'doghouse.jpg', '인천 미추홀구', 2000, '판매', NULL, 9, NULL, NULL, 35000, NULL, 6, 1, '가능', NOW() - INTERVAL 9 DAY),
+(120, 10, '기타 장비 대여', '연습용 장비입니다', 'USED', 'guitar.jpg', '충북 청주시', 3000, '대여', 10000, 10, '2025-04-23', '2025-04-26', NULL, 7000, 14, 3, '가능', NOW() - INTERVAL 10 DAY);
 
 
+ALTER TABLE member
+ADD COLUMN latitude DECIMAL(10, 7),
+ADD COLUMN longitude DECIMAL(10, 7);
 
 

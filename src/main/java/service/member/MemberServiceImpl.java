@@ -344,5 +344,12 @@ public class MemberServiceImpl implements MemberService {
           return "";
         }
       }
+    
+    //회원정보 수정,업데이트
+    @Override
+    public void updateMember(Member member) throws Exception {
+    	memberDao.updateMember(member);
+    }
+    
 
 }

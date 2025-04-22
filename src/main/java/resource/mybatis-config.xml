@@ -35,6 +35,7 @@
 		<mapper resource="mapper/product.xml"/>
 		<mapper resource="mapper/category.xml"/>
 		<mapper resource="mapper/member.xml"/>
+		<mapper resource="mapper/order.xml"/>
 		<mapper resource="mapper/mypage.xml"/>
 		<mapper resource="mapper/grade.xml"/>
 		<mapper resource="mapper/note.xml"/>

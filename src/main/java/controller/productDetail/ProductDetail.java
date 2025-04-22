@@ -34,6 +34,7 @@ public class ProductDetail extends HttpServlet {
 		try {
 			Product product = service.selectProductOne(no);
 			request.setAttribute("product", product);
+			request.setAttribute("productNo", product.getNo());
 			System.out.println("product : "+product);	
 			System.out.println("no : "+no);	
 		}catch (Exception e) {
