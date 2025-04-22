@@ -25,7 +25,7 @@
 	          		<img src="${contextPath }/img/tiger.png" alt="사용자 이미지" />
 		            <div class="user-id"><span><b>${member.id}</b></span>&nbsp;<span>님</span></div>
 		            <div class="membership"><span>${grade.gradeName }</span>&nbsp;<span>회원</span></div>
-		            <div class="total-count">총 거래 수: 00회</div>
+		            <div class="total-count">총 거래 수: ${member.orderCount}회</div>
 	          	</c:otherwise>
 	          </c:choose>
             

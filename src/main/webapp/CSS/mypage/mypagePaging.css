@@ -1,0 +1,16 @@
+@charset "UTF-8";
+
+	#paging {
+		margin: 0 auto;
+	}
+
+	#paging a {
+		display: inline-block;
+		width:20px; height:20px; border:solid gray 1px;
+		text-decoration: none;
+		background-color: #fdf3e6;
+		font-size: smaller;
+		text-align: center;
+	}
+	#paging .select { background: #f5a623; }
+	#paging .btn { background: rgb(250, 233, 168); }

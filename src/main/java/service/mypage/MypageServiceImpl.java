@@ -18,7 +18,7 @@ public class MypageServiceImpl implements MypageService {
 	}
 
 	@Override
-	public List<Product> productListByPage(PageInfo pageInfo, String id) throws Exception {
+	public List<Map<String,Object>> productListByPage(PageInfo pageInfo, String id) throws Exception {
 		Integer productCnt = mypageDao.selectProductCountById(id);
 		
 		Integer allPage = (int)Math.ceil((double)productCnt/5);
@@ -37,17 +37,21 @@ public class MypageServiceImpl implements MypageService {
 		paramMap.put("id", id);
 		paramMap.put("row", row);
 		
-		System.out.println(id);
-		List<Product> productList = mypageDao.selectProductListByPage(paramMap);
+		System.out.println(id); 
 		
-		return productList;
+		return mypageDao.selectProductListByPage(paramMap);
 	}
 
 	@Override
 	public Map<String, Object> mySellDetail(Integer orderNo, String id) throws Exception {
 		
-		
 		return mypageDao.selectMySellDetail(orderNo,id);
+	}
+
+	@Override
+	public boolean updateInvoiceInfo(Integer orderNo, String deliveryComp, String invoiceNo) throws Exception {
+		
+		return mypageDao.updateInvoiceInfo(orderNo, deliveryComp, invoiceNo);
 	}
 
 //	@Override
