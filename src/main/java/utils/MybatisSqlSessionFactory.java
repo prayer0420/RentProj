@@ -12,7 +12,9 @@ public class MybatisSqlSessionFactory {
 		try {
 			String resource = "resource/mybatis-config.xml";
 			InputStream inputStream = Resources.getResourceAsStream(resource);
-			
+			if (inputStream == null) {
+			    System.out.println("❌ Config 파일을 찾지 못했습니다: " + resource);
+			}
 			
 			//SqlSessionFactoryBuilder생성
 			SqlSessionFactoryBuilder builder = new SqlSessionFactoryBuilder();

@@ -1,6 +1,6 @@
 package dto;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class Order {
 	private Integer orderNo;
@@ -18,11 +18,12 @@ public class Order {
 	private String paymentType;
 	private String invoiceNo;
 	private String deliveryComp;
+	private String orderId;
 	
 	// 기본생성자
 	public Order() {}
 	
-	// 매개변수 모두 포함한 생성자
+	// 매개변수 모두 포함한 생성자 (대여거래 경우)
 	public Order(Integer orderNo, Integer memberNo, Date orderDate, String orderType, 
 			Integer price, Integer secPrice, String deliveryAddr, Integer deliveryPrice,
 			String orderStatus, Date startDate, Date endDate,Integer productNo, 
@@ -47,22 +48,11 @@ public class Order {
 	
 
 	// 일반 구매(보증금, 대여기간 없음)
-	public Order(Integer orderNo, Integer memberNo, Date orderDate, String orderType, 
-			Integer price, String deliveryAddr, Integer deliveryPrice, 
-			Integer productNo, String paymentType, String invoiceNo, 
-			String deliveryComp, String orderStatus) {
-		this.orderNo = orderNo;
+	public Order(Integer memberNo, Integer price, Integer productNo, String orderId) {
 		this.memberNo = memberNo;
-		this.orderDate = orderDate;
-		this.orderType = orderType;
 		this.price = price;
-		this.deliveryAddr = deliveryAddr;
-		this.deliveryPrice = deliveryPrice;
-		this.orderStatus = orderStatus;
 		this.productNo = productNo;
-		this.paymentType = paymentType;
-		this.invoiceNo = invoiceNo;
-		this.deliveryComp = deliveryComp;
+		this.orderId=orderId;
 	}
 	
 	// 나눔(택배 경우)
@@ -214,6 +204,14 @@ public class Order {
 
 	public void setDeliveryComp(String deliveryComp) {
 		this.deliveryComp = deliveryComp;
+	}
+
+	public String getOrderId() {
+		return orderId;
+	}
+
+	public void setOrderId(String orderId) {
+		this.orderId = orderId;
 	}
 
 

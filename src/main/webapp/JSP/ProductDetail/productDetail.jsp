@@ -33,7 +33,7 @@
 					<div class="product-id">${product.no}</div>
 					<div class="title">${product.title}</div>
 					<c:choose>
-						<c:when test="${product.tradeType == '무료나눔' }"></c:when>
+						<c:when test="${product.tradeType == '나눔' }"></c:when>
 						<c:when test="${product.tradeType == '대여' }">
 							<div class="rent-price">${product.rentPrice}원/1일</div>
 							<div class="sec-price">보증금 ${product.secPrice}</div>
@@ -41,7 +41,7 @@
 						<c:when test="${product.tradeType == '판매' }">
 							<div class="sale-price">${product.salePrice}원</div>
 						</c:when>
-						<c:when test="${product.tradeType == '대여/판매' }">
+						<c:when test="${product.tradeType == '판매대여' }">
 							<div class="rent-price">${product.rentPrice}원/1일</div>
 							<div class="sec-price">보증금 ${product.secPrice}원</div>
 							<div class="sale-price">판매가 ${product.salePrice}원</div>
@@ -71,11 +71,8 @@
 						</c:if>
 						<c:choose>
 							<c:when test="${product.tradeType=='판매' }">
-								<form
-									action="${pageContext.request.contextPath}/productOrder?no=${product.no}">
-									method="get"> <input type="hidden" name="productNo"
-										value="${product.no}" />
-
+								<form action="${pageContext.request.contextPath}/productOrder" method="get"> 
+									<input type="hidden" name="productNo" value="${product.no}" />
 									<button class="btn btn-sell">구매하기</button>
 								</form>
 							</c:when>
@@ -84,9 +81,9 @@
 									<button class="btn btn-rent">대여하기</button>
 								</form>
 							</c:when>
-							<c:when test="${product.tradeType=='대여/판매' }">
-								<form action="${pageContext.request.contextPath}/productOrder"
-									method="get">
+							<c:when test="${product.tradeType=='판매대여' }">
+								<form action="${pageContext.request.contextPath}/productOrder" method="get"> 
+									<input type="hidden" name="productNo" value="${product.no}" />
 									<button class="btn btn-sell">구매하기</button>
 								</form>
 								<form action="">
@@ -152,6 +149,11 @@
 			</div>
 		</div>
 	</div>
+	<c:if test="${param.paid eq 'true'}">
+ 		<script>
+    		alert("🎉 결제가 정상적으로 완료되었습니다!");
+  		</script>
+</c:if>
 </body>
 
 <jsp:include page="messageModal.jsp">

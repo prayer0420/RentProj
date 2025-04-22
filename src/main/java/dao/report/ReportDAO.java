@@ -13,7 +13,10 @@ public interface ReportDAO {
     boolean activeReport(String[] productNo);
     //상품 숨김
     boolean hideReport(String[] productNo);
-    
+    // 새로운 신고 건 수 조회
+    int getNewReportsCount(); 
+    // 신고 상태 업데이트 (처리된 상태로)
+    boolean updateReportStatus(int productNo);
     
 	
 }

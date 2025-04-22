@@ -34,6 +34,18 @@ public class ReportActive extends HttpServlet {
         ReportDAO dao = new ReportDAOImpl();
 		
         boolean success = dao.activeReport(productNo);
+        
+        // 추가: 상품 활성화가 성공했을 경우 status도 'processed'로 변경
+        if (success && productNo != null) {
+            for (String no : productNo) {
+                try {
+                    int productId = Integer.parseInt(no);
+                    dao.updateReportStatus(productId);  // 신고 상태 처리 완료
+                } catch (NumberFormatException e) {
+                    e.printStackTrace(); // 숫자 변환 실패 대비
+                }
+            }
+        }
 		response.getWriter().write(String.valueOf(success));
 	}
 

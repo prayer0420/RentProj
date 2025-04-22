@@ -13,6 +13,7 @@
 		<typeAlias type="dto.Grade" alias ="grade"/>
 		<typeAlias type="dto.Note" alias ="note"/>
 		<typeAlias type="dto.ReportedProduct" alias ="report"/>
+		<typeAlias type="dto.AlarmMessage" alias ="alarmMessage"/>
 	</typeAliases>
 	
 	<environments default="development">
@@ -34,9 +35,12 @@
 		<mapper resource="mapper/product.xml"/>
 		<mapper resource="mapper/category.xml"/>
 		<mapper resource="mapper/member.xml"/>
+		<mapper resource="mapper/order.xml"/>
 		<mapper resource="mapper/mypage.xml"/>
 		<mapper resource="mapper/grade.xml"/>
 		<mapper resource="mapper/note.xml"/>
 		<mapper resource="mapper/report.xml"/>
+		<mapper resource="mapper/alarmList.xml"/>
+		
 	</mappers>
 </configuration>

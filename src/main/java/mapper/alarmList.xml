@@ -1,1 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.alarmMessage">
+
+  <select id="selectAll" resultType="dto.AlarmMessage">
+    SELECT * FROM AlarmMessage
+  </select>
+
+  <insert id="insert" parameterType="dto.AlarmMessage">
+    INSERT INTO AlarmMessage (type, title, content, remark)
+    VALUES (#{type}, #{title}, #{content}, #{remark})
+  </insert>
+
+  <delete id="delete" parameterType="list">
+    DELETE FROM AlarmMessage WHERE no IN
+    <foreach collection="list" item="no" open="(" separator="," close=")">
+      #{no}
+    </foreach>
+  </delete>
+  
+  <select id="selectOne" parameterType="int" resultType="controller.alarm.AlarmMessage">
+  SELECT * FROM alarmmessage
+  WHERE no = #{no}
+</select>
+
+</mapper>

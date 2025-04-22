@@ -34,8 +34,16 @@ public class ReportHide extends HttpServlet {
         ReportDAO dao = new ReportDAOImpl();
 
         boolean success = dao.hideReport(productNo); 
+        
+        // 상품 숨김 성공 시 → 신고 상태를 'processed'로 변경 (뱃지용)
+        if (success) {
+            for (String no : productNo) {
+                dao.updateReportStatus(Integer.parseInt(no));
+            }
+            
         response.getWriter().write(String.valueOf(success));
 	
-	}
+        }
 
+	}
 }
