@@ -19,7 +19,7 @@
           <div class="profile-section" id="member">
 	          <c:choose>
 	          	<c:when test="${member.id eq null }">
-		          	<a href="login">로그인</a>
+					<a href="${contextPath}/login">로그인</a>
 	          	</c:when>
 	          	<c:otherwise>
 	          		<img src="${contextPath }/img/tiger.png" alt="사용자 이미지" />
@@ -64,8 +64,9 @@
 
           <div class="divider"></div>
 
-          <div class="simple-item"><a href="myInfoModify">개인정보 수정</a></div>
-          <div class="simple-item"><a href="#">배송지 관리</a></div>
+          <div class="simple-item"><a href="${contextPath}/myInfoModify">개인정보 수정</a></div>
+          <div class="simple-item"><a href="${contextPath}/myAddress">배송지 관리</a></div>
+          
         </div>
 
 </body>

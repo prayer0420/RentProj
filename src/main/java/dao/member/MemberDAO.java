@@ -19,4 +19,7 @@ public interface MemberDAO {
     void updateAdminInfo(Member member) throws Exception;
     //위치
     public void updateLocation(int memberNo, double lat, double lng, String address);
+    //배송지
+    public List<String> selectRawAddressList(int memberNo) throws Exception;
+
 }

@@ -351,5 +351,9 @@ public class MemberServiceImpl implements MemberService {
     	memberDao.updateMember(member);
     }
     
-
+    //회원정보조회(ID로)
+    @Override
+    public Member getMemberById(String id) throws Exception {
+        return memberDao.SelectMember(id);
+    }
 }

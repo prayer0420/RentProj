@@ -64,5 +64,12 @@ public class MemberDAOImpl implements MemberDAO {
         map.put("location", address);
         sqlSession.update("mapper.member.updateLocation", map);
         sqlSession.commit();
-      }
+    }
+    
+    //배송지 리스트 가져오기
+    @Override
+    public List<String> selectRawAddressList(int memberNo) throws Exception {
+        return sqlSession.selectList("mapper.member.selectRawAddressList", memberNo);
+    }
+    
 }
