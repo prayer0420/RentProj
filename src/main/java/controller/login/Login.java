@@ -36,7 +36,7 @@ public class Login extends HttpServlet {
 		MemberService service = new MemberServiceImpl();
 		try {
 			Member member = service.login(id, password);
-			member.setPassword("");
+//			member.setPassword("");
 			
 			HttpSession session = request.getSession();
 			session.setAttribute("member", member);

@@ -13,14 +13,6 @@
 </head>
 <body>
 	<header class="top-nav">
-		<div class="left-header">
-			<a href="${pageContext.request.contextPath}/JSP/Main/main.jsp">
-				<divclass="logo">RE:NT</div>
-			</a> 
-			<a href="${pageContext.request.contextPath}/JSP/ProductRegister/productRegister.jsp" class="product-add">
-				상품 등록
-			</a>
-		</div>
 		<div class="header-inner">
 
 			<div class="logo-area">
@@ -47,7 +39,7 @@
 				</div>
 
 				<button>🔔 알림</button>
-				<button>📄 마이페이지</button>
+				<button><a href="myOrder">📄 마이페이지</a></button>
 				<c:choose>
 					<c:when test="${not empty member}">
 						<button id="btn-logout">🚪 로그아웃</button>

@@ -32,7 +32,6 @@
 		#{rentPrice}, #{deliveryStatus})
 	</insert>
 	
-
 	<!-- 판매+대여 상품 등록 -->
 	<insert id="insertProductRentSell" parameterType="product"
 		useGeneratedKeys="true" keyProperty="no">
