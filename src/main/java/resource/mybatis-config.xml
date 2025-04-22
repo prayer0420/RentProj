@@ -32,5 +32,6 @@
 		<mapper resource="mapper/category.xml"/>
 		<mapper resource="mapper/member.xml"/>
 		<mapper resource="mapper/mypage.xml"/>
+		<mapper resource="mapper/order.xml"/>
 	</mappers>
 </configuration>
