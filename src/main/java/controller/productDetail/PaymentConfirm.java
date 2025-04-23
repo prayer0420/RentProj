@@ -61,6 +61,7 @@ public class PaymentConfirm extends HttpServlet {
 		Member member = (Member) session.getAttribute("member");
 		Integer memberNo = member.getNo();
 		Integer price = Integer.parseInt(amount);
+		String deliveryAddr = member.getAddress1()+member.getRegion1();
 
 		// 여기서 orderId로부터 productNo 추출 (예: ORDER_123_1710000000)
 		String[] parts = orderId.split("_");
@@ -96,7 +97,7 @@ public class PaymentConfirm extends HttpServlet {
 		}
 		reader.close();
 
-		Order order = new Order(memberNo, price,productNo, orderId);
+		Order order = new Order(memberNo, price,productNo, deliveryAddr,orderId);
 		OrderService service = new OrderServiceImpl();
 		try {
 			if (status == 200) {
@@ -105,7 +106,6 @@ public class PaymentConfirm extends HttpServlet {
 				request.setAttribute("order", order);
 				request.setAttribute("result", responseText.toString());
 				response.sendRedirect("productDetail?no=" + productNo + "&paid=true");
-				System.out.println("컨펌성공");
 			} else {
 				// 승인 실패
 				request.setAttribute("error", responseText.toString());

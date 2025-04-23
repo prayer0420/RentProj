@@ -1,7 +1,6 @@
 package controller.productDetail;
 
 import java.io.IOException;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -14,16 +13,16 @@ import service.product.ProductService;
 import service.product.ProductServiceImpl;
 
 /**
- * Servlet implementation class ProductOrder
+ * Servlet implementation class ProductRentOrder
  */
-@WebServlet("/productOrder")
-public class ProductOrder extends HttpServlet {
+@WebServlet("/productRentOrder")
+public class ProductRentOrder extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ProductOrder() {
+    public ProductRentOrder() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,7 +31,7 @@ public class ProductOrder extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("utf-8");
+request.setCharacterEncoding("utf-8");
 		
 		int productNo = Integer.parseInt(request.getParameter("productNo"));
 		ProductService service = new ProductServiceImpl();
@@ -45,11 +44,10 @@ public class ProductOrder extends HttpServlet {
 				return;
 			}
 			request.setAttribute("product", product);
-			request.getRequestDispatcher("/JSP/ProductDetail/order.jsp").forward(request, response);
+			request.getRequestDispatcher("/JSP/ProductDetail/orderRent.jsp").forward(request, response);
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
-		
 	}
 
 

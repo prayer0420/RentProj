@@ -71,23 +71,25 @@
 						</c:if>
 						<c:choose>
 							<c:when test="${product.tradeType=='판매' }">
-								<form action="${pageContext.request.contextPath}/productOrder" method="get"> 
+								<form action="${pageContext.request.contextPath}/productSellOrder" method="get"> 
 									<input type="hidden" name="productNo" value="${product.no}" />
 									<button class="btn btn-sell">구매하기</button>
 								</form>
 							</c:when>
 							<c:when test="${product.tradeType=='대여' }">
-								<form action="">
+								<form action="${pageContext.request.contextPath}/productRentOrder" method="get">
+									<input type="hidden" name="productNo" value="${product.no}" />
 									<button class="btn btn-rent">대여하기</button>
 								</form>
 							</c:when>
 							<c:when test="${product.tradeType=='판매대여' }">
-								<form action="${pageContext.request.contextPath}/productOrder" method="get"> 
+								<form action="${pageContext.request.contextPath}/productSellOrder" method="get"> 
 									<input type="hidden" name="productNo" value="${product.no}" />
 									<button class="btn btn-sell">구매하기</button>
 								</form>
-								<form action="">
-									<button class="btn btn-rent-">대여하기</button>
+								<form action="${pageContext.request.contextPath}/productRentOrder" method="get">
+									<input type="hidden" name="productNo" value="${product.no}" />
+									<button class="btn btn-rent">대여하기</button>
 								</form>
 							</c:when>
 						</c:choose>
@@ -152,6 +154,8 @@
 	<c:if test="${param.paid eq 'true'}">
  		<script>
     		alert("🎉 결제가 정상적으로 완료되었습니다!");
+    		// 주소에서 paid 파라미터 제거 (브라우저 주소만 바꾸고 리로드 안 함)
+    	    history.replaceState(null, '', location.pathname + location.search.replace(/(&|\?)?paid=true/, ''));
   		</script>
 </c:if>
 </body>

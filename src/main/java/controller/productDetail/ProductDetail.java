@@ -7,10 +7,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import dto.Member;
 import dto.Product;
+import service.order.OrderService;
+import service.order.OrderServiceImpl;
 import service.product.ProductService;
 import service.product.ProductServiceImpl;
 
@@ -28,7 +28,7 @@ public class ProductDetail extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 
 		Integer no = Integer.parseInt(request.getParameter("no"));
-		System.out.println(no);
+		
 		
 		ProductService service = new ProductServiceImpl();
 		try {
