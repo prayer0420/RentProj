@@ -53,7 +53,7 @@ public class MyOrder extends HttpServlet {
 		if(member == null) {
 			// 로그인하지 않은 사용자
 			request.setAttribute("loginId", null);	//JSP에서 분기 처리용
-			request.getRequestDispatcher("/JSP/MyPage/mySell.jsp").forward(request, response);
+			request.getRequestDispatcher("/JSP/MyPage/myOrder.jsp").forward(request, response);
 			return;
 		}
 		
