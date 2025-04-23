@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson; 
+import dto.AlarmMessage;
 import service.alarmList.AlarmMessageService;
 import service.alarmList.AlarmMessageServiceImpl;
 
@@ -41,13 +43,10 @@ public class AlarmMessageDetail extends HttpServlet {
         AlarmMessage alarm = service.getMessageByNo(no);
         // 3. JSON 응답 설정
         response.setContentType("application/json;charset=UTF-8");
-        // 4. ObjectMapper를 사용해 alarm 객체를 JSON 문자열로 변환 후 전송
-        // new ObjectMapper().writeValue(response.getWriter(), alarm);
+        // 4. Gson을 사용해 alarm 객체를 JSON 문자열로 변환 후 응답 전송
+		String json = new Gson().toJson(alarm);
+		response.getWriter().write(json);
 		
-		
-		
-
-	
 	}
 
 }
