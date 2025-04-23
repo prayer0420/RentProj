@@ -26,5 +26,9 @@ public interface MypageDAO {
 	
 	// 나의 구매내역 상세 불러오기(MyOrderDetail)
 	Map<String, Object> selectMyOrderDetail(Integer orderNo, String id) throws Exception;
+	
+	// 나의 빌린상품 리스트 불러오기(MyRent)
+	Integer selectRentCountById(String id);
+	List<Map<String, Object>> selectRentListByPage(Map<String, Object> paramMap);
 
 }

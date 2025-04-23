@@ -80,6 +80,20 @@ public class MypageDAOImpl implements MypageDAO {
 		return sqlSession.selectOne("mapper.mypage.selectMyOrderDetail", param);
 	}
 
+	// 나의 빌린상품 전체 카운트 불러오기(페이징)
+	@Override
+	public Integer selectRentCountById(String id) {
+		
+		return sqlSession.selectOne("mapper.mypage.selectRentCnt",id);
+	}
+
+	// 나의 빌린상품 리스트 불러오기
+	@Override
+	public List<Map<String, Object>> selectRentListByPage(Map<String, Object> paramMap) {
+		
+		return sqlSession.selectList("mapper.mypage.selectRentListByPage",paramMap);
+	}
+
 
 	
 

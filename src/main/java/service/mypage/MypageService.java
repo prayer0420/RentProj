@@ -14,5 +14,6 @@ public interface MypageService {
 	boolean updateInvoiceInfo(Integer orderNo, String deliveryComp, String invoiceNo) throws Exception;
 	List<Map<String, Object>> orderListByPage(PageInfo pageInfo,String id) throws Exception;
 	Map<String, Object> myOrderDetail(Integer orderNo, String id) throws Exception;
+	List<Map<String, Object>> rentListByPage(PageInfo pageInfo, String id) throws Exception;
 
 }
