@@ -315,3 +315,5 @@ VALUES
 INSERT INTO alarmmessage (title, content, type, remark)
 VALUES ('회원가입 환영!', '${id}님, 가입을 환영합니다! 🎉', 'SIGNUP', '회원가입 시 자동 발송 템플릿');
 
+ALTER TABLE `category`
+ADD COLUMN `imgfilename` VARCHAR(100);

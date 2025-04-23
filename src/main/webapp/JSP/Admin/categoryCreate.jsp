@@ -87,6 +87,33 @@
       margin-bottom: 5px;
       font-size: 13px;
     }
+    
+    .btn-file {
+	  background-color: #ddd;
+	  padding: 5px 10px;
+	  border: 1px solid #aaa;
+	  border-radius: 3px;
+	  cursor: pointer;
+	  position: relative;
+	  overflow: hidden;
+	  font-size: 13px;
+	}
+	
+	.btn-file input[type="file"] {
+	  position: absolute;
+	  left: 0;
+	  top: 0;
+	  opacity: 0;
+	  cursor: pointer;
+	  height: 100%;
+	  width: 100%;
+	}	
+	
+	.category-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
   </style>
 </head>
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script> 
@@ -101,6 +128,11 @@
 			$(this).prev().val("true")
 		}
 	})		  
+	
+    $("#imgFile").change(function () {
+      const fileName = this.files.length > 0 ? this.files[0].name : "선택된 파일 없음";
+      $("#fileNameLabel").text(fileName);
+    });
 	
 	$("#regCategory").click(function() {
 		$.ajax({
@@ -143,13 +175,26 @@
   <main>
     <div class="breadcrumb">HOME > 카테고리 > 카테고리등록</div>
 
-    <div class="category-section">
-      <div class="category-row inline">
-        <label for="categoryName">카테고리명</label>
-        <input type="text" class="search-input" id="categoryName">
-        <button class="btn-save" id="regCategory" >✔ 등록</button>
-      </div>
-    </div>
+		<div class="category-section">
+		
+		  <!-- 카테고리명 입력 -->
+		  <div class="category-row inline">
+		    <label for="categoryName">카테고리명</label>
+		    <input type="text" class="search-input" id="categoryName">
+		    <button class="btn-save" id="regCategory">✔ 등록</button>
+		  </div>
+		
+		  <!-- 이미지 선택 -->
+		  <div class="category-row inline">
+		    <label>이미지선택</label>
+		    <label class="btn-file">
+		      + 파일선택
+		      <input type="file" name="img" id="imgFile" style="display: none;">
+		    </label>
+		    <span id="fileNameLabel" class="file-label">선택된 파일 없음</span>
+		  </div>
+	
+	
     
 	<form  action="categoryUpdate" method="post">
     <div class="category-count">총 <span id="count">${fn:length(categoryList) }</span>개<button class="btn-save" style="margin-left: 10px;">✔ 저장</button></div>
@@ -160,6 +205,7 @@
       <tr>
         <th>번호</th>
         <th>카테고리명</th>
+        <th>이미지파일</th>
         <th>숨김 여부</th>
         <th>정렬</th>
       </tr>
@@ -171,6 +217,7 @@
 	        <td>
     	      <input type="text" value="${category.name }" name="name">
         	</td>
+        	<td><input type="text" value="${category.imgfilename }" name="imgfilename" ></td>
         	<td>
          	<c:choose>
         		<c:when test="${category.isActive==true }">
