@@ -91,7 +91,9 @@
           		
           <!-- 페이징 처리 --> 
           <br>
-			<jsp:include page="/JSP/MyPage/mypagePaging.jsp" />
+			<jsp:include page="/JSP/MyPage/mypagePaging.jsp" > 
+				<jsp:param value="baseUrl" name="${contextPath }/mySell" />
+			</jsp:include>
 			
         </section>
       </div>
