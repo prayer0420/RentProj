@@ -82,6 +82,14 @@ public class AlarmMessageDAOImpl implements AlarmMessageDAO {
 	        session.close();
 	    }
 	}
-
-
+	
+	@Override
+    public AlarmMessage selectByType(String type) {
+	    SqlSession session = MybatisSqlSessionFactory.getSqlSessionFactory().openSession();
+        try {
+            return session.selectOne("mapper.alarmMessage.selectByType", type);
+        }finally{
+        	session.close();
+        }
+    }
 }

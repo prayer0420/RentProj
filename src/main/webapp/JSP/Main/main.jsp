@@ -11,14 +11,14 @@
 </head>
 <body>
 
-<jsp:include page="../Header/header1.jsp"/>
-<jsp:include page="../Header/header2.jsp"/>
+<jsp:include page="../Header/header.jsp"/>
+<%-- <jsp:include page="../Header/header2.jsp"/> --%>
 
 <!-- 🔹 위치 정보 없을 때 자동 요청 -->
 <script>
 document.addEventListener("DOMContentLoaded", function() {
-  const lat = "${member.latitude}";
-  const lng = "${member.longitude}";
+	  const lat = "${sessionScope.latitude}";
+	  const lng = "${sessionScope.longitude}";
   function success(pos) {
     $.ajax({
       type: "POST",

@@ -7,7 +7,7 @@
 <mapper namespace="mapper.alarmMessage">
 
   <select id="selectAll" resultType="dto.AlarmMessage">
-    SELECT * FROM AlarmMessage
+    SELECT * FROM alarmmessage
   </select>
 
   <insert id="insert" parameterType="dto.AlarmMessage">
@@ -25,7 +25,7 @@
   </update>
 
   <delete id="delete" parameterType="list">
-    DELETE FROM AlarmMessage WHERE no IN
+    DELETE FROM alarmmessage WHERE no IN
     <foreach collection="list" item="no" open="(" separator="," close=")">
       #{no}
     </foreach>
@@ -34,6 +34,10 @@
   <select id="selectOne" parameterType="int" resultType="dto.AlarmMessage">
   SELECT * FROM alarmmessage
   WHERE no = #{no}
+  </select>
+  
+  <select id="selectByType" parameterType="string" resultType="dto.AlarmMessage">
+    SELECT * FROM AlarmMessage WHERE type = #{type}
   </select>
 
 </mapper>

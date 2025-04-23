@@ -19,6 +19,8 @@ import com.google.gson.JsonParser;
 import dao.member.MemberDAO;
 import dao.member.MemberDAOImpl;
 import dto.Member;
+import service.alarm.FcmService;
+import service.alarm.FcmServiceImpl;
 import utils.PageInfo;
 
 public class MemberServiceImpl implements MemberService {
@@ -72,6 +74,8 @@ public class MemberServiceImpl implements MemberService {
 		Member smember = memberDao.selectMemberById(member.getId());
 		System.out.println(member);
 		if (smember == null) {
+			FcmService fcmService = new FcmServiceImpl();  
+			fcmService.sendSignupAlarm(member.getId()); // 여기서 알림전송
 			memberDao.insertMember(member);
 			return member;
 		} else {
@@ -181,6 +185,10 @@ public class MemberServiceImpl implements MemberService {
 		Member smember = memberDao.selectMemberById(member.getId());
 		System.out.println(member);
 		if (smember == null) {
+
+			FcmService fcmService = new FcmServiceImpl();  
+			fcmService.sendSignupAlarm(member.getId()); // 여기서 알림전송
+			
 			memberDao.insertMember(member);
 			return member;
 		} else {

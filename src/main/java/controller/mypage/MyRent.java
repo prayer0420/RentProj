@@ -12,23 +12,21 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import dto.Member;
-import dto.Order;
-import dto.Product;
 import service.mypage.MypageService;
 import service.mypage.MypageServiceImpl;
 import utils.PageInfo;
 
 /**
- * Servlet implementation class MyOrder
+ * Servlet implementation class MyRent
  */
-@WebServlet("/myOrder")
-public class MyOrder extends HttpServlet {
+@WebServlet("/myRent")
+public class MyRent extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MyOrder() {
+    public MyRent() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -53,7 +51,7 @@ public class MyOrder extends HttpServlet {
 		if(member == null) {
 			// 로그인하지 않은 사용자
 			request.setAttribute("loginId", null);	//JSP에서 분기 처리용
-			request.getRequestDispatcher("/JSP/MyPage/myOrder.jsp").forward(request, response);
+			request.getRequestDispatcher("/JSP/MyPage/myRent.jsp").forward(request, response);
 			return;
 		}
 		
@@ -62,12 +60,12 @@ public class MyOrder extends HttpServlet {
 //		System.out.println("로그인ID: "+id);
 		MypageService service = new MypageServiceImpl();
 		try {
-			List<Map<String,Object>> orderList = service.orderListByPage(pageInfo,id);
+			List<Map<String,Object>> rentList = service.rentListByPage(pageInfo,id);
 			request.setAttribute("pageInfo", pageInfo);
-			request.setAttribute("orderList", orderList);
+			request.setAttribute("rentList", rentList);
 //			System.out.println(orderList);
 			request.setAttribute("loginId", member);
-			request.getRequestDispatcher("/JSP/MyPage/myOrder.jsp").forward(request, response);
+			request.getRequestDispatcher("/JSP/MyPage/myRent.jsp").forward(request, response);
 		}catch (Exception e) {
 			e.printStackTrace();
 			request.setAttribute("err",	"나의 구매상품 목록 조회를 실패했습니다.");

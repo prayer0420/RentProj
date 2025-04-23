@@ -4,34 +4,24 @@ import java.sql.Date;
 
 public class Alarm {
 	
-	int num;
-	String sendId;
-	String sendName;
+	int no;
+	String type;
 	String recvId;
 	String title;
-	String body;
-	boolean confirm;
-	Date createDate;
-	
-	public boolean isConfirm() {
-		return confirm;
+	String content;
+	boolean isActive;
+	Date sentDate;
+	public int getNo() {
+		return no;
 	}
-	public void setConfirm(boolean confirm) {
-		this.confirm = confirm;
+	public void setNo(int no) {
+		this.no = no;
 	}
-	public Date getCreateDate() {
-		return createDate;
+	public String getType() {
+		return type;
 	}
-	public void setCreateDate(Date createDate) {
-		this.createDate = createDate;
-	}
-	public Alarm(String sendId, String sendName, String recvId, String title, String body) {
-		super();
-		this.sendId = sendId;
-		this.sendName = sendName;
-		this.recvId = recvId;
-		this.title = title;
-		this.body = body;
+	public void setType(String type) {
+		this.type = type;
 	}
 	public String getRecvId() {
 		return recvId;
@@ -39,49 +29,50 @@ public class Alarm {
 	public void setRecvId(String recvId) {
 		this.recvId = recvId;
 	}
-
-	public Alarm(int num, String sendId, String sendName, String recvId, String title, String body) {
-		super();
-		this.num = num;
-		this.sendId = sendId;
-		this.sendName = sendName;
-		this.recvId = recvId;
-		this.title = title;
-		this.body = body;
-	}
-	public Alarm() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-	public int getNum() {
-		return num;
-	}
-	public void setNum(int num) {
-		this.num = num;
-	}
-	public String getSendId() {
-		return sendId;
-	}
-	public void setSendId(String sendId) {
-		this.sendId = sendId;
-	}
-	public String getSendName() {
-		return sendName;
-	}
-	public void setSendName(String sendName) {
-		this.sendName = sendName;
-	}
 	public String getTitle() {
 		return title;
 	}
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	public String getBody() {
-		return body;
+	public String getContent() {
+		return content;
 	}
-	public void setBody(String body) {
-		this.body = body;
+	public void setContent(String content) {
+		this.content = content;
 	}
-	
+	public boolean isActive() {
+		return isActive;
+	}
+	public void setActive(boolean isActive) {
+		this.isActive = isActive;
+	}
+	public Date getSentDate() {
+		return sentDate;
+	}
+	public void setSentDate(Date sentDate) {
+		this.sentDate = sentDate;
+	}
+	public Alarm() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	public Alarm(int no, String type, String recvId, String title, String content, boolean isActive, Date sentDate) {
+		super();
+		this.no = no;
+		this.type = type;
+		this.recvId = recvId;
+		this.title = title;
+		this.content = content;
+		this.isActive = isActive;
+		this.sentDate = sentDate;
+	}
+	public Alarm(String type, String recvId, String title, String content, boolean isActive) {
+		super();
+		this.type = type;
+		this.recvId = recvId;
+		this.title = title;
+		this.content = content;
+		this.isActive = isActive;
+	}
 }

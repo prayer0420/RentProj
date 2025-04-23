@@ -15,4 +15,7 @@ public interface AlarmMessageDAO {
     int delete(List<Integer> noList);
     // 알림 메시지 단건 조회 (수정용 모달)
     AlarmMessage selectOne(int no);
+    // 알림 메시지 탬플릿 조회(타입으로)
+    public AlarmMessage selectByType(String type);
+
 }

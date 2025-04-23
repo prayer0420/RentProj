@@ -13,8 +13,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import dto.Member;
+import dto.ParsedAddress;
 import service.member.MemberService;
 import service.member.MemberServiceImpl;
+import utils.AddressParser;
 
 @WebServlet("/myAddress")
 public class MyAddress extends HttpServlet {
@@ -38,7 +40,7 @@ public class MyAddress extends HttpServlet {
             Member member = service.getMemberById(sessionMember.getId());
 
             // 배송지 문자열 → 파싱된 객체 리스트로 변환
-            List<ParsedAddress> addressList = parseAddresses(member);
+            List<ParsedAddress> addressList = AddressParser.parseAddresses(member);
 
             // request에 담아서 JSP로 전달
             request.setAttribute("addressList", addressList);
@@ -73,11 +75,15 @@ public class MyAddress extends HttpServlet {
             if (member.getAddress3() != null) addresses.add(member.getAddress3());
 
             if ("delete".equals(action)) {
-                // 삭제할 배송지 문자열 조합
-                String toDelete = request.getParameter("alias") + "@@" +
-                                  request.getParameter("zipcode") + "@@" +
-                                  request.getParameter("address") + "@@" +
-                                  request.getParameter("detail");
+            	// 삭제할 주소 파라미터 수집
+                String alias = request.getParameter("alias");
+                String zipcode = request.getParameter("zipcode");
+                String address = request.getParameter("address");
+                String detail = request.getParameter("detail");
+
+                // 삭제할 문자열 조합
+                String toDelete = AddressParser.buildAddressString(alias, 
+                				zipcode, address, detail);
 
                 // 리스트에서 해당 주소 제거
                 addresses.removeIf(a -> a.startsWith(toDelete));
@@ -137,48 +143,5 @@ public class MyAddress extends HttpServlet {
         }
     }
 
-    // 문자열로 저장된 배송지를 ParsedAddress 객체 리스트로 변환
-    private List<ParsedAddress> parseAddresses(Member member) {
-        List<ParsedAddress> list = new ArrayList<>();
-        String[] raw = { member.getAddress1(), member.getAddress2(), member.getAddress3() };
 
-        for (int i = 0; i < 3; i++) {
-            if (raw[i] != null && !raw[i].isBlank()) {
-                String[] parts = raw[i].split("@@");
-                if (parts.length >= 4) {
-                    ParsedAddress addr = new ParsedAddress();
-                    addr.setAlias(parts[0]);
-                    addr.setZipcode(parts[1]);
-                    addr.setAddress(parts[2]);
-                    addr.setDetail(parts[3]);
-                    addr.setPhone(member.getPhone());
-                    addr.setRecipient(member.getName());
-                    addr.setDefault(i == 0); // address1이면 기본배송지
-                    list.add(addr);
-                }
-            }
-        }
-        return list;
-    }
-
-    // DTO 클래스: JSP에 출력할 배송지 정보 객체
-    public static class ParsedAddress {
-        private String alias, zipcode, address, detail, phone, recipient;
-        private boolean defaultAddress;
-
-        public String getAlias() { return alias; }
-        public void setAlias(String alias) { this.alias = alias; }
-        public String getZipcode() { return zipcode; }
-        public void setZipcode(String zipcode) { this.zipcode = zipcode; }
-        public String getAddress() { return address; }
-        public void setAddress(String address) { this.address = address; }
-        public String getDetail() { return detail; }
-        public void setDetail(String detail) { this.detail = detail; }
-        public String getPhone() { return phone; }
-        public void setPhone(String phone) { this.phone = phone; }
-        public String getRecipient() { return recipient; }
-        public void setRecipient(String recipient) { this.recipient = recipient; }
-        public boolean getDefaultAddress() { return defaultAddress; }
-        public void setDefault(boolean isDefault) { this.defaultAddress = isDefault; }
-    }
 }

@@ -1,12 +1,14 @@
 package utils;
 
+// 페이징 처리를 위한 정보 저장 및 계산 클래스
+
 public class PageInfo {
-	private Integer curPage;
-	private Integer allPage;
-	private Integer startPage;
-	private Integer endPage;
-	private int pageSize = 10; // 한 페이지당 12개 설정
-	private Integer totalCount;  // 총 데이터 수
+	private Integer curPage;     // 현재 페이지 번호
+	private Integer allPage;     // 전체 페이지 수
+	private Integer startPage;   // 시작 페이지 번호 (네비게이션용)
+	private Integer endPage;     // 끝 페이지 번호 (네비게이션용)
+	private int pageSize = 10;   // 한 페이지당 데이터 수
+	private Integer totalCount;  // 전체 데이터 수
 
 	public PageInfo() {}
 	

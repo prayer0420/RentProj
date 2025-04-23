@@ -29,7 +29,7 @@ public class KakaoLogin extends HttpServlet {
 		try {
 			Member member = service.KakaoLogin(code);
 			HttpSession session = request.getSession();
-			session.setAttribute("member", member);
+			session.setAttribute("id", member.getId());
 			
 			response.sendRedirect("main");
 		}catch(Exception e) {

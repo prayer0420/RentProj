@@ -15,10 +15,12 @@
 <body>
 <!-- 페이징 처리 --> 
           <br>
+          <c:set var="curPage" value="${param.baseUrl }" />
+          
 			<div id="paging">
 				<c:choose>
 					<c:when test="${pageInfo.curPage>1 }">
-						<a href="mySell?page=${pageInfo.curPage-1 }">&lt;</a>
+						<a href="${baseUrl}?page=${pageInfo.curPage-1 }">&lt;</a>
 					</c:when>
 					<c:otherwise>
 						<a>&lt;</a>
@@ -27,17 +29,17 @@
 					<c:forEach begin="${pageInfo.startPage }" end="${pageInfo.endPage }" step="1" var="page">
 						<c:choose>
 							<c:when test="${page eq pageInfo.curPage }">
-								<a href="mySell?page=${page }" class="select">${page}</a>
+								<a href="${baseUrl}?page=${page }" class="select">${page}</a>
 							</c:when>
 							<c:otherwise>
-								<a href="mySell?page=${page }" class="btn">${page}</a>
+								<a href="${baseUrl}?page=${page }" class="btn">${page}</a>
 							</c:otherwise>
 						</c:choose>
 					</c:forEach>
 							
 					<c:choose>
 						<c:when test="${pageInfo.curPage<pageInfo.allPage }">
-							<a href="mySell?page=${pageInfo.curPage+1 }">&gt;</a>
+							<a href="${baseUrl}?page=${pageInfo.curPage+1 }">&gt;</a>
 						</c:when>
 						<c:otherwise>
 							<a>&gt;</a>

@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import dto.Member;
+import service.alarm.FcmService;
+import service.alarm.FcmServiceImpl;
 import service.member.MemberService;
 import service.member.MemberServiceImpl;
 
@@ -47,7 +49,6 @@ public class Join extends HttpServlet {
 		//선택값 있으면 추가
 		member.setAdminNo(0);
 		
-		
 		String region2 = request.getParameter("region2");
 		if(region2 != null && !region2.isEmpty()) {
 			member.setRegion2(region2);
@@ -58,11 +59,22 @@ public class Join extends HttpServlet {
 			member.setRegion3(region3);
 		}
 		
-		//서비스 로직
-		MemberService service = new MemberServiceImpl();
+		//토큰 저장
+		String fcmToken = request.getParameter("fcmToken");
+		member.setFcmToken(fcmToken); // DTO에 저장
+
+		System.out.println("가입 시 FCM 토큰: " + fcmToken);
 		
+		//서비스 로직
+		MemberService memberService = new MemberServiceImpl();
+		FcmService fcmService = new FcmServiceImpl(); // 🔔 알림 서비스 호출 준비
+
 		try {
-			service.join(member);
+			//회원가입
+			memberService.join(member);
+			//알림 전송
+			fcmService.sendSignupAlarm(id);
+
 			response.sendRedirect("login"); //servlet의 login호출, doGet으로 호출
 		}catch(Exception e) {
 			e.printStackTrace();

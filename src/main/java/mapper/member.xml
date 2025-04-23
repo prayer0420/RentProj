@@ -8,8 +8,8 @@
 <!--null허용이 되는값이라면 모든 파라미터를 지정-->
 <!--넘어온 Member객체의 getter메서드를 자동 호출하여 값 가져옴-->
 	<insert id="insertMember" parameterType="member">
-		Insert Into member (id,password,name,nickname,phone,address1,address2,address3,region1,region2,region3,profileImage,adminNo) 
-		values(#{id},#{password},#{name},#{nickname},#{phone},#{address1},#{address2},#{address3},#{region1},#{region2},#{region3},#{profileImage},#{adminNo})	
+		Insert Into member (id,password,name,nickname,phone,address1,address2,address3,region1,region2,region3,profileImage,adminNo,fcmToken) 
+		values(#{id},#{password},#{name},#{nickname},#{phone},#{address1},#{address2},#{address3},#{region1},#{region2},#{region3},#{profileImage},#{adminNo}, #{fcmToken})	
 	</insert>
 	
 	<select id="selectMember" parameterType="String" resultType="member">
