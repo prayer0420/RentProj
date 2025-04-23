@@ -66,7 +66,14 @@
 		                <span class="status-text">${item.orderStatus }</span>
 		              </div>
 		              <div class="order-status-area">
-		                <a href="${contextPath }/mySellDetail?orderNo=${item.orderNo }" class="order-detail-link">거래 상세보기 &gt;</a>
+		              <c:choose>
+		              	<c:when test="${item.orderNo eq null }">
+		              		<span>&nbsp;</span>
+		              	</c:when>
+		              	<c:otherwise>
+		                	<a href="${contextPath }/mySellDetail?orderNo=${item.orderNo }" class="order-detail-link">거래 상세보기 &gt;</a>
+		                </c:otherwise>
+		              </c:choose>
 		              </div>
 		            </div>
 		
