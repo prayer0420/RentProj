@@ -1,7 +1,6 @@
 package controller.login;
 
 import java.io.IOException;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
@@ -17,10 +16,10 @@ import service.member.MemberServiceImpl;
 @WebServlet("/login")
 public class Login extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    public Login() {
-        super();
-    }
+
+	public Login() {
+		super();
+	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.getRequestDispatcher("/JSP/Login/login.jsp").forward(request, response);
@@ -28,43 +27,52 @@ public class Login extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
+
 		String id = request.getParameter("id");
 		String password = request.getParameter("password");
 		String type = request.getParameter("type");
-		
-		
+		String latStr = request.getParameter("latitude");
+		String lngStr = request.getParameter("longitude");
+
+		Double lat = null, lng = null;
+
+		try {
+			if (latStr != null && !latStr.trim().isEmpty()) {
+				lat = Double.parseDouble(latStr);
+			}
+			if (lngStr != null && !lngStr.trim().isEmpty()) {
+				lng = Double.parseDouble(lngStr);
+			}
+		} catch (NumberFormatException e) {
+			System.out.println("위도/경도 파싱 실패: " + e.getMessage());
+		}
+
 		MemberService service = new MemberServiceImpl();
+
 		try {
 			Member member = service.login(id, password);
-//			member.setPassword("");
-			
+
 			HttpSession session = request.getSession();
-			session.setAttribute("member", member);
-			System.out.println(member.getNo());
-			
-			//자동로그인 체크에 따른 쿠키 설정
-			Cookie cookie1 = null;
-			Cookie cookie2 = null;
-			Cookie cookie3 = null;
-			
-			if(type==null || type.equals("")) {
-				cookie1 = new Cookie("type","");
-				cookie2 = new Cookie("id","");
-				cookie3 = new Cookie("password","");
-			}else {
-				cookie1 = new Cookie("type",type);
-				cookie2 = new Cookie("id",id);
-				cookie3 = new Cookie("password",password);
-			}
-			
+			session.setAttribute("id", member.getId());
+			session.setAttribute("nickname", member.getNickname());
+			session.setAttribute("latitude", lat);  // null일 수도 있음
+			session.setAttribute("longitude", lng); // null일 수도 있음
+
+			System.out.println("로그인 성공: memberNo = " + member.getNo());
+
+			// 자동 로그인 쿠키 설정
+			Cookie cookie1 = new Cookie("type", type != null ? type : "");
+			Cookie cookie2 = new Cookie("id", id != null ? id : "");
+			Cookie cookie3 = new Cookie("password", password != null ? password : "");
+
 			response.addCookie(cookie1);
 			response.addCookie(cookie2);
 			response.addCookie(cookie3);
-		
-			//로그인 성공하면 이동할 홈페이지~
+
+			// 로그인 성공 후 메인 페이지로 이동
 			response.sendRedirect("main");
-			
-		}catch(Exception e) {
+
+		} catch (Exception e) {
 			e.printStackTrace();
 			request.setAttribute("err", "로그인에 실패했습니다.");
 			request.getRequestDispatcher("error.jsp").forward(request, response);

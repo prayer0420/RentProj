@@ -24,9 +24,7 @@ public class AlarmList extends HttpServlet {
         // TODO Auto-generated constructor stub
     }
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Member member = (Member)request.getSession().getAttribute("member");
-		System.out.println("알림받은 member:"+ member);
-		String id = member.getId();
+		String id= (String)request.getSession().getAttribute("id");
 		System.out.println("알림받은 id:"+ id);
 		FcmService service = new FcmServiceImpl();
 		try {

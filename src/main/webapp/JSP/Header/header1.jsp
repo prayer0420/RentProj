@@ -33,15 +33,15 @@
 			<div class="header-actions">
 				<button id="btn-location">📍 위치</button>
 				<div class="location-display">
-					<c:if test="${not empty member.location}">
-    					현재 위치:	${fn:substring(member.location, 0, fn:indexOf(member.location, "구") + 1)}
+					 <c:if test="${not empty sessionScope.location}">
+    					현재 위치:	${fn:substring(sessionScope.location, 0, fn:indexOf(sessionScope.location, "구") + 1)}
   					</c:if>
 				</div>
 
 				<button id="btn-alarm">🔔 알림</button>
 				<button><a href="myOrder">📄 마이페이지</a></button>
 				<c:choose>
-					<c:when test="${not empty member}">
+					<c:when test="${not empty sessionScope.id}">
 						<button id="btn-logout">🚪 로그아웃</button>
 					</c:when>
 					<c:otherwise>
