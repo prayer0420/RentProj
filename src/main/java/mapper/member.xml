@@ -96,5 +96,13 @@
          	location = #{location}
    		WHERE no = #{no}
 	</update>
+
+	<!--배송지 정보 가져오기 -->
+	<select id="selectRawAddressList" parameterType="int"
+		resultType="string">
+		SELECT address FROM address
+		WHERE memberNo = #{memberNo}
+	</select>
+		
 		
 </mapper>

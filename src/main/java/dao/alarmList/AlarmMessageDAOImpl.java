@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 
-import controller.alarm.AlarmMessage;
+import dto.AlarmMessage;
 import utils.MybatisSqlSessionFactory;
 
 //  MyBatis SqlSession을 통해 실제 DB 연산을 수행
@@ -38,7 +38,24 @@ public class AlarmMessageDAOImpl implements AlarmMessageDAO {
         }
     }
 	
-	// 알림 메시지를 일괄 삭제
+	// 알림 메시지 수정
+	@Override
+	public int update(AlarmMessage alarm) {
+		SqlSession session = MybatisSqlSessionFactory.getSqlSessionFactory().openSession();
+        try {
+            int result = session.update("mapper.alarmMessage.update", alarm);
+            session.commit();
+            return result;
+        } catch (Exception e) {
+            session.rollback();
+            e.printStackTrace();
+            return 0;
+        } finally {
+            session.close();
+        }
+    }
+	
+    // 알림 메시지 삭제
 	@Override
 	public int delete(List<Integer> noList) {
 		SqlSession session = MybatisSqlSessionFactory.getSqlSessionFactory().openSession();
@@ -55,6 +72,7 @@ public class AlarmMessageDAOImpl implements AlarmMessageDAO {
         }
     }
 
+	// 알림 메시지 단건 조회
 	@Override
 	public AlarmMessage selectOne(int no) {
 	    SqlSession session = MybatisSqlSessionFactory.getSqlSessionFactory().openSession();
@@ -64,4 +82,6 @@ public class AlarmMessageDAOImpl implements AlarmMessageDAO {
 	        session.close();
 	    }
 	}
+
+
 }

@@ -11,7 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+import dto.AlarmMessage;
 import service.alarmList.AlarmMessageService;
 import service.alarmList.AlarmMessageServiceImpl;
 
@@ -19,13 +19,13 @@ import service.alarmList.AlarmMessageServiceImpl;
  * Servlet implementation class AlarmMessage
  */
 @WebServlet("/alarmMessage")
-public class AlarmMessage extends HttpServlet {
+public class AlarmMessageServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AlarmMessage() {
+    public AlarmMessageServlet() {
         super();
     }
 
@@ -34,13 +34,13 @@ public class AlarmMessage extends HttpServlet {
 	    AlarmMessageService service = new AlarmMessageServiceImpl();
 	    
         // 1. 전체 알림 메시지 조회
-        List<AlarmMessage> list = service.getAllMessages();
+	    List<AlarmMessage> list = service.getAllMessages();
         
         // 2. 결과를 request scope에 저장
         request.setAttribute("alarmList", list);
         
         // 3. JSP로 forward
-        request.getRequestDispatcher("/alarmMessage.jsp").forward(request, response);
+        request.getRequestDispatcher("JSP/Admin/alarmMessage.jsp").forward(request, response);
     }
 
 

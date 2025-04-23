@@ -1,0 +1,246 @@
+@charset "UTF-8";
+
+/* 기본 설정 */
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+  background-color: #f9f9f9;
+  margin: 0;
+  padding: 0;
+}
+
+/* 전체 레이아웃 */
+.wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.container {
+  display: flex;
+}
+
+.content {
+  flex: 1;
+  margin-left: 30px;
+}
+
+.content h2 {
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.divider {
+  height: 1px;
+  background-color: #ddd;
+  margin: 10px 0 20px;
+}
+
+/* 배송지 추가 버튼 */
+.address-header {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 15px;
+}
+
+.add-address-btn {
+  padding: 8px 16px;
+  background-color: #26c6da;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.add-address-btn:hover {
+  background-color: #1aa5b5;
+}
+
+/* 배송지 카드 */
+.product-card {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  padding: 15px;
+}
+
+.order-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.order-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+}
+
+.badge {
+  background-color: #ff9800;
+  color: white;
+  padding: 3px 6px;
+  font-size: 12px;
+  border-radius: 4px;
+}
+
+.order-status-area {
+  display: flex;
+  gap: 8px;
+}
+
+.card-divider {
+  height: 1px;
+  background-color: #eee;
+  margin: 12px 0;
+}
+
+.card-content .product-info p {
+  font-size: 14px;
+  color: #555;
+  margin: 5px 0;
+}
+
+/* 버튼 */
+.edit-btn,
+.delete-btn {
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 13px;
+  cursor: pointer;
+  background-color: white;
+  border: 1px solid #ccc;
+}
+
+.edit-btn:hover {
+  border-color: #26c6da;
+  color: #26c6da;
+}
+
+.delete-btn:hover {
+  border-color: #f44336;
+  color: #f44336;
+}
+
+/* 빈 텍스트 */
+.empty-text {
+  text-align: center;
+  color: #999;
+  padding: 30px 0;
+}
+
+/* 모달 공통 */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background: #fff;
+  padding: 24px;
+  width: 400px;
+  border-radius: 10px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-header h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.modal-header .close {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/* 모달 폼 */
+.modal-content label {
+  font-size: 14px;
+  font-weight: bold;
+  margin-top: 8px;
+}
+
+.modal-content input[type="text"] {
+  padding: 6px;
+  font-size: 14px;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.zip-code-group {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.zip-code-group .zip-btn {
+  padding: 6px 10px;
+  font-size: 13px;
+  background-color: #26c6da;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.zip-code-group .zip-btn:hover {
+  background-color: #1aa5b5;
+}
+
+.btn-row {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.btn-row .btn {
+  padding: 8px 16px;
+  font-size: 14px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn.cancel {
+  background-color: #ddd;
+  color: #333;
+}
+
+.btn.confirm {
+  background-color: #26c6da;
+  color: white;
+}
+
+.btn.cancel:hover {
+  background-color: #bbb;
+}
+
+.btn.confirm:hover {
+  background-color: #1aa5b5;
+}

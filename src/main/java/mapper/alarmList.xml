@@ -14,6 +14,15 @@
     INSERT INTO AlarmMessage (type, title, content, remark)
     VALUES (#{type}, #{title}, #{content}, #{remark})
   </insert>
+  
+    <update id="update" parameterType="dto.AlarmMessage">
+    UPDATE alarmmessage
+    SET title = #{title},
+        content = #{content},
+        remark = #{remark},
+        type = #{type}
+    WHERE no = #{no}
+  </update>
 
   <delete id="delete" parameterType="list">
     DELETE FROM AlarmMessage WHERE no IN
@@ -22,9 +31,9 @@
     </foreach>
   </delete>
   
-  <select id="selectOne" parameterType="int" resultType="controller.alarm.AlarmMessage">
+  <select id="selectOne" parameterType="int" resultType="dto.AlarmMessage">
   SELECT * FROM alarmmessage
   WHERE no = #{no}
-</select>
+  </select>
 
 </mapper>
