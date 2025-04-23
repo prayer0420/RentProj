@@ -8,9 +8,12 @@
 		values(#{no},#{memberNo},#{contents},#{score},#{productNo})
 	</insert>
 	
-	<select id="selectReview" parameterType="Integer" resultType="Review">
-		select r.*,m.nickname from review r join member m on r.memberNo = m.no 
-		where r.productNo = #{productNo} order by r.no DESC
+	<select id="selectByProductNo" parameterType="int" resultType="review">
+		select * from review where productNo=#{productNo} order by no DESC
+	</select>	
+	
+	<select id="selectAvgScore" parameterType="int" resultType="double">
+		select round(avg(score),1)from review where productNo = #{productNo}
 	</select>
 	
 </mapper>

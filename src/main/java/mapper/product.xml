@@ -149,5 +149,6 @@
 	<select id="selectAll" resultMap="productMap">
   		SELECT * FROM product
 	</select>
+	
 
 </mapper>

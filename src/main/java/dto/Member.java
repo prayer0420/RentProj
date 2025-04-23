@@ -23,8 +23,8 @@ public class Member {
 	Integer adminNo;
 	Date regDate;
 	String fcmToken;
-	private Double latitude;
-	private Double longitude;
+	Double latitude;
+	Double longitude;
 	//기본생성자(myBatis용)
 	public Member() {}
 	

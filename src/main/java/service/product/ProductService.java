@@ -12,10 +12,6 @@ public interface ProductService {
 	void registRentSell(Product product) throws Exception;
 	void registFree(Product product) throws Exception;
 	
-	List<Product> getAll(String tradeType, String sort, int page);
-    List<Product> searchByName(String name, String tradeType, String sort, int page);
-    List<Product> searchByCategory(int categoryNo, String tradeType, String sort, int page);
-    
     Product selectProductOne(Integer no) throws Exception;
     
 	//페이징
@@ -27,5 +23,6 @@ public interface ProductService {
 	List<Product> getPopularProducts(int limit);
 	//근처상품
     public List<Product> getProductsNearby(double userLat, double userLng, double radiusKm);
+    
 
 }

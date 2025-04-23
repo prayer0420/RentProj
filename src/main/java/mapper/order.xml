@@ -4,9 +4,106 @@
   
   <mapper namespace="mapper.order">
   <insert id="insertOrder" parameterType="order" useGeneratedKeys="true" keyProperty="orderNo"> 
-	  insert into `order` (orderNo,memberNo,price,productNo,orderId)
-	  values(#{orderNo},#{memberNo},#{price},#{productNo},#{orderId})
+	  insert into `order` (orderNo,memberNo,price,productNo,deliveryAddr,orderId)
+	  values(#{orderNo},#{memberNo},#{price},#{productNo},#{deliveryAddr},#{orderId})
   </insert>
+  
+  
+  	  <!-- admin 조회용 -->
+		<!-- 주문 목록 검색 + 페이징 -->
+		<select id="searchOrders" parameterType="map" resultType="dto.Order">
+		    SELECT 
+		        o.*, 
+		        p.title AS productName,
+		        buyer.id AS buyerId,
+		        seller.id AS sellerId
+		    FROM `order` o
+		    JOIN product p ON o.productNo = p.no
+		    JOIN member buyer ON o.memberNo = buyer.no
+		    JOIN member seller ON p.memberNo = seller.no
+		    WHERE 1=1
+		
+		    <!-- 검색 조건  -->
+				<if test="type != null and keyword != null and keyword != ''">
+				  <choose>
+				    <when test="type == 'orderNo'">
+				      AND o.orderNo LIKE CONCAT('%', #{keyword}, '%')
+				    </when>
+				    <when test="type == 'buyerId'">
+				      AND buyer.id LIKE CONCAT('%', #{keyword}, '%')
+				    </when>
+				    <when test="type == 'sellerId'">
+				      AND seller.id LIKE CONCAT('%', #{keyword}, '%')
+				    </when>
+				  </choose>
+				</if>
+		
+		    <!-- 주문 유형 -->
+		    <if test="order_type != null and order_type != '' and order_type != 'all'">
+		        AND o.orderType = #{order_type}
+		    </if>
+		
+		    <!-- 날짜 조건: 주문 유형에 따라 분기 -->
+		    <if test="start_date != null and start_date != '' and end_date != null and end_date != ''">
+				  <choose>
+				    <when test="order_type == '대여'">
+				      AND o.startDate BETWEEN #{start_date} AND #{end_date}
+				    </when>
+				    <when test="order_type == '판매' or order_type == '나눔'">
+				      AND o.orderDate BETWEEN #{start_date} AND #{end_date}
+				    </when>
+				    <otherwise>
+				      AND (o.startDate BETWEEN #{start_date} AND #{end_date}
+				           OR o.orderDate BETWEEN #{start_date} AND #{end_date})
+				    </otherwise>
+  				</choose>
+		    </if>
+		
+		    ORDER BY o.orderNo DESC
+		    LIMIT #{row}, #{size}
+		</select>
+
+    <!-- 검색 총 개수 (페이징용) -->
+    <select id="getOrderCount" parameterType="map" resultType="int">
+
+		    SELECT COUNT(*)
+		    FROM `order` o
+		    JOIN product p ON o.productNo = p.no
+		    JOIN member buyer ON o.memberNo = buyer.no
+		    JOIN member seller ON p.memberNo = seller.no
+		    WHERE 1=1
+		
+			  <choose>
+			    <when test="type == 'orderNo'">
+			      AND o.orderNo LIKE CONCAT('%', #{keyword}, '%')
+			    </when>
+			    <when test="type == 'buyerId'">
+			      AND buyer.id LIKE CONCAT('%', #{keyword}, '%')
+			    </when>
+			    <when test="type == 'sellerId'">
+			      AND seller.id LIKE CONCAT('%', #{keyword}, '%')
+			    </when>
+			  </choose>
+		
+		    <if test="order_type != null and order_type != '' and order_type != 'all'">
+		        AND o.orderType = #{order_type}
+		    </if>
+		
+		    <if test="start_date != null and start_date != '' and end_date != null and end_date != ''">
+		      <choose>
+		        <when test="order_type == '대여'">
+		          AND o.startDate BETWEEN #{start_date} AND #{end_date}
+		        </when>
+		        <when test="order_type == '판매' or order_type == '나눔'">
+		          AND o.orderDate BETWEEN #{start_date} AND #{end_date}
+		        </when>
+		        <otherwise>
+		          AND (o.startDate BETWEEN #{start_date} AND #{end_date}
+		               OR o.orderDate BETWEEN #{start_date} AND #{end_date})
+		        </otherwise>
+		      </choose>
+		    </if>
+		</select>
   
   </mapper>
   

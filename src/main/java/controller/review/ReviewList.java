@@ -1,9 +1,7 @@
-package controller.alarm;
-
-
-
+package controller.review;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,17 +9,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import dto.Review;
+import service.review.ReviewService;
+import service.review.ReviewServiceImpl;
+
 /**
- * Servlet implementation class AlarmMessage
+ * Servlet implementation class ReviewList
  */
-@WebServlet("/alarmMessage")
-public class AlarmMessage extends HttpServlet {
+@WebServlet("/reviewList")
+public class ReviewList extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AlarmMessage() {
+    public ReviewList() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,8 +32,24 @@ public class AlarmMessage extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("alarmMessage.jsp").forward(request, response);
-	
+		request.setCharacterEncoding("utf-8");
+		
+		int productNo = Integer.parseInt(request.getParameter("productNo"));
+		
+		ReviewService service = new ReviewServiceImpl();
+		
+		try {
+			List<Review> reviewList = service.selectedByProductNo(productNo);
+			Double avgScore = service.selectAvgScore(productNo);
+			request.setAttribute("reviewList", reviewList);
+			request.setAttribute("avgScore", avgScore);
+			request.getRequestDispatcher("/JSP/ProductDetail/reviewList.jsp").forward(request, response);			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		
+		
 	}
 
 	/**

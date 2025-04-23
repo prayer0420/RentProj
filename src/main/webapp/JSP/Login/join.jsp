@@ -72,7 +72,8 @@
 					<input type="text" id="address" name="address" placeholder="주소">
 					<input type="text" id="detailAddress" name="detailAddress" placeholder="상세주소">
 				</div>
-      </div>
+		<input type="hidden" id="fcmToken" name="fcmToken" />
+      	</div>
       <div class="buttons">
         <button type="submit">회원가입 완료</button>
       </div>
@@ -135,6 +136,23 @@
         alert("비밀번호가 일치하지 않습니다.");
         return false;
       }
+      
+      // 필수 입력값이 비어 있으면 submit 중단
+      const requiredFields = ['#userId', '#password', '#confirmPassword', '#name', '#nickname', '#phone', '#postcode', '#address', '#detailAddress', '#addAlias'];
+      for (const selector of requiredFields) {
+        if ($(selector).val().trim() === '') {
+          alert("모든 필수 정보를 입력해주세요.");
+          $(selector).focus();
+          return false;
+        }
+      }
+
+      // 거래지역 최소 1개 등록 필수
+      if (selectedRegions.length === 0) {
+        alert("거래지역을 최소 1개 이상 등록해주세요.");
+        return false;
+      }
+      
       return true;
     });
 	
@@ -212,6 +230,66 @@
 		selectedRegions.splice(index, 1);
 		updateRegionList();
 	}
+	
+	//엔터금지
+	$('form').on('keypress', function (e) {
+		  if (e.key === 'Enter') {
+		    e.preventDefault();
+		    return false;
+		  }
+		});
 </script>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
+  import { getMessaging, getToken, onMessage } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-messaging.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyA5LKk4IXgwG57Z495sfLcHg1XA0ILokTU",
+    authDomain: "test-6b1b7.firebaseapp.com",
+    projectId: "test-6b1b7",
+    storageBucket: "test-6b1b7.firebasestorage.app",
+    messagingSenderId: "1066743702766",
+    appId: "1:1066743702766:web:e765caafcc8ff1b7817fff",
+    measurementId: "G-YTCKLHYEX2"
+  };
+
+  initializeApp(firebaseConfig);
+  const messaging = getMessaging();
+
+  const requestForToken = () => {
+    getToken(messaging, {
+      vapidKey: 'BKf2ZnmnAxGrBS6VogRScPinuISeM-n_I7Dn4k-4uSZ7FxAjeJCFxg7tJMFfZ0HvlKCeH4qv85F8L7r4rdweVT8'
+    }).then((currentToken) => {
+      if (currentToken) {
+      	document.getElementById("fcmToken").value = currentToken;
+        $.post("fcmToken", { fcmToken: currentToken });
+      }
+    }).catch(console.error);
+
+    onMessageListener();
+  };
+
+  const onMessageListener = () => {
+    onMessage(messaging, (payload) => {
+      const alarm = payload.data;
+      $("#alarmModal").css("display", "flex");
+      $("#alarmList .alarm-empty").remove(); // 알림 없을 때 텍스트 제거
+
+      const alarmHTML = `
+        <div class="alarm-card" data-num="${alarm.no}">
+          <div class="alarm-top">
+            <h4 class="alarm-title">${alarm.title}</h4>
+            <button class="delete-btn" onclick="deleteAlarm(this)">✕</button>
+          </div>
+          <p class="alarm-body">${alarm.content}</p>
+        </div>`;
+      $("#alarmList").prepend(alarmHTML);
+    });
+  };
+
+  requestForToken();
+</script>
+
 </body>
 </html>

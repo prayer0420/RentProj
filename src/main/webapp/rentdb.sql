@@ -137,7 +137,6 @@ CREATE TABLE `report` (
     `date` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP() DEFAULT CURRENT_TIMESTAMP(),
     `title` VARCHAR(100) NOT NULL,
     `productNo` INT NOT NULL,
-    `Field` VARCHAR(255) NULL,
     PRIMARY KEY (`no`)
 );
 
@@ -231,7 +230,8 @@ ADD CONSTRAINT `FK_mark_member` FOREIGN KEY (`memberNo`) REFERENCES `member`(`no
 ALTER TABLE `product`
 ADD COLUMN `view_cnt` INT NOT NULL DEFAULT 0 COMMENT '조회수';
 
-
+ALTER TABLE report
+ADD COLUMN status VARCHAR(20) DEFAULT 'new';
 
 INSERT INTO grade(gradeNo,gradeName,gradeRate,gradeCount)
 VALUES(1,"1",1.0,1.0);
@@ -291,4 +291,27 @@ ALTER TABLE member
 ADD COLUMN latitude DECIMAL(10, 7),
 ADD COLUMN longitude DECIMAL(10, 7);
 
+
+
+DROP TABLE IF EXISTS alarm;
+
+CREATE TABLE alarm (
+  no INT AUTO_INCREMENT PRIMARY KEY,
+  type VARCHAR(50) NOT NULL,
+  recvId VARCHAR(50) NOT NULL,
+  title VARCHAR(100) NOT NULL,
+  content VARCHAR(1000),
+  isActive BOOLEAN DEFAULT TRUE,
+  sentDate DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+INSERT INTO alarm (type, recvId, title, content, isActive)
+VALUES
+  ('chat', 'ekzm849', '새로운 메시지 도착', '1:1 채팅 메시지가 도착했습니다.', TRUE),
+  ('system', 'ekzm849', '상품 등록 완료', '상품이 성공적으로 등록되었습니다.', TRUE),
+  ('warning', 'ekzm849', '신고 처리 알림', '회원님이 신고한 내용이 처리되었습니다.', TRUE);
+
+
+INSERT INTO alarmmessage (title, content, type, remark)
+VALUES ('회원가입 환영!', '${id}님, 가입을 환영합니다! 🎉', 'SIGNUP', '회원가입 시 자동 발송 템플릿');
 

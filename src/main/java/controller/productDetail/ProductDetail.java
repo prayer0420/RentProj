@@ -7,12 +7,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import dto.Member;
 import dto.Product;
 import service.product.ProductService;
 import service.product.ProductServiceImpl;
+import service.review.ReviewService;
+import service.review.ReviewServiceImpl;
 
 @WebServlet("/productDetail")
 public class ProductDetail extends HttpServlet {
@@ -28,13 +28,16 @@ public class ProductDetail extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 
 		Integer no = Integer.parseInt(request.getParameter("no"));
-		System.out.println(no);
+		
 		
 		ProductService service = new ProductServiceImpl();
+		ReviewService reviewService = new ReviewServiceImpl();
 		try {
 			Product product = service.selectProductOne(no);
+			double avgScore = reviewService.selectAvgScore(no);
 			request.setAttribute("product", product);
 			request.setAttribute("productNo", product.getNo());
+			request.setAttribute("avgScore", avgScore);
 			System.out.println("product : "+product);	
 			System.out.println("no : "+no);	
 		}catch (Exception e) {

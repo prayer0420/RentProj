@@ -127,8 +127,6 @@ public class ProductServiceImpl implements ProductService {
 	}
 	@Override
 	public Product selectProductOne(Integer no) throws Exception {
-		
-		
 		return productDAO.SelectProductOne(no);
 	}
 
@@ -202,21 +200,6 @@ public class ProductServiceImpl implements ProductService {
 		
 	}
 
-	@Override
-	public List<Product> getAll(String tradeType, String sort, int page) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 
-	@Override
-	public List<Product> searchByName(String name, String tradeType, String sort, int page) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Product> searchByCategory(int categoryNo, String tradeType, String sort, int page) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }

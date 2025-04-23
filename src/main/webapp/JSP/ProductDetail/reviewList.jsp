@@ -5,16 +5,17 @@
 <div class="review-list">
   <c:forEach var="review" items="${reviewList}">
     <div class="review-item">
-      <strong>${review.nickname}</strong>
+      <strong>${member.nickname}</strong>
+      
       <div class="stars">
         <c:forEach begin="1" end="5" var="i">
           <c:choose>
-            <c:when test="${i <= review.rating}">★</c:when>
+            <c:when test="${i <= review.score}">★</c:when>
             <c:otherwise>☆</c:otherwise>
           </c:choose>
         </c:forEach>
       </div>
-      <p>${review.content}</p>
+      <p>${review.contents}</p>
     </div>
   </c:forEach>
 </div>

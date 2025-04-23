@@ -25,4 +25,7 @@ public interface MemberService {
 
     //회원정보 업데이트
     void updateMember(Member member) throws Exception;
+    
+    //회원정보 조회(ID로)
+    public Member getMemberById(String id) throws Exception;
 }

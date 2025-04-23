@@ -1,19 +1,18 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/CSS/productDetail/addressModal.css" />
-<link rel="stylesheet" href="${pageContext.request.contextPath}/CSS/productDetail/addressCard.css" />
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/CSS/productDetail/addressModal.css" />
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/CSS/productDetail/addressCard.css" />
 
 <div class="modal" id="addressModal" style="display: none;">
-  <div class="modal-content">
-    <div class="modal-header">
-      <button class="close" onclick="closeAddressModal()">×</button>
-      <h3>배송지 목록</h3>
-    </div>
-
-    <button class="modal-add-btn" onclick="openAddressAddModal()">+ 배송지 추가</button>
-
-    <div class="modal-address-list">
-<%--       <c:choose>
+	<div class="modal-content">
+		<div class="modal-header">
+			<button class="close" onclick="closeAddressModal()">×</button>
+			<h3>배송지 목록</h3>
+		</div>
+		<div class="modal-address-list">
+			<%--       <c:choose>
         <c:when test="${not empty addressList}">
           <c:forEach var="addr" items="${addressList}">
             <jsp:include page="addressCard.jsp">
@@ -33,26 +32,45 @@
           <p class="empty-text">등록된 배송지가 없습니다.</p>
         </c:otherwise>
       </c:choose> --%>
-	</div>
-	<div class="address-card">
-		<div class="card-header">
-			<div>
-				<strong>우리집</strong> <span class="badge">기본배송지</span>
-			</div>
-			<form action="#" method="post">
-				<button type="submit" class="delete-btn">✕</button>
-			</form>
 		</div>
-		<div class="card-body">
-			<p>홍길동</p>
-			<p>010-1234-5678</p>
-			<p>[12345] 서울시 강남구 테헤란로 123 101호</p>
-			<form action="#" method="get">
-				<button type="submit" class="edit-btn">수정</button>
-			</form>
+		<div class="address-card">
+			<c:choose >
+			<c:when test="${member.address1!=null}">
+				<div class="card-header">
+					<div>
+						<strong>우리집</strong> <span class="badge">기본배송지</span>
+					</div>
+				</div>
+				<div class="card-body">
+					<p>${member.nickname}</p>
+					<p>${member.phone}</p>
+					<p>${member.address1} ${member.region1 }</p>
+					<form action="#" method="get">
+						<button type="button" class="edit-btn" onclick="addressCheck()">확인</button>
+					</form>
+				</div>			
+			</c:when>
+			<c:when test="${member.address1 == null}">
+				<h4>배송지가 없습니다. 마이페이지에서 추가해주세요.</h4>
+				<a href="${pageContext.request.contextPath}/myOrder"><span>마이페이지 이동</span></a>
+			</c:when>
+			</c:choose>
 		</div>
+
 	</div>
-	
-  </div>
 </div>
-	<jsp:include page="addressAdd.jsp"></jsp:include>
+<jsp:include page="addressAdd.jsp"></jsp:include>
+<script type="text/javascript">
+	function addressCheck(){
+		const address1 = "${member.address1}";
+		const region1 = "${member.region1}";
+		const phone = "${member.phone}";
+		
+		
+		
+		document.querySelector('.addressRegion').innerText=address1+" "+region1;
+		document.querySelector('.phone').innerText=phone;
+		
+		closeAddressModal();
+	}
+</script>
