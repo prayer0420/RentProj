@@ -57,6 +57,7 @@ public class MySellDetail extends HttpServlet {
 			}
 			
 			request.setAttribute("mySellDetail", mySellDetail);
+			request.setAttribute("orderNo", orderNo);
 			request.getRequestDispatcher("/JSP/MyPage/mySellDetail.jsp").forward(request, response);
 		}catch(Exception e){
 			e.printStackTrace();
