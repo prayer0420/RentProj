@@ -51,7 +51,7 @@
             <div class="info-grid" style="margin-top: 20px;">
                 <div class="info-box">
                     <h4>구매 정보</h4>
-                    <p>주문번호: ${mySellDetail.orderNo }</p>
+                    <p>주문번호: ${mySellDetail.orderId }</p>
                     <p>주문일: ${mySellDetail.orderDate }</p>
                     <p>상품출고일: 2025-03-06</p>
                     <p>구매확정일: 2025-03-09</p>
