@@ -2,13 +2,17 @@ package controller.mypage;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import dto.Member;
+import dto.Order;
 import dto.Product;
 import service.mypage.MypageService;
 import service.mypage.MypageServiceImpl;
@@ -42,15 +46,31 @@ public class MyOrder extends HttpServlet {
 			page = Integer.parseInt(pageStr);
 		}
 		PageInfo pageInfo = new PageInfo(page);
+		
+		HttpSession session = request.getSession(false);
+		Member member = (session != null)? (Member) session.getAttribute("member") : null;
+		
+		if(member == null) {
+			// 로그인하지 않은 사용자
+			request.setAttribute("loginId", null);	//JSP에서 분기 처리용
+			request.getRequestDispatcher("/JSP/MyPage/mySell.jsp").forward(request, response);
+			return;
+		}
+		
+		// 로그인 한 사용자
+		String id = member.getId();
+//		System.out.println("로그인ID: "+id);
 		MypageService service = new MypageServiceImpl();
 		try {
-//			List<Order> orderList = service.orderListByPage(pageInfo);
+			List<Map<String,Object>> orderList = service.orderListByPage(pageInfo,id);
 			request.setAttribute("pageInfo", pageInfo);
-//			request.setAttribute("orderList", orderList);
+			request.setAttribute("orderList", orderList);
+//			System.out.println(orderList);
+			request.setAttribute("loginId", member);
 			request.getRequestDispatcher("/JSP/MyPage/myOrder.jsp").forward(request, response);
 		}catch (Exception e) {
 			e.printStackTrace();
-			request.setAttribute("err",	"나의 판매상품 목록 조회를 실패했습니다.");
+			request.setAttribute("err",	"나의 구매상품 목록 조회를 실패했습니다.");
 			request.getRequestDispatcher("/JSP/MyPage/error.jsp").forward(request, response);
 		}
 	}

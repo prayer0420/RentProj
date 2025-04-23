@@ -45,188 +45,70 @@
           </div>
 
           <!-- 상품 카드 1 -->
-          <div class="product-card">
-            <!-- 주문 정보 상단 영역 -->
-            <div class="order-info">
-              <div class="order-meta">
-                <span class="order-number">주문번호: 2025040801</span>
-                <span class="order-date">주문일: 2025-04-08</span>
-              </div>
-              <div class="order-status-area">
-                <span class="status-text">주문완료</span>
-                <a href="#" class="order-detail-link">주문 상세보기 &gt;</a>
-              </div>
-            </div>
+          <c:forEach var="item" items="${orderList }">
+          <form action="">
+	          <div class="product-card">
+	            <!-- 주문 정보 상단 영역 -->
+	            <div class="order-info">
+	              <div class="order-meta">
+	                <span class="order-number">주문번호: ${item.orderId }</span>
+	                <span class="order-date">주문일: ${item.orderDate }</span>
+	              </div>
+	              <div class="order-status-area">
+	                <span class="status-text">${item.orderStatus }</span>
+	                <a href="#" class="order-detail-link">주문 상세보기 &gt;</a>
+	              </div>
+	            </div>
+	
+	            <!-- 구분선 -->
+	            <div class="card-divider"></div>
+	
+	            <!-- 상품 정보 영역 -->
+	            <div class="card-content">
+	              <img
+	                src="${contextPath }/img/camera.jpg"
+	                alt="상품 이미지"
+	                class="product-image"
+	              />
+	              <div class="product-info">
+	                <p>상품번호: ${item.productNo}</p>
+	                <h3>${item.title }</h3>
+	                <p>가격: ${item.price}원</p>
+	                <p>배송비: ${item.deliveryPrice }원</p>
+	              </div>
+	              <div class="status-change-btns">
+	              <c:choose>
+		                <c:when test="${item.orderStatus eq '결제완료'}">
+					        <button type="button" class="open-cancel-btn" data-orderno="${item.orderNo}">주문취소</button>
+					   </c:when> 
+					   <c:when test="${item.orderStatus eq '배송완료'}">
+					        <button type="button" class="open-confirm-btn" data-orderno="${item.orderNo}">구매확정</button>
+					   </c:when>
+					   <c:when test="${item.orderStatus eq '구매완료'}">
+					        <button type="button" class="open-review-btn" data-orderno="${item.orderNo}">리뷰쓰러가기</button>
+					   </c:when>  
+					   <c:otherwise>
+						    <span>처리 불가능한 상태</span>
+					   </c:otherwise>
+				   </c:choose>
+	              </div>
+	            </div>
+	          </div>
+          </form>
+          </c:forEach>
+          
+          <!-- 페이징 처리 --> 
+          <br>
+			<jsp:include page="/JSP/MyPage/mypagePaging.jsp" >
+				<jsp:param name="baseUrl" value="${contextPath }/myOrder" />
+			</jsp:include>
 
-            <!-- 구분선 -->
-            <div class="card-divider"></div>
-
-            <!-- 상품 정보 영역 -->
-            <div class="card-content">
-              <img
-                src="${contextPath }/img/camera.jpg"
-                alt="상품 이미지"
-                class="product-image"
-              />
-              <div class="product-info">
-                <p>7890123456</p>
-                <h3>
-                  앤디워홀 카메라! 1975년 생산된 Konica35EF 필름카메라
-                  판매(생활기스 있음)
-                </h3>
-                <p>가격: 200,000원</p>
-                <p>배송비: 2,500원</p>
-              </div>
-              <div class="status-change-btns">
-                <button
-                  onclick="openModalWith('주문을 취소하시겠습니까?', cancelOrder)"
-                >
-                  주문취소
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <!-- 상품 카드 2 -->
-          <div class="product-card">
-            <!-- 주문 정보 상단 영역 -->
-            <div class="order-info">
-              <div class="order-meta">
-                <span class="order-number">주문번호: 2025040801</span>
-                <span class="order-date">주문일: 2025-04-08</span>
-              </div>
-              <div class="order-status-area">
-                <span class="status-text">상품준비중</span>
-                <a href="#" class="order-detail-link">주문 상세보기 &gt;</a>
-              </div>
-            </div>
-
-            <!-- 구분선 -->
-            <div class="card-divider"></div>
-
-            <!-- 상품 정보 영역 -->
-            <div class="card-content">
-              <img
-                src="${contextPath }/img/bicycle.jpg"
-                alt="상품 이미지"
-                class="product-image"
-              />
-              <div class="product-info">
-                <p>7890123456</p>
-                <h3>빈티지 감성의 성인용 자전거 팝니다 (사용감 조금 있음)</h3>
-                <p>가격: 100,000원</p>
-                <p>배송비: 무료</p>
-              </div>
-              <div class="status-change-btns">
-                <button
-                  onclick="openModalWith('주문을 취소하시겠습니까?', cancelOrder)"
-                >
-                  주문 취소
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <!-- 상품 카드 3 -->
-          <div class="product-card">
-            <!-- 주문 정보 상단 영역 -->
-            <div class="order-info">
-              <div class="order-meta">
-                <span class="order-number">주문번호: 2365478965</span>
-                <span class="order-date">주문일: 2025-02-08</span>
-              </div>
-              <div class="order-status-area">
-                <span class="status-text">거래완료</span>
-                <a href="#" class="order-detail-link">주문 상세보기 &gt;</a>
-              </div>
-            </div>
-
-            <!-- 구분선 -->
-            <div class="card-divider"></div>
-
-            <!-- 상품 정보 영역 -->
-            <div class="card-content">
-              <img
-                src="${contextPath }/img/watering-can.jpg"
-                alt="상품 이미지"
-                class="product-image"
-              />
-              <div class="product-info">
-                <p>4567890987</p>
-                <h3>화분 물뿌리개(새 제품)</h3>
-                <p>가격: 5,000원</p>
-                <p>배송비: 2,500원</p>
-              </div>
-              <div class="status-change-btns">
-                <button onclick="openModalWith('구매를 확정하시겠습니까?', confirmOrder)">구매확정</button>
-                <button onclick="openModalWith('주문을 취소하시겠습니까?', cancelOrder)">주문취소</button>
-              </div>
-            </div>
-          </div>
         </section>
       </div>
     </div>
 
 <!-- 푸터 -->
   <jsp:include page="/JSP/Header/footer.jsp" />
-  
-  
-    <!-- 재사용 가능한 모달 -->
-    <div id="universalModal" class="modal-overlay">
-      <div class="modal-content">
-        <p id="modalMessage">여기에 메시지가 들어갑니다</p>
-        <div class="modal-buttons">
-          <button onclick="handleModalConfirm()">확인</button>
-          <button onclick="closeModal()">취소</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- 자바스크립트 코드 -->
-    <script>
-      function toggleSubmenu(clickedTitle) {
-        const menuItem = clickedTitle.parentElement;
-
-        if (menuItem.classList.contains("active")) {
-          menuItem.classList.remove("active");
-        } else {
-          document
-            .querySelectorAll(".menu-item")
-            .forEach((item) => item.classList.remove("active"));
-          menuItem.classList.add("active");
-        }
-      }
-
-      /* 모달창 관련: 메시지, 콜백 함수 코드 */
-      let modalConfirmCallback = null;
-
-      function openModalWith(message, onConfirmCallback) {
-        document.getElementById("modalMessage").textContent = message;
-        modalConfirmCallback = onConfirmCallback;
-        document.getElementById("universalModal").style.display = "flex";
-      }
-
-      function handleModalConfirm() {
-        if (typeof modalConfirmCallback === "function") {
-          modalConfirmCallback();
-        }
-        closeModal();
-      }
-
-      function closeModal() {
-        document.getElementById("universalModal").style.display = "none";
-      }
-
-      // 각각의 동작 정의
-      
-      function cancelOrder() {
-        alert("주문을 취소합니다");
-      }
-      
-      function confirmOrder() {
-          alert("구매를 확정합니다");
-        }
-    </script>
 
 </body>
 </html>

@@ -36,7 +36,7 @@ public class MypageDAOImpl implements MypageDAO {
 
 	// 마이페이지 판매상품 거래내역 상세 불러오기
 	@Override
-	public Map<String, Object> selectMySellDetail(Integer orderNo, String id) {
+	public Map<String, Object> selectMySellDetail(Integer orderNo, String id) throws Exception{
 		Map<String,Object> param = new HashMap<String, Object>();
 		param.put("orderNo",orderNo);
 		param.put("id",id);
@@ -53,6 +53,18 @@ public class MypageDAOImpl implements MypageDAO {
 		Integer result = sqlSession.update("mapper.mypage.updateInvoiceNo",param);
 		sqlSession.commit();
 		return result == 1;
+	}
+
+	@Override
+	public Integer selectOrderCountById(String id) throws Exception {
+		
+		return sqlSession.selectOne("mapper.mypage.selectOrderCnt",id);
+	}
+
+	@Override
+	public List<Map<String,Object>> selectOrderListByPage(Map<String, Object> paramMap) throws Exception {
+		
+		return sqlSession.selectList("mapper.mypage.selectOrderListByPage",paramMap);
 	}
 
 
