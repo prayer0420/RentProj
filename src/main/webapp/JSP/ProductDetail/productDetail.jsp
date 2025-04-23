@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8" />
 <title>주문결제</title>
+<script>const contextPath = "${pageContext.request.contextPath}"</script>
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/CSS/productDetail/detail.css" />
 <link rel="stylesheet"
@@ -25,8 +26,13 @@
 				<div class="product-details">
 					<div class="top-icons">
 						<button class="btn-share">🔗</button>
-						<button class="btn-wish">🤍</button>
-						<button class="btn-inquiry">🚩</button>
+							<button class="btn-wish" onclick="toggleMark(this,${product.no})">
+								<c:choose>
+									<c:when test="${isMark}">♥</c:when>
+									<c:otherwise>♡</c:otherwise>
+								</c:choose>
+							</button>
+							<button class="btn-inquiry">🚩</button>
 						<!-- singo.jsp -->
 					</div>
 					<div class="category">${product.categoryNo}</div>
@@ -253,6 +259,21 @@
 	 $('#review-list-container').load(
 		'${pageContext.request.contextPath}/reviewList?productNo=${product.no}'		 
 	 )
+	 
+	 function toggleMark(btn,productNo){
+		 $.ajax({
+			url:contextPath + "/markProduct",
+			type:"post",
+			data:{productNo:productNo},
+			success:function(res){
+				btn.innerText = res.isMark ? "♥":"♡";
+			},
+			error:function(){
+				alert("로그인이 필요합니다.");
+			}
+		 });
+		 
+	 }
 	
 	
 </script>
