@@ -32,7 +32,7 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public void join(Member member) throws Exception {
 		// DB로부터 아이디 중복 체크
-		Member smember = memberDao.SelectMember(member.getId());
+		Member smember = memberDao.selectMemberById(member.getId());
 		if (smember != null)
 			throw new Exception("회원가입 오류");
 
@@ -43,7 +43,7 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public Member login(String id, String password) throws Exception {
 		// DB로부터 ID일치여부 확인
-		Member member = memberDao.SelectMember(id);
+		Member member = memberDao.selectMemberById(id);
 		if (member == null)
 			throw new Exception("로그인 오류");
 
@@ -56,7 +56,7 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public boolean checkDoubleId(String id) throws Exception {
 		// 이미 DB에있는건 중복임(false로넘김)
-		Member member = memberDao.SelectMember(id);
+		Member member = memberDao.selectMemberById(id);
 		if (member == null)
 			return true;
 		return false;
@@ -69,7 +69,7 @@ public class MemberServiceImpl implements MemberService {
 		Member member = getKakaoUserInfo(token);
 
 		// 카카오로그인 처음만 하고, 그후에 추가한건 적용이 되어야함
-		Member smember = memberDao.SelectMember(member.getId());
+		Member smember = memberDao.selectMemberById(member.getId());
 		System.out.println(member);
 		if (smember == null) {
 			memberDao.insertMember(member);
@@ -178,7 +178,7 @@ public class MemberServiceImpl implements MemberService {
 		System.out.println(member);
 		System.out.println(member.getNickname());
 
-		Member smember = memberDao.SelectMember(member.getId());
+		Member smember = memberDao.selectMemberById(member.getId());
 		System.out.println(member);
 		if (smember == null) {
 			memberDao.insertMember(member);
@@ -351,5 +351,9 @@ public class MemberServiceImpl implements MemberService {
     	memberDao.updateMember(member);
     }
     
-
+    //회원정보조회(ID로)
+    @Override
+    public Member getMemberById(String id) throws Exception {
+        return memberDao.selectMemberById(id);
+    }
 }
