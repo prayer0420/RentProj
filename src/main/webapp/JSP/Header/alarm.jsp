@@ -9,15 +9,13 @@
 <!-- 🔔 알림 모달 -->
 <div id="alarmModal" class="alarm-modal" onclick="backgroundClick(event)">
   <div class="alarm-content">
-
     <!-- 헤더 -->
     <div class="alarm-header">
-      <span>🔔 알림</span>
+            <span>🔔 알림 <span id="alarmBadge" class="alarm-badge" style="display:none; background-color: red; color: white; font-size: 12px; padding: 2px 6px; border-radius: 12px;">0</span></span>
       <div>
         <button class="close-btn" onclick="closeAlarmModal()">✕</button>
       </div>
     </div>
-
     <div class="divider"></div>
 
     <!-- 전체 삭제 버튼 -->
@@ -27,8 +25,6 @@
 
     <!-- 알림 목록 -->
     <div class="alarm-list" id="alarmList">
-
-      <!-- 알림이 있을 때 -->
       <c:forEach var="alarm" items="${alarms}">
         <div class="alarm-card" data-num="${alarm.no}">
           <div class="alarm-top">
@@ -39,11 +35,9 @@
         </div>
       </c:forEach>
 
-      <!-- 알림이 없을 때 -->
       <c:if test="${empty alarms}">
         <div class="alarm-empty">
           <div class="alarm-empty-icon">
-            <!-- SVG 아이콘 -->
             <svg width="80" height="80" viewBox="0 0 24 24" fill="#e0e7ef" xmlns="http://www.w3.org/2000/svg">
               <path d="M12 2C10.3 2 9 3.3 9 5V5.3C6.2 6.2 4.3 8.8 4.3 11.7V16L2 18.3V19H22V18.3L19.7 16V11.7C19.7 8.8 17.8 6.2 15 5.3V5C15 3.3 13.7 2 12 2ZM12 22C13.1 22 14 21.1 14 20H10C10 21.1 10.9 22 12 22Z"/>
             </svg>
@@ -52,9 +46,7 @@
           <p class="alarm-empty-text">알림 내역이 없습니다.</p>
         </div>
       </c:if>
-
     </div>
-
   </div>
 </div>
 
@@ -80,36 +72,71 @@
     getToken(messaging, {
       vapidKey: 'BKf2ZnmnAxGrBS6VogRScPinuISeM-n_I7Dn4k-4uSZ7FxAjeJCFxg7tJMFfZ0HvlKCeH4qv85F8L7r4rdweVT8'
     }).then((currentToken) => {
+ 		console.log("🔑 Token:", currentToken);
       if (currentToken) {
         $.post("fcmToken", { fcmToken: currentToken });
       }
     }).catch(console.error);
 
+    updateAlarmBadge();
     onMessageListener();
   };
 
+	const updateAlarmBadge = () => {
+    const count = document.querySelectorAll("#alarmList .alarm-card").length;
+    const badge = document.getElementById("alarmBadge");
+    const headerBadge = document.getElementById("headerAlarmBadge");
+    if (count > 0) {
+      badge.textContent = count;
+      badge.style.display = "inline-block";
+      if (headerBadge) {
+        headerBadge.textContent = count;
+        headerBadge.style.display = "inline-block";
+      }
+    } else {
+      badge.style.display = "none";
+      if (headerBadge) {
+        headerBadge.style.display = "none";
+      }
+    }
+  };
+	
   const onMessageListener = () => {
     onMessage(messaging, (payload) => {
-      const alarm = payload.data;
-      $("#alarmModal").css("display", "flex");
-      $("#alarmList .alarm-empty").remove(); // 알림 없을 때 텍스트 제거
+		console.log("📬 FCM 수신함!");
+      console.log("📦 payload 전체:", payload);
+      const title = payload.data?.title || "제목 없음";
+      const body = payload.data?.body || "내용 없음";
+
+      const modal = document.getElementById("alarmModal");
+      modal.style.display = "flex";
+      void modal.offsetHeight;
+
+      $("#alarmList .alarm-empty").remove();
 
       const alarmHTML = `
-        <div class="alarm-card" data-num="${alarm.no}">
+        <div class="alarm-card realtime">
           <div class="alarm-top">
-            <h4 class="alarm-title">${alarm.title}</h4>
+            <h4 class="alarm-title">${title}</h4>
             <button class="delete-btn" onclick="deleteAlarm(this)">✕</button>
           </div>
-          <p class="alarm-body">${alarm.content}</p>
+          <p class="alarm-body">${body}</p>
         </div>`;
+
       $("#alarmList").prepend(alarmHTML);
+      updateAlarmBadge();
     });
   };
 
   requestForToken();
+  onMessageListener();
+
 </script>
 
 <script>
+
+	
+
   function closeAlarmModal() {
     document.getElementById("alarmModal").style.display = "none";
   }
@@ -127,6 +154,7 @@
       });
     } else {
       card.remove();
+      checkIfEmpty();
     }
   }
 
@@ -138,12 +166,16 @@
 
     cards.forEach(card => {
       const no = card.getAttribute('data-num');
-      $.post('alarmConfirm', { no }, function (result) {
-        if (result === 'true') {
-          card.remove();
-          checkIfEmpty();
-        }
-      });
+      if (no) {
+        $.post('alarmConfirm', { no }, function (result) {
+          if (result === 'true') {
+            card.remove();
+            checkIfEmpty();
+          }
+        });
+      } else {
+        card.remove();
+      }
     });
   }
 
@@ -174,5 +206,19 @@
     if (!modalContent.contains(event.target)) {
       closeAlarmModal();
     }
+  }
+</script>
+
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('${contextPath}/firebase-messaging-sw.js')
+      .then(function(registration) {
+        console.log("✅ Service Worker 등록 성공", registration);
+      })
+      .catch(function(err) {
+        console.error("❌ Service Worker 등록 실패", err);
+      });
+  } else {
+    console.warn("Service Worker 지원 안 됨");
   }
 </script>

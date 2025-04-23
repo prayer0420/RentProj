@@ -31,7 +31,7 @@ public class FcmToken extends HttpServlet {
 		
 		try {
 			HttpSession session = request.getSession();
-			String memberId = (String)session.getAttribute("member.memberId");
+			String memberId = (String)session.getAttribute("id");
 			
 			MemberService memberServie = new MemberServiceImpl();
 	        Member member = memberServie.getMemberById(memberId);
