@@ -8,6 +8,6 @@ import dto.Alarm;
 public interface AlarmDao  {
 
 	void insetAlarm(Alarm alarm) throws Exception;
-	void updateAlarmConfirm(Integer num) throws Exception;
+	void updateAlarmConfirm(Integer no) throws Exception;
 	List<Alarm> selectAlarmList(String id) throws Exception;
 }

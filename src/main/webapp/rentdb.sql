@@ -292,3 +292,22 @@ ADD COLUMN latitude DECIMAL(10, 7),
 ADD COLUMN longitude DECIMAL(10, 7);
 
 
+
+DROP TABLE IF EXISTS alarm;
+
+CREATE TABLE alarm (
+  no INT AUTO_INCREMENT PRIMARY KEY,
+  type VARCHAR(50) NOT NULL,
+  recvId VARCHAR(50) NOT NULL,
+  title VARCHAR(100) NOT NULL,
+  content VARCHAR(1000),
+  isActive BOOLEAN DEFAULT TRUE,
+  sentDate DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+INSERT INTO alarm (type, recvId, title, content, isActive)
+VALUES
+  ('chat', 'ekzm849', '새로운 메시지 도착', '1:1 채팅 메시지가 도착했습니다.', TRUE),
+  ('system', 'ekzm849', '상품 등록 완료', '상품이 성공적으로 등록되었습니다.', TRUE),
+  ('warning', 'ekzm849', '신고 처리 알림', '회원님이 신고한 내용이 처리되었습니다.', TRUE);
+

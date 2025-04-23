@@ -24,8 +24,8 @@ public class AlarmDaoImpl implements AlarmDao{
 	}
 
 	@Override
-	public void updateAlarmConfirm(Integer num)throws Exception {
-		sqlSession.update("mapper.alarm.updateAlarmConfirm",num);
+	public void updateAlarmConfirm(Integer no)throws Exception {
+		sqlSession.update("mapper.alarm.updateAlarmConfirm",no);
 		sqlSession.commit();
 	}
 }

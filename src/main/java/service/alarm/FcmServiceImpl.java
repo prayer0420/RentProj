@@ -32,6 +32,7 @@ public class FcmServiceImpl implements FcmService{
 		memberDao.updateFcmToken(id,fcmToken);
 	}
 	
+	//알림 보내기
 	@Override
 	public void sendAlarm(Alarm alarm) throws Exception{
 		Member member = memberDao.selectMemberById(alarm.getRecvId());
@@ -49,14 +50,13 @@ public class FcmServiceImpl implements FcmService{
 		//{"message":{"token":"...", notification:{"title":"제목", "body":"내용"}, "data":{내가 원하는 데이터}
 		JSONObject notification = new JSONObject();
 		notification.put("title", alarm.getTitle());
-		notification.put("body", alarm.getBody());
+		notification.put("content", alarm.getContent());
 		
 		JSONObject data= new JSONObject();
 		data.put("title", alarm.getTitle()+"");
-		data.put("body", alarm.getBody());
-		data.put("num", alarm.getNum());
-		data.put("sendId", alarm.getSendId());
-		data.put("sendName", alarm.getSendName());
+		data.put("body", alarm.getContent());
+		data.put("type", alarm.getType());
+		data.put("isActive", alarm.isActive());
 		
 		JSONObject json = new JSONObject();
 		JSONObject message = new JSONObject();
@@ -86,8 +86,8 @@ public class FcmServiceImpl implements FcmService{
 		System.out.println(response.toString());
 	}
 	@Override
-	public void confirmAlarm(Integer num) throws Exception{
-		alarmDao.updateAlarmConfirm(num);
+	public void confirmAlarm(Integer no) throws Exception{
+		alarmDao.updateAlarmConfirm(no);
 	}
 	
 	@Override

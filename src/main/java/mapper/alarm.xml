@@ -5,15 +5,15 @@
 	
 <mapper namespace="mapper.alarm">
 	<insert id="insertAlarm" parameterType ="alarm" useGeneratedKeys="true" keyProperty="num">
-			insert into alarm (sendId,sendName,recvId,title,body)
-				values (#{sendId}, #{sendName}, #{recvId}, #{title}, #{body})
+			insert into alarm (type,recvId,title,content,isActive)
+				values (#{type}, #{recvId}, #{title}, #{content}, #{isActive})
 	</insert>
 	
 	<select id="selectAlarmList" parameterType="String" resultType="alarm">
-		select * from alarm where recvId=#{id} and confirm= false order by num desc
+		select * from alarm where recvId=#{id} and isActive= true order by no desc
 	</select>
 	
 	<update id="updateAlarmConfirm" parameterType="Integer">
-		update alarm set confirm=1 where num=#{num}
+		update alarm set isActive=false where no=#{no}
 	</update>
 </mapper>

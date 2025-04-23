@@ -38,7 +38,7 @@
   					</c:if>
 				</div>
 
-				<button>🔔 알림</button>
+				<button id="btn-alarm">🔔 알림</button>
 				<button><a href="myOrder">📄 마이페이지</a></button>
 				<c:choose>
 					<c:when test="${not empty member}">
@@ -97,6 +97,30 @@
       window.location.href = "${pageContext.request.contextPath}/logout";
     }
   });
+</script>
+
+<!--알림 관련 코드-->
+<div id="alarmModalContainer"></div>
+
+<script>
+$("#btn-alarm").click(function () {
+	  $.ajax({
+	    url: "${pageContext.request.contextPath}/alarmList",
+	    method: "GET",
+	    success: function (html) {
+	      // 이전 모달 제거 (중복 방지)
+	      $("#alarmModalContainer").html(""); 
+	      $("#alarmModalContainer").html(html);
+
+	      // 모달 보이기
+	      $("#alarmModal").css("display", "flex");
+	    },
+	    error: function () {
+	      alert("알림을 불러오는 데 실패했습니다 😥");
+	    }
+	  });
+	});
+
 </script>
 
 </body>

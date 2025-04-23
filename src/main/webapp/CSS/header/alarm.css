@@ -1,0 +1,170 @@
+@charset "UTF-8";
+
+/* 🔔 전체 모달 배경 */
+.alarm-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.4);
+  display: none;
+  justify-content: flex-end;
+  z-index: 9999;
+}
+
+/* 🔔 모달 콘텐츠 */
+.alarm-content {
+  width: 500px;
+  height: 100%;
+  background-color: #fff;
+  box-shadow: -3px 0 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  animation: slideIn 0.3s ease forwards;
+  transform: translateX(100%);
+  position: relative;
+}
+
+/* 오른쪽에서 슬라이드 인 */
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0%);
+  }
+}
+
+/* 헤더 */
+.alarm-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  font-size: 18px;
+  font-weight: bold;
+  border-bottom: 1px solid #eee;
+}
+
+/* 전체 삭제 버튼 */
+.clear-all-wrap {
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px 20px 0;
+}
+
+.clear-all-btn {
+  font-size: 13px;
+  padding: 6px 12px;
+  background-color: #2f855a;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.clear-all-btn:hover {
+  background-color: #276749;
+}
+
+/* 구분선 */
+.divider {
+  height: 1px;
+  background-color: #ddd;
+  margin: 0 20px;
+}
+
+/* 알림 목록 영역 */
+.alarm-list {
+  padding: 20px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+/* 알림 카드 */
+.alarm-card {
+  background-color: #f9f9f9;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+  margin-bottom: 15px;
+  border: 1px solid #eee;
+}
+
+.alarm-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.alarm-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #333;
+  margin: 0;
+}
+
+.alarm-body {
+  font-size: 13px;
+  color: #555;
+  margin-top: 6px;
+}
+
+/* 삭제 버튼, 닫기 버튼 */
+.delete-btn,
+.close-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  color: #aaa;
+}
+
+.delete-btn:hover,
+.close-btn:hover {
+  color: crimson;
+}
+
+/* 알림 없음 UI */
+.alarm-empty {
+  text-align: center;
+  padding: 60px 20px 20px;
+}
+
+.alarm-empty-icon {
+  position: relative;
+  display: inline-block;
+}
+
+.alarm-empty-icon svg {
+  width: 80px;
+  height: 80px;
+  opacity: 0.85;
+}
+
+.alarm-empty-icon .close-btn {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background-color: #03a9f4;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  font-size: 12px;
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+  cursor: pointer;
+}
+
+.alarm-empty-icon .close-btn:hover {
+  background-color: #0288d1;
+}
+
+.alarm-empty-text {
+  margin-top: 12px;
+  font-size: 14px;
+  color: #777;
+}
