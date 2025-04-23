@@ -26,10 +26,10 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response) 
 		request.setCharacterEncoding("utf-8");
 		response.setCharacterEncoding("utf-8");
 		response.setContentType("text/html");
-		Integer num = Integer.parseInt(request.getParameter("num"));
+		Integer no = Integer.parseInt(request.getParameter("no"));
 		try {
 			FcmService service = new FcmServiceImpl();
-			service.confirmAlarm(num);
+			service.confirmAlarm(no);
 			response.getWriter().write("true");
 		}catch(Exception e) {
 			e.printStackTrace();

@@ -23,12 +23,11 @@ if (cookieHeader != null) {
 %>
 
 <c:set var="contextPath" value="${pageContext.request.contextPath }" />
-<%-- 외부 CSS 파일 연결 --%>
-<link rel="stylesheet" href="${contextPath}/CSS/Login/login.css" />
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+<%-- 외부 CSS 파일 연결 --%>
+<link rel="stylesheet" href="${contextPath}/CSS/Login/login.css" />
 	<meta charset="UTF-8">
 	<title>로그인</title>
 </head>

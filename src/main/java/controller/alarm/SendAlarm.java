@@ -1,6 +1,4 @@
 package controller.alarm;
-
-
 import java.io.IOException;
 
 import javax.servlet.ServletException;
@@ -23,16 +21,16 @@ public class SendAlarm extends HttpServlet {
     
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
-		String sendId = request.getParameter("sendId");
-		System.out.println(sendId);
-		String sendName = request.getParameter("sendName");
 		String recvId = request.getParameter("recvId");
 		System.out.println(recvId);
+		
 		String title = request.getParameter("title");
-		String body = request.getParameter("body");
+		String content = request.getParameter("content");
+		String type = request.getParameter("type");
+		boolean isActive = Boolean.valueOf(request.getParameter("isActive"));
 		FcmService service = new FcmServiceImpl();
 		try {
-			service.sendAlarm(new Alarm(sendId, sendName,recvId,title,body));
+			service.sendAlarm(new Alarm(type,recvId,title,content,isActive));
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
