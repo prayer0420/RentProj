@@ -77,7 +77,7 @@
 					</div>
 
 					<div class="likes-views">
-						<div>❤️ 5</div>
+						<div>❤️ {}</div>
 						<div>👁️ ${product.viewCnt}</div>
 					</div>
 					<div class="btn-box">
@@ -272,8 +272,8 @@
 				alert("로그인이 필요합니다.");
 			}
 		 });
-		 
 	 }
+	 
 	
 	
 </script>

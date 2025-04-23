@@ -127,8 +127,6 @@ public class ProductServiceImpl implements ProductService {
 	}
 	@Override
 	public Product selectProductOne(Integer no) throws Exception {
-		
-		
 		return productDAO.SelectProductOne(no);
 	}
 
@@ -219,4 +217,5 @@ public class ProductServiceImpl implements ProductService {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 }

@@ -29,4 +29,5 @@ public interface ProductDAO {
     //메인페이지
     List<Product> selectPopularProducts(int limit);
     
+    
 }
