@@ -20,6 +20,11 @@ public class Order {
 	private String deliveryComp;
 	private String orderId;
 	
+	// admin 주문조회용
+    private String productName; // product.title (조인 결과)
+    private String buyerId;     // member.id (조인 결과)
+    private String sellerId;    // member.id (조인 결과)
+
 	// 기본생성자
 	public Order() {}
 	
@@ -215,5 +220,29 @@ public class Order {
 	}
 
 
+	// admin 주문조회용 + Getter/Setter
+	public String getProductName() {
+		return productName;
+	}
+	
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
+	
+	public String getBuyerId() {
+		return buyerId;
+	}
+	
+	public void setBuyerId(String buyerId) {
+		this.buyerId = buyerId;
+	}
+	
+	public String getSellerId() {
+		return sellerId;
+	}
+	
+	public void setSellerId(String sellerId) {
+		this.sellerId = sellerId;
+	}
 	
 }

@@ -54,10 +54,61 @@ public class MypageServiceImpl implements MypageService {
 		return mypageDao.updateInvoiceInfo(orderNo, deliveryComp, invoiceNo);
 	}
 
-//	@Override
-//	public List<Order> orderListByPage(PageInfo pageInfo) {
-//		
-//		return null;
-//	}
+	@Override
+	public List<Map<String,Object>> orderListByPage(PageInfo pageInfo,String id) throws Exception {
+		Integer orderCnt = mypageDao.selectOrderCountById(id);
+		
+		Integer allPage = (int)Math.ceil((double)orderCnt/5);
+		// startPage : 1~5 -> 1, 6~10 -> 6
+		Integer startPage = (pageInfo.getCurPage()-1)/5*5+1;
+		Integer endPage = startPage+5-1;
+		if(endPage > allPage) endPage = allPage;
+		
+		pageInfo.setAllPage(allPage);
+		pageInfo.setStartPage(startPage);
+		pageInfo.setEndPage(endPage);
+		
+		Integer row = (pageInfo.getCurPage()-1)*5;
+		
+		Map<String,Object> paramMap = new HashMap<>();
+		paramMap.put("id", id);
+		paramMap.put("row", row);
+		
+		System.out.println(id); 
+		
+		return mypageDao.selectOrderListByPage(paramMap);
+	}
+
+	@Override
+	public Map<String, Object> myOrderDetail(Integer orderNo, String id) throws Exception {
+		
+		return mypageDao.selectMyOrderDetail(orderNo,id);
+	}
+
+	@Override
+	public List<Map<String, Object>> rentListByPage(PageInfo pageInfo, String id) throws Exception {
+		Integer orderCnt = mypageDao.selectRentCountById(id);
+		
+		Integer allPage = (int)Math.ceil((double)orderCnt/5);
+		// startPage : 1~5 -> 1, 6~10 -> 6
+		Integer startPage = (pageInfo.getCurPage()-1)/5*5+1;
+		Integer endPage = startPage+5-1;
+		if(endPage > allPage) endPage = allPage;
+		
+		pageInfo.setAllPage(allPage);
+		pageInfo.setStartPage(startPage);
+		pageInfo.setEndPage(endPage);
+		
+		Integer row = (pageInfo.getCurPage()-1)*5;
+		
+		Map<String,Object> paramMap = new HashMap<>();
+		paramMap.put("id", id);
+		paramMap.put("row", row);
+		
+		System.out.println(id); 
+		
+		return mypageDao.selectRentListByPage(paramMap);
+	}
+
 
 }
