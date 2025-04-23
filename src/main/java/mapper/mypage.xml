@@ -3,12 +3,15 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 	
 <mapper namespace="mapper.mypage">
+
+	<!-- 나의 판매상품 전체 숫자(*페이징에 필요) -->
 	<select id="selectProductCnt" parameterType="String" resultType="Integer">
 		select count(*) from product p join member m
 		on (p.memberNo = m.no)
 		where m.id=#{id}	
 	</select>
 	
+	<!-- 나의 판매상품 리스트(MySell) 불러오기 -->
 	<select id="selectProductListByPage" parameterType="map" resultType="map">
 		select 
 		p.no, p.createDate, p.title, p.img, p.salePrice, p.deliveryprice, p.deliveryStatus, o.orderNo, o.orderStatus
@@ -19,9 +22,10 @@
         order by p.no desc limit #{row},5
 	</select>
 	
+	<!-- 나의 판매내역 상세(MySellDetail) 불러오기  -->
 	<select id="selectMySellDetail" parameterType="map" resultType="map">
 		select 
-		p.*, o.orderNo, o.orderDate, o.deliveryAddr, o.paymentType, o.invoiceNo, o.deliveryComp,
+		p.*, o.orderId, o.orderDate, o.deliveryAddr, o.paymentType, o.invoiceNo, o.deliveryComp,
 		m1.name, m1.id, m1.phone
         from Product p 
         join `Order` o On (o.productNo = p.no)
@@ -36,5 +40,50 @@
 		 SET deliveryComp=#{deliveryComp}, invoiceNo=#{invoiceNo}, orderStatus='배송중' 
 		 WHERE orderNo=#{orderNo}
 	</update>
+	
+	<!-- 나의 구매상품 전체 숫자 (*페이징에 필요) -->
+	<select id="selectOrderCnt" parameterType="String" resultType="Integer">
+		select count(*) from `Order` o join member m
+		on (o.memberNo = m.no)
+		where m.id=#{id} and o.orderType='구매'
+	</select>
+	
+	<!-- 나의 구매상품 리스트(MyOrder) 불러오기 -->
+	<select id="selectOrderListByPage" parameterType="map" resultType="map">
+		select o.*, p.*
+		from `order` o 
+		left join product p on (p.no = o.productNo)
+		join member m on (o.memberNo=m.no)
+        where m.id=#{id} and o.orderType='구매'
+        order by o.orderNo desc limit #{row},5
+	</select>
+	
+	<!-- 나의 구매내역 상세(MyOrderDetail) 불러오기  -->
+	<select id="selectMyOrderDetail" parameterType="map" resultType="map">
+		select p.*, o.*, m1.name, m2.id, m2.phone
+        from Product p 
+        join `Order` o On (o.productNo = p.no)
+        join member m1 On (o.memberNo = m1.no)
+		  JOIN member m2 ON p.memberNo = m2.no
+		  where o.orderNo=#{orderNo} and m1.id=#{id} and o.orderType='구매'
+	</select>
+	
+	<!-- 나의 빌린상품 전체 숫자 (*페이징에 필요) -->
+	<select id="selectRentCnt" parameterType="String" resultType="Integer">
+		select count(*) from `Order` o join member m
+		on (o.memberNo = m.no)
+		where m.id=#{id} and o.orderType='대여'
+	</select>
+	
+	<!-- 나의 빌린상품 리스트(MyRent) 불러오기 -->
+	<select id="selectRentListByPage" parameterType="map" resultType="map">
+		select o.*, p.*
+		from `order` o 
+		left join product p on (p.no = o.productNo)
+		join member m on (o.memberNo=m.no)
+        where m.id=#{id} and o.orderType='대여'
+        order by o.orderNo desc limit #{row},5
+	</select>
+	
 	
 </mapper>
