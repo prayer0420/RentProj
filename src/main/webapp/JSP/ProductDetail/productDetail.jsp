@@ -56,14 +56,23 @@
 						<div class="profile-info">
 							<div class="seller-name">${product.nickname}</div>
 							<div class="seller-rating">
-								<span class="score">3.0</span> <span class="stars">★★★</span>
+								<span class="score">${avgScore}</span> 
+								<span class="stars"> 
+									<c:choose>
+										<c:when test="${avgScore >= 4.5}">★★★★★</c:when>
+										<c:when test="${avgScore >= 3.5}">★★★★☆</c:when>
+										<c:when test="${avgScore >= 2.5}">★★★☆☆</c:when>
+										<c:when test="${avgScore >= 1.5}">★★☆☆☆</c:when>
+										<c:when test="${avgScore >= 0.5}">★☆☆☆☆</c:when>
+									</c:choose>
+								</span>
 							</div>
 						</div>
 					</div>
 
 					<div class="likes-views">
 						<div>❤️ 5</div>
-						<div>👁️ 13</div>
+						<div>👁️ ${product.viewCnt}</div>
 					</div>
 					<div class="btn-box">
 						<c:if test="${not empty sessionScope.member}">
@@ -71,23 +80,31 @@
 						</c:if>
 						<c:choose>
 							<c:when test="${product.tradeType=='판매' }">
-								<form action="${pageContext.request.contextPath}/productSellOrder" method="get"> 
+								<form
+									action="${pageContext.request.contextPath}/productSellOrder"
+									method="get">
 									<input type="hidden" name="productNo" value="${product.no}" />
 									<button class="btn btn-sell">구매하기</button>
 								</form>
 							</c:when>
 							<c:when test="${product.tradeType=='대여' }">
-								<form action="${pageContext.request.contextPath}/productRentOrder" method="get">
+								<form
+									action="${pageContext.request.contextPath}/productRentOrder"
+									method="get">
 									<input type="hidden" name="productNo" value="${product.no}" />
 									<button class="btn btn-rent">대여하기</button>
 								</form>
 							</c:when>
 							<c:when test="${product.tradeType=='판매대여' }">
-								<form action="${pageContext.request.contextPath}/productSellOrder" method="get"> 
+								<form
+									action="${pageContext.request.contextPath}/productSellOrder"
+									method="get">
 									<input type="hidden" name="productNo" value="${product.no}" />
 									<button class="btn btn-sell">구매하기</button>
 								</form>
-								<form action="${pageContext.request.contextPath}/productRentOrder" method="get">
+								<form
+									action="${pageContext.request.contextPath}/productRentOrder"
+									method="get">
 									<input type="hidden" name="productNo" value="${product.no}" />
 									<button class="btn btn-rent">대여하기</button>
 								</form>
@@ -121,17 +138,27 @@
 				<div class="review-top">
 					<h3>판매자 만족도</h3>
 					<div class="rating-display">
-						<span class="score">3/5</span> <span class="stars">★★★☆☆</span>
+						<span class="score">${avgScore}/5.0</span>
+						<c:choose>
+							<c:when test="${avgScore >= 4.5}">★★★★★</c:when>
+							<c:when test="${avgScore >= 3.5}">★★★★☆</c:when>
+							<c:when test="${avgScore >= 2.5}">★★★☆☆</c:when>
+							<c:when test="${avgScore >= 1.5}">★★☆☆☆</c:when>
+							<c:when test="${avgScore >= 0.5}">★☆☆☆☆</c:when>
+						</c:choose>
 					</div>
 				</div>
-
-				<button id="review-toggle-btn" class="btn btn-review-write">리뷰
-					쓰기</button>
+				<c:if test="${member.no != null }">
+					<button id="review-toggle-btn" class="btn btn-review-write">리뷰
+						쓰기</button>
+				</c:if>
 				<!--리뷰 작성-->
 				<form id="review-form" class="review-form" style="display: none;">
+					<input type="hidden" name="productNo" value="${product.no} }" /> <input
+						type="hidden" name="memberNo" value="${member.no} }" />
 					<div class="review-input-row">
 						<textarea name="content" placeholder="리뷰 내용을 입력하세요"></textarea>
-						<label class="rating-box"> 평점: <select name="rating">
+						<label class="rating-box"> 평점: <select name="score">
 								<option value="5">5점</option>
 								<option value="4">4점</option>
 								<option value="3" selected>3점</option>
@@ -152,12 +179,12 @@
 		</div>
 	</div>
 	<c:if test="${param.paid eq 'true'}">
- 		<script>
+		<script>
     		alert("🎉 결제가 정상적으로 완료되었습니다!");
     		// 주소에서 paid 파라미터 제거 (브라우저 주소만 바꾸고 리로드 안 함)
     	    history.replaceState(null, '', location.pathname + location.search.replace(/(&|\?)?paid=true/, ''));
   		</script>
-</c:if>
+	</c:if>
 </body>
 
 <jsp:include page="messageModal.jsp">
@@ -201,7 +228,7 @@
 
 		    const formData = {
 		      content: $('textarea[name="content"]').val(),
-		      rating: $('select[name="rating"]').val(),
+		      score: $('select[name="score"]').val(),
 		      productNo: '${product.no}'
 		    };
 
@@ -215,7 +242,7 @@
 		        $('#review-form').hide();
 
 		        // 🔁 리뷰 리스트를 다시 불러오기
-		        $('#review-list-container').load('${pageContext.request.contextPath}/review/list?productNo=${product.no}');
+		        $('#review-list-container').load('${pageContext.request.contextPath}/reviewList?productNo=${product.no}');
 		      },
 		      error: function () {
 		        alert('리뷰 등록에 실패했습니다.');
@@ -223,6 +250,9 @@
 		    });
 		  });
 	
+	 $('#review-list-container').load(
+		'${pageContext.request.contextPath}/reviewList?productNo=${product.no}'		 
+	 )
 	
 	
 </script>

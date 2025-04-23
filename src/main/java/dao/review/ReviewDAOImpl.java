@@ -1,5 +1,7 @@
 package dao.review;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 
 import dto.Review;
@@ -13,6 +15,17 @@ public class ReviewDAOImpl implements ReviewDAO {
 		session.insert("mapper.review.insertReview",review);
 		session.commit();
 		return review;
+	}
+
+	@Override
+	public List<Review> selectedByProductNo(int productNo) throws Exception {
+		return session.selectList("mapper.review.selectByProductNo",productNo);
+	}
+
+	@Override
+	public double selectAvgScore(int productNo) throws Exception {
+		Double result = session.selectOne("mapper.review.selectAvgScore",productNo);
+		return result != null ? result : 0.0;
 	}
 
 }

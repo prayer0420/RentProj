@@ -14,6 +14,8 @@
 		<typeAlias type="dto.Note" alias ="note"/>
 		<typeAlias type="dto.ReportedProduct" alias ="report"/>
 		<typeAlias type="dto.AlarmMessage" alias ="alarmMessage"/>
+		<typeAlias type="dto.Alarm" alias ="alarm"/>
+		<typeAlias type="dto.Review" alias ="review"/>
 	</typeAliases>
 	
 	<environments default="development">
@@ -42,6 +44,7 @@
 		<mapper resource="mapper/report.xml"/>
 		<mapper resource="mapper/alarmList.xml"/>
 		<mapper resource="mapper/alarm.xml"/>
+		<mapper resource="mapper/review.xml"/>
 		
 	</mappers>
 </configuration>
