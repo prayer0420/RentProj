@@ -7,6 +7,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import dto.Member;
 import service.member.MemberService;
@@ -21,32 +22,34 @@ public class UpdateLocation extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-          Member loginUser = (Member) req.getSession().getAttribute("member");
-          if (loginUser != null) {
-        	double lat = Double.parseDouble(req.getParameter("lat"));
-            double lng = Double.parseDouble(req.getParameter("lng"));  
-            int memberNo = loginUser.getNo();
-            System.out.println(memberNo);
+            String id = (String) request.getSession().getAttribute("id");
+
+            String latStr = request.getParameter("lat");
+            String lngStr = request.getParameter("lng");
+
+            Double lat = Double.parseDouble(latStr);
+            Double lng = Double.parseDouble(lngStr);
+
             MemberService service = new MemberServiceImpl();
-            String address = service.updateLocationAndGetAddress(loginUser.getNo(), lat, lng);
-            System.out.println(address);
+            Member member = service.getMemberById(id); // DB에서 다시 가져옴
+
+            String address = service.updateLocationAndGetAddress(member.getNo(), lat, lng);
 
             // 세션 갱신
-            loginUser.setLatitude(lat);
-            loginUser.setLongitude(lng);
-            loginUser.setLocation(address);
+            HttpSession session = request.getSession();
+            session.setAttribute("latitude", lat);
+            session.setAttribute("longitude", lng);
+            session.setAttribute("location", address);
 
-            // 응답
-            resp.setContentType("application/json");
-            resp.getWriter().write("{\"address\":\"" + address + "\"}");
-          }
+            response.setContentType("application/json");
+            response.getWriter().write("{\"address\":\"" + address + "\"}");
+            response.setStatus(HttpServletResponse.SC_OK);
 
-          resp.setStatus(HttpServletResponse.SC_OK);
         } catch (Exception e) {
-          e.printStackTrace();
-          resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            e.printStackTrace();
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
-      }
+    }
 }

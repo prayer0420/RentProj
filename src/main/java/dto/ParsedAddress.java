@@ -1,14 +1,34 @@
 package dto;
 
-public class Address {
+import java.io.Serializable;
+
+public class ParsedAddress {
     private String alias;
     private String zipcode;
     private String address;
     private String detail;
     private String phone;
     private String recipient;
+    private boolean defaultAddress;
 
-    public String getAlias() {
+    public ParsedAddress(String alias, String zipcode, String address, String detail, String phone, String recipient,
+			boolean defaultAddress) {
+		super();
+		this.alias = alias;
+		this.zipcode = zipcode;
+		this.address = address;
+		this.detail = detail;
+		this.phone = phone;
+		this.recipient = recipient;
+		this.defaultAddress = defaultAddress;
+	}
+
+	public ParsedAddress() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public String getAlias() {
         return alias;
     }
 
@@ -55,4 +75,12 @@ public class Address {
     public void setRecipient(String recipient) {
         this.recipient = recipient;
     }
-} 
+
+    public boolean isDefaultAddress() {
+        return defaultAddress;
+    }
+
+    public void setDefaultAddress(boolean defaultAddress) {
+        this.defaultAddress = defaultAddress;
+    }
+}

@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 
 import dto.Alarm;
+import dto.AlarmMessage;
 import utils.MybatisSqlSessionFactory;
 
 public class AlarmDaoImpl implements AlarmDao{
