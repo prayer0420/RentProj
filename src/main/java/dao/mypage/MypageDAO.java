@@ -23,5 +23,8 @@ public interface MypageDAO {
 	// 나의 구매내역 리스트 불러오기(MyOrder) 
 	Integer selectOrderCountById(String id) throws Exception;
 	List<Map<String,Object>> selectOrderListByPage(Map<String, Object> paramMap) throws Exception;
+	
+	// 나의 구매내역 상세 불러오기(MyOrderDetail)
+	Map<String, Object> selectMyOrderDetail(Integer orderNo, String id) throws Exception;
 
 }

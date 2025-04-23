@@ -13,11 +13,13 @@ import utils.MybatisSqlSessionFactory;
 public class MypageDAOImpl implements MypageDAO {
 	private SqlSession sqlSession = MybatisSqlSessionFactory.getSqlSessionFactory().openSession();
 
+	// 나의 판매상품 전체 카운트 불러오기(페이징) 
 	@Override
 	public Integer selectProductCountById(String id) throws Exception {
 		return sqlSession.selectOne("mapper.mypage.selectProductCnt",id);
 	}
 	
+	//나의 판매상품 리스트 불러오기
 	@Override
 	public List<Map<String, Object>> selectProductListByPage(Map<String, Object> paramMap) throws Exception {
 		return sqlSession.selectList("mapper.mypage.selectProductListByPage", paramMap);
@@ -55,16 +57,27 @@ public class MypageDAOImpl implements MypageDAO {
 		return result == 1;
 	}
 
+	// 나의 구매내역 전체 카운트 불러오기(페이징)
 	@Override
 	public Integer selectOrderCountById(String id) throws Exception {
 		
 		return sqlSession.selectOne("mapper.mypage.selectOrderCnt",id);
 	}
 
+	// 나의 구매내역 리스트 불러오기
 	@Override
 	public List<Map<String,Object>> selectOrderListByPage(Map<String, Object> paramMap) throws Exception {
 		
 		return sqlSession.selectList("mapper.mypage.selectOrderListByPage",paramMap);
+	}
+
+	// 나의 구매내역 상세 불러오기
+	@Override
+	public Map<String, Object> selectMyOrderDetail(Integer orderNo, String id) throws Exception {
+		Map<String,Object> param = new HashMap<>();
+		param.put("orderNo",orderNo);
+		param.put("id",id);
+		return sqlSession.selectOne("mapper.mypage.selectMyOrderDetail", param);
 	}
 
 
