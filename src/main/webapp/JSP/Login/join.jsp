@@ -240,6 +240,7 @@
 		});
 </script>
 
+<!--일반회원용-->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
   import { getMessaging, getToken, onMessage } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-messaging.js";
@@ -257,38 +258,13 @@
   initializeApp(firebaseConfig);
   const messaging = getMessaging();
 
-  const requestForToken = () => {
-    getToken(messaging, {
-      vapidKey: 'BKf2ZnmnAxGrBS6VogRScPinuISeM-n_I7Dn4k-4uSZ7FxAjeJCFxg7tJMFfZ0HvlKCeH4qv85F8L7r4rdweVT8'
-    }).then((currentToken) => {
-      if (currentToken) {
-      	document.getElementById("fcmToken").value = currentToken;
-        $.post("fcmToken", { fcmToken: currentToken });
-      }
-    }).catch(console.error);
-
-    onMessageListener();
-  };
-
-  const onMessageListener = () => {
-    onMessage(messaging, (payload) => {
-      const alarm = payload.data;
-      $("#alarmModal").css("display", "flex");
-      $("#alarmList .alarm-empty").remove(); // 알림 없을 때 텍스트 제거
-
-      const alarmHTML = `
-        <div class="alarm-card" data-num="${alarm.no}">
-          <div class="alarm-top">
-            <h4 class="alarm-title">${alarm.title}</h4>
-            <button class="delete-btn" onclick="deleteAlarm(this)">✕</button>
-          </div>
-          <p class="alarm-body">${alarm.content}</p>
-        </div>`;
-      $("#alarmList").prepend(alarmHTML);
-    });
-  };
-
-  requestForToken();
+  getToken(messaging, {
+    vapidKey: 'BKf2ZnmnAxGrBS6VogRScPinuISeM-n_I7Dn4k-4uSZ7FxAjeJCFxg7tJMFfZ0HvlKCeH4qv85F8L7r4rdweVT8'
+  }).then((currentToken) => {
+    if (currentToken) {
+      document.getElementById("fcmToken").value = currentToken;
+    }
+  }).catch(console.error);
 </script>
 
 </body>

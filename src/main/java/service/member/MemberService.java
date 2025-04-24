@@ -3,6 +3,7 @@ package service.member;
 import java.util.List;
 import java.util.Map;
 
+import dto.LoginResult;
 import dto.Member;
 import utils.PageInfo;
 
@@ -10,8 +11,8 @@ public interface MemberService {
 	void join(Member member) throws Exception;
 	Member login(String id, String password) throws Exception;
 	boolean checkDoubleId(String id) throws Exception;
-	Member KakaoLogin(String code) throws Exception;
-	Member NaverLogin(String code) throws Exception;
+	LoginResult KakaoLogin(String code) throws Exception;
+	LoginResult NaverLogin(String code) throws Exception;
 	
 	//관리자 회원 목록 조회 (검색 조건 + 페이징 처리)
 	List<Member> searchMembersWithPaging(Map<String, Object> params, PageInfo pageInfo) throws Exception;

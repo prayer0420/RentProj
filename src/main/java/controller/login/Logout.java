@@ -27,6 +27,7 @@ public class Logout extends HttpServlet {
 		session.removeAttribute("latitude");
 		session.removeAttribute("longitude");
 		session.removeAttribute("nickname");
+		session.removeAttribute("alarms");
 		
 		response.sendRedirect("main");
 
