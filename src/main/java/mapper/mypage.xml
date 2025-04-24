@@ -8,7 +8,7 @@
 	<select id="selectProductCnt" parameterType="String" resultType="Integer">
 		select count(*) from product p join member m
 		on (p.memberNo = m.no)
-		where m.id=#{id}	
+		where m.id=#{id} and p.tradeType='판매'
 	</select>
 	
 	<!-- 나의 판매상품 리스트(MySell) 불러오기 -->
@@ -18,7 +18,7 @@
 		from product p 
 		left join `order` o on (p.no = o.productNo)
 		join member m on (p.memberNo=m.no)
-        where m.id=#{id} 
+        where m.id=#{id} and p.tradeType='판매'
         order by p.no desc limit #{row},5
 	</select>
 	
@@ -31,7 +31,7 @@
         join `Order` o On (o.productNo = p.no)
         join member m1 On (o.memberNo = m1.no)
 		  JOIN member m2 ON p.memberNo = m2.no
-		  where o.orderNo=#{orderNo} and m2.id=#{id}
+		  where o.orderNo=#{orderNo} and m2.id=#{id} and p.tradeType='판매'
 	</select>
 	
 	<!-- 송장번호, 택배사 정보 업데이트 -->
