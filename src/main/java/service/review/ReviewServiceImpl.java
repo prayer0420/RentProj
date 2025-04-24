@@ -34,4 +34,9 @@ public class ReviewServiceImpl implements ReviewService {
 		
 	}
 
+	@Override
+	public void updateReview(Review review) throws Exception {
+		reviewDAO.updateReview(review);
+	}
+
 }

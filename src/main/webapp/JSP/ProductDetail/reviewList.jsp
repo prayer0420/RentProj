@@ -7,8 +7,8 @@
 		<div class="review-item">
 			<strong>${review.memberNickname}</strong>
 			<c:if test="${review.memberNo == memberNo}">
-				<button class="review-edit" type="button">수정</button>
-				<button class="review-del" type="button"
+				<button class="review-edit"  onclick="editReview(${review.no}, '${review.contents}', ${review.score})">수정</button>
+				<button class="review-del" 
 					onclick="deleteReview(${review.no})">삭제</button>
 			</c:if>
 			<div class="stars">

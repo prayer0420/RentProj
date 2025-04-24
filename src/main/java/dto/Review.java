@@ -9,7 +9,7 @@ public class Review {
 	String title;
 	String contents;
 	Integer score;
-	Date date;
+	String date;
 	Integer productNo;
 	String memberNickname;
 	
@@ -20,6 +20,13 @@ public class Review {
 		this.score = score;
 		this.productNo = productNo;
 		this.memberNickname = memberNickname;
+	}
+	
+	public Review(Integer no,String contents,Integer score,String date) {
+		this.no = no;
+		this.contents = contents;
+		this.score = score;
+		this.date = date;
 	}
 
 	public Integer getNo() {
@@ -62,11 +69,11 @@ public class Review {
 		this.score = score;
 	}
 
-	public Date getDate() {
+	public String getDate() {
 		return date;
 	}
 
-	public void setDate(Date date) {
+	public void setDate(String date) {
 		this.date = date;
 	}
 

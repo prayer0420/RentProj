@@ -232,32 +232,41 @@
 	  document.getElementById('messageModal').style.display = 'none';
 	}
 	
-	 $('#review-form').on('submit', function (e) {
-		    e.preventDefault(); // 기본 제출 막기
+	$('#review-form').on('submit', function (e) {
+		  e.preventDefault(); // 기본 제출 막기
 
-		    const formData = {
-		      content: $('textarea[name="content"]').val(),
-		      score: $('select[name="score"]').val(),
-		      productNo: '${product.no}'
-		    };
+		  const reviewNo = $('#reviewNo').val(); // 수정 시 존재함
+		  const isUpdate = !!reviewNo;
 
-		    $.ajax({
-		      type: 'POST',
-		      url: '${pageContext.request.contextPath}/reviewWrite', // ← 리뷰 등록 서블릿
-		      data: formData,
-		      success: function () {
-		        alert('리뷰가 등록되었습니다!');
-		        $('#review-form')[0].reset();
-		        $('#review-form').hide();
+		  const formData = {
+		    content: $('textarea[name="content"]').val(),
+		    score: $('select[name="score"]').val(),
+		    productNo: '${product.no}'
+		  };
 
-		        // 🔁 리뷰 리스트를 다시 불러오기
-		        $('#review-list-container').load('${pageContext.request.contextPath}/reviewList?productNo=${product.no}');
-		      },
-		      error: function () {
-		        alert('리뷰 등록에 실패했습니다.');
-		      }
-		    });
+		  if (isUpdate) {
+		    formData.no = reviewNo; // 수정 시 필요
+		  }
+
+		  console.log("보낼 데이터:", formData); // 디버깅용
+
+		  $.ajax({
+		    type: 'POST',
+		    url: isUpdate ? '${pageContext.request.contextPath}/reviewUpdate' : '${pageContext.request.contextPath}/reviewWrite',
+		    data: formData,
+		    success: function () {
+		      alert(isUpdate ? '리뷰가 수정되었습니다!' : '리뷰가 등록되었습니다!');
+		      $('#review-form')[0].reset();
+		      $('#review-form').hide();
+		      $('#reviewNo').remove(); // 수정용 hidden 필드 제거
+		      $('#review-list-container').load('${pageContext.request.contextPath}/reviewList?productNo=${product.no}');
+		    },
+		    error: function () {
+		      alert(isUpdate ? '리뷰 수정 실패' : '리뷰 등록 실패');
+		    }
 		  });
+		});
+
 	
 	 $('#review-list-container').load(
 		'${pageContext.request.contextPath}/reviewList?productNo=${product.no}'		 
@@ -296,6 +305,16 @@
 		 });
 	 }
 	 
-	
-	
+	 function editReview(no, contents, score) {
+		    $("#review-form").show();
+		    $("textarea[name='content']").val(contents);
+		    $("select[name='score']").val(score);
+
+		    if ($("#reviewNo").length === 0) {
+		        $("#review-form").append('<input type="hidden" id="reviewNo" name="no" value="' + no + '">');
+		    } else {
+		        $("#reviewNo").val(no);
+		    }
+		}
+	 
 </script>
