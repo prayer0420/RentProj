@@ -1,0 +1,212 @@
+@charset "UTF-8";
+
+	body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f9f9f9;
+      }
+      .wrapper {
+        max-width: 1200px;
+        width: 100%;
+        margin: 0 auto;
+        padding: 20px;
+        box-sizing: border-box;
+      }
+      .container {
+        display: flex;
+        margin: 0 auto;
+        padding: 20px;
+      }
+      
+      
+      .content {
+        flex: 1;
+        margin-left: 30px;
+      }
+      .content h2 {
+        font-size: 24px;
+        margin-bottom: 10px;
+      }
+      .divider {
+        height: 1px;
+        background-color: #ccc;
+        margin-bottom: 20px;
+      }
+
+      .filter-section {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 20px;
+      }
+      .filter-dropdown {
+        padding: 5px 10px;
+        font-size: 13px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        background-color: #fff;
+      }
+      .product-card {
+        display: flex;
+        flex-direction: column;
+        background-color: #fff;
+        border: 1px solid #ddd;
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        gap: 15px;
+        overflow: hidden;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+      }
+      .order-info {
+        display: flex;
+        justify-content: space-between;
+        font-size: 14px;
+        color: #555;
+      }
+      .order-meta {
+        display: flex;
+        gap: 10px;
+      }
+      .order-status-area {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+      }
+      .status-text {
+        font-size: 16px;
+        font-weight: bold;
+      }
+      .order-detail-link {
+        font-size: 13px;
+        color: grey;
+        text-decoration: none;
+      }
+      .order-detail-link:hover {
+        text-decoration: underline;
+      }
+      
+      /* 구분선 */
+      .card-divider {
+        height: 1px;
+        background-color: #eee;
+        width: 100%;
+      }
+      .card-content {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+      }
+      .product-image {
+        margin-top: 5px;
+        margin-left: 5px;
+        width: 150px;
+        height: 120px;
+        border-radius: 4%;
+        object-fit: cover;
+        background-color: #eee;
+      }
+      .product-info {
+        flex: 2;
+        padding: 15px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+      .product-info h3 {
+        margin: 0 0 10px;
+        font-size: 16px;
+        white-space: nowrap; /* 줄바꿈 안 함 */
+        overflow: hidden; /* 넘친 텍스트 숨김 */
+        text-overflow: ellipsis; /* 말줄임표 표시 */
+        max-width: 450px; /* 필요한 경우 너비 제한 가능 */
+      }
+      .product-info p {
+        margin: 5px 0;
+        color: #555;
+        font-size: 13px;
+      }
+      .order-status {
+        flex: 1;
+        padding: 15px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+      .order-status p {
+        margin: 5px 0;
+        font-weight: bold;
+        color: #333;
+      }
+      
+      .sec-prices {
+      	color: rgb(139,222,222);
+      }
+      
+      .status-change-btns {
+        display: flex;
+        align-items: flex-end;
+        flex: 1;
+        padding: 15px;
+        flex-direction: column;
+        justify-content: center;
+      }
+      .status-change-btns button {
+        width: 150px;
+        height: 30px;
+        background-color: #fff;
+        border-radius: 8%;
+        font-size: 10px;
+        font-weight: bold;
+        margin: 5px;
+      }
+      #confrim-order {
+        border: 1px solid green;
+        background-color: #fff;
+      }
+      #cancel-order {
+        border: 1px solid palevioletred;
+        background-color: #fff;
+      }
+
+      /* 모달 오버레이 */
+      .modal-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.4);
+        justify-content: center;
+        align-items: center;
+        z-index: 999;
+      }
+
+      /* 모달 콘텐츠 박스 */
+      .modal-content {
+        background: #fff;
+        padding: 24px;
+        border-radius: 8px;
+        width: 300px;
+        text-align: center;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      }
+
+      .modal-buttons {
+        margin-top: 20px;
+      }
+
+      .modal-buttons button {
+        margin: 0 10px;
+        padding: 8px 16px;
+        border: none;
+        background-color: #333;
+        color: white;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+
+      .modal-buttons button:hover {
+        background-color: #555;
+      }

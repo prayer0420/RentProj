@@ -82,19 +82,46 @@ public class MypageDAOImpl implements MypageDAO {
 
 	// 나의 빌린상품 전체 카운트 불러오기(페이징)
 	@Override
-	public Integer selectRentCountById(String id) {
+	public Integer selectRentCountById(String id) throws Exception{
 		
 		return sqlSession.selectOne("mapper.mypage.selectRentCnt",id);
 	}
 
 	// 나의 빌린상품 리스트 불러오기
 	@Override
-	public List<Map<String, Object>> selectRentListByPage(Map<String, Object> paramMap) {
+	public List<Map<String, Object>> selectRentListByPage(Map<String, Object> paramMap) throws Exception{
 		
 		return sqlSession.selectList("mapper.mypage.selectRentListByPage",paramMap);
 	}
 
+	// 나의 빌리기 내역 상세 불러오기
+	@Override
+	public Map<String, Object> selectMyRentDetail(Integer orderNo, String id) throws Exception {
+		Map<String,Object> param = new HashMap<>();
+		param.put("orderNo",orderNo);
+		param.put("id",id);
+		return sqlSession.selectOne("mapper.mypage.selectMyRentDetail",param);
+	}
 
-	
+	@Override
+	public Integer selectLendCountById(String id) {
+		
+		return sqlSession.selectOne("mapper.mypage.selectLendCnt",id);
+	}
+
+	@Override
+	public List<Map<String, Object>> selectLendListByPage(Map<String, Object> paramMap) {
+		
+		return sqlSession.selectList("mapper.mypage.selectLendListByPage",paramMap);
+	}
+
+	// 나의 대여(빌려준)내역 상세 불러오기
+	@Override
+	public Map<String, Object> selectMyLendDetail(Integer orderNo, String id) {
+		Map<String,Object> param = new HashMap<>();
+		param.put("orderNo", orderNo);
+		param.put("id", id);
+		return sqlSession.selectOne("mapper.mypage.selectMyLendDetail",param);
+	}
 
 }

@@ -28,7 +28,17 @@ public interface MypageDAO {
 	Map<String, Object> selectMyOrderDetail(Integer orderNo, String id) throws Exception;
 	
 	// 나의 빌린상품 리스트 불러오기(MyRent)
-	Integer selectRentCountById(String id);
-	List<Map<String, Object>> selectRentListByPage(Map<String, Object> paramMap);
+	Integer selectRentCountById(String id) throws Exception;
+	List<Map<String, Object>> selectRentListByPage(Map<String, Object> paramMap) throws Exception;
+	
+	// 나의 빌리기 내역 상세 불러오기(MyRentDetail)
+	Map<String, Object> selectMyRentDetail(Integer orderNo, String id) throws Exception;
+	
+	// 나의 대여(빌려주는)상품 리스트 불러오기(MyLend)
+	Integer selectLendCountById(String id);
+	List<Map<String, Object>> selectLendListByPage(Map<String, Object> paramMap);
+	
+	// 나의 대여(빌려주는)내역 상세 불러오기(MyLendDetail)
+	Map<String, Object> selectMyLendDetail(Integer orderNo, String id);
 
 }

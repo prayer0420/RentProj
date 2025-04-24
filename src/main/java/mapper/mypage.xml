@@ -85,5 +85,46 @@
         order by o.orderNo desc limit #{row},5
 	</select>
 	
+	<!-- 나의 빌리기 내역 상세(MyRentDetail) 불러오기  -->
+	<select id="selectMyRentDetail" parameterType="map" resultType="map">
+		select p.*, o.*, m1.name, m2.id, m2.phone, m2.address1
+        from Product p 
+        join `Order` o On (o.productNo = p.no)
+        join member m1 On (o.memberNo = m1.no)
+		  JOIN member m2 ON p.memberNo = m2.no
+		  where o.orderNo=#{orderNo} and m1.id=#{id} and o.orderType='대여'
+	</select>
+	
+	
+	<!-- 나의 대여(빌려주는)상품 전체 숫자 (*페이징에 필요) -->
+	<select id="selectLendCnt" parameterType="String" resultType="Integer">
+		select count(*) from product p join member m
+		on (p.memberNo = m.no)
+		where m.id=#{id} and p.tradeType='대여'
+	</select>
+	
+	<!-- 나의 대여(빌려주는)상품 리스트(MyLend) 불러오기 -->
+	<select id="selectLendListByPage" parameterType="map" resultType="map">
+		select 
+		p.no, p.createDate, p.title, p.img, p.deliveryStatus, o.*
+		from product p 
+		left join `order` o on (p.no = o.productNo)
+		join member m on (p.memberNo=m.no)
+        where m.id=#{id} and p.tradeType='대여'
+        order by p.no desc limit #{row},5
+	</select>
+	
+	<!-- 나의 대여(빌려주는)내역 상세(MyLendDetail) 불러오기  -->
+	<select id="selectMyLendDetail" parameterType="map" resultType="map">
+		select 
+		p.no, p.title, p.img, p.tradeType, o.*,
+		m1.name, m1.id, m1.phone
+        from Product p 
+        join `Order` o On (o.productNo = p.no)
+        join member m1 On (o.memberNo = m1.no)
+		  JOIN member m2 ON p.memberNo = m2.no
+		  where o.orderNo=#{orderNo} and m2.id=#{id} and p.tradeType='대여'
+	</select>
+	
 	
 </mapper>
