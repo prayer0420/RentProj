@@ -3,11 +3,23 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 	
 <mapper namespace="mapper.review">
+	<!-- 리뷰쓰기 -->
 	<insert id="insertReview" parameterType="Review" useGeneratedKeys="true" keyProperty="no">
-		insert into review (no,memberNo,contents,score,productNo) 
-		values(#{no},#{memberNo},#{contents},#{score},#{productNo})
+		insert into review (no,memberNo,contents,score,productNo,memberNickname) 
+		values(#{no},#{memberNo},#{contents},#{score},#{productNo},#{memberNickname})
 	</insert>
 	
+	<!-- 리뷰삭제 -->
+	<delete id="deleteReview" parameterType="int">
+		delete from review where no=#{no}
+	</delete>
+	
+	<!-- 리뷰수정 -->
+	<update id="updateReview" parameterType="int">
+		update review set contents=#{contents} where memberNo=#{memberNo}
+	</update>
+
+
 	<select id="selectByProductNo" parameterType="int" resultType="review">
 		select * from review where productNo=#{productNo} order by no DESC
 	</select>	
@@ -15,5 +27,6 @@
 	<select id="selectAvgScore" parameterType="int" resultType="double">
 		select round(avg(score),1)from review where productNo = #{productNo}
 	</select>
+	
 	
 </mapper>

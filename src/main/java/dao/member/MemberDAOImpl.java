@@ -78,7 +78,7 @@ public class MemberDAOImpl implements MemberDAO {
 		Map<String,String> param = new HashMap<>();
 		param.put("id", id);
 		param.put("fcmToken", fcmToken);
-		sqlSession.update("mapper.user.updateFcmToken", param);
+		sqlSession.update("mapper.member.updateFcmToken", param);
 		sqlSession.commit();
 	}
     

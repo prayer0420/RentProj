@@ -69,9 +69,14 @@ public class Join extends HttpServlet {
 		MemberService memberService = new MemberServiceImpl();
 		FcmService fcmService = new FcmServiceImpl(); // 🔔 알림 서비스 호출 준비
 
+		
 		try {
 			//회원가입
 			memberService.join(member);
+			// 일반회원도 첫 로그인 플래그 설정
+			request.getSession().setAttribute("firstLogin", true);
+			//token저장
+            fcmService.regFcmToken(id, fcmToken);
 			//알림 전송
 			fcmService.sendSignupAlarm(id);
 

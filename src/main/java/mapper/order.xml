@@ -132,6 +132,14 @@
 			    </choose>	
 		      </if>
 		  </select>		
+		<select id="hasMemberOrderProduct" resultType="int">
+			select count(*) from `order` where memberNo=#{memberNo} and productNo=#{productNo}
+		</select>
+		
+		<select id="checkOrder" resultType="int">
+			select count(*) from `order` where productNo=#{productNo}
+		</select>
+		
   
   </mapper>
   

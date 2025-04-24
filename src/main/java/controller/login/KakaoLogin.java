@@ -1,6 +1,7 @@
 package controller.login;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,7 +10,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import dto.Alarm;
+import dto.LoginResult;
 import dto.Member;
+import service.alarm.FcmServiceImpl;
 import service.member.MemberService;
 import service.member.MemberServiceImpl;
 
@@ -27,10 +31,21 @@ public class KakaoLogin extends HttpServlet {
 		String code =  request.getParameter("code");
 		MemberService service = new MemberServiceImpl();
 		try {
-			Member member = service.KakaoLogin(code);
 			HttpSession session = request.getSession();
-			session.setAttribute("id", member.getId());
+            LoginResult result = service.KakaoLogin(code);
+            //소셜로그인 회원정보 등록
+            session.setAttribute("id", result.getMember().getId());
+            System.out.println("카카오 로그인 성공: memberId = " + result.getMember().getId());
+
+			//최초 로그인인지 확인 용
+            if (result.isFirstLogin()) {
+                session.setAttribute("firstLogin", true);
+            }			
 			
+			//알림을 로그인에서 각각?
+			 List<Alarm> alarmList = new FcmServiceImpl().getAlarmList(result.getMember().getId());
+			 session.setAttribute("alarms", alarmList); //헤더에서 사용
+
 			response.sendRedirect("main");
 		}catch(Exception e) {
 			e.printStackTrace();

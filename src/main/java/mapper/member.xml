@@ -103,6 +103,13 @@
 		SELECT address FROM address
 		WHERE memberNo = #{memberNo}
 	</select>
+	
+	<update id="updateFcmToken" parameterType="map">
+	  UPDATE member
+	  SET fcmToken = #{fcmToken}
+	  WHERE id = #{id}
+	</update>
+
 		
 		
 </mapper>

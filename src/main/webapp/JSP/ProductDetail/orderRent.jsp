@@ -20,11 +20,12 @@
 			<div class="order-box">
 				<h3 class="order-subtitle">주문 배송정보</h3>
 				<div class="address-title">
-					<span class="address-name">집</span>
-					<button class="default-address">기본 배송지</button>
+					<span class="address-name"></span>
+					<button class="default-address"></button>
 				</div>
 				<div class="address-info">
 					<span class="phone"></span><br><span class="addressRegion"></span>
+					<input type="hidden" name="deliveryAddr" id="deliveryAddressInput">
 				</div>
 				<button class="address-list" onclick="openAddressModal()">배송지
 					목록</button>
@@ -85,8 +86,8 @@
 	      const tossPayments = TossPayments(clientKey);
 	      const productNo = "${product.no}";
 	      const productTitle = "${product.title}";
-	      const memberPhone = "${member.phone}".replace(/-/g, "");
-	      const memberName = "${member.nickname}";
+	      const memberPhone = "${phone}".replace(/-/g, "");
+	      const memberName = "${nickname}";
 	      const price = parseInt("${product.rentPrice + product.secPrice + product.deliveryPrice}");
 	      
 	      const orderId = "ORDER_"+productNo+"_"+Date.now();//예 ORDER_1_2025-01-01
@@ -130,7 +131,7 @@
 	          },
 	          orderId: orderId, // 고유 주문번호
 	          orderName: productTitle,
-	          successUrl: window.location.origin +"${pageContext.request.contextPath}/success", // 결제 요청이 성공하면 리다이렉트되는 URL
+	          successUrl: window.location.origin + "${pageContext.request.contextPath}/success" + "?deliveryAddr=" + encodeURIComponent(document.getElementById('deliveryAddressInput').value),
 	          failUrl: window.location.origin + "/fail", // 결제 요청이 실패하면 리다이렉트되는 URL
 	          customerEmail: "",
 	          customerName: memberName,

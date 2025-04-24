@@ -35,16 +35,20 @@ public class ProductSellOrder extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		
 		int productNo = Integer.parseInt(request.getParameter("productNo"));
+		String phone = (String)request.getSession().getAttribute("phone");
+		String nickname = (String)request.getSession().getAttribute("nickname");
 		ProductService service = new ProductServiceImpl();
 		
 		try {
 			Product product = service.selectProductOne(productNo);			
 			HttpSession session = request.getSession(false);
-			if(session == null || session.getAttribute("member")==null) {
+			if(session == null || session.getAttribute("id")==null) {
 				response.sendRedirect(request.getContextPath()+"/login");
 				return;
 			}
 			request.setAttribute("product", product);
+			request.setAttribute("phone",phone);
+			request.setAttribute("nickname",nickname);
 			request.getRequestDispatcher("/JSP/ProductDetail/orderSell.jsp").forward(request, response);
 		}catch(Exception e) {
 			e.printStackTrace();

@@ -13,5 +13,11 @@ public interface OrderDAO {
     int getOrderCount(Map<String, Object> paramMap);
     // 지연 주문 목록 조회
     List<Order> selectDelayedOrders(Map<String, String> param);
+    //회원이 주문한 상품인지 조회
+    int hasMemberOrderProduct(Integer memberNo,Integer productNo) throws Exception;
+    //상품에 주문이 존재하는지 조회
+    int checkOrder(Integer productNo)throws Exception;
+    
+    
 
 }
