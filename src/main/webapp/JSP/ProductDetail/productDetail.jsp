@@ -18,6 +18,7 @@
 	<div class="container">
 		<c:if test="${not empty product }">
 			<div class="section-title">📷 상세 정보</div>
+			<c:if test="${checkOrder}">이미 구매/대여된 상품입니다.</c:if>
 			<div class="product-layout">
 				<div class="product-image">
 					<img src="https://cdn-icons-png.flaticon.com/512/1041/1041916.png"
@@ -26,18 +27,19 @@
 				<div class="product-details">
 					<div class="top-icons">
 						<button class="btn-share">🔗</button>
-							<button class="btn-wish" onclick="toggleMark(this,${product.no})">
-								<c:choose>
-									<c:when test="${isMark}">♥</c:when>
-									<c:otherwise>♡</c:otherwise>
-								</c:choose>
-							</button>
-							<button class="btn-inquiry">🚩</button>
+						<button class="btn-wish" onclick="toggleMark(this,${product.no})">
+							<c:choose>
+								<c:when test="${isMark}">♥</c:when>
+								<c:otherwise>♡</c:otherwise>
+							</c:choose>
+						</button>
+						<button class="btn-inquiry">🚩</button>
 						<!-- singo.jsp -->
 					</div>
 					<div class="category">${product.categoryNo}</div>
 					<div class="product-id">${product.no}</div>
 					<div class="title">${product.title}</div>
+
 					<c:choose>
 						<c:when test="${product.tradeType == '나눔' }"></c:when>
 						<c:when test="${product.tradeType == '대여' }">
@@ -62,8 +64,7 @@
 						<div class="profile-info">
 							<div class="seller-name">${product.nickname}</div>
 							<div class="seller-rating">
-								<span class="score">${avgScore}</span> 
-								<span class="stars"> 
+								<span class="score">${avgScore}</span> <span class="stars">
 									<c:choose>
 										<c:when test="${avgScore >= 4.5}">★★★★★</c:when>
 										<c:when test="${avgScore >= 3.5}">★★★★☆</c:when>
@@ -81,41 +82,43 @@
 						<div>👁️ ${product.viewCnt}</div>
 					</div>
 					<div class="btn-box">
-						<c:if test="${not empty sessionScope.member}">
+						<c:if test="${hasOrder}">
 							<button class="btn btn-message" onclick="openMessageModal()">쪽지보내기</button>
 						</c:if>
-						<c:choose>
-							<c:when test="${product.tradeType=='판매' }">
-								<form
-									action="${pageContext.request.contextPath}/productSellOrder"
-									method="get">
-									<input type="hidden" name="productNo" value="${product.no}" />
-									<button class="btn btn-sell">구매하기</button>
-								</form>
-							</c:when>
-							<c:when test="${product.tradeType=='대여' }">
-								<form
-									action="${pageContext.request.contextPath}/productRentOrder"
-									method="get">
-									<input type="hidden" name="productNo" value="${product.no}" />
-									<button class="btn btn-rent">대여하기</button>
-								</form>
-							</c:when>
-							<c:when test="${product.tradeType=='판매대여' }">
-								<form
-									action="${pageContext.request.contextPath}/productSellOrder"
-									method="get">
-									<input type="hidden" name="productNo" value="${product.no}" />
-									<button class="btn btn-sell">구매하기</button>
-								</form>
-								<form
-									action="${pageContext.request.contextPath}/productRentOrder"
-									method="get">
-									<input type="hidden" name="productNo" value="${product.no}" />
-									<button class="btn btn-rent">대여하기</button>
-								</form>
-							</c:when>
-						</c:choose>
+						<c:if test="${not checkOrder}">
+							<c:choose>
+								<c:when test="${product.tradeType=='판매' }">
+									<form
+										action="${pageContext.request.contextPath}/productSellOrder"
+										method="get">
+										<input type="hidden" name="productNo" value="${product.no}" />
+										<button class="btn btn-sell">구매하기</button>
+									</form>
+								</c:when>
+								<c:when test="${product.tradeType=='대여' }">
+									<form
+										action="${pageContext.request.contextPath}/productRentOrder"
+										method="get">
+										<input type="hidden" name="productNo" value="${product.no}" />
+										<button class="btn btn-sell">대여하기</button>
+									</form>
+								</c:when>
+								<c:when test="${product.tradeType=='판매대여' }">
+									<form
+										action="${pageContext.request.contextPath}/productSellOrder"
+										method="get">
+										<input type="hidden" name="productNo" value="${product.no}" />
+										<button class="btn btn-sell">구매하기</button>
+									</form>
+									<form
+										action="${pageContext.request.contextPath}/productRentOrder"
+										method="get">
+										<input type="hidden" name="productNo" value="${product.no}" />
+										<button class="btn btn-rent">대여하기</button>
+									</form>
+								</c:when>
+							</c:choose>
+						</c:if>
 					</div>
 				</div>
 			</div>
@@ -154,7 +157,7 @@
 						</c:choose>
 					</div>
 				</div>
-				<c:if test="${member.no != null }">
+				<c:if test="${no != null }">
 					<button id="review-toggle-btn" class="btn btn-review-write">리뷰
 						쓰기</button>
 				</c:if>
@@ -180,7 +183,7 @@
 					<jsp:include page="reviewList.jsp" />
 				</div>
 
-
+			
 			</div>
 		</div>
 	</div>
@@ -268,9 +271,28 @@
 			success:function(res){
 				btn.innerText = res.isMark ? "♥":"♡";
 			},
-			error:function(){
-				alert("로그인이 필요합니다.");
+			error:function(xhr){
+				alert("로그인이 필요합니다.");					
 			}
+		 });
+	 }
+	 
+	 function deleteReview(reviewNo){
+		 console.log(reviewNo+"실제로 삭제할 번호");
+		 if(!confirm('정말 삭제하시겠습니까?'))return;
+		 
+		 $.ajax({
+			url:"${pageContext.request.contextPath}/reviewDelete",
+			type:"Post",
+			data:{no:reviewNo},
+			success:function(){
+				alert("리뷰가 삭제되었습니다.");
+				// 🔁 리뷰 리스트를 다시 불러오기
+		        $('#review-list-container').load('${pageContext.request.contextPath}/reviewList?productNo=${product.no}');
+			},
+		    error: function () {
+		        alert('삭제 실패');
+		      }
 		 });
 	 }
 	 

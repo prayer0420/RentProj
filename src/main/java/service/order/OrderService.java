@@ -11,5 +11,7 @@ public interface OrderService {
 	
 	// 관리자 전체 주문 조회용
     List<Order> searchOrders(Map<String, Object> params, PageInfo pageInfo);
+    boolean hasMemberOrderProduct(Integer memberNo,Integer productNO) throws Exception;
+    boolean checkOrder(Integer productNo) throws Exception;
 
 }

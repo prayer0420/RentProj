@@ -28,4 +28,10 @@ public class ReviewServiceImpl implements ReviewService {
 		return reviewDAO.selectAvgScore(productNo);
 	}
 
+	@Override
+	public void deleteReview(Integer memberNo) throws Exception {
+		reviewDAO.deleteReview(memberNo);
+		
+	}
+
 }
