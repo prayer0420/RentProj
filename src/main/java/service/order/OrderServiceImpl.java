@@ -86,8 +86,7 @@ public class OrderServiceImpl implements OrderService {
 	        return orderDAO.selectDelayedOrders(map);
 		}
     
-		return orderList;
-	}
+
 
 	@Override
 	public boolean hasMemberOrderProduct(Integer memberNo, Integer productNO) throws Exception {
@@ -98,4 +97,4 @@ public class OrderServiceImpl implements OrderService {
 	public boolean checkOrder(Integer productNo) throws Exception {
 		return orderDAO.checkOrder(productNo) > 0;
 	}
-
+}

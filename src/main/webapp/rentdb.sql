@@ -317,3 +317,24 @@ VALUES ('회원가입 환영!', '${id}님, 가입을 환영합니다! 🎉', 'SI
 
 ALTER TABLE `category`
 ADD COLUMN `imgfilename` VARCHAR(100);
+
+
+DROP TABLE IF EXISTS FAQ;
+
+-- 카테고리 테이블
+CREATE TABLE faq_category (
+  no INT PRIMARY KEY AUTO_INCREMENT,
+  name VARCHAR(50) NOT NULL UNIQUE
+);
+
+-- FAQ 테이블 (category_no 참조)
+CREATE TABLE faq (
+  no INT PRIMARY KEY AUTO_INCREMENT,
+  category_no INT NOT NULL,
+  title VARCHAR(200) NOT NULL,
+  content TEXT NOT NULL,
+  createdAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP(),
+  updatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP(),
+  imgUrl VARCHAR(255),
+  FOREIGN KEY (category_no) REFERENCES faq_category(no)
+);
