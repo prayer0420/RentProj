@@ -68,12 +68,12 @@ public class FcmServiceImpl implements FcmService{
 		data.put("body", alarm.getContent());
 		data.put("type", alarm.getType());
 		data.put("isActive", String.valueOf(alarm.isActive())); //  문자열
-		System.out.println(alarm.getTitle());
+		//System.out.println(alarm.getTitle());
 		JSONObject json = new JSONObject();
 		JSONObject message = new JSONObject();
 		
 		message.put("token", fcmToken);
-//		message.put("notification", notification);
+		//message.put("notification", notification);
 		message.put("data", data);
 		json.put("message", message);
 		
@@ -126,7 +126,14 @@ public class FcmServiceImpl implements FcmService{
 	            filledContent,
 	            true
 	        );
-
+        	System.out.println("회원가입 알림 전송");
 	        sendAlarm(alarm);
 	    }
+	 
+	 //모든 알람 확인처리
+	 @Override
+	 public void confirmAllAlarms(String recvId) throws Exception {
+	 	alarmDao.updateAlarmConfirmAll(recvId);
+	 }
+	 
 }

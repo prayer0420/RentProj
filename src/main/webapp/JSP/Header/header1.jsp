@@ -41,6 +41,9 @@
 				<button id="btn-alarm">🔔 알림
 				  <span id="headerAlarmBadge" style="display:none; background:red; color:white; font-size:11px; border-radius:8px; padding:1px 6px; margin-left:4px;">0</span>
 				</button>
+				<!-- 알림 모달 포함 (정적 include) -->
+				<jsp:include page="/JSP/Header/alarm.jsp" />
+				
 				<button><a href="myOrder">📄 마이페이지</a></button>
 				<c:choose>
 					<c:when test="${not empty sessionScope.id}">
@@ -52,14 +55,11 @@
 					</c:otherwise>
 				</c:choose>
 			</div>
-
-
 		</div>
 	</header>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-
   //위치
   $("#btn-location").click(function () {
     if (navigator.geolocation) {
@@ -101,29 +101,14 @@
   });
 </script>
 
-<!--알림 관련 코드-->
-<div id="alarmModalContainer"></div>
 
 <script>
-$("#btn-alarm").click(function () {
-	  $.ajax({
-	    url: "${pageContext.request.contextPath}/alarmList",
-	    method: "GET",
-	    success: function (html) {
-	      // 이전 모달 제거 (중복 방지)
-	      $("#alarmModalContainer").html(""); 
-	      $("#alarmModalContainer").html(html);
-
-	      // 모달 보이기
-	      $("#alarmModal").css("display", "flex");
-	    },
-	    error: function () {
-	      alert("알림을 불러오는 데 실패했습니다 😥");
-	    }
-	  });
-	});
-
+  // 알림 버튼 클릭 시 모달만 보여주기
+  $("#btn-alarm").click(function () {
+    $("#alarmModal").css("display", "flex"); // 보여주기만 함
+  });
 </script>
+
 
 </body>
 </html>

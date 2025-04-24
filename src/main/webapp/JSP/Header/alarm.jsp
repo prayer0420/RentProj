@@ -7,11 +7,13 @@
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 
 <!-- 🔔 알림 모달 -->
-<div id="alarmModal" class="alarm-modal" onclick="backgroundClick(event)">
+<div id="alarmModal" class="alarm-modal">
   <div class="alarm-content">
     <!-- 헤더 -->
     <div class="alarm-header">
-            <span>🔔 알림 <span id="alarmBadge" class="alarm-badge" style="display:none; background-color: red; color: white; font-size: 12px; padding: 2px 6px; border-radius: 12px;">0</span></span>
+            <span>🔔 알림 
+            	<span id="alarmBadge" class="alarm-badge" style="display:none; background-color: red; color: white; font-size: 12px; padding: 2px 6px; border-radius: 12px;">0</span>
+            </span>
       <div>
         <button class="close-btn" onclick="closeAlarmModal()">✕</button>
       </div>
@@ -68,79 +70,70 @@
   initializeApp(firebaseConfig);
   const messaging = getMessaging();
 
-  const requestForToken = () => {
-    getToken(messaging, {
-      vapidKey: 'BKf2ZnmnAxGrBS6VogRScPinuISeM-n_I7Dn4k-4uSZ7FxAjeJCFxg7tJMFfZ0HvlKCeH4qv85F8L7r4rdweVT8'
-    }).then((currentToken) => {
- 		console.log("🔑 Token:", currentToken);
-      if (currentToken) {
-        $.post("fcmToken", { fcmToken: currentToken });
-      }
-    }).catch(console.error);
-
-    updateAlarmBadge();
-    onMessageListener();
-  };
-
-	const updateAlarmBadge = () => {
+  //전역으로 노출
+  window.updateAlarmBadge = () => {
     const count = document.querySelectorAll("#alarmList .alarm-card").length;
     const badge = document.getElementById("alarmBadge");
     const headerBadge = document.getElementById("headerAlarmBadge");
+
     if (count > 0) {
-      badge.textContent = count;
-      badge.style.display = "inline-block";
+      if (badge) {
+        badge.textContent = count;
+        badge.style.display = "inline-block";
+      }
       if (headerBadge) {
         headerBadge.textContent = count;
         headerBadge.style.display = "inline-block";
       }
     } else {
-      badge.style.display = "none";
-      if (headerBadge) {
-        headerBadge.style.display = "none";
-      }
+      if (badge) badge.style.display = "none";
+      if (headerBadge) headerBadge.style.display = "none";
     }
   };
-	
+
+  const requestForToken = () => {
+    getToken(messaging, {
+      vapidKey: 'BKf2ZnmnAxGrBS6VogRScPinuISeM-n_I7Dn4k-4uSZ7FxAjeJCFxg7tJMFfZ0HvlKCeH4qv85F8L7r4rdweVT8'
+    }).then((currentToken) => {
+      if (currentToken) {
+        $.post("fcmToken", { fcmToken: currentToken });
+      }
+    }).catch(console.error);
+  };
+
   const onMessageListener = () => {
-    onMessage(messaging, (payload) => {
-		console.log("📬 FCM 수신함!");
-      console.log("📦 payload 전체:", payload);
-      const title = payload.data?.title || "제목 없음";
-      const body = payload.data?.body || "내용 없음";
+    onMessage(messaging, () => {
+      console.log("📬 FCM 수신 → 전체 알림 다시 불러오기");
 
-      const modal = document.getElementById("alarmModal");
-      modal.style.display = "flex";
-      void modal.offsetHeight;
-
-      $("#alarmList .alarm-empty").remove();
-
-      const alarmHTML = `
-        <div class="alarm-card realtime">
-          <div class="alarm-top">
-            <h4 class="alarm-title">${title}</h4>
-            <button class="delete-btn" onclick="deleteAlarm(this)">✕</button>
-          </div>
-          <p class="alarm-body">${body}</p>
-        </div>`;
-
-      $("#alarmList").prepend(alarmHTML);
-      updateAlarmBadge();
+      $.ajax({
+        url: "alarmList",
+        method: "GET",
+        success: function (html) {
+    	const content = $(html).find("#alarmList").html(); 
+    	$("#alarmList").html(content);          
+		updateAlarmBadge(); // 전역 함수 호출
+        },
+        error: function () {
+          alert("알림을 불러오는데 실패했어요 😥");
+        }
+      });
     });
   };
 
+  // 초기 실행
   requestForToken();
   onMessageListener();
-
+  updateAlarmBadge();
 </script>
 
+
 <script>
-
-	
-
+  //알림 모달 닫기
   function closeAlarmModal() {
     document.getElementById("alarmModal").style.display = "none";
   }
 
+  //알림 삭제
   function deleteAlarm(button) {
     const card = button.closest('.alarm-card');
     const no = card.getAttribute('data-num');
@@ -149,36 +142,33 @@
       $.post('alarmConfirm', { no }, function (result) {
         if (result === 'true') {
           card.remove();
+          updateAlarmBadge();
           checkIfEmpty();
         }
       });
     } else {
       card.remove();
+    	updateAlarmBadge();
       checkIfEmpty();
     }
   }
 
-  function clearAllAlarms() {
-    if (!confirm("모든 알림을 삭제하시겠어요?")) return;
+  //모든 알릭 삭제
+function clearAllAlarms() {
+  if (!confirm("모든 알림을 삭제하시겠어요?")) return;
 
-    const cards = document.querySelectorAll('.alarm-card');
-    if (cards.length === 0) return;
+  $.post("alarmConfirmAll", function (result) {
+    if (result === "true") {
+      document.querySelectorAll(".alarm-card").forEach(card => card.remove());
+      updateAlarmBadge();
+      checkIfEmpty();
+    } else {
+      alert("알림 삭제에 실패했어요 😥");
+    }
+  });
+}
 
-    cards.forEach(card => {
-      const no = card.getAttribute('data-num');
-      if (no) {
-        $.post('alarmConfirm', { no }, function (result) {
-          if (result === 'true') {
-            card.remove();
-            checkIfEmpty();
-          }
-        });
-      } else {
-        card.remove();
-      }
-    });
-  }
-
+//알림 한개도 없을때 뜨는 내용
   function checkIfEmpty() {
     if ($("#alarmList .alarm-card").length === 0) {
       $("#alarmList").html(`
@@ -195,18 +185,23 @@
     }
   }
 
-  document.addEventListener("keydown", function (event) {
+/*   document.addEventListener("keydown", function (event) {
     if (event.key === "Escape") {
-      closeAlarmModal();
-    }
-  });
+    	  console.log("esc감지됨", event.target.id);
 
-  function backgroundClick(event) {
-    const modalContent = document.querySelector(".alarm-content");
-    if (!modalContent.contains(event.target)) {
       closeAlarmModal();
     }
-  }
+  }); */
+
+/*   //배경 클릭하면 알림 모달 닫기
+  function backgroundClick(event) {
+  console.log("배경 클릭 감지됨", event.target.id);
+
+	  if (event.target.id === "alarmModal") {
+		    closeAlarmModal();
+		  }
+    }
+  } */
 </script>
 
 <script>

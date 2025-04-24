@@ -62,7 +62,7 @@ if (cookieHeader != null) {
 				<%= "autologin".equals(type) ? "checked" : "" %> />
 				<label for="remember">아이디 저장</label>
 			</div>
-
+	
 			<%-- 회원가입 버튼 (join 서블릿으로 이동) --%>
 			<button type="button" class="signup-btn" onclick="location.href='${contextPath}/join'">회원가입</button>
 

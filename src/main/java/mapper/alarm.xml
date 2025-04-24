@@ -16,4 +16,10 @@
 	<update id="updateAlarmConfirm" parameterType="Integer">
 		update alarm set isActive=false where no=#{no}
 	</update>
+	
+	
+	<update id="updateAlarmConfirmAll" parameterType="String">
+  		update alarm set isActive = false where recvId = #{recvId}
+	</update>
+	
 </mapper>
