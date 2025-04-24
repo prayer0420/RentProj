@@ -40,5 +40,8 @@ public interface MypageDAO {
 	
 	// 나의 대여(빌려주는)내역 상세 불러오기(MyLendDetail)
 	Map<String, Object> selectMyLendDetail(Integer orderNo, String id);
+	
+	// MyLendDetail 페이지에서 대여이력 중 한 행 선택시 orderNo로 해당 행의 대여상세내역 불러오기(MyLendHistoryDetail)
+	Map<String, Object> selectLendDetailByOrderNo(String id, Integer orderNo) throws Exception;
 
 }

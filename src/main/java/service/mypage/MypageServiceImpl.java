@@ -147,5 +147,11 @@ public class MypageServiceImpl implements MypageService {
 		return mypageDao.selectMyLendDetail(orderNo,id);
 	}
 
+	@Override
+	public Map<String, Object> getLendDetailByOrderNo(String id, Integer orderNo) throws Exception {
+		
+		return mypageDao.selectLendDetailByOrderNo(id, orderNo);
+	}
+
 
 }

@@ -124,4 +124,12 @@ public class MypageDAOImpl implements MypageDAO {
 		return sqlSession.selectOne("mapper.mypage.selectMyLendDetail",param);
 	}
 
+	@Override
+	public Map<String, Object> selectLendDetailByOrderNo(String id, Integer orderNo) throws Exception {
+		Map<String,Object> param = new HashMap<>();
+		param.put("orderNo", orderNo);
+		param.put("id", id);
+		return sqlSession.selectOne("mapper.mypage.selectLendHistoryDetail",param);
+	}
+
 }

@@ -126,5 +126,10 @@
 		  where o.orderNo=#{orderNo} and m2.id=#{id} and p.tradeType='대여'
 	</select>
 	
-	
+	<select id="selectLendHistoryDetail" parameterType="map" resultType="map">
+		select o.*, m.id, m.phone
+		from `Order` o join Member m
+		on (o.memberNo = m.no)
+		where o.orderNo = #{orderNo} and o.orderType='대여'
+	</select>
 </mapper>

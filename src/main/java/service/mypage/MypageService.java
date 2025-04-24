@@ -18,5 +18,6 @@ public interface MypageService {
 	Map<String, Object> myRentDetail(Integer orderNo, String id) throws Exception;
 	List<Map<String, Object>> lendListByPage(PageInfo pageInfo, String id) throws Exception;
 	Map<String, Object> myLendDetail(Integer orderNo, String id) throws Exception;
+	Map<String, Object> getLendDetailByOrderNo(String id, Integer orderNo) throws Exception;
 
 }
