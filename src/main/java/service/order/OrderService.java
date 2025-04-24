@@ -11,5 +11,6 @@ public interface OrderService {
 	
 	// 관리자 전체 주문 조회용
     List<Order> searchOrders(Map<String, Object> params, PageInfo pageInfo);
-
+    // 지연 주문 목록 조회
+    List<Order> getDelayedOrders(String type, String keyword);
 }

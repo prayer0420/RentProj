@@ -38,7 +38,7 @@ public class CategoryCreate extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // 업로드 경로 설정 (webapp/upload 폴더)
         String path = request.getServletContext().getRealPath("upload");
-        int size = 10 * 1024 * 1024; // 최대 파일 크기: 10MB
+        int size = 50 * 1024 * 1024; // 최대 파일 크기: 10MB
 
         // 파일 업로드 처리 (파일명 중복 시 자동 이름 변경)
         MultipartRequest multi = new MultipartRequest(request, path, size, "utf-8", new DefaultFileRenamePolicy());
@@ -59,7 +59,10 @@ public class CategoryCreate extends HttpServlet {
 
             // 클라이언트에게 JSON 또는 단순 텍스트로 응답 가능
             response.setContentType("application/json; charset=utf-8");
-            response.getWriter().write("{\"status\":\"success\"}");
+            response.getWriter().write("success");
+//            response.getWriter().write("{\"status\":\"success\"}");
+            
+            response.sendRedirect("categoryList");
         } catch (Exception e) {
             e.printStackTrace();
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);

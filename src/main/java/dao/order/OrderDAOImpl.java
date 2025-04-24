@@ -28,4 +28,9 @@ public class OrderDAOImpl implements OrderDAO {
 		return session.selectOne("mapper.order.getOrderCount", paramMap);
 	}
 
+	@Override
+	public List<Order> selectDelayedOrders(Map<String, String> param) {
+        return session.selectList("mapper.order.selectDelayedOrders", param);
+	}
+
 }

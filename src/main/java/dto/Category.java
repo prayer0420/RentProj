@@ -20,7 +20,15 @@ public class Category {
 		this.sortOrder = sortOrder;
 		this.isActive = isActive;
 	}
-
+	
+	public Category(Integer no, String name, Integer sortOrder, boolean isActive, String imgFilename) {
+		super();
+		this.no = no;
+		this.name = name;
+		this.sortOrder = sortOrder;
+		this.isActive = isActive;
+		this.imgFilename = imgFilename;
+	}
 	public Integer getNo() {
 		return no;
 	}

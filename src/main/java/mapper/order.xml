@@ -104,6 +104,34 @@
 		      </choose>
 		    </if>
 		</select>
+		
+		  <!-- 렌탈 지연 주문 목록 조회 (조건 검색 포함) -->
+		  <select id="selectDelayedOrders" parameterType="map" resultType="dto.Order">
+		    SELECT o.*, p.title AS productName,
+		           m1.id AS buyerId, 
+		           m2.id AS sellerId
+		    FROM `order` o
+		    JOIN product p ON o.productNo = p.no
+		    <!-- 구매자 -->
+		    JOIN member m1 ON o.memberNo = m1.no    
+			<!-- 판매자 -->
+			JOIN member m2 ON p.memberNo = m2.no          
+		    WHERE o.orderType = '대여'
+		      AND o.endDate &lt; NOW()
+		      <if test="type != null and keyword != null and keyword != ''">
+			    <choose>
+			      <when test="type == 'orderNo'">
+			        AND o.orderNo LIKE CONCAT('%', #{keyword}, '%')
+			      </when>
+			      <when test="type == 'productNo'">
+			        AND p.no LIKE CONCAT('%', #{keyword}, '%')
+			      </when>
+			      <when test="type == 'productName'">
+			        AND p.title LIKE CONCAT('%', #{keyword}, '%')
+			      </when>
+			    </choose>	
+		      </if>
+		  </select>		
   
   </mapper>
   

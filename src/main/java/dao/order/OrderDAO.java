@@ -11,5 +11,7 @@ public interface OrderDAO {
     List<Order> searchOrders(Map<String, Object> paramMap);
     // admin 검색 조건에 따른 주문 총 개수 조회 (페이징 계산용)
     int getOrderCount(Map<String, Object> paramMap);
+    // 지연 주문 목록 조회
+    List<Order> selectDelayedOrders(Map<String, String> param);
 
 }

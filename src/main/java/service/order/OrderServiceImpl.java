@@ -1,6 +1,7 @@
 package service.order;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -73,4 +74,15 @@ public class OrderServiceImpl implements OrderService {
 
 	        return orderList;
 	    }
+	
+		// 지연 주문 목록 조회	
+		@Override
+		public List<Order> getDelayedOrders(String type, String keyword) {
+		    SqlSession sqlSession = MybatisSqlSessionFactory.getSqlSessionFactory().openSession();
+			
+	        Map<String, String> map = new HashMap<>();
+	        map.put("type", type);       // orderNo, productNo, productName 중 하나
+	        map.put("keyword", keyword); // 검색 키워드
+	        return orderDAO.selectDelayedOrders(map);
+		}
     }
