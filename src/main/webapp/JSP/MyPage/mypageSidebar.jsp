@@ -18,12 +18,12 @@
           <!-- 사용자 프로필 -->
           <div class="profile-section" id="member">
 	          <c:choose>
-	          	<c:when test="${member.id eq null }">
+	          	<c:when test="${id eq null }">
 					<a href="${contextPath}/login">로그인</a>
 	          	</c:when>
 	          	<c:otherwise>
 	          		<img src="${contextPath }/img/tiger.png" alt="사용자 이미지" />
-		            <div class="user-id"><span><b>${member.id}</b></span>&nbsp;<span>님</span></div>
+		            <div class="user-id"><span><b>${id}</b></span>&nbsp;<span>님</span></div>
 		            <div class="membership"><span>${grade.gradeName }</span>&nbsp;<span>회원</span></div>
 		            <div class="total-count">총 거래 수: ${member.orderCount}회</div>
 	          	</c:otherwise>

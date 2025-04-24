@@ -3,7 +3,7 @@
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>   
     <%@ page import="dto.Member" %>
     <% 
-    	Member id = (Member) request.getAttribute("loginId");
+    	String id = (String) request.getAttribute("loginId");
     %>
 <c:set var="contextPath" value="${pageContext.request.contextPath }" />
 <!DOCTYPE html>
@@ -28,7 +28,7 @@
           <div class="divider"></div>
           
           <c:choose>
-			<c:when test="${member.id eq null }">
+			<c:when test="${id eq null }">
 				<span> 로그인이 필요한 페이지입니다.</span>
 			</c:when>
 			
