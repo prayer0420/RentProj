@@ -11,13 +11,15 @@ public class Review {
 	Integer score;
 	Date date;
 	Integer productNo;
+	String memberNickname;
 	
 	public Review(){}
-	public Review(Integer memberNo,String contents,Integer score,Integer productNo){
+	public Review(Integer memberNo,String contents,Integer score,Integer productNo,String memberNickname){
 		this.memberNo = memberNo;
 		this.contents = contents;
 		this.score = score;
 		this.productNo = productNo;
+		this.memberNickname = memberNickname;
 	}
 
 	public Integer getNo() {
@@ -74,6 +76,12 @@ public class Review {
 
 	public void setProductNo(Integer productNo) {
 		this.productNo = productNo;
+	}
+	public String getMemberNickname() {
+		return memberNickname;
+	}
+	public void setMemberNickname(String memberNickname) {
+		this.memberNickname = memberNickname;
 	}
 	
 	

@@ -25,6 +25,7 @@
 				</div>
 				<div class="address-info">
 					<span class="phone"></span><br><span class="addressRegion"></span>
+					<input type="hidden" name="deliveryAddr" id="deliveryAddressInput">
 				</div>
 				<button class="address-list" onclick="openAddressModal()">배송지
 					목록</button>
@@ -82,8 +83,8 @@
 	      const tossPayments = TossPayments(clientKey);
 	      const productNo = "${product.no}";
 	      const productTitle = "${product.title}";
-	      const memberPhone = "${member.phone}".replace(/-/g, "");
-	      const memberName = "${member.nickname}";
+	      const memberPhone = "${phone}".replace(/-/g, "");
+	      const memberName = "${nickname}";
 	      const price = parseInt("${product.salePrice + product.deliveryPrice}");
 	      console.log(price);
 	      
@@ -128,7 +129,7 @@
 	          },
 	          orderId: orderId, // 고유 주문번호
 	          orderName: productTitle,
-	          successUrl: window.location.origin +"${pageContext.request.contextPath}/success", // 결제 요청이 성공하면 리다이렉트되는 URL
+	          successUrl: window.location.origin + "${pageContext.request.contextPath}/success" + "?deliveryAddr=" + encodeURIComponent(document.getElementById('deliveryAddressInput').value),
 	          failUrl: window.location.origin + "/fail", // 결제 요청이 실패하면 리다이렉트되는 URL
 	          customerEmail: "",
 	          customerName: memberName,

@@ -35,6 +35,8 @@ public class OrderSuccess extends HttpServlet {
 	    String amount = request.getParameter("amount");
 	    Product product =(Product) request.getAttribute("product");
 	    
+	    String deliveryAddr = request.getParameter("deliveryAddr");
+	    
 
 	    
 	    // 여기서 orderId로부터 productNo 추출 (예: ORDER_123_1710000000)
@@ -47,6 +49,7 @@ public class OrderSuccess extends HttpServlet {
 	    request.setAttribute("amount", amount);
 	    request.setAttribute("productNo",productNo);
 	    request.setAttribute("product",product);
+	    request.setAttribute("deliveryAddr", deliveryAddr);
 	    
 	    //confirm서블릿으로 넘기기
 		request.getRequestDispatcher("/confirm").forward(request, response);

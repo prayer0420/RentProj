@@ -6,9 +6,12 @@ public class Category {
 	String name;
 	Integer sortOrder;
 	boolean isActive;
+	String imgFilename;
+	
 	public Category() {}
-	public Category(String name) {
+	public Category(String name, String imgFilename) {
 		this.name = name;
+	    this.imgFilename = imgFilename;
 	}
 	public Category(Integer no, String name, Integer sortOrder, boolean isActive) {
 		super();
@@ -17,7 +20,15 @@ public class Category {
 		this.sortOrder = sortOrder;
 		this.isActive = isActive;
 	}
-
+	
+	public Category(Integer no, String name, Integer sortOrder, boolean isActive, String imgFilename) {
+		super();
+		this.no = no;
+		this.name = name;
+		this.sortOrder = sortOrder;
+		this.isActive = isActive;
+		this.imgFilename = imgFilename;
+	}
 	public Integer getNo() {
 		return no;
 	}
@@ -49,7 +60,15 @@ public class Category {
 	public void setIsActive(boolean isActive) {
 		this.isActive = isActive;
 	}
+	
+	
 
+	public String getImgFilename() {
+		return imgFilename;
+	}
+	public void setImgFilename(String imgFilename) {
+		this.imgFilename = imgFilename;
+	}
 	@Override
 	public String toString() {
 		return "Category [no=" + no + ", name=" + name + ", sortOrder=" + sortOrder + ", isActive=" + isActive + "]";

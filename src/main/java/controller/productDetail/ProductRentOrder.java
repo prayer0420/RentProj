@@ -34,16 +34,22 @@ public class ProductRentOrder extends HttpServlet {
 request.setCharacterEncoding("utf-8");
 		
 		int productNo = Integer.parseInt(request.getParameter("productNo"));
+		String address1 = (String)request.getSession().getAttribute("address1");
+		String phone = (String)request.getSession().getAttribute("phone");
+		System.out.println("phone:"+phone);
+		String nickname = (String)request.getSession().getAttribute("nickname");
 		ProductService service = new ProductServiceImpl();
 		
 		try {
 			Product product = service.selectProductOne(productNo);			
 			HttpSession session = request.getSession(false);
-			if(session == null || session.getAttribute("member")==null) {
+			if(session == null || session.getAttribute("id")==null) {
 				response.sendRedirect(request.getContextPath()+"/login");
 				return;
 			}
 			request.setAttribute("product", product);
+			request.setAttribute("phone",phone);
+			request.setAttribute("nickname",nickname);
 			request.getRequestDispatcher("/JSP/ProductDetail/orderRent.jsp").forward(request, response);
 		}catch(Exception e) {
 			e.printStackTrace();

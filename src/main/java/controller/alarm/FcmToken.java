@@ -24,22 +24,33 @@ public class FcmToken extends HttpServlet {
     }
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println(request.getParameter("fcmToken"));
 		request.setCharacterEncoding("utf-8");
+
 		String fcmToken = request.getParameter("fcmToken");
-		System.out.println(fcmToken);
 		
 		try {
 			HttpSession session = request.getSession();
-			String memberId = (String)session.getAttribute("member.memberId");
+			String memberId = (String)session.getAttribute("id");
+			
+			Boolean firstLogin = (Boolean) session.getAttribute("firstLogin");
 			
 			MemberService memberServie = new MemberServiceImpl();
 	        Member member = memberServie.getMemberById(memberId);
+	        FcmService fcmService = new FcmServiceImpl();
 	        
 	        if (member != null) {
 	            String id = member.getId();
-	            FcmService service = new FcmServiceImpl();
-	            service.regFcmToken(id, fcmToken);
+	            fcmService.regFcmToken(id, fcmToken); //토큰 저장
+	            
+	            //최초 로그인인 경우에만 서버가 알림을 전송
+	            if (Boolean.TRUE.equals(firstLogin)) {
+	            	System.out.println("fcmtoken"+firstLogin);
+	                //회원가입 알림 전송
+	            	fcmService.sendSignupAlarm(id); 
+	                //전송 후 세션에서 최초로그인 플래그 제거
+	            	firstLogin = false;
+	                request.getSession().removeAttribute("firstLogin"); //
+	              }
 	        } else {
 	            System.out.println("해당 memberId에 해당하는 회원 없음");
 	        }

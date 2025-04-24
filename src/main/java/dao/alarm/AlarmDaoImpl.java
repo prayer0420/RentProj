@@ -29,4 +29,11 @@ public class AlarmDaoImpl implements AlarmDao{
 		sqlSession.update("mapper.alarm.updateAlarmConfirm",no);
 		sqlSession.commit();
 	}
+	
+	@Override
+	public void updateAlarmConfirmAll(String recvId) throws Exception {
+		sqlSession.update("mapper.alarm.updateAlarmConfirmAll", recvId);
+		sqlSession.commit();
+	}
+
 }

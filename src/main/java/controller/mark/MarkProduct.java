@@ -38,14 +38,13 @@ public class MarkProduct extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		
 		HttpSession session = request.getSession();
-		Member member = (Member) session.getAttribute("member");
 		Product product = (Product)request.getAttribute("product");
+		Integer memberNo = (Integer)request.getSession().getAttribute("no");
 		
-		if(member == null) {
+		if(memberNo == null) {
 			response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+			return;
 		}
-		
-		Integer memberNo = member.getNo();
 		Integer productNo = Integer.parseInt(request.getParameter("productNo"));
 		
 		MarkService service = new MarkServiceImpl();

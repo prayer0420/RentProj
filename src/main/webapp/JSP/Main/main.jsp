@@ -12,37 +12,6 @@
 <body>
 
 <jsp:include page="../Header/header.jsp"/>
-<%-- <jsp:include page="../Header/header2.jsp"/> --%>
-
-<!-- 🔹 위치 정보 없을 때 자동 요청 -->
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-	  const lat = "${sessionScope.latitude}";
-	  const lng = "${sessionScope.longitude}";
-  function success(pos) {
-    $.ajax({
-      type: "POST",
-      url: "${pageContext.request.contextPath}/updateLocation",
-      data: {
-        lat: pos.coords.latitude,
-        lng: pos.coords.longitude
-      },
-      success: function(res) {
-        alert("위치가 저장되었습니다: " + res.address);
-        location.reload();
-      },
-      error: function() {
-        alert("위치 저장에 실패했어요.");
-      }
-    });
-  }
-
-  function error(err) {
-    alert("위치 정보를 불러올 수 없어요.");
-    console.error(err);
-  }
-});
-</script>
 
 <!-- 🔸 배너 영역 -->
 <section class="banner">
@@ -100,6 +69,7 @@ document.addEventListener("DOMContentLoaded", function() {
 </section>
 
 <jsp:include page="../Header/footer.jsp"/>
+
 
 </body>
 </html>

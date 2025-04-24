@@ -18,9 +18,8 @@ import com.google.gson.JsonParser;
 
 import dao.member.MemberDAO;
 import dao.member.MemberDAOImpl;
+import dto.LoginResult;
 import dto.Member;
-import service.alarm.FcmService;
-import service.alarm.FcmServiceImpl;
 import utils.PageInfo;
 
 public class MemberServiceImpl implements MemberService {
@@ -65,25 +64,25 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public Member KakaoLogin(String code) throws Exception {
+	public LoginResult KakaoLogin(String code) throws Exception {
 		String token = getKakaoToken(code);
-		System.out.println(token);
 		Member member = getKakaoUserInfo(token);
 
+		Member existing = memberDao.selectMemberById(member.getId());
+	    boolean isFirstLogin = false;
+
 		// 카카오로그인 처음만 하고, 그후에 추가한건 적용이 되어야함
-		Member smember = memberDao.selectMemberById(member.getId());
-		System.out.println(member);
-		if (smember == null) {
-			FcmService fcmService = new FcmServiceImpl();  
-			fcmService.sendSignupAlarm(member.getId()); // 여기서 알림전송
-			memberDao.insertMember(member);
-			return member;
-		} else {
-			smember.setNickname(member.getNickname());
-			smember.setProfileImage(member.getProfileImage());
-			memberDao.updateMember(smember);
-			return smember;
-		}
+	    if (existing == null) {
+	        memberDao.insertMember(member);
+	        isFirstLogin = true;
+	        System.out.println("카카오 처음 로그인");
+	        return new LoginResult(member, true);
+	    } else {
+	        existing.setNickname(member.getNickname());
+	        existing.setProfileImage(member.getProfileImage());
+	        memberDao.updateMember(existing);
+	        return new LoginResult(existing, false);
+	    }
 	}
 
 	public String getKakaoToken(String code) throws Exception {
@@ -176,27 +175,24 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public Member NaverLogin(String code) throws Exception {
+	public LoginResult NaverLogin(String code) throws Exception {
 		String token = getNaverToken(code);
 		Member member = getNaverUserInfo(token);
-		System.out.println(member);
-		System.out.println(member.getNickname());
 
-		Member smember = memberDao.selectMemberById(member.getId());
-		System.out.println(member);
-		if (smember == null) {
+	    Member existing = memberDao.selectMemberById(member.getId());
+	    boolean isFirstLogin = false;
 
-			FcmService fcmService = new FcmServiceImpl();  
-			fcmService.sendSignupAlarm(member.getId()); // 여기서 알림전송
-			
-			memberDao.insertMember(member);
-			return member;
-		} else {
-			smember.setNickname(member.getNickname());
-			smember.setProfileImage(member.getProfileImage());
-			memberDao.updateMember(smember);
-			return smember;
-		}
+		System.out.println(member);
+	    if (existing == null) {
+	        memberDao.insertMember(member);
+	        isFirstLogin = true;
+	        return new LoginResult(member, true);
+	    } else {
+	        existing.setNickname(member.getNickname());
+	        existing.setProfileImage(member.getProfileImage());
+	        memberDao.updateMember(existing);
+	        return new LoginResult(existing, false);
+	    }
 	}
 
 	String getNaverToken(String code) throws Exception {
@@ -364,4 +360,6 @@ public class MemberServiceImpl implements MemberService {
     public Member getMemberById(String id) throws Exception {
         return memberDao.selectMemberById(id);
     }
+    
+
 }

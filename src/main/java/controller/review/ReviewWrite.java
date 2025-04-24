@@ -37,13 +37,12 @@ public class ReviewWrite extends HttpServlet {
 			throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 		int productNo = Integer.parseInt(request.getParameter("productNo"));
-		HttpSession session = request.getSession();
-		Member member = (Member) session.getAttribute("member");
-		Integer memberNo = member.getNo();
+		Integer memberNo = (Integer)request.getSession().getAttribute("no");
 		String content = request.getParameter("content");
 		Integer score = Integer.parseInt(request.getParameter("score"));
+		String memberNickname = (String) request.getSession().getAttribute("nickname");
 
-		Review review = new Review(memberNo, content, score, productNo);
+		Review review = new Review(memberNo, content, score, productNo,memberNickname);
 		ReviewService service = new ReviewServiceImpl();
 		
 		try {

@@ -58,10 +58,9 @@ public class PaymentConfirm extends HttpServlet {
 		
 		
 		HttpSession session = request.getSession();
-		Member member = (Member) session.getAttribute("member");
-		Integer memberNo = member.getNo();
+		Integer memberNo = (Integer)request.getSession().getAttribute("no");
 		Integer price = Integer.parseInt(amount);
-		String deliveryAddr = member.getAddress1()+member.getRegion1();
+		String deliveryAddr = (String) request.getAttribute("deliveryAddr");
 
 		// 여기서 orderId로부터 productNo 추출 (예: ORDER_123_1710000000)
 		String[] parts = orderId.split("_");

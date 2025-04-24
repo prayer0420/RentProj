@@ -9,7 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import dto.Alarm;
 import dto.Product;
+import service.alarm.FcmServiceImpl;
 import service.product.ProductService;
 import service.product.ProductServiceImpl;
 import utils.PageInfo;
@@ -38,7 +40,7 @@ public class Main extends HttpServlet {
 		    System.out.println("세션에 위도/경도 없음");
 		}
 
-		// 1. 추천 상품 (조회수 기준 정렬)
+		//추천 상품 (조회수 기준 정렬)
 		List<Product> popularList = productService.getPopularProducts(5);
 		List<Product> localList  =  null;
 		List<Product> fullList  =  null;
@@ -51,7 +53,18 @@ public class Main extends HttpServlet {
 			localList = productService.getProductsNearby(lat, lng,30);
 		}
 
-		// 3. 결과 전달
+		//알람리스트 가져와서 세션에 저장
+		if (id != null) {
+		    List<Alarm> alarms =null;
+			try {
+				alarms = new FcmServiceImpl().getAlarmList(id);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		    request.getSession().setAttribute("alarms", alarms);
+		}
+		
+		//결과 전달
 		request.setAttribute("popularList", popularList);
 		request.setAttribute("localList", localList);
 		request.getRequestDispatcher("/JSP/Main/main.jsp").forward(request, response);

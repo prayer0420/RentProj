@@ -8,11 +8,11 @@
 	</select>
 	
 	<update id="updateCategory" parameterType="category">
-		update category set name=#{name}, sortOrder=${sortOrder}, isActive=#{isActive} where no=#{no}
+		update category set name=#{name}, sortOrder=${sortOrder}, isActive=#{isActive} , imgFilename = #{imgFilename} where no=#{no}
 	</update>
 	
 	<insert id="insertCategory" parameterType="category" useGeneratedKeys="true" keyProperty="no">
-		insert into category (name, sortOrder) values (#{name}, #{sortOrder})
+		insert into category (name, sortOrder, imgFilename) values (#{name}, #{sortOrder}, #{imgFilename})
 	</insert>
 	
 	<select id="categoryMaxNo" resultType="Integer">
