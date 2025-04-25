@@ -23,7 +23,32 @@ public class Product {
 	private Integer viewCnt;
 	private String deliveryStatus;
 	private String nickname;
+	private Double latitude;
+	private Double longitude;
+	private Double distance; 
 	
+	
+	public Double getDistance() {
+	    return distance;
+	}
+
+	public void setDistance(Double distance) {
+	    this.distance = distance;
+	}
+	
+	
+	public Double getLatitude() {
+		return latitude;
+	}
+	public void setLatitude(Double latitude) {
+		this.latitude = latitude;
+	}
+	public Double getLongitude() {
+		return longitude;
+	}
+	public void setLongitude(Double longitude) {
+		this.longitude = longitude;
+	}
 	public Product() {}
 	public Product(
 			Integer categoryNo,String title,

@@ -29,5 +29,8 @@ public interface ProductDAO {
     //메인페이지
     List<Product> selectPopularProducts(int limit);
     
+    //거리에 따른 상품조회
+    List<Product> selectNearbyProducts(double lat, double lng, int limit);
+
     
 }

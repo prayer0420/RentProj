@@ -1,85 +1,112 @@
 @charset "UTF-8";
 
 body {
-	font-family: 'Noto Sans KR', sans-serif;
-	background: #fff;
-	margin: 0;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	height: 100vh;
+  font-family: 'Noto Sans KR', sans-serif;
+  background-color: #fafafa;
+  margin: 0;
+  padding: 0;
 }
 
 .login-container {
-	text-align: center;
-	max-width: 400px;
-	width: 90%;
+  width: 100%;
+  max-width: 500px;
+  margin: 100px auto;
+  padding: 40px 40px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  text-align: center;
 }
 
 .title {
-	font-size: 28px;
-	border-bottom: 1px solid #000;
-	padding-bottom: 10px;
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 12px;
+  border-bottom: 1px solid #333;
+  display: inline-block;
+  padding-bottom: 6px;
 }
 
 .subtitle {
-	color: #777;
-	margin: 15px 0;
+  color: #666;
+  font-size: 14px;
+  margin-bottom: 24px;
+  line-height: 1.6;
 }
 
-.social-buttons {
-	display: flex;
-	flex-direction: column;
-	gap: 10px;
-	margin-top: 20px;
+/* 소셜 로그인 버튼 */
+.social-buttons a {
+  display: block;
+  margin: 10px auto;
+  width: 100%;
+  max-width: 250px;
 }
 
+.social-buttons img {
+  width: 250px;
+  height: 45px;
+  object-fit: contain;  
+  display: block;
+  margin: 0 auto;
+}
+
+/* 토글 버튼 */
 .switch-login {
-	margin: 15px 0;
-	color: #777;
-	font-size: 14px;
-	cursor: pointer;
-	text-decoration: underline;
+  color: #0078FF;
+  font-size: 14px;
+  cursor: pointer;
+  margin-top: 14px;
+  margin-bottom: 14px;
 }
 
+/* 기본 로그인 폼 */
 .basic-form {
-	display: none;
-	flex-direction: column;
-	gap: 10px;
+  display: none;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 20px;
 }
 
 .basic-form input[type="text"],
 .basic-form input[type="password"] {
-	padding: 12px;
-	border: 1px solid #ccc;
-	border-radius: 5px;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
 }
 
 .remember {
-	display: flex;
-	align-items: center;
-	justify-content: flex-start;
-	gap: 5px;
-	font-size: 14px;
-	color: #555;
+  text-align: left;
+  font-size: 13px;
+  color: #555;
 }
 
-.signup-btn,
-.login-btn {
-	padding: 12px;
-	font-size: 15px;
-	border-radius: 5px;
-	border: 1px solid #ccc;
-	cursor: pointer;
-}
-
+/* 회원가입 버튼 */
 .signup-btn {
-	background: white;
-	color: black;
-	font-weight: bold;
+  padding: 12px;
+  font-size: 15px;
+  background-color: #fff;
+  border: 1px solid #aaa;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+.signup-btn:hover {
+  background-color: #f0f0f0;
 }
 
+/* 로그인 버튼 */
 .login-btn {
-	background: #e0e0e0;
-	color: #555;
+  padding: 12px;
+  font-size: 15px;
+  background-color: #0078FF;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 6px;
+  transition: background-color 0.3s ease;
+}
+.login-btn:hover {
+  background-color: #005bb5;
 }

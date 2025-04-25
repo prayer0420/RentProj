@@ -9,6 +9,15 @@
   --bg-card: #fff;
   --text-sub: #777;
   --new-badge: #FF5722;
+  
+  --paging-bg: #ffffff;            
+  --paging-text: #333333;          
+  --paging-hover-bg: #DFF5D8;      
+  --paging-hover-text: #000000;    
+  --paging-active-bg: #ff9800;     
+  --paging-active-text: #ffffff;   
+  --paging-arrow-color: #d32f2f;   
+  --paging-arrow-hover: #b71c1c;   
 }
 
 /* 필터 & 정렬 바 */
@@ -95,6 +104,7 @@
   object-fit: cover;
 }
 
+
 /* 제목 */
 .product-title {
   font-size: 16px;
@@ -169,4 +179,57 @@
   font-size: 11px;
   padding: 2px 6px;
   border-radius: 8px;
+}
+
+
+.dot {
+  margin: 0 5px;
+  color: #999;
+}
+
+/*페이징 */
+#paging {
+  margin-top: 40px;
+  text-align: center;
+}
+
+#paging a,
+#paging span {
+  display: inline-block;
+  margin: 0 4px;
+  padding: 8px 14px;
+  border-radius: 8px;
+  background-color: var(--paging-bg);
+  color: var(--paging-text);
+  text-decoration: none;
+  font-size: 14px;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+#paging a:hover {
+  background-color: var(--paging-hover-bg);
+  color: var(--paging-hover-text);
+}
+
+#paging a.active {
+  background-color: var(--paging-active-bg);
+  color: var(--paging-active-text);
+  font-weight: bold;
+}
+
+#paging span.disabled {
+  color: #bbb;
+  cursor: not-allowed;
+  background-color: var(--paging-bg);
+}
+
+/* 화살표만 따로 색 지정 */
+#paging a[data-page^="<"],
+#paging a[data-page^=">"] {
+  color: var(--paging-arrow-color);
+}
+
+#paging a[data-page^="<"]:hover,
+#paging a[data-page^=">"]:hover {
+  color: var(--paging-arrow-hover);
 }

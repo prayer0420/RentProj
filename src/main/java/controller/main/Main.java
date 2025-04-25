@@ -46,11 +46,13 @@ public class Main extends HttpServlet {
 		List<Product> fullList  =  null;
 		if (lat == null || lng == null) {
 		    // 로그인 안 한 상태 → 전체 상품 보여주기
-			fullList  = productService.getProducts(null,null,null,null, new PageInfo(1,1,1,1));
+		    fullList  = productService.getProducts(null,null,null,null, new PageInfo(1,1,1,1),null,null);
 			localList = fullList.size() > 5 ? fullList.subList(0, 5) : fullList;
 		} else {
-		    // 로그인 한 상태 → 동네 상품 보여주기
-			localList = productService.getProductsNearby(lat, lng,30);
+		    // 로그인 한 상태 → 거리순 정렬 보여주기
+			PageInfo pageInfo = new PageInfo(1, 1, 1, 1); // 내 동네 상품은 일단 5개만 보여주니까 1페이지만
+			List<Product> allNearby = productService.getProducts(null, null, null, "distance", pageInfo, lat, lng);
+			localList = allNearby.size() > 5 ? allNearby.subList(0, 5) : allNearby;
 		}
 
 		//알람리스트 가져와서 세션에 저장

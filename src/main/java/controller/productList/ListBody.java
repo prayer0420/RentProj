@@ -34,13 +34,15 @@ public class ListBody extends HttpServlet {
 		String tradeType = request.getParameter("tradeType");
 		String sort = request.getParameter("sort");
 		int page = parseInt(request.getParameter("page"), 1);
+		Double lat = (Double) request.getSession().getAttribute("latitude");
+		Double lng = (Double) request.getSession().getAttribute("longitude");
 
 		// 2) 페이지 정보 계산
 		PageInfo pageInfo = productService.getPageInfo(searchText, categoryNo, tradeType, sort, page);
 
 		// 3) 상품 목록 조회
 		Integer categoryInt = (categoryNo != null && !"0".equals(categoryNo)) ? Integer.valueOf(categoryNo) : null;
-		List<Product> list = productService.getProducts(searchText, categoryInt, tradeType, sort, pageInfo);
+		List<Product> list = productService.getProducts(searchText, categoryInt, tradeType, sort, pageInfo,lat,lng);
 
 		// 4) 카테고리 목록
 		List<Category> categories = productService.getAllCategories();
