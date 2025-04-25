@@ -315,3 +315,71 @@ VALUES
 INSERT INTO alarmmessage (title, content, type, remark)
 VALUES ('회원가입 환영!', '${id}님, 가입을 환영합니다! 🎉', 'SIGNUP', '회원가입 시 자동 발송 템플릿');
 
+ALTER TABLE `category`
+ADD COLUMN `imgfilename` VARCHAR(100);
+
+
+DROP TABLE IF EXISTS FAQ;
+
+-- 카테고리 테이블
+CREATE TABLE faq_category (
+  no INT PRIMARY KEY AUTO_INCREMENT,
+  name VARCHAR(50) NOT NULL UNIQUE
+);
+
+-- FAQ 테이블 (category_no 참조)
+CREATE TABLE faq (
+  no INT PRIMARY KEY AUTO_INCREMENT,
+  category_no INT NOT NULL,
+  title VARCHAR(200) NOT NULL,
+  content TEXT NOT NULL,
+  createdAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP(),
+  updatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP(),
+  imgUrl VARCHAR(255),
+  FOREIGN KEY (category_no) REFERENCES faq_category(no)
+);
+
+
+ALTER TABLE product
+ADD COLUMN sortPrice INT GENERATED ALWAYS AS (COALESCE(salePrice, rentPrice)) STORED;
+
+CREATE INDEX idx_sortPrice ON product(sortPrice);
+
+CREATE INDEX idx_categoryNo ON product(categoryNo);
+CREATE INDEX idx_tradeType ON product(tradeType);
+CREATE INDEX idx_title ON product(title);
+CREATE INDEX idx_createDate ON product(createDate);
+
+
+ALTER TABLE product ADD COLUMN latitude DOUBLE;
+ALTER TABLE product ADD COLUMN longitude DOUBLE;
+
+UPDATE product SET latitude = 37.4979, longitude = 127.0276 WHERE no = 111;
+UPDATE product SET latitude = 35.1631, longitude = 129.1636 WHERE no = 112;
+UPDATE product SET latitude = 35.8264, longitude = 128.5327 WHERE no = 113;
+UPDATE product SET latitude = 37.6027, longitude = 126.9291 WHERE no = 114;
+UPDATE product SET latitude = 37.5638, longitude = 126.9084 WHERE no = 115;
+UPDATE product SET latitude = 35.2285, longitude = 128.6811 WHERE no = 116;
+UPDATE product SET latitude = 35.1631, longitude = 129.1636 WHERE no = 117;
+UPDATE product SET latitude = 35.1741, longitude = 126.9119 WHERE no = 118;
+UPDATE product SET latitude = 36.3258, longitude = 127.4275 WHERE no = 119;
+UPDATE product SET latitude = 37.5638, longitude = 126.9084 WHERE no = 120;
+UPDATE product SET latitude = 37.4475, longitude = 126.7313 WHERE no = 105;
+UPDATE product SET latitude = 35.8242, longitude = 127.1478 WHERE no = 106;
+UPDATE product SET latitude = 35.8589, longitude = 128.6302 WHERE no = 107;
+UPDATE product SET latitude = 37.4629, longitude = 126.6822 WHERE no = 108;
+UPDATE product SET latitude = 35.1741, longitude = 126.9119 WHERE no = 109;
+UPDATE product SET latitude = 36.6424, longitude = 127.489 WHERE no = 102;
+UPDATE product SET latitude = 36.6424, longitude = 127.489 WHERE no = 103;
+UPDATE product SET latitude = 33.4996, longitude = 126.5312 WHERE no = 104;
+
+-- 회원 등급
+DELETE FROM grade;
+
+INSERT INTO grade (gradeNo, gradeName, gradeRate, gradeCount) VALUES
+(1, '브론즈', 5, 0.0),
+(2, '실버', 4.85, 10.0),
+(3, '골드', 4.7, 20.0),
+(4, '플래티넘', 4.5, 30.0),
+(5, '다이아', 4.25, 40.0),
+(6, ' Re:NT', 3.5, 50.0);

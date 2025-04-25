@@ -9,6 +9,15 @@
   --bg-card: #fff;
   --text-sub: #777;
   --new-badge: #FF5722;
+  
+  --paging-bg: #ffffff;            
+  --paging-text: #333333;          
+  --paging-hover-bg: #DFF5D8;      
+  --paging-hover-text: #000000;    
+  --paging-active-bg: #ff9800;     
+  --paging-active-text: #ffffff;   
+  --paging-arrow-color: #d32f2f;   
+  --paging-arrow-hover: #b71c1c;   
 }
 
 /* 필터 & 정렬 바 */
@@ -64,6 +73,7 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 30px;
+  align-items: stretch; /* 카드 높이 통일 보장 */
 }
 
 /* 상품 카드 */
@@ -75,8 +85,16 @@
   box-shadow: 0 2px 5px rgba(0,0,0,0.05);
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   gap: 10px;
   position: relative;
+  height: 400px; /* ✅ 고정 높이 */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.12);
 }
 
 .product-card img {
@@ -86,41 +104,54 @@
   object-fit: cover;
 }
 
+
+/* 제목 */
 .product-title {
-  font-size: 30px;
+  font-size: 16px;
   font-weight: bold;
-  margin-top: 6px;
+  color: #1f2937;
+  margin: 6px 0;
+  height: 40px;
+  line-height: 20px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
+/* 상품 설명 묶음 */
 .product-info {
   display: flex;
   flex-direction: column;
   gap: 4px;
+  flex-grow: 1;
+  justify-content: center;
 }
 
+/* 가격 정보 */
 .product-price {
-  margin-top: 6px;
-  line-height: 1.6;
+  font-size: 15px;
+  line-height: 1.5;
+  height: 42px;
+  overflow: hidden;
 }
 
 .product-price .sale {
-  color: #d14b00;
+  color: #e53935;
   font-weight: bold;
 }
-
 .product-price .rent {
-  color: #007acc;
+  color: #2196f3;
   font-weight: bold;
 }
-
 .product-price .deposit {
   color: #666;
 }
 
+/* 거래유형 뱃지 */
 .product-type {
-  font-size: 16px;
+  font-size: 14px;
   color: #fff;
-  padding: 8px 14px;
+  padding: 6px 12px;
   border-radius: 12px;
   display: inline-block;
   margin-top: 6px;
@@ -131,11 +162,14 @@
 .product-type.판매대여 { background-color: var(--판매대여-active); }
 .product-type.나눔 { background-color: var(--나누몬-active); }
 
+/* 날짜 */
 .product-meta {
   font-size: 12px;
-  color: #aaa;
+  color: #999;
+  margin-top: auto;
 }
 
+/* 신규 상품 뱃지 */
 .new-badge {
   position: absolute;
   top: 12px;
@@ -145,4 +179,57 @@
   font-size: 11px;
   padding: 2px 6px;
   border-radius: 8px;
+}
+
+
+.dot {
+  margin: 0 5px;
+  color: #999;
+}
+
+/*페이징 */
+#paging {
+  margin-top: 40px;
+  text-align: center;
+}
+
+#paging a,
+#paging span {
+  display: inline-block;
+  margin: 0 4px;
+  padding: 8px 14px;
+  border-radius: 8px;
+  background-color: var(--paging-bg);
+  color: var(--paging-text);
+  text-decoration: none;
+  font-size: 14px;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+#paging a:hover {
+  background-color: var(--paging-hover-bg);
+  color: var(--paging-hover-text);
+}
+
+#paging a.active {
+  background-color: var(--paging-active-bg);
+  color: var(--paging-active-text);
+  font-weight: bold;
+}
+
+#paging span.disabled {
+  color: #bbb;
+  cursor: not-allowed;
+  background-color: var(--paging-bg);
+}
+
+/* 화살표만 따로 색 지정 */
+#paging a[data-page^="<"],
+#paging a[data-page^=">"] {
+  color: var(--paging-arrow-color);
+}
+
+#paging a[data-page^="<"]:hover,
+#paging a[data-page^=">"]:hover {
+  color: var(--paging-arrow-hover);
 }

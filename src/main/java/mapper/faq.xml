@@ -1,1 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.faq">
+
+  <!-- FAQ Category 관련 -->
+  <!-- FAQ 카테고리 전체 조회 -->
+  <select id="selectFaqCategoryList" resultType="faqCategory">
+    SELECT * FROM faq_category ORDER BY no ASC
+  </select>
+
+
+  <!-- FAQ 카테고리 생성 -->
+  <insert id="insertFaqCategory" parameterType="faqCategory" useGeneratedKeys="true" keyProperty="no">
+    INSERT INTO faq_category (name) VALUES (#{name})
+  </insert>
+
+
+
+  <!-- FAQ 관련 -->
+  <select id="selectFaqList" resultType="faq">
+    SELECT * FROM faq ORDER BY createdAt DESC
+  </select>
+
+  <insert id="insertFaq" parameterType="faq" useGeneratedKeys="true" keyProperty="no">
+    INSERT INTO faq (category, title, content, imgUrl) VALUES (#{category}, #{title}, #{content}, #{imgUrl})
+  </insert>
+
+</mapper>

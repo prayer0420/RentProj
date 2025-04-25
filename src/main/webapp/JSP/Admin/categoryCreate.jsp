@@ -87,6 +87,33 @@
       margin-bottom: 5px;
       font-size: 13px;
     }
+    
+    .btn-file {
+	  background-color: #ddd;
+	  padding: 5px 10px;
+	  border: 1px solid #aaa;
+	  border-radius: 3px;
+	  cursor: pointer;
+	  position: relative;
+	  overflow: hidden;
+	  font-size: 13px;
+	}
+	
+	.btn-file input[type="file"] {
+	  position: absolute;
+	  left: 0;
+	  top: 0;
+	  opacity: 0;
+	  cursor: pointer;
+	  height: 100%;
+	  width: 100%;
+	}	
+	
+	.category-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
   </style>
 </head>
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script> 
@@ -102,25 +129,10 @@
 		}
 	})		  
 	
-	$("#regCategory").click(function() {
-		$.ajax({
-			url:"categoryCreate",
-			method:"post",
-			data:{name:$("#categoryName").val()},
-			success:function(result) {
-				let category = JSON.parse(result);
-				console.log(category);
-				$("table>tbody").append($(`<tr>
-							<td><input type="text" value="\${category.no }" name="no"></td>
-				        	<td><input type="text" value="\${category.name }" name="name"></td>
-				        	<td><input type="hidden"  name="isActive" value="false"/><input type="checkbox">카테고리 숨김</td>
-				        	<td><div class="sort-buttons"><button class="btn-up">위로↑</button><button class="btn-down">아래로↓</button></div></td>
-				        	</tr>`))
-				console.log($("#count").text())
-				$("#count").text(+$("#count").text()+1);
-			}
-		})
-	})
+    $("#imgFile").change(function () {
+      const fileName = this.files.length > 0 ? this.files[0].name : "선택된 파일 없음";
+      $("#fileNameLabel").text(fileName);
+    });
   }) 
   
  function moveUp(el){
@@ -143,15 +155,29 @@
   <main>
     <div class="breadcrumb">HOME > 카테고리 > 카테고리등록</div>
 
-    <div class="category-section">
-      <div class="category-row inline">
-        <label for="categoryName">카테고리명</label>
-        <input type="text" class="search-input" id="categoryName">
-        <button class="btn-save" id="regCategory" >✔ 등록</button>
-      </div>
-    </div>
+		<div class="category-section">
+		<form action="categoryCreate" id="regCategoryForm" enctype="multipart/form-data" method="post">			
+		  <!-- 카테고리명 입력 -->
+		  <div class="category-row inline">
+		    <label for="categoryName">카테고리명</label>
+		    <input type="text" class="search-input" id="categoryName" name="name" required="required">
+		    <button class="btn-save" id="regCategory">✔ 저장</button>
+		  </div>
+		
+		  <!-- 이미지 선택 -->
+		  <div class="category-row inline">
+		    <label>이미지선택</label>
+		    <label class="btn-file">
+		      + 파일선택
+		      <input type="file" name="img" id="imgFile" style="display: none;">
+		    </label>
+		    <span id="fileNameLabel" class="file-label">선택된 파일 없음</span>
+		  </div>
+		</form>
+		</div>
+	
     
-	<form  action="categoryUpdate" method="post">
+	<form  action="categoryUpdate" method="post" enctype="multipart/form-data">
     <div class="category-count">총 <span id="count">${fn:length(categoryList) }</span>개<button class="btn-save" style="margin-left: 10px;">✔ 저장</button></div>
 
 	
@@ -160,17 +186,23 @@
       <tr>
         <th>번호</th>
         <th>카테고리명</th>
+        <th>이미지파일</th>
         <th>숨김 여부</th>
         <th>정렬</th>
       </tr>
       </thead>
       <tbody>
-      <c:forEach items="${categoryList}" var="category">
+      <c:forEach items="${categoryList}" var="category" varStatus="status">
            <tr>
         	<td><input type="text" value="${category.no }" name="no" readonly="readonly"></td>
 	        <td>
     	      <input type="text" value="${category.name }" name="name">
         	</td>
+        	<td><label class="input-file-button" for="input-file${status.index }">
+        		${(category.imgFilename eq null || category.imgFilename eq '')? '파일선택':category.imgFilename }  </label>
+        		<input type="file" class="imgFile" id="input-file${status.index }" name="imgfilename${status.index }"  style='display:none'>
+        		<input type="hidden" name="oldFilename" value="${category.imgFilename}">	
+        		</td>
         	<td>
          	<c:choose>
         		<c:when test="${category.isActive==true }">
@@ -185,8 +217,8 @@
         	카테고리 숨김</td>
         	<td>
 	          <div class="sort-buttons">
-    	        <button class="btn-up" onclick="moveUp(this)">위로↑</button>
-        	    <button class="btn-down"onclick="moveDown(this)">아래로↓</button>
+    	        <span class="btn-up" onclick="moveUp(this)">위로↑</span>
+        	    <span class="btn-down"onclick="moveDown(this)">아래로↓</span>
           	</div>
         	</td>
       	</tr>
@@ -198,5 +230,10 @@
     </form>
   </main>
 </div>
+<script>
+ 	$(".imgFile").change(function(e) {
+		$(this).prev().text(e.target.files[0].name)
+	})
+</script>
 </body>
 </html>

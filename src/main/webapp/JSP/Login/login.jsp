@@ -42,7 +42,7 @@ if (cookieHeader != null) {
 				<img src="${contextPath}/img/kakao_login_medium_narrow.png" alt="Kakao">
 			</a>
 			<a href="https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=F6Q5T61yYsZTND6Hay0F&redirect_uri=http://localhost:8080/rent/naver&state=7564">
-				<img src="${contextPath}/img/btnG_naver.png" width="120px" alt="Naver">
+				<img src="${contextPath}/img/btnG_naver.png" alt="Naver">
 			</a>
 		</div>
 

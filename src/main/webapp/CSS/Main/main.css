@@ -74,16 +74,21 @@ body {
 /* 상품 카드 */
 .product-card {
   width: 220px;
+  height: 400px; /* ✅ 카드 높이 통일 */
   background-color: #fff;
   border-radius: 10px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
   padding: 14px;
-  transition: transform 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.3s ease;
   position: relative;
 }
 
 .product-card:hover {
   transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.1);
 }
 
 .product-card img {
@@ -97,14 +102,19 @@ body {
   font-size: 16px;
   font-weight: 600;
   margin-top: 12px;
+  height: 40px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-/* 가격 정보 */
 .product-price {
   font-size: 15px;
   color: #6b7280;
   margin-top: 8px;
   line-height: 1.5;
+  height: 42px;
+  overflow: hidden;
 }
 
 .product-price .sale {
@@ -117,27 +127,10 @@ body {
   font-weight: bold;
 }
 
-/* 거래유형 뱃지 */
-.product-type {
-  font-size: 14px;
-  font-weight: 600;
-  padding: 6px 12px;
-  border-radius: 20px;
-  display: inline-block;
-  margin-top: 10px;
-  color: #fff;
-}
-
-/* 거래유형별 배경색 */
-.product-type.판매 {
-  background-color: #f5a623;
-}
-.product-type.대여 {
-  background-color: #2196f3;
-}
-.product-type.판매대여 {
-  background-color: #2ecc71;
-}
-.product-type.나눔 {
-  background-color: #e91e63;
+/* 등록 시간 (신규 시간 정보 추가용) */
+.product-time {
+  font-size: 13px;
+  color: #aaa;
+  text-align: right;
+  margin-top: auto;
 }

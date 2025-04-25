@@ -18,7 +18,7 @@
           <!-- 사용자 프로필 -->
           <div class="profile-section" id="member">
 	          <c:choose>
-	          	<c:when test="${member.id eq null }">
+  				<c:when test="${sessionScope.id eq null}">
 					<a href="${contextPath}/login">로그인</a>
 	          	</c:when>
 	          	<c:otherwise>

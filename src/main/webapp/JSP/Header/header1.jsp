@@ -36,13 +36,13 @@
   					</c:if>
 				</div>
 
-				<button id="btn-alarm">🔔 알림
+<!-- 				<button id="btn-alarm">🔔 알림
 				  <span id="headerAlarmBadge" style="display:none; background:red; color:white; font-size:11px; border-radius:8px; padding:1px 6px; margin-left:4px;">0</span>
-				</button>
+				</button> -->
 				<!-- 알림 모달 포함 (정적 include) -->
 				<jsp:include page="/JSP/Header/alarm.jsp" />
 				
-				<button><a href="myOrder">📄 마이페이지</a></button>
+				<button><a href="myInfoModify">📄 마이페이지</a></button>
 				<c:choose>
 					<c:when test="${not empty sessionScope.id}">
 						<button id="btn-logout">🚪 로그아웃</button>

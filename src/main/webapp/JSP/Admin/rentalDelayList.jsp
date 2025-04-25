@@ -1,7 +1,51 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+  <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+  <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+  <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
+<style>
+	.modal {
+	  display: none;
+	  position: fixed;
+	  z-index: 9999;
+	  top: 0; left: 0;
+	  width: 100%;
+	  height: 100%;
+	  background: rgba(0, 0, 0, 0.5);
+	}
+	
+	.modal-content {
+	  background-color: white;
+	  margin: 10% auto;
+	  padding: 20px;
+	  width: 400px;
+	  border: 1px solid #888;
+	  border-radius: 6px;
+	  position: relative;
+	}
+	
+	.modal-title {
+	  text-align: center;
+	  font-weight: bold;
+	  font-size: 18px;
+	  margin-bottom: 15px;
+	}
+	
+	.modal-close {
+	  text-align: right;
+	  margin-bottom: 10px;
+	}
+	
+	.modal-close button {
+	  background-color: #26c6da;
+	  color: white;
+	  border: none;
+	  padding: 6px 12px;
+	  border-radius: 4px;
+	  cursor: pointer;
+</style>
 <head>
   <meta charset="UTF-8">
   <title>대여지연조회</title>
@@ -21,67 +65,116 @@
 
   <main>
     <div class="breadcrumb">HOME > 정산관리 > 대여지연조회</div>
-
+	<form method="post" action="${pageContext.request.contextPath}/rentalDelayList">
     <div class="search-box">
-      <div class="row">
-        <label>기간검색</label>
-        <input type="text" placeholder="YYYYMMDD"> ~
-        <input type="text" placeholder="YYYYMMDD">
-        <button>당일</button>
-        <button>당월</button>
-        <button>전월</button>	
-        <button>검색</button>
-      </div>
-    </div>
+        <label><b>검색어:</b>&nbsp;&nbsp;
+          <select name="type">
+	          <option value="orderNo" ${param.type == 'orderNo' ? 'selected' : ''}>주문번호</option>
+			  <option value="productNo" ${param.type == 'productNo' ? 'selected' : ''}>상품번호</option>
+			  <option value="productName" ${param.type == 'productName' ? 'selected' : ''}>상품명</option>
+          </select>
+        </label>
+            <input type="text" name="keyword" value="${param.keyword}" />
+        <br><br>
+        	<b>거래일자:</b>&nbsp;&nbsp;
+		    <input type="date" name="start_date" value="${param.start_date}" />
+		    <span>~</span>
+		    <input type="date" name="end_date" value="${param.end_date}" />	
+        <input type="submit" value="검색">
 
-    <div class="total-count" id="delayCount"></div>
+      </div>
+	</form>
+    
+
+		<div style="margin-bottom:10px; font-weight:bold;">
+		    🔍 검색된 총 지연주문 수: <span style="color:#007bff;">${not empty orderList ? fn:length(orderList) : 0}</span>건
+		</div>
 
   <table>
   <thead>
     <tr>
-      <th rowspan="2">no</th>
+      <th rowspan="2">No</th>
       <th rowspan="2">주문번호</th>
+      <th rowspan="2">상품번호</th>
       <th rowspan="2">상품명</th>
       <th rowspan="2">구매자</th>
       <th rowspan="2">판매자</th>
       <th rowspan="2">거래유형</th>
-      <th rowspan="2">배송유형</th>
-      <th colspan="1">거래일자</th>
+      <th colspan="2">거래일자</th>
       <th colspan="3">결제금액</th>
       <th rowspan="2">결제수단</th>
       <th rowspan="2">거래 상태</th>
     </tr>
     <tr>
+      <th>거래시작일</th>
       <th>거래종료일</th>
       <th>물품가</th>
       <th>배송비</th>
       <th>보증금</th>
     </tr>
   </thead>
-  <tbody>
-    <tr>
-      <td>1</td>
-      <td>ORD20240329</td>
-      <td>aaa</td>
-      <td>userA</td>
-      <td>sellerA</td>
-      <td>대여</td>
-      <td>직접</td>
-      <td>2025-03-31</td>
-      <td>100000</td>
-      <td>5000</td>
-      <td>10000</td>
-      <td>신용카드</td>
-      <td>반납지연</td>
-    </tr>
-  </tbody>
-</table>
-
+		<tbody>
+		  <c:forEach var="order" items="${orderList}" varStatus="status">
+		    <tr>		    
+		      <td>${status.index + 1}</td> <!-- 해당 리스트 넘버링 -->
+		      <td>${order.orderNo}</td>
+		      <td>${order.productNo}</td>
+		      <td><a href="${pageContext.request.contextPath}/productDetail?no=${order.productNo}">${order.productName}</a></td> <!-- product.title -->
+		      <td><a href="javascript:void(0);" onclick="openMemberDetail('${order.buyerId}')">${order.buyerId}</a></td>   <!-- member.id (구매자) -->
+		      <td><a href="javascript:void(0);" onclick="openMemberDetail('${order.sellerId}')">${order.sellerId}</a></td>  <!-- member.id (판매자) -->
+		      <td>${order.orderType}</td>
+		      <td><fmt:formatDate value="${order.startDate}" pattern="yyyy-MM-dd" /></td>
+		      <td><fmt:formatDate value="${order.endDate}" pattern="yyyy-MM-dd" /></td>
+		      <td><fmt:formatNumber value="${order.price}" pattern="#,##0" /></td>
+		      <td><fmt:formatNumber value="${order.deliveryPrice}" pattern="#,##0" /></td>
+		      <td><fmt:formatNumber value="${order.secPrice}" pattern="#,##0" /></td>
+		      <td>${order.paymentType}</td>
+		      <td>${order.orderStatus}</td>
+		    </tr>
+		  </c:forEach>
+		</tbody>
+	</table>	
 
     <div class="notice">
       * 구매자/판매자 선택 시 각 회원의 상세 정보 페이지 제공
     </div>
+    
+    <!-- 모달 HTML -->
+		<div id="memberModal" class="modal">
+		  <div class="modal-content">
+		    <div class="modal-title">[회원정보상세]</div>
+		    <div class="modal-close">
+		      <button onclick="document.getElementById('memberModal').style.display='none'">닫기</button>
+		    </div>
+		    <div id="memberDetailBody"></div>
+		  </div>
+		</div>
+		
+		
   </main>
-</div>
+ </div>
+ 
+ 	<!-- 판매자 구매자id 눌렀을때 상세 정보 팝업 추가 -->
+ 	<script>
+		function openMemberDetail(memberId) {
+		  fetch('${pageContext.request.contextPath}/memberDetailModal?memberId=' + memberId)
+		    .then(res => res.text())
+		    .then(html => {
+		      document.getElementById('memberDetailBody').innerHTML = html;
+		      document.getElementById('memberModal').style.display = 'block';
+		    }).catch(err => {
+		      document.getElementById('memberDetailBody').innerHTML = '<p>회원 정보를 불러오지 못했습니다.</p>';
+		    });
+		}
+		
+			// 모달 닫기
+			window.addEventListener('click', function(event) {
+			  const modal = document.getElementById('memberModal');
+			  // 바깥 영역만 클릭되었을 때
+			  if (event.target === modal) {
+			    modal.style.display = 'none';
+			  }
+			});
+		</script>	
 </body>
 </html>

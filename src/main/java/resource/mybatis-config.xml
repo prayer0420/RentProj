@@ -17,6 +17,10 @@
 		<typeAlias type="dto.Alarm" alias ="alarm"/>
 		<typeAlias type="dto.Review" alias ="review"/>
 		<typeAlias type="dto.Mark" alias ="mark"/>
+		<typeAlias type="dto.Faq" alias ="faq"/>  
+		<typeAlias type="dto.FaqCategory" alias ="faqCategory"/>
+		
+		
 	</typeAliases>
 	
 	<environments default="development">
@@ -27,6 +31,11 @@
 				<property name="url" value="jdbc:mariadb://localhost:3306/rentdb"/>
 				<property name="username" value="root"/>
 				<property name="password" value="7564"/>
+				
+				<!--커넥션 유효성 체크 설정 -->
+        		<property name="poolPingQuery" value="SELECT 1"/>
+        		<property name="poolPingEnabled" value="true"/>
+        		<property name="poolPingConnectionsNotUsedFor" value="60000"/>
 			</dataSource>
 		</environment>
 	</environments>
@@ -47,6 +56,8 @@
 		<mapper resource="mapper/alarm.xml"/>
 		<mapper resource="mapper/review.xml"/>
 		<mapper resource="mapper/mark.xml"/>
+		<mapper resource="mapper/faq.xml"/>
+		
 		
 	</mappers>
 </configuration>
