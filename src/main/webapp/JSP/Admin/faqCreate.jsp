@@ -71,7 +71,6 @@
 
       <div class="action-top">
         <div class="action-buttons">
-          <button>선택수정</button>
           <button>선택삭제</button>
         </div>
         <button>+ 추가하기</button>
@@ -86,6 +85,7 @@
             <th>제목</th>
             <th>등록일</th>
             <th>최종수정일</th>
+            <th> </th>
           </tr>
         </thead>
         <tbody>
@@ -96,10 +96,110 @@
             <td>상품 등록 이용가이드</td>
             <td>2025-04-03</td>
             <td>2025-04-03</td>
+            <td><button>수정하기</button></td>
           </tr>
         </tbody>
       </table>
     </main>
   </div>
+  
+  <!-- 모달 -->
+<div class="modal-overlay" id="faqModal">
+  <div class="modal">
+    <div class="modal-header">
+      <span id="modalTitle">FAQ 등록</span>
+      <span class="close-btn" onclick="closeModal()">×</span>
+    </div>
+    <table>
+      <tr>
+        <th>유형</th>
+        <td>
+          <select id="faqType">
+            <option>주문/결제</option>
+            <option>배송</option>
+            <option>취소/환불</option>
+            <option>반품/교환</option>
+            <option>기타</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <th>제목</th>
+        <td><input type="text" id="faqTitleInput" placeholder="FAQ 제목 입력"></td>
+      </tr>
+      <tr>
+        <th>이미지선택</th>
+        <td>
+          <button type="button">+ 파일선택</button>
+          <span class="file-label">선택된 파일 없음</span>
+        </td>
+      </tr>
+      <tr>
+        <th>내용</th>
+        <td><textarea id="faqContentInput" placeholder="FAQ 상세 내용을 입력하세요."></textarea></td>
+      </tr>
+    </table>
+    <div class="modal-footer">
+      <button id="submitBtn" onclick="handleSubmit()">✔ 저장</button>
+    </div>
+  </div>
+</div>
+
+	<script>
+	  let isEditMode = false;
+	  let editingFaqId = null;
+	
+	  // 등록 모드로 열기
+	  function openCreateModal() {
+	    isEditMode = false;
+	    editingFaqId = null;
+	    document.getElementById('modalTitle').textContent = "FAQ 등록";
+	    document.getElementById('faqTitleInput').value = "";
+	    document.getElementById('faqContentInput').value = "";
+	    document.getElementById('submitBtn').textContent = "✔ 저장";
+	    document.getElementById('faqModal').style.display = 'flex';
+	  }
+	
+	  // 수정 모드로 열기 (데이터 전달 받음)
+	  function openEditModal(faq) {
+	    isEditMode = true;
+	    editingFaqId = faq.id;
+	    document.getElementById('modalTitle').textContent = "FAQ 수정";
+	    document.getElementById('faqType').value = faq.type;
+	    document.getElementById('faqTitleInput').value = faq.title;
+	    document.getElementById('faqContentInput').value = faq.content;
+	    document.getElementById('submitBtn').textContent = "✔ 수정";
+	    document.getElementById('faqModal').style.display = 'flex';
+	  }
+	
+	  function closeModal() {
+	    document.getElementById('faqModal').style.display = 'none';
+	  }
+	
+	  function handleSubmit() {
+	    const title = document.getElementById('faqTitleInput').value.trim();
+	    const content = document.getElementById('faqContentInput').value.trim();
+	    const type = document.getElementById('faqType').value;
+	
+	    if (!title || !content) {
+	      alert("제목과 내용을 모두 입력해주세요.");
+	      return;
+	    }
+	
+	    if (isEditMode) {
+	      console.log("수정 요청:", { id: editingFaqId, type, title, content });
+	      // TODO: AJAX로 수정 요청
+	    } else {
+	      console.log("등록 요청:", { type, title, content });
+	      // TODO: AJAX로 등록 요청
+	    }
+	
+	    closeModal();
+	  }
+	
+
+	</script>
+  
+  
 </body>
 </html>
