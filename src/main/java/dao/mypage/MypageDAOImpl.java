@@ -132,4 +132,10 @@ public class MypageDAOImpl implements MypageDAO {
 		return sqlSession.selectOne("mapper.mypage.selectLendHistoryDetail",param);
 	}
 
+	@Override
+	public List<Order> selectLendHistoryByProductNo(Integer productNo) {
+		
+		return sqlSession.selectList("mapper.mypage.selectLendHistoryByProductNo",productNo);
+	}
+
 }

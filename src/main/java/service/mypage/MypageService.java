@@ -10,14 +10,27 @@ import utils.PageInfo;
 public interface MypageService {
 
 	List<Map<String,Object>> productListByPage(PageInfo pageInfo, String id) throws Exception;
+	
 	Map<String, Object> mySellDetail(Integer orderNo, String id) throws Exception;
+	
+	// 송장번호 입력
 	boolean updateInvoiceInfo(Integer orderNo, String deliveryComp, String invoiceNo) throws Exception;
+	
 	List<Map<String, Object>> orderListByPage(PageInfo pageInfo,String id) throws Exception;
+	
 	Map<String, Object> myOrderDetail(Integer orderNo, String id) throws Exception;
-	List<Map<String, Object>> rentListByPage(PageInfo pageInfo, String id) throws Exception;
+	
+	List<Map<String, Object>> rentListByPage(PageInfo pageInfo, String id) throws Exception;	
+	
 	Map<String, Object> myRentDetail(Integer orderNo, String id) throws Exception;
+	
 	List<Map<String, Object>> lendListByPage(PageInfo pageInfo, String id) throws Exception;
+	
 	Map<String, Object> myLendDetail(Integer orderNo, String id) throws Exception;
+	
 	Map<String, Object> getLendDetailByOrderNo(String id, Integer orderNo) throws Exception;
+	
+	// 대여이력 리스트 불러오기
+	List<Order> getLendHistoryByProductNo(Integer productNo) throws Exception;
 
 }

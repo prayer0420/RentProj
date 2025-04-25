@@ -23,7 +23,7 @@
         <!-- 콘텐츠 영역 -->
         <section class="content">
           <h2>대여 상세</h2>
-          <div class="divider"></div>
+          <div class="divider"></div><br>
           
           <c:choose>
 			<c:when test="${id eq null }">
@@ -42,8 +42,9 @@
 	                <span class="status-text">${myLendDetail.orderStatus }</span>
 	            </div>
 	
+				<div>
 	            <div class="info-grid">
-	                <div class="info-box">
+	                <div class="info-box" id="lendDetailBox">
 	                    <h4>대여 배송 정보</h4>
 	                    <p>송장번호: ${myLendDetail.invoiceNo }</p>
 	                    <p>택배사: ${myLendDetail.deliveryComp }</p>
@@ -75,6 +76,7 @@
 	                    <p>배송비: <fmt:formatNumber value="${myLendDetail.deliveryPrice }" type="number" groupingUsed="true"/>원</p>
 	                </div>
 	            </div>
+	            </div><br>
             
              <div class="rental-table-wrapper">
                 <h3>이 상품의 대여 거래 이력</h3>
@@ -82,7 +84,7 @@
                 <table class="rental-table">
                     <thead>
                         <tr>
-                            <th>이용자ID</th>
+                            <th>주문번호</th>
                             <th>대여기간</th>
                             <th>이용일</th>
                             <th>이용금액</th>
@@ -90,43 +92,15 @@
                         </tr>
                     </thead>
                     <tbody>
-                    	<c:forEach var="history" items="${lendHistoryList }">
-	                        <tr class="highlight">
-	                            <td><strong>deoksoo1243</strong></td>
-	                            <td><strong>2025-03-04 ~ 2025-03-07</strong></td>
+                    	<c:forEach var="history" items="${lendHistoryList}">
+	                        <tr class="history-row" data-lend-no="${history.orderNo }">
+	                            <td><strong>${history.orderId }</strong></td>
+	                            <td><strong>${history.startDate } ~ ${history.endDate }</strong></td>
 	                            <td><strong>3일</strong></td>
-	                            <td><strong>300,000원</strong></td>
+	                            <td><strong>${history.price }원</strong></td>
 	                            <td>없음</td>
 	                        </tr>
                         </c:forEach>
-                        <tr>
-                            <td>dong</td>
-                            <td>2025-02-11 ~ 2025-02-12</td>
-                            <td>3일</td>
-                            <td>300,000원</td>
-                            <td>없음</td>
-                        </tr>
-                        <tr>
-                            <td>honggil</td>
-                            <td>2025-03-01 ~ 2025-03-04</td>
-                            <td>3일</td>
-                            <td>300,000원</td>
-                            <td>없음</td>
-                        </tr>
-                        <tr>
-                            <td>honggil</td>
-                            <td>2025-03-01 ~ 2025-03-04</td>
-                            <td>3일</td>
-                            <td>300,000원</td>
-                            <td>없음</td>
-                        </tr>
-                        <tr>
-                            <td>honggil</td>
-                            <td>2025-03-01 ~ 2025-03-04</td>
-                            <td>3일</td>
-                            <td>300,000원</td>
-                            <td>없음</td>
-                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -144,15 +118,15 @@
 	<script>
 	$(document).ready(function() {
 	    $('.history-row').click(function() {
-	        const rentNo = $(this).data('orderNo');
+	        const orderNo = $(this).data('orderNo');
 	
 	        $.ajax({
-	            url: '/lendHistoryDetail',
+	            url: '/myLendHistoryDetail',
 	            method: 'GET',
-	            data: { rentNo: rentNo },
+	            data: { orderNo: orderNo },
 	            dataType: 'json',
 	            success: function(data) {
-	                $('#detailUserId').text(data.userId);
+	                $('#lendDetail').text(data.userId);
 	                $('#detailPeriod').text(data.startDate + " ~ " + data.endDate);
 	                $('#detailPrice').text(data.price + "원");
 	                $('#detailNote').text(data.note || "없음");

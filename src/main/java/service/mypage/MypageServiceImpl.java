@@ -153,5 +153,11 @@ public class MypageServiceImpl implements MypageService {
 		return mypageDao.selectLendDetailByOrderNo(id, orderNo);
 	}
 
+	@Override
+	public List<Order> getLendHistoryByProductNo(Integer productNo) throws Exception {
+		
+		return mypageDao.selectLendHistoryByProductNo(productNo);
+	}
+
 
 }

@@ -126,6 +126,16 @@
 		  where o.orderNo=#{orderNo} and m2.id=#{id} and p.tradeType='대여'
 	</select>
 	
+	<!-- 내가 대여(빌려주는)중인 상품의 대여내역(history) 불러오기  -->
+	<select id="selectLendHistoryByProductNo" parameterType="Integer" resultType="Order">
+		select o.*
+		from `order` o join product p On p.no = o.productNo
+		join member m On m.no = o.memberNo
+		where o.productNo=#{productNo} 	
+		order by orderDate desc
+	</select>
+	
+	<!-- 상품의 대여내역(history)에서 선택된 행의 대여 상세정보를 (같은 페이지 상단에) 불러오기  -->
 	<select id="selectLendHistoryDetail" parameterType="map" resultType="map">
 		select o.*, m.id, m.phone
 		from `Order` o join Member m
