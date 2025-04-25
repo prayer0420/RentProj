@@ -1,11 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="<%= request.getContextPath() %>/CSS/productRegister/productRegisterFree.css">
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/CSS/productRegister/productRegisterFree.css">
 <script>
         window.onload = function(){
             const addr = document.querySelector('.modal-addr');
@@ -69,75 +70,69 @@
                 deliveryPrice.disabled = false;
             }
         }
+        
+        function openAddressModal() {
+    		document.getElementById('addressModal').style.display = 'flex';
+    	}
+
+    	function closeAddressModal() {
+    		document.getElementById('addressModal').style.display = 'none';
+    	}
     </script>
 </head>
 <body>
-<jsp:include page="../Header/header.jsp"></jsp:include>
- <form action="<%=request.getContextPath()%>/free"
-		method="post" enctype="multipart/form-data" class="container">
+	<jsp:include page="../Header/header.jsp"></jsp:include>
+	<form action="<%=request.getContextPath()%>/free" method="post"
+		enctype="multipart/form-data" class="container">
 		<input type="hidden" name="tradeType" value="무료나눔">
-        <div class="container">
-            <div class="container-header">
-                <h2>무료나눔등록</h2>
-            </div>
-            <div class="container-category">
-                <select name="categoryNo" id="categoryNo" class="category-list">
-                    <option selected="">카테고리 선택</option>
-                    <option value="1">의류/패션/악세사리</option>
-                    <option value="2">PC용품/디지털</option>
-                    <option value="3">가전제품</option>
-                    <option value="4">뷰티/미용</option>
-                    <option value="5">캠핑/스포츠/레져</option>
-                    <option value="6">생활/주방용품</option>
-                    <option value="7">가구/인테리어</option>
-                    <option value="8">유아동/출산</option>
-                    <option value="9">애완동물용품</option>
-                    <option value="10">기타</option>
-                </select>
-                <input type="text" placeholder="제목을 입력하세요" name="title">
-            </div>
-            <div class="container-addr">
-                <div class="modal-addr">
-                    <div class="modal-addr-body">
-                        <h3>거래지역 선택</h3>
-                        <hr>
-                        <button type="button" class="btn-open-modal-addrPlus">거래지역 추가</button>
-                        <div class="addr-list"></div>
-                        <button class="cancle-addr" type="button">확인</button>
-                    </div>
-                </div>
-                <!-- 
-                <div class="modal-addrPlus">
-                    <div class="modal-addrPlus-body">
-                        <h3>거래지역 추가</h3>
-                        <hr>
-                        <h5>거래지역*</h5>
-                        <input class="addrNum" placeholder="우편번호">
-                        <button class="searchBtn">검색</button>
-                        <input class="loadNum" placeholder="도로명 주소">
-                        <h5>입력하신 거래지역의 상세주소는 표시되지 않습니다.</h5>
-                        <button>취소</button>
-                        <button>확인</button>
-                    </div>
-                </div>
-                 -->
-                <button type="button" class="btn-open-modal-addr">거래지역 등록/수정</button>
-            </div>
-            <div class="container-image">
-                <h4>상품이미지</h4>
-                <hr>
-                 <img alt="상품이미지" src="<%=request.getContextPath()%>/img/plus.jpg"
-				id="preview" onclick="document.getElementById('ifile').click();">
-			<input type="file" name="img" id="ifile" accept="image/*"
-				style="display: none" onchange="readURL(this)">
-            </div>
+		<div class="container">
+			<div class="container-header">
+				<h2>무료나눔등록</h2>
+			</div>
+			<div class="container-category">
+				<select name="categoryNo" id="categoryNo" class="category-list">
+					<option selected="">카테고리 선택</option>
+					<option value="1">의류/패션/악세사리</option>
+					<option value="2">PC용품/디지털</option>
+					<option value="3">가전제품</option>
+					<option value="4">뷰티/미용</option>
+					<option value="5">캠핑/스포츠/레져</option>
+					<option value="6">생활/주방용품</option>
+					<option value="7">가구/인테리어</option>
+					<option value="8">유아동/출산</option>
+					<option value="9">애완동물용품</option>
+					<option value="10">기타</option>
+				</select> <input type="text" placeholder="제목을 입력하세요" name="title">
+			</div>
+			<div class="container-addr">
+				<div class="address-title">
+				<span class="address-name"></span>
+				<button class="default-address"></button>
+			</div>
+			<div class="address-info">
+				<span class="phone"></span><br> <span class="addressRegion"></span>
+				<input type="hidden" name="deliveryAddr" id="deliveryAddressInput">
+			</div>
+			<h4>거래지역</h4>
+			<button type="button" class="btn-open-modal-addr"
+				onclick="openAddressModal()">배송지 선택</button>
+			</div>
+			<div class="container-image">
+				<h4>상품이미지</h4>
+				<hr>
+				<img alt="상품이미지" src="<%=request.getContextPath()%>/img/plus.jpg"
+					id="preview" onclick="document.getElementById('ifile').click();">
+				<input type="file" name="img" id="ifile" accept="image/*"
+					style="display: none" onchange="readURL(this)">
+			</div>
 
-            <div class="container-content">
-                <textarea name="content" id="content" placeholder="내용을 입력하세요"></textarea>
-            </div>
+			<div class="container-content">
+				<textarea name="content" id="content" placeholder="내용을 입력하세요"></textarea>
+			</div>
 
-            <button type="submit">확인</button>
-        </div>
-    </form>
+			<button type="submit">확인</button>
+		</div>
+	</form>
+	<jsp:include page="productAddressModal.jsp"></jsp:include>
 </body>
 </html>

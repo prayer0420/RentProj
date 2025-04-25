@@ -53,10 +53,7 @@ public class ProductRegisterRent extends HttpServlet {
 		String content = multi.getParameter("content");
 		String state = multi.getParameter("state");
 		String img = multi.getFilesystemName("img");
-		System.out.println(img);
-//		String img = "123.jpg";
-//		String deliveryAddr = multi.getParameter("deliveryAddr");
-		String deliveryAddr = "장곡동";
+		String deliveryAddr = multi.getParameter("deliveryAddr");
 		
 		Integer deliveryPrice = 0;
 		if((multi.getParameter("deliveryPrice")) != null) {

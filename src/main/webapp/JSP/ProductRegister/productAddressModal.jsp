@@ -1,9 +1,9 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <link rel="stylesheet"
-	href="${pageContext.request.contextPath}/CSS/productDetail/addressModal.css" />
+	href="${pageContext.request.contextPath}/CSS/productRegister/productAddressModal.css" />
 <link rel="stylesheet"
-	href="${pageContext.request.contextPath}/CSS/productDetail/addressCard.css" />
+	href="${pageContext.request.contextPath}/CSS/productRegister/productAddressCard.css" />
 
 <div class="modal" id="addressModal" style="display: none;">
 	<div class="modal-content">
@@ -77,7 +77,6 @@
 
 	</div>
 </div>
-<jsp:include page="addressAdd.jsp"></jsp:include>
 <script type="text/javascript">
 	const fullAddress1 = "${address1}";
 	const parts1 = fullAddress1.split("@@");

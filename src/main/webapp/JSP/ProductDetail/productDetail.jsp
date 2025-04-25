@@ -182,7 +182,10 @@
 				<div id="review-list-container">
 					<jsp:include page="reviewList.jsp" />
 				</div>
-
+				
+				<!-- 달력 -->
+				<jsp:include page="calendarModal.jsp" />
+				<button onclick="openCalendar()">📅 대여 가능 날짜 보기</button>
 			
 			</div>
 		</div>
@@ -200,6 +203,8 @@
 	<jsp:param value="${product.no }" name="productNo" />
 	<jsp:param value="${product.tradeType }" name="tradeType" />
 </jsp:include>
+
+
 
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -316,5 +321,7 @@
 		        $("#reviewNo").val(no);
 		    }
 		}
+	 
+	
 	 
 </script>

@@ -58,10 +58,6 @@
             btnCancleAdmit.addEventListener("click", () => {
                 admit.style.display = "none";
             });
-            btnOpenAddr.addEventListener("click", () => {
-                addr.style.display = "flex";
-                //addrPlus.style.display = "none";
-            });
             btnCancleAddr.addEventListener("click", () => {
                 addr.style.display = "none";
             });
@@ -145,7 +141,13 @@
                 deliveryPrice.disabled = false;
             }
         }
-        	
+        function openAddressModal() {
+    		document.getElementById('addressModal').style.display = 'flex';
+    	}
+
+    	function closeAddressModal() {
+    		document.getElementById('addressModal').style.display = 'none';
+    	}	
         
     </script>
 </head>
@@ -251,33 +253,17 @@
 		</div>
 
 		<div class="container-addr">
-			<div class="modal-addr">
-				<div class="modal-addr-body">
-					<h3>거래지역 선택</h3>
-					<hr>
-					<button type="button" class="btn-open-modal-addrPlus">거래지역
-						추가</button>
-					<div class="addr-list"></div>
-					<button class="cancle-addr" type="button">확인</button>
-				</div>
+			<div class="address-title">
+				<span class="address-name"></span>
+				<button class="default-address"></button>
 			</div>
-			<!-- 
-			<div class="modal-addrPlus">
-				<div class="modal-addrPlus-body">
-					<h3>거래지역 추가</h3>
-					<hr>
-					<h5>거래지역*</h5>
-					<input class="addrNum" placeholder="우편번호">
-					<button class="searchBtn">검색</button>
-					<input class="loadNum" placeholder="도로명 주소">
-					<h5>입력하신 거래지역의 상세주소는 표시되지 않습니다.</h5>
-					<button type="button" class="cancle-btn">취소</button>
-					<button type="button" class="ok-btn">확인</button>
-				</div>
+			<div class="address-info">
+				<span class="phone"></span><br> <span class="addressRegion"></span>
+				<input type="hidden" name="deliveryAddr" id="deliveryAddressInput">
 			</div>
-			 -->
 			<h4>거래지역</h4>
-			<button type="button" class="btn-open-modal-addr">거래지역 선택</button>
+			<button type="button" class="btn-open-modal-addr"
+				onclick="openAddressModal()">배송지 선택</button>
 		</div>
 
 		<div class="container-image">
@@ -295,5 +281,6 @@
 
 		<button type="submit">확인</button>
 	</form>
+	<jsp:include page="productAddressModal.jsp"></jsp:include>
 </body>
 </html>

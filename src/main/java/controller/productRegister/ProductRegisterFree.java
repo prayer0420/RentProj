@@ -52,8 +52,7 @@ public class ProductRegisterFree extends HttpServlet {
 		String title = multi.getParameter("title");
 		String content = multi.getParameter("content");
 		String img = multi.getFilesystemName("img");
-//		String deliveryAddr = multi.getParameter("deliveryAddr");
-		String deliveryAddr = "장곡동";
+		String deliveryAddr = multi.getParameter("deliveryAddr");
 		String tradeType = multi.getParameter("tradeType");
 		
 //		Integer memberNo = Integer.parseInt(multi.getParameter("memberNo"));
