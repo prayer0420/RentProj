@@ -17,6 +17,10 @@
 		<typeAlias type="dto.Alarm" alias ="alarm"/>
 		<typeAlias type="dto.Review" alias ="review"/>
 		<typeAlias type="dto.Mark" alias ="mark"/>
+		<typeAlias type="dto.Faq" alias ="faq"/>  
+		<typeAlias type="dto.FaqCategory" alias ="faqCategory"/>
+		
+		
 	</typeAliases>
 	
 	<environments default="development">
@@ -52,6 +56,8 @@
 		<mapper resource="mapper/alarm.xml"/>
 		<mapper resource="mapper/review.xml"/>
 		<mapper resource="mapper/mark.xml"/>
+		<mapper resource="mapper/faq.xml"/>
+		
 		
 	</mappers>
 </configuration>
