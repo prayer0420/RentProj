@@ -1,13 +1,13 @@
 @charset "UTF-8";
 
-/* 🔔 전체 모달 배경 */
+/* 🔔 전체 모달 배경 (기존 유지) */
 .alarm-modal {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(0,0,0,0.4);
+  background: rgba(0, 0, 0, 0.4);
   display: none;
   justify-content: flex-end;
   z-index: 9999;
@@ -17,13 +17,15 @@
 .alarm-content {
   width: 500px;
   height: 100%;
-  background-color: #fff;
+  background-color: #fefefe; /* 기본 white 대체 */
+  background: linear-gradient(to bottom right, #fbfaf7, #f3f4f6); /* 부드러운 느낌 */
   box-shadow: -3px 0 10px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
   animation: slideIn 0.3s ease forwards;
   transform: translateX(100%);
   position: relative;
+  border-radius: 0; /* 테두리 없음, 깔끔하게 */
 }
 
 /* 오른쪽에서 슬라이드 인 */
@@ -43,11 +45,12 @@
   align-items: center;
   padding: 20px;
   font-size: 18px;
-  font-weight: bold;
-  border-bottom: 1px solid #eee;
+  font-weight: 600;
+  color: #2f855a;
+  border-bottom: 1px solid #e5e7eb;
 }
 
-/* 전체 삭제 버튼 */
+/* 전체삭제 버튼 */
 .clear-all-wrap {
   display: flex;
   justify-content: flex-end;
@@ -55,18 +58,17 @@
 }
 
 .clear-all-btn {
-  font-size: 13px;
+  font-size: 14px;
   padding: 6px 12px;
-  background-color: #2f855a;
-  color: white;
-  border: none;
-  border-radius: 4px;
+  background-color: transparent;
+  border: 1px solid #cbd5e0;
+
+  border-radius: 6px;
   cursor: pointer;
   transition: background-color 0.2s ease;
 }
-
 .clear-all-btn:hover {
-  background-color: #276749;
+  background-color: #f3f4f6;
 }
 
 /* 구분선 */
@@ -76,7 +78,7 @@
   margin: 0 20px;
 }
 
-/* 알림 목록 영역 */
+/* 알림 목록 */
 .alarm-list {
   padding: 20px;
   overflow-y: auto;
@@ -85,12 +87,16 @@
 
 /* 알림 카드 */
 .alarm-card {
-  background-color: #f9f9f9;
-  padding: 15px;
-  border-radius: 8px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
-  margin-bottom: 15px;
-  border: 1px solid #eee;
+  background-color: #ffffff;
+  padding: 16px;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  margin-bottom: 16px;
+  border: 1px solid #e5e7eb;
+  transition: box-shadow 0.2s ease;
+}
+.alarm-card:hover {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .alarm-top {
@@ -100,71 +106,55 @@
 }
 
 .alarm-title {
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 600;
-  color: #333;
+  color: #1f2937;
   margin: 0;
 }
 
 .alarm-body {
-  font-size: 13px;
-  color: #555;
+  font-size: 14px;
+  color: #4b5563;
   margin-top: 6px;
 }
 
-/* 삭제 버튼, 닫기 버튼 */
-.delete-btn,
+/* 닫기 버튼 스타일 (X버튼) */
 .close-btn {
   background: none;
   border: none;
   cursor: pointer;
-  font-size: 14px;
-  color: #aaa;
+  font-size: 22px !important;   /* 강제 적용 */
+  color: #9ca3af;
+  padding-right: 8px;
+  padding-left: 4px;
+  line-height: 1;
 }
 
+/* X버튼 */
+.delete-btn{
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  color: #9ca3af;
+}
 .delete-btn:hover,
 .close-btn:hover {
-  color: crimson;
+  color: #ef4444;
 }
 
-/* 알림 없음 UI */
+/* 알림 없음 */
 .alarm-empty {
   text-align: center;
-  padding: 60px 20px 20px;
+  padding: 80px 20px;
 }
-
-.alarm-empty-icon {
-  position: relative;
-  display: inline-block;
-}
-
 .alarm-empty-icon svg {
   width: 80px;
   height: 80px;
   opacity: 0.85;
 }
-
-.alarm-empty-icon .close-btn {
-  position: absolute;
-  top: -5px;
-  right: -5px;
-  background-color: #03a9f4;
-  color: white;
-  border: none;
-  border-radius: 50%;
-  font-size: 12px;
-  width: 20px;
-  height: 20px;
-  line-height: 20px;
-  cursor: pointer;
-}
-
-.alarm-empty-icon .close-btn:hover {
-  background-color: #0288d1;
-}
-
 .alarm-empty-text {
   margin-top: 12px;
-  font-size: 14px;
-  color: #777;
+  font-size: 15px;
+  color: #9ca3af;
 }
