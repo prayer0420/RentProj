@@ -3,6 +3,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script>
+  const contextPath = '${pageContext.request.contextPath}';
+</script>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet"
@@ -48,6 +51,14 @@
       });
       btnCancleProd.addEventListener("click", () => {
         prod.style.display = "none";
+        const selected = document.querySelector('input[name="state"]:checked');
+        const result = document.querySelector('.stateDiv');
+        if (selected) {
+          result.innerText = '상품상태 : '+selected.value;
+        } else {
+          result.innerText = '상품상태 : 없음';
+        }
+        
       });
       btnOpenAdmit.addEventListener("click", () => {
         admit.style.display = "flex";
@@ -75,47 +86,170 @@
       
       //필수등록 여부
       registerForm.addEventListener("submit", function (e) {
-          if (!admitCheck.checked) {
-              e.preventDefault(); // 폼 제출 막기
-              alert("상품등록을 위해 필수 동의를 체크해야 합니다.");
-          }else if(categoryList.value==="카테고리 선택"){
-          	e.preventDefault();
-          	alert("카테고리를 선택해야 합니다.");
-          }else if(title.value===""){
-          	e.preventDefault();
-          	alert("제목을 입력해주세요");
-          }else if(salePrice.value === ""){
-          	e.preventDefault();
-          	alert("판매금액을 설정하셔야 합니다.");
-          }else if(!hand.checked && !delvPrice.checked) {
-              e.preventDefault();
-              alert("거래방식을 선택해야 합니다.");
-          }else if(delvPrice.checked && deliveryPrice.value.trim() === ""){
-          	e.preventDefault();
-          	alert("배송비를 설정하셔야 합니다.");
-          }else if(!state1.checked && !state2.checked && !state3.checked && !state4.checked){
-          	e.preventDefault();
-          	alert("상품상태를 선택하셔야 합니다.");
-          }else if(ifile.files.length === 0){
-          	e.preventDefault();
-          	alert("상품 이미지를 선택하셔야 합니다.");
-          }else if(content.value.trim() === ""){
-          	e.preventDefault();
-          	alert("상품에 대한 내용을 입력하셔야 합니다.");
-          }
-      });
+    if (!admitCheck.checked) {
+        e.preventDefault();
+        alert("상품등록을 위해 필수 동의를 체크해야 합니다.");
+    } else if(categoryList.value === "카테고리 선택"){
+        e.preventDefault();
+        alert("카테고리를 선택해야 합니다.");
+    } else if(title.value === ""){
+        e.preventDefault();
+        alert("제목을 입력해주세요");
+    } else if(salePrice.value === ""){
+        e.preventDefault();
+        alert("판매금액을 설정하셔야 합니다.");
+    } else if(!hand.checked && !delvPrice.checked) {
+        e.preventDefault();
+        alert("거래방식을 선택해야 합니다.");
+    } else if(delvPrice.checked && deliveryPrice.value.trim() === ""){
+        e.preventDefault();
+        alert("배송비를 설정하셔야 합니다.");
+    } else if(!state1.checked && !state2.checked && !state3.checked && !state4.checked){
+        e.preventDefault();
+        alert("상품상태를 선택하셔야 합니다.");
+    } else if (content.value.trim() === "") {
+        e.preventDefault();
+        alert("상품에 대한 내용을 입력하셔야 합니다.");
+      }else if(document.querySelectorAll('.copied-image-input').length === 0 ||
+    	        !Array.from(document.querySelectorAll('.copied-image-input')).some(input => input.files.length > 0)){
+    	    e.preventDefault();
+    	    alert("상품 이미지를 선택하셔야 합니다.");
+    	}
+    });
       toggleDeliveryPrice();
+      createImageCard();
     };
     //이미지 파일
-    function readURL(input){
-    	if(input.files && input.files[0]){
-    		var reader = new FileReader();
-    		reader.onload = function(e){
-    			document.getElementById("preview").src = e.target.result;
-    		}
-    		reader.readAsDataURL(input.files[0]);
-    	}
+let imageCount = 0;
+const MAX_IMAGES = 5;
+
+function createImageCard() {
+	  if (imageCount >= MAX_IMAGES) return;
+
+	  const container = document.getElementById('imageContainer');
+	  const card = document.createElement('div');
+	  card.className = 'image-card';
+
+	  const previewId = `preview${imageCount}`;
+	  const inputId = `ifile${imageCount}`;
+	  const nameAttr = `imgList${imageCount}`;  // 반드시 이 name으로!
+
+	  const img = document.createElement('img');
+	  img.src = `${contextPath}/img/plus.jpg`;
+	  img.id = previewId;
+	  img.style.cursor = 'pointer';
+
+	  const input = document.createElement('input');
+	  input.type = 'file';
+	  input.accept = 'image/*';
+	  input.name = nameAttr;
+	  input.id = inputId;
+	  input.classList.add('product-image');  // 식별용
+	  input.style.display = 'none'; // 안 보여도 form 안에 있음
+
+	  const deleteBtn = document.createElement('button');
+	  deleteBtn.innerText = 'X';
+	  deleteBtn.type = 'button';
+	  deleteBtn.className = 'img-delete-btn';
+	  deleteBtn.style.display = 'none';
+
+	  deleteBtn.onclick = () => {
+	    if (container.children.length > 1) {
+	      container.removeChild(card);
+	      imageCount--;
+	    } else {
+	      alert("이미지는 최소 1장 이상 등록해야 합니다.");
+	    }
+	  };
+
+	  img.addEventListener('click', () => input.click());
+
+	  input.addEventListener('change', function () {
+	    if (input.files && input.files[0]) {
+	      const reader = new FileReader();
+	      reader.onload = function (e) {
+	        img.src = e.target.result;
+	        deleteBtn.style.display = 'block';
+
+	        // 다음 카드 생성
+	        if (container.querySelectorAll('.image-card').length < MAX_IMAGES) {
+	          imageCount++;
+	          createImageCard();
+	        }
+	      };
+	      reader.readAsDataURL(input.files[0]);
+	    }
+	  });
+
+	  card.appendChild(img);
+	  card.appendChild(input);
+	  card.appendChild(deleteBtn);
+	  container.appendChild(card);
+	}
+
+
+//✅ 모달 확인 버튼 클릭 시 선택 이미지 메인에 표시 및 실제 input 복사
+function confirmImages() {
+  const previewArea = document.getElementById('selectedImagePreview');
+  previewArea.innerHTML = '';
+
+  const mainForm = document.getElementById('registerForm');
+
+  // 기존 복사본 제거
+  document.querySelectorAll('.copied-image-input').forEach(el => el.remove());
+
+  const inputs = document.querySelectorAll('#imageContainer input[type="file"]');
+  let validImageCount = 0;
+
+  inputs.forEach((input, index) => {
+    const file = input.files[0];
+    if (file) {
+      validImageCount++;
+
+      // 미리보기
+      const img = document.createElement('img');
+      img.src = URL.createObjectURL(file);
+      img.style.width = '100px';
+      img.style.height = '100px';
+      img.style.objectFit = 'cover';
+      previewArea.appendChild(img);
+
+      // ✅ 새로운 input 생성 + 파일 복사
+      const newInput = document.createElement('input');
+      newInput.type = 'file';
+      newInput.name = `imgList${index}`;
+      newInput.classList.add('copied-image-input');
+      newInput.style.display = 'none';
+
+      // 🔥 핵심: DataTransfer 사용해서 파일 넣어줘야 실제 전송됨
+      const dt = new DataTransfer();
+      dt.items.add(file);
+      newInput.files = dt.files;
+
+      mainForm.appendChild(newInput);
     }
+  });
+
+  if (validImageCount === 0) {
+    alert("최소 한 장의 이미지를 선택해야 합니다.");
+  } else {
+    closeImageModal();
+  }
+}
+
+
+    function readURL(input, previewId) {
+    	  if (input.files && input.files[0]) {
+    	    const reader = new FileReader();
+    	    reader.onload = function (e) {
+    	      const img = document.getElementById(previewId);
+    	      if (img) {
+    	        img.src = e.target.result;
+    	      }
+    	    };
+    	    reader.readAsDataURL(input.files[0]);
+    	  }
+    	}
     
     function toggleDeliveryPrice() {
         if (hand.checked) {
@@ -130,10 +264,16 @@
     function openAddressModal() {
 		document.getElementById('addressModal').style.display = 'flex';
 	}
-
 	function closeAddressModal() {
 		document.getElementById('addressModal').style.display = 'none';
 	}
+	function openImageModal(){
+		document.getElementById('imageModal').style.display = 'flex';
+	}
+	function closeImageModal(){
+		document.getElementById('imageModal').style.display = 'none';
+	}
+	
   </script>
 </head>
 <body>
@@ -160,7 +300,7 @@
 					<button class="cancle-admit" type="button">확인</button>
 				</div>
 			</div>
-			<button type="button" class="btn-open-modal-admit">자세히 보기
+			<button type="button" class="btn-open-modal-admit">자세히 보기</button>
 		</div>
 		<hr>
 		<div class="container-category">
@@ -210,21 +350,26 @@
 					<h3>상품의 상태를 선택하세요</h3>
 					<hr>
 					<input type="radio" id="state1" name="state" class="state-radio"
-						value="새상품"> <label for="state1" class="state-label">새상품(미사용)</label>
+						value="새상품(미사용)"> <label for="state1" class="state-label">새상품(미사용)</label>
 					<input type="radio" id="state2" name="state" class="state-radio"
 						value="사용감적음"> <label for="state2" class="state-label">사용감
 						적음</label> <input type="radio" id="state3" name="state"
 						class="state-radio" value="사용감 많음"> <label for="state3"
 						class="state-label">사용감 많음</label> <input type="radio" id="state4"
-						name="state" class="state-radio" value="파손"> <label
+						name="state" class="state-radio" value="고장/파손"> <label
 						for="state4" class="state-label">고장/파손</label>
 					<button type="button" class="cancle-prod">확인</button>
 				</div>
 			</div>
 			<button type="button" class="btn-open-modal-prodState">상품상태선택</button>
+			<div class="stateDiv">상품상태 : 없음</div>
 		</div>
 
 		<div class="container-addr">
+
+			<h4>거래지역</h4>
+			<button type="button" class="btn-open-modal-addr"
+				onclick="openAddressModal()">배송지 선택</button>
 			<div class="address-title">
 				<span class="address-name"></span>
 				<button class="default-address"></button>
@@ -233,24 +378,26 @@
 				<span class="phone"></span><br> <span class="addressRegion"></span>
 				<input type="hidden" name="deliveryAddr" id="deliveryAddressInput">
 			</div>
-			<h4>거래지역</h4>
-			<button type="button" class="btn-open-modal-addr"
-				onclick="openAddressModal()">배송지 선택</button>
 		</div>
 
 		<div class="container-image">
 			<h4>상품이미지</h4>
-			<hr>
+			<button type="button" class="btn-open-modal-image"
+				onClick="openImageModal()">상품 이미지 선택</button>
+			<div id="selectedImagePreview" class="selected-image-preview"
+				style="display: flex; gap: 10px; margin-top: 10px;"></div>
+			<!-- 
 			<img alt="상품이미지" src="<%=request.getContextPath()%>/img/plus.jpg"
 				id="preview" onclick="document.getElementById('ifile').click();">
 			<input type="file" name="img" id="ifile" accept="image/*"
 				style="display: none" onchange="readURL(this)">
+			-->
 		</div>
+		<jsp:include page="productImageModal.jsp"></jsp:include>
 
 		<div class="container-content">
 			<textarea name="content" id="content" placeholder="내용을 입력하세요"></textarea>
 		</div>
-
 		<button type="submit">확인</button>
 	</form>
 	<jsp:include page="productAddressModal.jsp"></jsp:include>

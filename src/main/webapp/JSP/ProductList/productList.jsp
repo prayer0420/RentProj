@@ -10,7 +10,7 @@
     <a href="${pageContext.request.contextPath}/productDetail?no=${p.no}&tradeType=${p.tradeType}">
       <div class="product-card">
         <!-- 상품 이미지 -->
-        <img src="${p.img}" alt="${p.title}" />
+        <img src="${p.img1}" alt="${p.title}" />
 
         <!-- 상품 제목 -->
         <div class="product-title">${p.title}</div>

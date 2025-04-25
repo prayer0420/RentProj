@@ -30,7 +30,7 @@
   <div class="product-grid">
     <c:forEach var="p" items="${popularList}">
       <div class="product-card">
-        <img src="${p.img}" alt="">
+        <img src="${p.img1}" alt="">
         <div class="product-name">${p.title}</div>
         <div class="product-price">
           <c:if test="${not empty p.salePrice}">
@@ -52,7 +52,7 @@
   <div class="product-grid">
     <c:forEach var="p" items="${localList}">
       <div class="product-card">
-        <img src="${p.img}" alt="">
+        <img src="${p.img1}" alt="">
         <div class="product-name">${p.title}</div>
         <div class="product-price">
           <c:if test="${not empty p.salePrice}">

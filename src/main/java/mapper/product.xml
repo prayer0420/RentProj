@@ -11,10 +11,10 @@
 	<!-- 판매 상품 등록 -->
 	<insert id="insertProductSell" parameterType="product"
 		useGeneratedKeys="true" keyProperty="no">
-		INSERT INTO product (no, categoryNo, title, content, state, img,
+		INSERT INTO product (no, categoryNo, title, content, state, img1,img2,img3,img4,img5,
 		deliveryAddr,
 		deliveryPrice, tradeType, memberNo, salePrice, deliveryStatus)
-		VALUES (#{no}, #{categoryNo}, #{title}, #{content}, #{state}, #{img},
+		VALUES (#{no}, #{categoryNo}, #{title}, #{content}, #{state}, #{img1},#{img2},#{img3},#{img4},#{img5},
 		#{deliveryAddr},
 		#{deliveryPrice}, #{tradeType}, #{memberNo}, #{salePrice}, #{deliveryStatus})
 	</insert>
@@ -22,11 +22,11 @@
 	<!-- 대여 상품 등록 -->
 	<insert id="insertProductRent" parameterType="product"
 		useGeneratedKeys="true" keyProperty="no">
-		INSERT INTO product (no, categoryNo, title, content, state, img,
+		INSERT INTO product (no, categoryNo, title, content, state, img1,img2,img3,img4,img5,
 		deliveryAddr,
 		deliveryPrice, tradeType, secPrice, memberNo, startDate, endDate,
 		rentPrice, deliveryStatus)
-		VALUES (#{no}, #{categoryNo}, #{title}, #{content}, #{state}, #{img},
+		VALUES (#{no}, #{categoryNo}, #{title}, #{content}, #{state}, #{img1},#{img2},#{img3},#{img4},#{img5},
 		#{deliveryAddr},
 		#{deliveryPrice}, #{tradeType}, #{secPrice}, #{memberNo}, #{startDate}, #{endDate},
 		#{rentPrice}, #{deliveryStatus})
@@ -35,11 +35,11 @@
 	<!-- 판매+대여 상품 등록 -->
 	<insert id="insertProductRentSell" parameterType="product"
 		useGeneratedKeys="true" keyProperty="no">
-		INSERT INTO product (no, categoryNo, title, content, state, img,
+		INSERT INTO product (no, categoryNo, title, content, state, img1,img2,img3,img4,img5,
 		deliveryAddr,
 		deliveryPrice, tradeType, secPrice, memberNo, salePrice, startDate, endDate,
 		rentPrice, deliveryStatus)
-		VALUES (#{no}, #{categoryNo}, #{title}, #{content}, #{state}, #{img},
+		VALUES (#{no}, #{categoryNo}, #{title}, #{content}, #{state}, #{img1},#{img2},#{img3},#{img4},#{img5},
 		#{deliveryAddr},
 		#{deliveryPrice}, #{tradeType}, #{secPrice}, #{memberNo}, #{salePrice}, #{startDate},
 		#{endDate}, #{rentPrice}, #{deliveryStatus})
@@ -48,9 +48,9 @@
 	<!-- 나눔 상품 등록 -->
 	<insert id="insertProductFree" parameterType="product"
 		useGeneratedKeys="true" keyProperty="no">
-		INSERT INTO product (no, categoryNo, title, content, img, deliveryAddr,
+		INSERT INTO product (no, categoryNo, title, content, img1,img2,img3,img4,img5, deliveryAddr,
 		tradeType, memberNo)
-		VALUES (#{no}, #{categoryNo}, #{title}, #{content}, #{img}, #{deliveryAddr},
+		VALUES (#{no}, #{categoryNo}, #{title}, #{content}, #{img1},#{img2},#{img3},#{img4},#{img5}, #{deliveryAddr},
 		#{tradeType}, #{memberNo})
 	</insert>
 	
@@ -76,7 +76,7 @@
 	<!-- 메인 AJAX용 상품 조회: 검색 + 카테고리 + 필터 + 정렬 -->
 	<select id="selectProducts" resultMap="productMap"
 		parameterType="map">
-		SELECT no, title, img, salePrice, rentPrice, secPrice, tradeType,
+		SELECT no, title, img1, salePrice, rentPrice, secPrice, tradeType,
 		createDate
 		FROM product
 		<where>
@@ -139,7 +139,7 @@
 	<!-- 메인에서 인기 상품 (조회수 기준 정렬) -->
 	<select id="selectPopularProducts" resultMap="productMap"
 		parameterType="int">
-		SELECT no, title, img, salePrice, rentPrice, tradeType
+		SELECT no, title, img1, salePrice, rentPrice, tradeType
 		FROM product
 		ORDER BY view_cnt DESC
 		LIMIT #{limit}

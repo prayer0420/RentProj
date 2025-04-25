@@ -32,7 +32,7 @@ public class ProductRegister extends HttpServlet {
 		Integer memberNo = (Integer) request.getSession().getAttribute("no");
 		
 		request.setAttribute("memberNo", memberNo);
-		request.getRequestDispatcher("/JSP/ProductRegister/productRegister.jsp").forward(request, response);;
+		request.getRequestDispatcher("/JSP/ProductRegister/productRegister.jsp").forward(request, response);
 	}
 
 	/**

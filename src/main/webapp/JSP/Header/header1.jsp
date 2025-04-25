@@ -109,7 +109,7 @@
 <script>
     function checkLoginAndRedirect() {
         // 세션에서 로그인 유저 확인 (세션에서 'member' 객체가 있으면 로그인 된 상태로 가정)
-        var isLoggedIn = <%= session.getAttribute("member") != null ? "true" : "false" %>;
+        var isLoggedIn = <%= session.getAttribute("id") != null ? "true" : "false" %>;
 
         if (isLoggedIn) {
             // 로그인 상태라면 상품 등록 페이지로 이동
