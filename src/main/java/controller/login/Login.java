@@ -31,13 +31,13 @@ public class Login extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
-
+		
 		String id = request.getParameter("id");
 		String password = request.getParameter("password");
 		String type = request.getParameter("type");
 		String latStr = request.getParameter("latitude");
 		String lngStr = request.getParameter("longitude");
-
+		
 		Double lat = null, lng = null;
 
 		try {
@@ -57,6 +57,13 @@ public class Login extends HttpServlet {
 			Member member = service.login(id, password);
 
 			HttpSession session = request.getSession();
+			session.setAttribute("no", member.getNo());
+			session.setAttribute("id", member.getId());
+			session.setAttribute("nickname", member.getNickname());
+			session.setAttribute("address1", member.getAddress1());
+			session.setAttribute("address2", member.getAddress2());//null일 수 있음
+			session.setAttribute("address3", member.getAddress3());//null일 수 있음
+			session.setAttribute("phone",member.getPhone());
 			session.setAttribute("id", id);
 			session.setAttribute("nickname", password);
 			session.setAttribute("latitude", lat);  // null일 수도 있음

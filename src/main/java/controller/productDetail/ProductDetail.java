@@ -7,8 +7,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import dto.Product;
+import service.order.OrderService;
+import service.order.OrderServiceImpl;
 import service.product.ProductService;
 import service.product.ProductServiceImpl;
 import service.review.ReviewService;
@@ -26,18 +29,25 @@ public class ProductDetail extends HttpServlet {
 			throws ServletException, IOException {
 		
 		request.setCharacterEncoding("utf-8");
-
 		Integer no = Integer.parseInt(request.getParameter("no"));
+		Integer memberNo = (Integer)request.getSession().getAttribute("no");
 		
+		System.out.println("memberNo:"+memberNo);
 		
 		ProductService service = new ProductServiceImpl();
 		ReviewService reviewService = new ReviewServiceImpl();
+		OrderService orderService = new OrderServiceImpl();
 		try {
 			Product product = service.selectProductOne(no);
 			double avgScore = reviewService.selectAvgScore(no);
+			boolean hasOrder = orderService.hasMemberOrderProduct(memberNo, no);
+			boolean checkOrder = orderService.checkOrder(no);
+			
 			request.setAttribute("product", product);
 			request.setAttribute("productNo", product.getNo());
 			request.setAttribute("avgScore", avgScore);
+			request.setAttribute("hasOrder", hasOrder);
+			request.setAttribute("checkOrder",checkOrder);
 			System.out.println("product : "+product);	
 			System.out.println("no : "+no);	
 		}catch (Exception e) {

@@ -35,14 +35,18 @@ public class ReviewList extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		
 		int productNo = Integer.parseInt(request.getParameter("productNo"));
-		
+		String memberNickname = (String) request.getSession().getAttribute("nickname");
+		Integer memberNo = (Integer) request.getSession().getAttribute("no");
 		ReviewService service = new ReviewServiceImpl();
+		
 		
 		try {
 			List<Review> reviewList = service.selectedByProductNo(productNo);
 			Double avgScore = service.selectAvgScore(productNo);
 			request.setAttribute("reviewList", reviewList);
 			request.setAttribute("avgScore", avgScore);
+			request.setAttribute("memberNickname",memberNickname);
+			request.setAttribute("memberNo",memberNo);
 			request.getRequestDispatcher("/JSP/ProductDetail/reviewList.jsp").forward(request, response);			
 		}catch(Exception e) {
 			e.printStackTrace();

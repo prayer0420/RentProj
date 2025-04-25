@@ -12,6 +12,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.oreilly.servlet.MultipartRequest;
+import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
+
 import dto.Category;
 import service.category.CategoryService;
 import service.category.CategoryServiceImpl;
@@ -36,15 +39,27 @@ public class CategoryUpdate extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
-		String[] noList = request.getParameterValues("no");
-		String[] nameList = request.getParameterValues("name");
-		String[] isActiveList = request.getParameterValues("isActive");
+        // 업로드 경로 설정 (webapp/upload 폴더)
+        String path = request.getServletContext().getRealPath("upload");
+        int size = 50 * 1024 * 1024; // 최대 파일 크기: 10MB
+
+        // 파일 업로드 처리 (파일명 중복 시 자동 이름 변경)
+        MultipartRequest multi = new MultipartRequest(request, path, size, "utf-8", new DefaultFileRenamePolicy());
+		
+		String[] noList = multi.getParameterValues("no");
+		String[] nameList = multi.getParameterValues("name");
+		String[] isActiveList = multi.getParameterValues("isActive");
+		String[] oldFilenameList = multi.getParameterValues("oldFilename");
 		
 		List<Category> categoryList = new ArrayList<>();
 		
 		for(int i=0; i<noList.length; i++) {
+			String filename = multi.getFilesystemName("imgfilename"+i);
+			if(filename==null || filename.trim().equals("")) {
+				filename = oldFilenameList[i];
+			}
 			categoryList.add(new Category(Integer.parseInt(noList[i]),
-					nameList[i],i+1,Boolean.parseBoolean(isActiveList[i])));
+					nameList[i],i+1,Boolean.parseBoolean(isActiveList[i]),filename));
 		}
 		
 		try {

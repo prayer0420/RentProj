@@ -28,4 +28,10 @@ public class ReviewDAOImpl implements ReviewDAO {
 		return result != null ? result : 0.0;
 	}
 
+	@Override
+	public void deleteReview(Integer memberNo) throws Exception {
+		session.delete("mapper.review.deleteReview",memberNo);
+		session.commit();
+	}
+
 }
