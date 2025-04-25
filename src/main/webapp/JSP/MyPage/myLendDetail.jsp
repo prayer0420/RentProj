@@ -46,14 +46,14 @@
 	            <div class="info-grid">
 	                <div class="info-box" id="lendDetailBox">
 	                    <h4>대여 배송 정보</h4>
-	                    <p>송장번호: ${myLendDetail.invoiceNo }</p>
-	                    <p>택배사: ${myLendDetail.deliveryComp }</p>
-	                    <p>배송지: ${myLendDetail.deliveryAddr }</p>
+	                    <p>송장번호: <span id="detailInvoice">${myLendDetail.invoiceNo }</span></p>
+	                    <p>택배사: <span id="detailCourier">${myLendDetail.deliveryComp }</span></p>
+	                    <p>배송지: <span id="detailDeliverAddr">${myLendDetail.deliveryAddr }</span></p>
 	                </div>
 	                <div class="info-box">
 	                    <h4>대여회원 정보</h4>
-	                    <p>${myLendDetail.id }</p>
-	                    <p>${myLendDetail.phone }</p>
+	                    <p><span id="detailMemId">${myLendDetail.id }</span></p>
+	                    <p><span id="detailMemPhone">${myLendDetail.phone }</span></p>
 	                    <p></p>
 	                    
 	                </div>
@@ -62,18 +62,18 @@
 	            <div class="info-grid" style="margin-top: 20px;">
 	                <div class="info-box">
 	                    <h4>대여 기간</h4>
-	                    <p>대여 신청일: <fmt:formatDate value="${myLendDetail.orderDate }" pattern="yyyy년 MM월 dd일" /> </p>
-	                    <p>대여 시작일: <fmt:formatDate value="${myLendDetail.startDate }" pattern="yyyy년 MM월 dd일"/></p>
-	                    <p><strong>대여 종료일: <fmt:formatDate value="${myLendDetail.endDate }" pattern="yyyy년 MM월 dd일"/> </strong></p>
+	                    <p>대여 신청일:<span id="detailOrderDate"><fmt:formatDate value="${myLendDetail.orderDate }" pattern="yyyy년 MM월 dd일" /> </span></p>
+	                    <p>대여 시작일:<span id="detailStartDate"> <fmt:formatDate value="${myLendDetail.startDate }" pattern="yyyy년 MM월 dd일"/></span></p>
+	                    <p><strong>대여 종료일: <span id="detailEndDate"><fmt:formatDate value="${myLendDetail.endDate }" pattern="yyyy년 MM월 dd일"/></span> </strong></p>
 	                    <p><strong>상품 회수일:</strong></p>
 	                    
 	                </div>
 	                <div class="info-box">
 	                    <h4>결제정보</h4>
 	                    <p><strong>총 결제금액: 400,000원 </strong></p>
-	                    <p>1일 이용금액: <fmt:formatNumber value="${myLendDetail.price }" type="number" groupingUsed="true"/>원 &nbsp;&nbsp;<strong>총 3일 이용</strong></p>
-	                    <p>보증금: <fmt:formatNumber value="${myLendDetail.secPrice }" type="number" groupingUsed="true"/>원</p>
-	                    <p>배송비: <fmt:formatNumber value="${myLendDetail.deliveryPrice }" type="number" groupingUsed="true"/>원</p>
+	                    <p>1일 이용금액: <span id="detailDayPrice"><fmt:formatNumber value="${myLendDetail.price }" type="number" groupingUsed="true"/></span>원 &nbsp;&nbsp;<strong>총 3일 이용</strong></p>
+	                    <p>보증금: <span id="detailSecPrice"><fmt:formatNumber value="${myLendDetail.secPrice }" type="number" groupingUsed="true"/></span>원</p>
+	                    <p>배송비: <span id="detailDelPrice"><fmt:formatNumber value="${myLendDetail.deliveryPrice }" type="number" groupingUsed="true"/></span>원</p>
 	                </div>
 	            </div>
 	            </div><br>
@@ -118,18 +118,27 @@
 	<script>
 	$(document).ready(function() {
 	    $('.history-row').click(function() {
-	        const orderNo = $(this).data('orderNo');
+	        const orderNo = $(this).data('order-no');
 	
 	        $.ajax({
-	            url: '/myLendHistoryDetail',
+	            url: '/rent/myLendHistoryDetail?orderNo=' + orderNo,
 	            method: 'GET',
-	            data: { orderNo: orderNo },
+	            data: { orderNo: orderNo, ts: new Date().getTime() },	// 캐싱 방지
 	            dataType: 'json',
+	            cache: false,
 	            success: function(data) {
-	                $('#lendDetail').text(data.userId);
-	                $('#detailPeriod').text(data.startDate + " ~ " + data.endDate);
-	                $('#detailPrice').text(data.price + "원");
-	                $('#detailNote').text(data.note || "없음");
+	            	console.log("응답데이터: ", data);
+	                $('#detailInvoice').text(data.invoiceNo);
+	                $('#detailCourier').text(data.deliveryComp);
+	                $('#detailDeliverAddr').text(data.deliveryAddr);
+	                $('#detailMemId').text(data.id);
+	                $('#detailMemPhone').text(data.phone);
+	                $('#detailOrderDate').text(data.orderDate);
+	                $('#detailStartDate').text(data.startDate);
+	                $('#detailEndDate').text(data.endDate);
+	                $('#detailDayPrice').text(data.price);
+	                $('#detailSecPrice').text(data.secPrice);
+	                $('#detailDelPrice').text(data.deliveryPrice);
 	            },
 	            error: function(err) {
 	                alert("대여 상세정보를 불러오는 데 실패했습니다.");

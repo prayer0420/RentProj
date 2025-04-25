@@ -41,7 +41,7 @@ public class MyLendHistoryDetail extends HttpServlet {
 			if(id == null) {
 				// 로그인하지 않은 사용자: 로그인 페이지로 리다이렉트
 				response.sendRedirect(request.getContextPath() + "/JSP/Login/login.jsp");
-				return;
+				
 			}
 			
 			try {
@@ -58,10 +58,11 @@ public class MyLendHistoryDetail extends HttpServlet {
 					return;
 				}
 				
+				response.setContentType("application/json; charset=UTF-8");
+
 				Gson gson = new Gson();
 				String json = gson.toJson(lendDetail);
 				
-				response.setContentType("application/json; charset=UTF-8");
 				response.getWriter().write(json);
 				
 			} catch (Exception e) {
