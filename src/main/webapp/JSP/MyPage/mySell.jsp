@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>   
+    <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
     <%@ page import="dto.Member" %>
     <% 
     	String id = (String) request.getAttribute("loginId");
@@ -25,7 +26,7 @@
         <!-- 콘텐츠 영역 -->
         <section class="content">
           <h2>판매 상품</h2>
-          <div class="divider"></div>
+          <div class="divider"></div><br>
           
           <c:choose>
 			<c:when test="${id eq null }">
@@ -62,18 +63,19 @@
 		            <!-- 주문 정보 상단 영역 -->
 		            <div class="order-info">
 		              <div class="order-meta">
-		                <span class="order-date">상품등록일: ${item.createDate}</span>
-		                <span class="status-text">${item.orderStatus }</span>
+		                <span class="order-date">상품등록일: <fmt:formatDate value="${item.createDate}" pattern="yyyy년 MM월 dd일"/> </span>
 		              </div>
 		              <div class="order-status-area">
-		              <c:choose>
-		              	<c:when test="${item.orderNo eq null }">
-		              		<span>&nbsp;</span>
-		              	</c:when>
-		              	<c:otherwise>
-		                	<a href="${contextPath }/mySellDetail?orderNo=${item.orderNo }" class="order-detail-link">거래 상세보기 &gt;</a>
-		                </c:otherwise>
-		              </c:choose>
+		              	  <span class="status-text">${item.deliveryStatus }</span>&nbsp;&nbsp;
+		                  <span class="status-text">${item.orderStatus }</span>
+			              <c:choose>
+			              	<c:when test="${item.orderNo eq null }">
+			              		<span>&nbsp;</span>
+			              	</c:when>
+			              	<c:otherwise>
+			                	<a href="${contextPath }/mySellDetail?orderNo=${item.orderNo }" class="order-detail-link">거래 상세보기 &gt;</a>
+			                </c:otherwise>
+			              </c:choose>
 		              </div>
 		            </div>
 		
@@ -94,9 +96,19 @@
 		                <p>배송비: ${item.deliveryPrice}원</p>
 		              </div>
 		              <div class="status-change-btns">
-		               <c:if test="${item.orderStatus eq '결제완료'}">
+		               <c:choose>
+		               	<c:when test="${item.deliveryStatus eq '상품게시중'}">
+					        <button type="button" class="open-invoice-btn" data-orderno="${item.orderNo}">상품숨김</button><br>
+					        <button type="button" class="open-invoice-btn" data-orderno="${item.orderNo}">상품삭제</button>
+					        
+		               	</c:when>
+		               	<c:when test="${item.orderStatus eq '결제완료'}">
 					        <button type="button" class="open-invoice-btn" data-orderno="${item.orderNo}">송장번호입력</button>
-					   </c:if> 
+		               	</c:when>
+		               	<c:when test="${item.orderStatus eq '배송완료'}">
+					        <button type="button" class="open-invoice-btn" data-orderno="${item.orderNo}">대여거래종료</button>
+		               	</c:when>
+		               </c:choose>
 		              </div>
 		            </div>
 		          </div>

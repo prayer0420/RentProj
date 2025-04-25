@@ -21,7 +21,7 @@
         <!-- 콘텐츠 영역 -->
         <section class="content">
           <h2>대여 상품</h2>
-          <div class="divider"></div>
+          <div class="divider"></div><br>
           
           <c:choose>
 			<c:when test="${id eq null }">
@@ -62,6 +62,7 @@
 		                <span class="order-date">상품등록일: <fmt:formatDate value="${item.createDate }" pattern="yyyy년 MM월 dd일"/></span>
 		              </div>
 		              <div class="order-status-area">
+		              	
 		                <span class="status-text">${item.orderStatus}</span>
 		                <a href="${contextPath }/myLendDetail?orderNo=${item.orderNo}" class="order-detail-link">주문 상세보기 &gt;</a>
 		              </div>
@@ -85,9 +86,19 @@
 		              </div>
 		              
 		               <div class="status-change-btns">
-		               <c:if test="${item.orderStatus eq '결제완료'}">
+		               <c:choose>
+		               	<c:when test="${item.deliveryStatus eq '상품게시중'}">
+					        <button type="button" class="open-invoice-btn" data-orderno="${item.orderNo}">상품숨김</button><br>
+					        <button type="button" class="open-invoice-btn" data-orderno="${item.orderNo}">상품삭제</button>
+					        
+		               	</c:when>
+		               	<c:when test="${item.orderStatus eq '결제완료'}">
 					        <button type="button" class="open-invoice-btn" data-orderno="${item.orderNo}">송장번호입력</button>
-					   </c:if> 
+		               	</c:when>
+		               	<c:when test="${item.orderStatus eq '배송완료'}">
+					        <button type="button" class="open-invoice-btn" data-orderno="${item.orderNo}">대여거래종료</button>
+		               	</c:when>
+		               </c:choose>
 		              </div>
 		              
 		            </div>
@@ -100,6 +111,7 @@
 				<jsp:include page="/JSP/MyPage/mypagePaging.jsp" > 
 					<jsp:param name="baseUrl" value="${contextPath }/myLend" />
 				</jsp:include>
+				
           </c:otherwise>
           </c:choose>
 
