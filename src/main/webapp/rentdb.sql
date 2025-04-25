@@ -338,3 +338,15 @@ CREATE TABLE faq (
   imgUrl VARCHAR(255),
   FOREIGN KEY (category_no) REFERENCES faq_category(no)
 );
+
+
+-- 회원 등급
+DELETE FROM grade;
+
+INSERT INTO grade (gradeNo, gradeName, gradeRate, gradeCount) VALUES
+(1, '브론즈', 5, 0.0),
+(2, '실버', 4.85, 10.0),
+(3, '골드', 4.7, 20.0),
+(4, '플래티넘', 4.5, 30.0),
+(5, '다이아', 4.25, 40.0),
+(6, ' Re:NT', 3.5, 50.0);

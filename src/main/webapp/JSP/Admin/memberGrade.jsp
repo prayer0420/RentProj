@@ -59,7 +59,7 @@
       
       <div class="info-note">*등급명, 수수료 수정 가능</div>
       <div class="save-button">
-        <button type="button" id="saveGrade">✔ 저장</button>
+        <button type="button" id="saveGrade">✔ 수정</button>
       </div>
     </main>
   </div>
