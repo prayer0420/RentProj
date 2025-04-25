@@ -22,7 +22,7 @@
         <!-- 콘텐츠 영역 -->
         <section class="content">
           <h2>구매한 상품</h2>
-          <div class="divider"></div>
+          <div class="divider"></div><br>
 
 		<c:choose>
 			<c:when test="${id eq null }">
@@ -94,7 +94,7 @@
 							        <button type="button" class="open-review-btn" data-orderno="${item.orderNo}">리뷰쓰러가기</button>
 							   </c:when>  
 							   <c:otherwise>
-								    <span>처리 불가능한 상태</span>
+								    <span>&nbsp;</span>
 							   </c:otherwise>
 						   </c:choose>
 			              </div>
