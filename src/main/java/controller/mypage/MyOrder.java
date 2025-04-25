@@ -48,9 +48,9 @@ public class MyOrder extends HttpServlet {
 		PageInfo pageInfo = new PageInfo(page);
 		
 		HttpSession session = request.getSession(false);
-		Member member = (session != null)? (Member) session.getAttribute("member") : null;
+		String id = (session != null)? (String) session.getAttribute("id") : null;
 		
-		if(member == null) {
+		if(id == null) {
 			// 로그인하지 않은 사용자
 			request.setAttribute("loginId", null);	//JSP에서 분기 처리용
 			request.getRequestDispatcher("/JSP/MyPage/myOrder.jsp").forward(request, response);
@@ -58,7 +58,6 @@ public class MyOrder extends HttpServlet {
 		}
 		
 		// 로그인 한 사용자
-		String id = member.getId();
 //		System.out.println("로그인ID: "+id);
 		MypageService service = new MypageServiceImpl();
 		try {
@@ -66,7 +65,7 @@ public class MyOrder extends HttpServlet {
 			request.setAttribute("pageInfo", pageInfo);
 			request.setAttribute("orderList", orderList);
 //			System.out.println(orderList);
-			request.setAttribute("loginId", member);
+			request.setAttribute("loginId", id);
 			request.getRequestDispatcher("/JSP/MyPage/myOrder.jsp").forward(request, response);
 		}catch (Exception e) {
 			e.printStackTrace();

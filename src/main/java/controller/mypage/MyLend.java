@@ -11,22 +11,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import dto.Member;
 import service.mypage.MypageService;
 import service.mypage.MypageServiceImpl;
 import utils.PageInfo;
 
 /**
- * Servlet implementation class MySell
+ * Servlet implementation class MyLend
  */
-@WebServlet("/mySell")
-public class MySell extends HttpServlet {
+@WebServlet("/myLend")
+public class MyLend extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MySell() {
+    public MyLend() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -51,7 +50,7 @@ public class MySell extends HttpServlet {
 		if(id == null) {
 			// 로그인하지 않은 사용자
 			request.setAttribute("loginId", null);	//JSP에서 분기 처리용
-			request.getRequestDispatcher("/JSP/MyPage/mySell.jsp").forward(request, response);
+			request.getRequestDispatcher("/JSP/MyPage/myLend.jsp").forward(request, response);
 			return;
 		}
 		
@@ -59,19 +58,17 @@ public class MySell extends HttpServlet {
 //		System.out.println("로그인ID: "+id);
 		MypageService service = new MypageServiceImpl();
 		try {
-			List<Map<String,Object>> productList = service.productListByPage(pageInfo,id);
+			List<Map<String,Object>> lendList = service.lendListByPage(pageInfo,id);
 			request.setAttribute("pageInfo", pageInfo);
-			request.setAttribute("productList", productList);
-//			System.out.println(productList);
+			request.setAttribute("lendList", lendList);
+//			System.out.println(lendList);
 			request.setAttribute("loginId", id); 	// JSP에서 로그인 사용자 정보 활용 가능
-			request.getRequestDispatcher("/JSP/MyPage/mySell.jsp").forward(request, response);
+			request.getRequestDispatcher("/JSP/MyPage/myLend.jsp").forward(request, response);
 		}catch (Exception e) {
 			e.printStackTrace();
-			request.setAttribute("err",	"나의 판매상품 목록 조회를 실패했습니다.");
+			request.setAttribute("err",	"나의 대여상품 목록 조회를 실패했습니다.");
 			request.getRequestDispatcher("/JSP/MyPage/error.jsp").forward(request, response);
 		}
-		
 	}
-	
 
 }

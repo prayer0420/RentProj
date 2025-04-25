@@ -1,19 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>   
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<c:set var="contextPath" value="${pageContext.request.contextPath }" />       
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>  
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> 
+<c:set var="contextPath" value="${pageContext.request.contextPath }" />    
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>My Rental Products</title>
-<link rel="stylesheet" href="${contextPath}/CSS/mypage/myRent.css">
+<title>My Lend List</title>
+<link rel="stylesheet" href="${contextPath}/CSS/mypage/myLend.css">
 </head>
 <body>
 <!-- 헤더 (로고 + 검색창 + 카테고리) -->
   <jsp:include page="/JSP/Header/header.jsp" />
-  
 	<div class="wrapper">
       <div class="container">
         <!-- 사이드바 -->
@@ -21,15 +20,16 @@
 
         <!-- 콘텐츠 영역 -->
         <section class="content">
-          <h2>빌린 상품</h2>
+          <h2>대여 상품</h2>
           <div class="divider"></div><br>
-
-		<c:choose>
+          
+          <c:choose>
 			<c:when test="${id eq null }">
 				<span> 로그인이 필요한 페이지입니다.</span>
 			</c:when>
-			<c:otherwise>
 			
+			<c:otherwise>
+
 	          <!-- 드롭다운 메뉴 영역 -->
 	          <div class="filter-section">
 	            <select class="filter-dropdown" name="period">
@@ -51,19 +51,20 @@
 	            </select>
 	          </div>
 	
-	          <!-- 상품 카드 -->
-	          <c:forEach var="item" items="${rentList }">
+	          <!-- 상품 카드 1 -->
+	          <c:forEach var="item" items="${lendList }">
 		          <form action="">
+		          
 		          <div class="product-card">
 		            <!-- 주문 정보 상단 영역 -->
 		            <div class="order-info">
 		              <div class="order-meta">
-		                <span class="order-number">주문번호: ${item.orderId }</span>
-		                <span class="order-date">주문일: <fmt:formatDate value="${item.orderDate }" pattern="yyyy년 MM월 dd일" /> </span>
+		                <span class="order-date">상품등록일: <fmt:formatDate value="${item.createDate }" pattern="yyyy년 MM월 dd일"/></span>
 		              </div>
 		              <div class="order-status-area">
+		              	
 		                <span class="status-text">${item.orderStatus}</span>
-		                <a href="${contextPath }/myRentDetail?orderNo=${item.orderNo }" class="order-detail-link">주문 상세보기 &gt;</a>
+		                <a href="${contextPath }/myLendDetail?orderNo=${item.orderNo}" class="order-detail-link">주문 상세보기 &gt;</a>
 		              </div>
 		            </div>
 		
@@ -73,51 +74,57 @@
 		            <!-- 상품 정보 영역 -->
 		            <div class="card-content">
 		              <img
-		                src="${contextPath }/img/bicycle.jpg"
+		                src="${contextPath }/img/camera.jpg"
 		                alt="상품 이미지"
 		                class="product-image"
 		              />
 		              <div class="product-info">
-		                <p>${item.productNo }</p>
-		                <h3>${item.title }</h3>
-		                <p>가격: <fmt:formatNumber value="${item.rentPrice }" type="number" groupingUsed="true"/>원</p>
-		                <p>배송비: <fmt:formatNumber value="${item.deliveryPrice }" type="number" groupingUsed="true"/></p>
+		                <p>${item.no }</p>
+		                <h3>${item.title } </h3>
+		                <p>1일 <fmt:formatNumber value="${item.price }" type="number" groupingUsed="true" />원</p>
+		                <p class="sec-prices">보증금: <fmt:formatNumber value="${item.secPrice}" type="number" groupingUsed="true"/>원</p>
 		              </div>
-		              <div class="status-change-btns">
-		                <c:choose>
-				                <c:when test="${item.orderStatus eq '결제완료'}">
-							        <button type="button" class="open-cancel-btn" data-orderno="${item.orderNo}">주문취소</button>
-							   </c:when> 
-							   <c:when test="${item.orderStatus eq '배송완료'}">
-							        <button type="button" class="open-confirm-btn" data-orderno="${item.orderNo}">빌려쓰기 시작</button>
-							   </c:when>
-							   <c:when test="${item.orderStatus eq '거래완료'}">
-							        <button type="button" class="open-review-btn" data-orderno="${item.orderNo}">리뷰쓰러가기</button>
-							   </c:when>  
-							   <c:otherwise>
-								    <span>&nbsp;</span>
-							   </c:otherwise>
-						   </c:choose>
+		              
+		               <div class="status-change-btns">
+		               <c:choose>
+		               	<c:when test="${item.deliveryStatus eq '상품게시중'}">
+					        <button type="button" class="open-invoice-btn" data-orderno="${item.orderNo}">상품숨김</button><br>
+					        <button type="button" class="open-invoice-btn" data-orderno="${item.orderNo}">상품삭제</button>
+					        
+		               	</c:when>
+		               	<c:when test="${item.orderStatus eq '결제완료'}">
+					        <button type="button" class="open-invoice-btn" data-orderno="${item.orderNo}">송장번호입력</button>
+		               	</c:when>
+		               	<c:when test="${item.orderStatus eq '배송완료'}">
+					        <button type="button" class="open-invoice-btn" data-orderno="${item.orderNo}">대여거래종료</button>
+		               	</c:when>
+		               </c:choose>
 		              </div>
+		              
 		            </div>
 		          </div>
-		         </form>
-		        </c:forEach>
-	          
-	          <!-- 페이징 처리 --> 
-		      <br>
+		          </form>
+	          </c:forEach>
+          
+          <!-- 페이징 처리 --> 
+	          <br>
 				<jsp:include page="/JSP/MyPage/mypagePaging.jsp" > 
-					<jsp:param name="baseUrl" value="${contextPath }/myRent" />
+					<jsp:param name="baseUrl" value="${contextPath }/myLend" />
 				</jsp:include>
 				
-			</c:otherwise>
-			</c:choose>
-			
+          </c:otherwise>
+          </c:choose>
+
         </section>
       </div>
     </div>
 
-	<!-- 푸터 -->
+   <!-- 푸터 -->
 	<jsp:include page="/JSP/Header/footer.jsp" />
+
+
+   <!-- 송장번호입력 모달 -->
+   <jsp:include page="/JSP/MyPage/mypageModal.jsp" />
+   
 </body>
 </html>
