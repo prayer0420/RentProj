@@ -62,7 +62,7 @@
             <span class="rent">대여 ${p.rentPrice}원</span><br/>
           </c:if>
         </div>
-        <div class="product-type ${p.tradeType}">${p.tradeType}</div>
+		<div class="product-time">${p.timeAgo}</div>
       </div>
     </c:forEach>
   </div>
