@@ -114,6 +114,7 @@
         order by p.no desc limit #{row},5
 	</select>
 	
+	
 	<!-- 나의 대여(빌려주는)내역 상세(MyLendDetail) 불러오기  -->
 	<select id="selectMyLendDetail" parameterType="map" resultType="map">
 		select 
