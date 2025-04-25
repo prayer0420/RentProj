@@ -31,6 +31,9 @@ public class OrderDAOImpl implements OrderDAO {
 	@Override
 	public List<Order> selectDelayedOrders(Map<String, String> param) {
         return session.selectList("mapper.order.selectDelayedOrders", param);
+	}
+	
+	@Override
 	public int hasMemberOrderProduct(Integer memberNo, Integer productNo) throws Exception {
 		return session.selectOne("mapper.order.hasMemberOrderProduct",Map.of("memberNo",memberNo,"productNo",productNo));
 	

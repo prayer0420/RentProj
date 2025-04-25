@@ -86,16 +86,17 @@ public class OrderServiceImpl implements OrderService {
 	        return orderDAO.selectDelayedOrders(map);
 		}
     
-		return orderList;
+//		return orderList;
+		
+		@Override
+		public boolean hasMemberOrderProduct(Integer memberNo, Integer productNO) throws Exception {
+			return orderDAO.hasMemberOrderProduct(memberNo, productNO) > 0;
+		}
+		
+		@Override
+		public boolean checkOrder(Integer productNo) throws Exception {
+			return orderDAO.checkOrder(productNo) > 0;
+		}
 	}
 
-	@Override
-	public boolean hasMemberOrderProduct(Integer memberNo, Integer productNO) throws Exception {
-		return orderDAO.hasMemberOrderProduct(memberNo, productNO) > 0;
-	}
-
-	@Override
-	public boolean checkOrder(Integer productNo) throws Exception {
-		return orderDAO.checkOrder(productNo) > 0;
-	}
 
