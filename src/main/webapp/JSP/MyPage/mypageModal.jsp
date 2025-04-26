@@ -40,10 +40,10 @@
 		        },
 		        success: function (res) {
 		            // 성공 시 페이지 리다이렉트
-		            window.location.href = "/rent/mySellDetail";
+		            window.location.href = "/rent/mySellDetail?orderNo="+orderNo;
 		        },
 		        error: function (xhr, status, error) {
-		            alert("송장 입력에 실패했습니다. 다시 시도해주세요.");
+		            alert("송장 등록에 실패했습니다. 다시 시도해주세요.");
 		        }
 		    });
 		  });

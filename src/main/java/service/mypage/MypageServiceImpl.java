@@ -110,5 +110,54 @@ public class MypageServiceImpl implements MypageService {
 		return mypageDao.selectRentListByPage(paramMap);
 	}
 
+	@Override
+	public Map<String, Object> myRentDetail(Integer orderNo, String id) throws Exception {
+		
+		return mypageDao.selectMyRentDetail(orderNo,id);
+	}
+
+	@Override
+	public List<Map<String, Object>> lendListByPage(PageInfo pageInfo, String id) throws Exception {
+		Integer lendCnt = mypageDao.selectLendCountById(id);
+		
+		Integer allPage = (int)Math.ceil((double)lendCnt/5);
+		// startPage : 1~5 -> 1, 6~10 -> 6
+		Integer startPage = (pageInfo.getCurPage()-1)/5*5+1;
+		Integer endPage = startPage+5-1;
+		if(endPage > allPage) endPage = allPage;
+		
+		pageInfo.setAllPage(allPage);
+		pageInfo.setStartPage(startPage);
+		pageInfo.setEndPage(endPage);
+		
+		Integer row = (pageInfo.getCurPage()-1)*5;
+		
+		Map<String,Object> paramMap = new HashMap<>();
+		paramMap.put("id", id);
+		paramMap.put("row", row);
+		
+		System.out.println(id); 
+		
+		return mypageDao.selectLendListByPage(paramMap);
+	}
+
+	@Override
+	public Map<String, Object> myLendDetail(Integer orderNo, String id) throws Exception {
+		
+		return mypageDao.selectMyLendDetail(orderNo,id);
+	}
+
+	@Override
+	public Map<String, Object> getLendDetailByOrderNo(String id, Integer orderNo) throws Exception {
+		
+		return mypageDao.selectLendDetailByOrderNo(id, orderNo);
+	}
+
+	@Override
+	public List<Order> getLendHistoryByProductNo(Integer productNo) throws Exception {
+		
+		return mypageDao.selectLendHistoryByProductNo(productNo);
+	}
+
 
 }
