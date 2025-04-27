@@ -327,10 +327,10 @@ CREATE TABLE faq_category (
   name VARCHAR(50) NOT NULL UNIQUE
 );
 
--- FAQ 테이블 (category_no 참조)
+-- FAQ 테이블 (categoryNo 참조)
 CREATE TABLE faq (
   no INT PRIMARY KEY AUTO_INCREMENT,
-  category_no INT NOT NULL,
+  categoryNo INT NOT NULL,
   title VARCHAR(200) NOT NULL,
   content TEXT NOT NULL,
   createdAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP(),

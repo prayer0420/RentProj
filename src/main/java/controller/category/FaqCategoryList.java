@@ -12,8 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import dto.FaqCategory;
-import service.FAQ.FaqService;
-import service.FAQ.FaqServiceImpl;
+import service.FAQ.FaqCategoryService;
+import service.FAQ.FaqCategoryServiceImpl;
 
 /**
  * Servlet implementation class FaqCategory
@@ -38,7 +38,7 @@ public class FaqCategoryList extends HttpServlet {
 		response.setContentType("application/json;charset=UTF-8");	
 		
 		// Service 생성
-			FaqService faqService = new FaqServiceImpl();   
+			FaqCategoryService faqService = new FaqCategoryServiceImpl();   
 		
 	        // 1. 카테고리 목록 조회
 	        List<FaqCategory> list = faqService.getFaqCategoryList();

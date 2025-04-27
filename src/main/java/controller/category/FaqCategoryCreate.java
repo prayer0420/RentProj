@@ -12,8 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 
 import dto.FaqCategory;
-import service.FAQ.FaqService;
-import service.FAQ.FaqServiceImpl; 
+import service.FAQ.FaqCategoryService;
+import service.FAQ.FaqCategoryServiceImpl; 
 
 /**
  * Servlet implementation class FaqCategoryCreate
@@ -37,7 +37,7 @@ public class FaqCategoryCreate extends HttpServlet {
     	request.setCharacterEncoding("UTF-8");
     	response.setContentType("application/json;charset=UTF-8");
     	
-    	FaqService faqService = new FaqServiceImpl();
+    	FaqCategoryService faqService = new FaqCategoryServiceImpl();
 		
     	List<FaqCategory> list = faqService.getFaqCategoryList();
 		String json = new Gson().toJson(list);
@@ -49,7 +49,7 @@ public class FaqCategoryCreate extends HttpServlet {
     	response.setContentType("application/json;charset=UTF-8");
 
     	String name = request.getParameter("name");
-		FaqService faqService = new FaqServiceImpl();
+		FaqCategoryService faqService = new FaqCategoryServiceImpl();
 
 		FaqCategory result = faqService.insertFaqCategory(name);
 
