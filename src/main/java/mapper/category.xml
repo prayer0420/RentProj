@@ -8,7 +8,7 @@
 	</select>
 	
 	<update id="updateCategory" parameterType="category">
-		update category set name=#{name}, sortOrder=${sortOrder}, isActive=#{isActive} , imgFilename = #{imgFilename} where no=#{no}
+		update category set name=#{name}, sortOrder=#{sortOrder}, isActive=#{isActive} , imgFilename = #{imgFilename} where no=#{no}
 	</update>
 	
 	<insert id="insertCategory" parameterType="category" useGeneratedKeys="true" keyProperty="no">
