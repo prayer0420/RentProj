@@ -36,8 +36,40 @@
 						<button class="btn-inquiry">🚩</button>
 						<!-- singo.jsp -->
 					</div>
-					<div class="category">${product.categoryNo}</div>
-					<div class="product-id">${product.no}</div>
+					<c:choose>
+					<c:when test="${product.categoryNo == 1}">
+						<div class="category">의류/패션/악세사리</div>
+					</c:when>
+					<c:when test="${product.categoryNo == 2}">
+						<div class="category">PC/모바일</div>
+					</c:when>
+					<c:when test="${product.categoryNo == 3}">
+						<div class="category">가전제품</div>
+					</c:when>
+					<c:when test="${product.categoryNo == 4}">
+						<div class="category">뷰티/미용</div>
+					</c:when>
+					<c:when test="${product.categoryNo == 5}">
+						<div class="category">캠핑/스포츠/레저</div>
+					</c:when>
+					<c:when test="${product.categoryNo == 6}">
+						<div class="category">생활/주방용품</div>
+					</c:when>
+					<c:when test="${product.categoryNo == 7}">
+						<div class="category">가구인테리어</div>
+					</c:when>
+					<c:when test="${product.categoryNo == 8}">
+						<div class="category">유아동/출산</div>
+					</c:when>
+					<c:when test="${product.categoryNo == 9}">
+						<div class="category">애완동물용품</div>
+					</c:when>
+					<c:when test="${product.categoryNo == 10}">
+						<div class="category">기타</div>
+					</c:when>
+					
+					</c:choose>
+					<div class="product-id">상품고유번호:${product.no}</div>
 					<div class="title">${product.title}</div>
 
 					<c:choose>
@@ -78,8 +110,8 @@
 					</div>
 
 					<div class="likes-views">
-						<div>❤️ {}</div>
-						<div>👁️ ${product.viewCnt}</div>
+						<div>❤️</div>
+						<div>👁️</div>
 					</div>
 					<div class="btn-box">
 						<c:if test="${hasOrder}">

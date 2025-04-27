@@ -26,8 +26,8 @@
                     찾지 못한 질문은 우측의 1:1문의를 활용해 주세요!
                 </div>
                 <div>
-                    <input type="text" placeholder="검색어를 입력해주세요">
-                    <button>🔍</button>
+                    <input type="text" id="faqSearchInput" placeholder="검색어를 입력해주세요">
+                    <button type="button" onclick="searchFAQ()">🔍</button>
                 </div>
             </div>
 
@@ -62,4 +62,15 @@
         </div>
     </form>
 </body>
+<script type="text/javascript">
+function searchFAQ() {
+	 const keyword = document.getElementById('faqSearchInput').value.trim();
+	    if (keyword !== "") {
+	        location.href = '${contextPath}/serviceFAQ?search=' + encodeURIComponent(keyword);
+	    } else {
+	        // 검색어 없으면 그냥 전체 FAQ로 이동
+	        location.href = '${contextPath}/serviceFAQ';
+	    }
+}
+</script>
 </html>

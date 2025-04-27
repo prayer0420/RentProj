@@ -12,11 +12,11 @@
         <!-- 상품 이미지 -->
         <img src="${p.img1}" alt="${p.title}" />
 		<c:choose>
-		  <c:when test="${empty p.img}">
+		  <c:when test="${empty p.img1}">
 		    <img src="${contextPath}/img/default_product.png" alt="기본 이미지" loading="lazy"/>
 		  </c:when>
 		  <c:otherwise>
-		    <img src="${p.img}" alt="${p.title}" loading="lazy"/>
+		    <img src="${p.img1}" alt="${p.title}" loading="lazy"/>
 		  </c:otherwise>
 		</c:choose>
 

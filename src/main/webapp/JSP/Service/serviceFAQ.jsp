@@ -9,15 +9,89 @@
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/CSS/service/serviceFAQ.css">
 <script>
-	window.onload = function () {
-    	const questions = document.querySelectorAll('.faq-question'); // ✅ 모두 가져옴
+let searchKeyword = '${searchKeyword}';
+let filterNo = '${filterNo}';
 
-    	questions.forEach((question) => {
+window.onload = function () {
+    const questions = document.querySelectorAll('.faq-question');
+    const faqItems = document.querySelectorAll('.faq-item');
+
+    questions.forEach((question) => {
         question.addEventListener('click', () => {
-            const item = question.parentElement;  // ✅ 해당 질문의 부모 div(.faq-item)를 찾음
-            item.classList.toggle('active');      // ✅ 부모 div에 active 토글
+            const item = question.parentElement;
+            item.classList.toggle('active');
         });
     });
+
+    // ✅ 페이지 처음 로드할 때
+    if (filterNo) {
+        // 특정 번호만 보이게
+        faqItems.forEach(item => {
+            const itemNo = item.getAttribute('data-no');
+            if (itemNo !== filterNo) {
+                item.style.display = 'none';
+            }
+        });
+    } else if (searchKeyword) {
+        // 검색 키워드로 필터링
+        faqItems.forEach(item => {
+            const title = item.querySelector('.faq-question')?.innerText || "";
+            if (!title.includes(searchKeyword)) {
+                item.style.display = 'none';
+            }
+        });
+    }
+};
+
+// 카테고리별 키워드
+const categoryKeywords = {
+    '주문/결제': ['주문', '결제'],
+    '수수료': ['수수료'],
+    '배송': ['배송'],
+    '취소/환불': ['취소', '환불'],
+    '반품/교환': ['반품', '교환'],
+    '기타': []
+};
+
+// 카테고리 버튼 필터링
+function filterFAQ(category) {
+    const faqItems = document.querySelectorAll('.faq-item');
+    faqItems.forEach(item => {
+        item.style.display = 'block';
+    });
+
+    faqItems.forEach(item => {
+        const title = item.querySelector('.faq-question')?.innerText || "";
+
+        if (category === '전체') {
+            item.style.display = 'block';
+        } else if (category === '기타') {
+            const allKeywords = Object.values(categoryKeywords).flat().filter(word => word);
+            const hasAnyKeyword = allKeywords.some(keyword => title.includes(keyword));
+            item.style.display = hasAnyKeyword ? 'none' : 'block';
+        } else {
+            const keywords = categoryKeywords[category] || [];
+            const matchesCategory = keywords.some(keyword => title.includes(keyword));
+            item.style.display = matchesCategory ? 'block' : 'none';
+        }
+    });
+}
+
+// 검색 기능
+function searchFAQ() {
+    const searchInput = document.getElementById('faqSearchInput').value.trim();
+    const faqItems = document.querySelectorAll('.faq-item');
+
+    faqItems.forEach(item => {
+        const title = item.querySelector('.faq-question')?.innerText || "";
+
+        if (title.includes(searchInput) || searchInput === "") {
+            item.style.display = 'block';
+        } else {
+            item.style.display = 'none';
+        }
+    });
+}
 }
     </script>
 </head>
