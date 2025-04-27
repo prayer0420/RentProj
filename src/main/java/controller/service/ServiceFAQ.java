@@ -33,18 +33,24 @@ public class ServiceFAQ extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
-		
-		Integer no = Integer.parseInt(request.getParameter("no"));
-		
-		FaqService service = new FaqServiceImpl();
-		try {
-			List<Faq> faqList = service.selectAllFaq();
-			request.setAttribute("faqList", faqList);
-			request.getRequestDispatcher("/JSP/Service/serviceFAQ.jsp").forward(request, response);
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-	
+	    
+	    String noParam = request.getParameter("no");
+	    FaqService faqService = new FaqServiceImpl();
+	    
+	    try {
+	        List<Faq> faqList = faqService.selectAllFaq();  // 항상 전체 리스트 가져옴 (검색/탭 기능 위해)
+	        request.setAttribute("faqList", faqList);
+
+	        if (noParam != null && !noParam.trim().isEmpty()) {
+	            Integer no = Integer.parseInt(noParam);
+	            request.setAttribute("filterNo", no);  // 별도로 필터링할 no만 세팅
+	        }
+	        
+	        request.getRequestDispatcher("/JSP/Service/serviceFAQ.jsp").forward(request, response);
+	        
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
 	}
 
 	/**

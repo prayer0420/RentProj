@@ -47,7 +47,8 @@
 			<div class="faq-count">전체 1개</div>
 			<!-- FAQ 항목 -->
 			<c:forEach var="faq" items="${faqList}">
-				<div class="faq-item" data-title="${faq.title}">
+				<div class="faq-item" data-title="${faq.title}" 
+         			 style="<c:if test='${not empty filterNo and faq.no ne filterNo}'>display:none;</c:if>">
 					<div class="faq-question">${faq.title}</div>
 					<div class="faq-answer">
 						<img src="" alt="사진">
@@ -73,6 +74,11 @@
 function filterFAQ(category) {
     const faqItems = document.querySelectorAll('.faq-item');
 
+    // ✅ 필터No가 적용된 초기상태를 풀기 위해 모든 FAQ를 다시 보여줄 준비
+    faqItems.forEach(item => {
+        item.style.display = 'block';
+    });
+
     // ✅ 카테고리별 키워드 세팅
     const categoryKeywords = {
         '주문/결제': ['주문', '결제'],
@@ -90,8 +96,7 @@ function filterFAQ(category) {
             item.style.display = 'block';
         } 
         else if (category === '기타') {
-            // 기타는 어떤 카테고리 키워드도 포함 안 해야 함
-            const allKeywords = Object.values(categoryKeywords).flat().filter(word => word); // 기타 빼고
+            const allKeywords = Object.values(categoryKeywords).flat().filter(word => word);
             const hasAnyKeyword = allKeywords.some(keyword => title.includes(keyword));
             item.style.display = hasAnyKeyword ? 'none' : 'block';
         }
@@ -108,6 +113,8 @@ function searchFAQ() {
     const faqItems = document.querySelectorAll('.faq-item');
 
     faqItems.forEach(item => {
+        item.style.display = 'block'; // ✅ 초기화
+
         const title = item.querySelector('.faq-question')?.innerText || "";
 
         if (title.includes(searchInput) || searchInput === "") {

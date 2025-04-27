@@ -20,7 +20,7 @@
 <section class="banner">
   <div class="banner-container">
     <h2>RE:NT에서 렌트하세요!</h2>
-    <a href="../Service/service.jsp"><button>이용가이드 &gt;</button></a>
+    <a href="${contextPath}/service"><button>이용가이드 &gt;</button></a>
   </div>
   <div class="banner-img">
     <img src="${contextPath}/img/rent.jpg" alt="이벤트 이미지">

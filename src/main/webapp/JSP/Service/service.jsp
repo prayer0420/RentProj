@@ -36,7 +36,7 @@
                 <div class="faq-section">
                     <div class="section-title">
                         <span>자주 묻는 질문 TOP 5</span>
-                        <a href="serviceFAQ.jsp">더보기 ></a>
+                        <a href="${contextPath}/serviceFAQ">더보기 ></a>
                     </div>
                     <c:forEach var="faq" items="${faqList}">
                     <ul class="faq-list">
