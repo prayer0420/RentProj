@@ -1,0 +1,183 @@
+@charset "UTF-8";
+
+	body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f9f9f9;
+      }
+      .wrapper {
+        max-width: 1200px;
+        width: 100%;
+        margin: 0 auto;
+        padding: 20px;
+        box-sizing: border-box;
+      }
+      .container {
+        display: flex;
+        margin: 0 auto;
+        padding: 20px;
+      }
+      
+      /* 콘텐츠 영역 */
+      .content {
+        flex: 1;
+        margin-left: 30px;
+      }
+      .content h2 {
+        font-size: 24px;
+        margin-bottom: 10px;
+      }
+      .divider {
+        height: 1px;
+        background-color: #ccc;
+        margin-bottom: 20px;
+      }
+      
+      
+      /* 주문상세 테이블 영역 */
+		.product-box {
+            display: flex;
+            align-items: center;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .product-box img {
+            width: 120px;
+            margin-right: 20px;
+        }
+
+        .product-info {
+            flex: 1;
+        }
+
+        .product-title {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .price {
+            color: #e74c3c;
+            font-weight: bold;
+            font-size: 16px;
+            margin-top: 5px;
+        }
+
+        .btn {
+            padding: 6px 12px;
+            background-color: white;
+            border: 1px solid rgb(228, 242, 220);
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 13px;
+            float: right;
+            margin-top: -70px;
+        }
+        .status-text {
+            padding: 6px 12px;
+            background-color: white;
+            border: 1px solid rgb(228, 242, 220);
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 13px;
+            float: right;
+            margin-top: 50px;
+        }
+
+        .info-grid {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .info-box {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .info-box h4 {
+            border-bottom: 1px solid #999;
+            margin-bottom: 10px;
+            padding-bottom: 5px;
+        }
+
+        .info-box p {
+            font-size: 14px;
+            margin: 5px 0;
+        }
+        
+        
+        /* 대여 이력 테이블 */
+        
+         .rental-table-wrapper {
+            max-width: 900px;
+            margin: 30px auto;
+            text-align: center;
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+
+        .rental-table-wrapper hr{
+            width: 740px;
+        }
+        .rental-table-wrapper h3{
+            margin-bottom: 10px;
+            text-align: left;
+        }
+
+        .rental-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .rental-table th,
+        .rental-table td {
+            border-bottom: 1px solid #ddd;
+            padding: 12px 10px;
+        }
+
+        .rental-table th {
+            background-color: #f8f8f8;
+            font-weight: bold;
+        }
+
+        .rental-table .highlight {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+
+        /* 페이지네이션 */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .pagination button {
+            padding: 6px 12px;
+            border: 1px solid #ccc;
+            background-color: white;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .pagination .active {
+            background-color: #fdd835;
+            /* 노랑 */
+            border-color: #fdd835;
+            font-weight: bold;
+        }
+
+        .pagination .arrow {
+            border: 1px solid #fdd835;
+            color: #fdd835;
+            font-weight: bold;
+            background-color: transparent;
+        }
+        

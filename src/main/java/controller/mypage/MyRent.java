@@ -46,9 +46,9 @@ public class MyRent extends HttpServlet {
 		PageInfo pageInfo = new PageInfo(page);
 		
 		HttpSession session = request.getSession(false);
-		Member member = (session != null)? (Member) session.getAttribute("member") : null;
+		String id = (session != null)? (String) session.getAttribute("id") : null;
 		
-		if(member == null) {
+		if(id == null) {
 			// 로그인하지 않은 사용자
 			request.setAttribute("loginId", null);	//JSP에서 분기 처리용
 			request.getRequestDispatcher("/JSP/MyPage/myRent.jsp").forward(request, response);
@@ -56,19 +56,18 @@ public class MyRent extends HttpServlet {
 		}
 		
 		// 로그인 한 사용자
-		String id = member.getId();
 //		System.out.println("로그인ID: "+id);
 		MypageService service = new MypageServiceImpl();
 		try {
 			List<Map<String,Object>> rentList = service.rentListByPage(pageInfo,id);
 			request.setAttribute("pageInfo", pageInfo);
 			request.setAttribute("rentList", rentList);
-//			System.out.println(orderList);
-			request.setAttribute("loginId", member);
+//			System.out.println(rentList);
+			request.setAttribute("loginId", id);
 			request.getRequestDispatcher("/JSP/MyPage/myRent.jsp").forward(request, response);
 		}catch (Exception e) {
 			e.printStackTrace();
-			request.setAttribute("err",	"나의 구매상품 목록 조회를 실패했습니다.");
+			request.setAttribute("err",	"나의 빌린 상품 목록 조회를 실패했습니다.");
 			request.getRequestDispatcher("/JSP/MyPage/error.jsp").forward(request, response);
 		}
 	}

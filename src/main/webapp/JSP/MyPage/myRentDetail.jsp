@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>   
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>  
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> 
 <c:set var="contextPath" value="${pageContext.request.contextPath }" />     
 <!DOCTYPE html>
 <html>
@@ -23,51 +24,61 @@
           <h2>빌리기 상세</h2>
           <div class="divider"></div>
           
-          <div class="section product-box">
-                <img src="https://via.placeholder.com/120x100?text=🚲" alt="자전거">
-                <div class="product-info">
-                    <div style="font-size: 13px; color: gray;">상품번호 98765432134567</div>
-                    <div class="product-title">성인용 자전거 (일반주행용, 3년 전 구입)</div>
-                    <div class="price">1일 100,000원</div>
-                </div>
-                <span class="status-text">상품배송중</span>
-            </div>
-
-            <div class="info-grid">
-                <div class="info-box">
-                    <h4>배송정보</h4>
-                    <p>송장번호: 23456789123</p>
-                    <p>택배사: 롯데택배</p>
-                    <p>배송지: (04020) 서울시 관악구 문성동</p>
-                </div>
-                <div class="info-box">
-                    <h4>판매자 정보</h4>
-                    <p>deoksoo1243</p>
-                    <p>010-1234-5678</p>
-                    <p>(04020) 서울시 관악구 문성동</p>
-                    
-                    <button class="btn">판매자의 다른 상품-></button>
-                </div>
-            </div>
-
-            <div class="info-grid" style="margin-top: 20px;">
-                <div class="info-box">
-                    <h4>대여 기간</h4>
-                    <p>대여 신청일 2025-03-04</p>
-                    <p>대여 시작일 2025-03-06</p>
-                    <p><strong>대여 종료일 2025-03-09</strong></p>
-                    <p><strong>상품 회수일 2025-03-11</strong></p>
-                    
-                </div>
-                <div class="info-box">
-                    <h4>결제정보</h4>
-                    <p><strong>총 결제금액:</strong> 400,000원</p>
-                    <p>1일 이용금액: 100,000원 &nbsp;&nbsp;<strong>총 3일 이용</strong></p>
-                    <p>보증금: 100,000원</p>
-                    <p>배송비: 0원</p>
-                </div>
-            </div>
-            
+          <c:choose>
+			<c:when test="${id eq null }">
+				<span> 로그인이 필요한 페이지입니다.</span>
+			</c:when>
+			<c:otherwise>
+          
+	          <div class="section product-box">
+	                <img src="${contextPath }/img/bicycle.jpg" alt="자전거">
+	                <div class="product-info">
+	                    <div style="font-size: 13px; color: gray;">상품번호 ${myRentDetail.productNo }</div>
+	                    <div class="product-title">${myRentDetail.title }</div>
+	                    <div class="price">1일 <fmt:formatNumber value="${myRentDetail.rentPrice }" type="number" groupingUsed="true" />원</div>
+	                </div>
+	                <span class="status-text">${myRentDetail.orderStatus }</span>
+	            </div>
+	
+	            <div class="info-grid">
+	                <div class="info-box">
+	                    <h4>배송정보</h4>
+	                    <p>송장번호: ${myRentDetail.invoiceNo }</p>
+	                    <p>택배사: ${myRentDetail.deliveryComp }</p>
+	                    <p>배송지: ${myRentDetail.deliveryAddr }</p>
+	                </div>
+	                <div class="info-box">
+	                    <h4>판매자 정보</h4>
+	                    <p>아이디: ${myRentDetail.memberId }</p>
+	                    <p>연락처: ${myRentDetail.phone }</p>
+	                    <p>반환배송지: ${myRentDetail.address1 }</p>
+	                    <button class="btn">판매자의 다른 상품-></button>
+	                    
+	                </div>
+	            </div>
+	
+	            <div class="info-grid" style="margin-top: 20px;">
+	                <div class="info-box">
+	                    <h4>대여 기간</h4>
+	                    <fmt:parseDate value='${myRentDetail.orderDate}' pattern="yyyy-MM-dd" var='orderDate'/>
+	                    <p>대여 신청일 <fmt:formatDate value="${orderDate }" pattern="yyyy년 MM월 dd일"/> </p>
+	                    <fmt:parseDate value='${myRentDetail.startDate}' pattern="yyyy-MM-dd" var='startDate'/>
+	                    <p>대여 시작일 <fmt:formatDate value="${startDate }" pattern="yyyy년 MM월 dd일"/> </p>
+	                    <fmt:parseDate value='${myRentDetail.endDate}' pattern="yyyy-MM-dd" var='endDate'/>
+	                    <p><strong>대여 종료일 <fmt:formatDate value="${endDate }" pattern="yyyy년 MM월 dd일"/></strong></p>
+	                    <p><strong>상품 회수일 </strong></p> 
+	                    
+	                </div>
+	                <div class="info-box">
+	                    <h4>결제정보</h4>
+	                    <p><strong>총 결제금액: <fmt:formatNumber value="${myRentDetail.deliveryPrice + myRentDetail.rentPrice + myRentDetail.secPrice }" type="number" groupingUsed="true" />원 </strong></p>
+	                    <p>1일 이용금액: <fmt:formatNumber value="${myRentDetail.rentPrice }" type="number" groupingUsed="true"/>원 &nbsp;&nbsp;<strong>총 3일 이용</strong></p>
+	                    <p>보증금: <fmt:formatNumber value="${myRentDetail.secPrice}" type="number" groupingUsed="true" />원</p>
+	                    <p>배송비: <fmt:formatNumber value="${myRentDetail.deliveryPrice}" type="number" groupingUsed="true" />원</p>
+	                </div>
+	            </div>
+            </c:otherwise>
+            </c:choose>
           </section>
         </div>
     </div>

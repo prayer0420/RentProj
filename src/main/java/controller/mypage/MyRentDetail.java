@@ -10,21 +10,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import dto.Member;
 import service.mypage.MypageService;
 import service.mypage.MypageServiceImpl;
 
 /**
- * Servlet implementation class MySellDetail
+ * Servlet implementation class MyRentDetail
  */
-@WebServlet("/mySellDetail")
-public class MySellDetail extends HttpServlet {
+@WebServlet("/myRentDetail")
+public class MyRentDetail extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MySellDetail() {
+    public MyRentDetail() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -47,20 +46,19 @@ public class MySellDetail extends HttpServlet {
 			Integer orderNo = Integer.parseInt(request.getParameter("orderNo"));
 			
 			MypageService service = new MypageServiceImpl();
-			Map<String, Object> mySellDetail = service.mySellDetail(orderNo, id);
+			Map<String, Object> myRentDetail = service.myRentDetail(orderNo, id);
 			
-			if(mySellDetail == null) {
-				request.setAttribute("err", "해당 주문을 조회할 수 없습니다");
+			if(myRentDetail == null) {
+				request.setAttribute("err", "해당 내역을 조회할 수 없습니다");
 				request.getRequestDispatcher("/JSP/MyPage/error.jsp").forward(request, response);
 				return;
 			}
 			
-			request.setAttribute("mySellDetail", mySellDetail);
-			request.setAttribute("orderNo", orderNo);
-			request.getRequestDispatcher("/JSP/MyPage/mySellDetail.jsp").forward(request, response);
+			request.setAttribute("myRentDetail", myRentDetail);
+			request.getRequestDispatcher("/JSP/MyPage/myRentDetail.jsp").forward(request, response);
 		}catch(Exception e){
 			e.printStackTrace();
-			request.setAttribute("err", "거래 상세내역 조회시 오류가 발생했습니다.");
+			request.setAttribute("err", "빌리기 거래 상세내역 조회시 오류가 발생했습니다.");
 			request.getRequestDispatcher("/JSP/MyPage/error.jsp").forward(request, response);
 		}
 	}

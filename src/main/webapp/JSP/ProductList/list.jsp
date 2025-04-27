@@ -13,11 +13,11 @@
 </head>
 <body>
 
-  <!-- 1. 상단 공통 헤더 (로고 + 검색창) -->
-  <jsp:include page="/JSP/Header/header1.jsp" />
+  <!-- 1. 상단 공통 헤더 (로고 + 검색창 + 카테고리 버튼) -->
+  <jsp:include page="/JSP/Header/header.jsp" />
 
-  <!-- 2. 카테고리 헤더 (카테고리 버튼 영역) -->
-  <jsp:include page="/JSP/Header/header2.jsp" />
+  <%-- <!-- 2. 카테고리 헤더 (카테고리 버튼 영역) -->
+  <jsp:include page="/JSP/Header/header2.jsp" /> --%>
 
   <!-- 3. 거래유형 필터 + 정렬 버튼 영역 -->
   <div class="filter-sort-bar">
@@ -32,8 +32,8 @@
 
     <!-- 정렬 옵션 -->
     <div class="sort-options">
-      <span class="${param.sort=='recommend' ? 'active' : ''}" data-sort="recommend">추천순</span>
       <span class="${param.sort=='latest' or empty param.sort ? 'active' : ''}" data-sort="latest">최신순</span>
+      <span class="${param.sort=='distance' ? 'active' : ''}" data-sort="distance">거리순</span>
       <span class="${param.sort=='priceAsc' ? 'active' : ''}" data-sort="priceAsc">낮은가격순</span>
       <span class="${param.sort=='priceDesc' ? 'active' : ''}" data-sort="priceDesc">높은가격순</span>
     </div>
@@ -53,9 +53,9 @@
     const state = {
       searchText: '${fn:escapeXml(param.searchText)}',
       categoryNo: '${empty param.categoryNo ? "0" : param.categoryNo}',
-      tradeType: '${param.tradeType}',
+      tradeType: '${empty param.tradeType ? "sell" : param.tradeType}',
       sort: '${empty param.sort ? "latest" : param.sort}',
-      page: 1
+      page: ${param.page != null && param.page != "" ? param.page : 1}
     };
 
     // 2. contextPath (URL 경로 앞에 붙이기용)
@@ -125,9 +125,10 @@
 
     // 7. 페이지 최초 로딩 시 실행
     document.addEventListener("DOMContentLoaded", () => {
+      loadProducts();
       attachFilterEvents();
       attachSortEvents();
-      attachPaging(); // 첫 페이지에서도 동작 가능하게
+      attachPaging();  
     });
   </script>
 
