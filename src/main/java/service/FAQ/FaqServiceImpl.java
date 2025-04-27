@@ -4,6 +4,7 @@ import java.util.List;
 
 import dao.FAQ.FaqDAO;
 import dao.FAQ.FaqDAOImpl;
+import dto.Faq;
 import dto.FaqCategory;
 
 public class FaqServiceImpl implements FaqService {
@@ -27,6 +28,17 @@ public class FaqServiceImpl implements FaqService {
         FaqCategory category = new FaqCategory(); // DTO 생성
         category.setName(name);                   // 사용자 입력값 세팅
         return faqDAO.insertFaqCategory(category);
+	}
+
+	@Override
+	public List<Faq> selectAllFaq() throws Exception {
+		return faqDAO.selectAllFaq();
+		
+	}
+
+	@Override
+	public Faq faqSelectOne(Integer no) throws Exception {
+		return faqDAO.selectOne(no);
 	}
 
 }

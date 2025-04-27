@@ -77,12 +77,17 @@ public class ProductRegisterSell extends HttpServlet {
 
 		// ✅ 이미지 처리 명시적으로
 		String[] imgList = new String[5];
-
 		imgList[0] = multi.getFilesystemName("imgList0");
 		imgList[1] = multi.getFilesystemName("imgList1");
 		imgList[2] = multi.getFilesystemName("imgList2");
 		imgList[3] = multi.getFilesystemName("imgList3");
 		imgList[4] = multi.getFilesystemName("imgList4");
+		
+		System.out.println(imgList[0]);
+		System.out.println(imgList[1]);
+		System.out.println(imgList[2]);
+		System.out.println(imgList[3]);
+		System.out.println(imgList[4]);
 
 		if (imgList[0] == null) {
 			// img1이 null이면 insert 막아야 DB 오류 안 나

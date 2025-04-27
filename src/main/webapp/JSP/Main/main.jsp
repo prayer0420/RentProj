@@ -35,11 +35,11 @@
       <div class="product-card">
         <img src="${p.img1}" alt="">
         <c:choose>
-          <c:when test="${empty p.img}">
+          <c:when test="${empty p.img1}">
             <img src="${contextPath}/img/default_product.png" alt="기본 이미지" loading="lazy"/>
           </c:when>
           <c:otherwise>
-            <img src="${p.img}" alt="${p.title}" loading="lazy" />
+            <img src="${p.img1}" alt="${p.title}" loading="lazy" />
           </c:otherwise>
         </c:choose>
         <div class="product-name">${p.title}</div>
@@ -65,11 +65,11 @@
       <div class="product-card">
         <img src="${p.img1}" alt="">
         <c:choose>
-          <c:when test="${empty p.img}">
+          <c:when test="${empty p.img1}">
             <img src="${contextPath}/img/default_product.png" alt="기본 이미지" />
           </c:when>
           <c:otherwise>
-            <img src="${p.img}" alt="${p.title}" />
+            <img src="${p.img1}" alt="${p.title}" />
           </c:otherwise>
         </c:choose>
         <div class="product-name">${p.title}</div>

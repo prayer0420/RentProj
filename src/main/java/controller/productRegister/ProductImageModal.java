@@ -31,7 +31,7 @@ public class ProductImageModal extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		
 		
-		request.getRequestDispatcher("/JSP/ProductRegister/productImageModal.jsp.jsp").forward(request, response);
+		request.getRequestDispatcher("/JSP/ProductRegister/productImageModal.jsp").forward(request, response);
 	}
 
 	/**

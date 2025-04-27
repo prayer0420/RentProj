@@ -1,33 +1,26 @@
 package dto;
 
-public class Faq {
+public class Announce {
 	private Integer no;
-	private String category;
 	private String title;
 	private String content;
-	private String createdAt;
-	private String updatedAt;
+	private String regDate;
+	private Integer viewCount;
 	private String imgUrl;
 	
-	public Faq() {}
-	public Faq(String title,String content,String imgUrl) {
+	public Announce() {}
+	public Announce(String title,String content,String regDate,String imgUrl) {
 		this.title=title;
 		this.content=content;
+		this.regDate=regDate;
 		this.imgUrl=imgUrl;
 	}
-	
 	
 	public Integer getNo() {
 		return no;
 	}
 	public void setNo(Integer no) {
 		this.no = no;
-	}
-	public String getCategory() {
-		return category;
-	}
-	public void setCategory(String category) {
-		this.category = category;
 	}
 	public String getTitle() {
 		return title;
@@ -41,17 +34,17 @@ public class Faq {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public String getCreatedAt() {
-		return createdAt;
+	public String getRegDate() {
+		return regDate;
 	}
-	public void setCreatedAt(String createdAt) {
-		this.createdAt = createdAt;
+	public void setRegDate(String regDate) {
+		this.regDate = regDate;
 	}
-	public String getUpdatedAt() {
-		return updatedAt;
+	public Integer getViewCount() {
+		return viewCount;
 	}
-	public void setUpdatedAt(String updatedAt) {
-		this.updatedAt = updatedAt;
+	public void setViewCount(Integer viewCount) {
+		this.viewCount = viewCount;
 	}
 	public String getImgUrl() {
 		return imgUrl;
@@ -61,5 +54,6 @@ public class Faq {
 	}
 	
 	
-
+	
+	
 }

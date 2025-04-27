@@ -5,13 +5,14 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 
+import dto.Faq;
 import dto.FaqCategory;
 import utils.MybatisSqlSessionFactory;
 
 public class FaqDAOImpl implements FaqDAO {
 
 	private SqlSessionFactory factory = MybatisSqlSessionFactory.getSqlSessionFactory(); 
-
+	private SqlSession session = MybatisSqlSessionFactory.getSqlSessionFactory().openSession();
 
     // FAQ 카테고리 전체 목록을 조회하는 메서드
     @Override
@@ -36,4 +37,12 @@ public class FaqDAOImpl implements FaqDAO {
             return null;
         }
     }
+	@Override
+	public List<Faq> selectAllFaq() {
+		return session.selectList("mapper.faq.selectAllFaq");
+	}
+	@Override
+	public Faq selectOne(Integer no) throws Exception {
+		return session.selectOne("mapper.faq.faqSelectOne",no);
+	}
 }

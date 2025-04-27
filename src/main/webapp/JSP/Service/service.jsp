@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
+<c:set var = "contextPath" value="${pageContext.request.contextPath}"/>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -11,6 +13,7 @@
 <jsp:include page="../Header/header.jsp"></jsp:include>
   <form action="">
         <div class="container">
+        	<input type="hidden" name="no" value="${faq.no}">
             <h2>고객센터</h2>
             <hr>
             <div class="intro">안녕하세요! <strong>Re:NT 고객센터입니다!</strong></div>
@@ -35,13 +38,11 @@
                         <span>자주 묻는 질문 TOP 5</span>
                         <a href="serviceFAQ.jsp">더보기 ></a>
                     </div>
+                    <c:forEach var="faq" items="${faqList}">
                     <ul class="faq-list">
-                        <li>정산 수수료는 어떻게 되나요?</li>
-                        <li>정산 수수료는 어떻게 되나요?</li>
-                        <li>정산 수수료는 어떻게 되나요?</li>
-                        <li>정산 수수료는 어떻게 되나요?</li>
-                        <li>정산 수수료는 어떻게 되나요?</li>
+                        <a href="${contextPath}/serviceFAQ?no=${faq.no}"><li>${faq.title}</li></a>
                     </ul>
+                     </c:forEach>
                 </div>
 
                 <!-- 공지사항 -->
@@ -51,10 +52,13 @@
                         <a href="serviceAnnounce.jsp">더보기 ></a>
                     </div>
                     <ul class="notice-list">
-                        <li><span>[공지]</span> 정산 수수료는 어떻게 되나요?</li>
+                    <c:forEach var="announce" items="${announceList}">
+                        <a href="${contextPath}/serviceAnnounce?no=${announce.no}"><li><span>[공지]</span>${announce.title}</li></a>
+                    </c:forEach>
                     </ul>
                 </div>
             </div>
+           
         </div>
     </form>
 </body>

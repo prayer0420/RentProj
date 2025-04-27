@@ -270,6 +270,8 @@ public class Product {
 		this.nickname = nickname;
 	}
 	
+	
+	
 	public String getImg2() {
 		return img2;
 	}

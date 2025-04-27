@@ -27,5 +27,13 @@
   <insert id="insertFaq" parameterType="faq" useGeneratedKeys="true" keyProperty="no">
     INSERT INTO faq (category, title, content, imgUrl) VALUES (#{category}, #{title}, #{content}, #{imgUrl})
   </insert>
+  
+  <select id="selectAllFaq" resultType="faq">
+  	select * from faq 
+  </select>
+  
+  <select id="faqSelectOne" parameterType="int" resultType="faq">
+  	select * from faq where no=#{no}
+  </select>
 
 </mapper>

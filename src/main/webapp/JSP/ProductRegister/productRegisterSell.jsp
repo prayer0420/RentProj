@@ -43,6 +43,8 @@
 		const content = document.getElementById("content");
 		const deliveryPrice = document.getElementById("deliveryPrice");
       
+		const copiedInputs = document.querySelectorAll('.copied-image-input');
+		
 		hand.addEventListener("change", toggleDeliveryPrice);
         delvPrice.addEventListener("change", toggleDeliveryPrice);
 
@@ -110,132 +112,120 @@
     } else if (content.value.trim() === "") {
         e.preventDefault();
         alert("상품에 대한 내용을 입력하셔야 합니다.");
-      }else if(document.querySelectorAll('.copied-image-input').length === 0 ||
-    	        !Array.from(document.querySelectorAll('.copied-image-input')).some(input => input.files.length > 0)){
-    	    e.preventDefault();
-    	    alert("상품 이미지를 선택하셔야 합니다.");
-    	}
+    }else if(document.querySelectorAll('.copied-image-input').length === 0 ||
+    	!Array.from(document.querySelectorAll('.copied-image-input')).some(input => input.files.length > 0)){
+    	e.preventDefault();
+    	alert("상품 이미지를 선택하셔야 합니다.");
+  	}
     });
+      
+      
       toggleDeliveryPrice();
       createImageCard();
     };
     //이미지 파일
-let imageCount = 0;
+var imageCount = 0;
 const MAX_IMAGES = 5;
 
 function createImageCard() {
-	  if (imageCount >= MAX_IMAGES) return;
+    if (imageCount >= MAX_IMAGES) return;
 
-	  const container = document.getElementById('imageContainer');
-	  const card = document.createElement('div');
-	  card.className = 'image-card';
+    const container = document.getElementById('imageContainer');
+    const card = document.createElement('div');
+    card.className = 'image-card';
 
-	  const previewId = `preview${imageCount}`;
-	  const inputId = `ifile${imageCount}`;
-	  const nameAttr = `imgList${imageCount}`;  // 반드시 이 name으로!
+    const img = document.createElement('img');
+    img.src = `${contextPath}/img/plus.jpg`;
+    img.style.cursor = 'pointer';
 
-	  const img = document.createElement('img');
-	  img.src = `${contextPath}/img/plus.jpg`;
-	  img.id = previewId;
-	  img.style.cursor = 'pointer';
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'image/*';
+    input.name = `imgList${imageCount}`;   // ✅ input name을 바로 imageCount로 박는다
+    input.id = `ifile${imageCount}`;
+    input.classList.add('product-image');
+    input.style.display = 'none';
 
-	  const input = document.createElement('input');
-	  input.type = 'file';
-	  input.accept = 'image/*';
-	  input.name = nameAttr;
-	  input.id = inputId;
-	  input.classList.add('product-image');  // 식별용
-	  input.style.display = 'none'; // 안 보여도 form 안에 있음
+    const deleteBtn = document.createElement('button');
+    deleteBtn.innerText = 'X';
+    deleteBtn.type = 'button';
+    deleteBtn.className = 'img-delete-btn';
+    deleteBtn.style.display = 'none';
 
-	  const deleteBtn = document.createElement('button');
-	  deleteBtn.innerText = 'X';
-	  deleteBtn.type = 'button';
-	  deleteBtn.className = 'img-delete-btn';
-	  deleteBtn.style.display = 'none';
+    deleteBtn.onclick = () => {
+        if (container.children.length > 1) {
+            container.removeChild(card);
+            imageCount--;
+        } else {
+            alert("이미지는 최소 1장 이상 등록해야 합니다.");
+        }
+    };
 
-	  deleteBtn.onclick = () => {
-	    if (container.children.length > 1) {
-	      container.removeChild(card);
-	      imageCount--;
-	    } else {
-	      alert("이미지는 최소 1장 이상 등록해야 합니다.");
-	    }
-	  };
+    img.addEventListener('click', () => input.click());
 
-	  img.addEventListener('click', () => input.click());
+    input.addEventListener('change', function () {
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                img.src = e.target.result;
+                deleteBtn.style.display = 'block';
+            };
+            reader.readAsDataURL(input.files[0]);
 
-	  input.addEventListener('change', function () {
-	    if (input.files && input.files[0]) {
-	      const reader = new FileReader();
-	      reader.onload = function (e) {
-	        img.src = e.target.result;
-	        deleteBtn.style.display = 'block';
+            // ✅ 파일 선택 후에 다음 카드 생성
+            if (container.querySelectorAll('.image-card').length < MAX_IMAGES) {
+                imageCount++;
+                createImageCard();
+            }
+        }
+    });
 
-	        // 다음 카드 생성
-	        if (container.querySelectorAll('.image-card').length < MAX_IMAGES) {
-	          imageCount++;
-	          createImageCard();
-	        }
-	      };
-	      reader.readAsDataURL(input.files[0]);
-	    }
-	  });
+    card.appendChild(img);
+    card.appendChild(input);
+    card.appendChild(deleteBtn);
+    container.appendChild(card);
+}
 
-	  card.appendChild(img);
-	  card.appendChild(input);
-	  card.appendChild(deleteBtn);
-	  container.appendChild(card);
-	}
 
 
 //✅ 모달 확인 버튼 클릭 시 선택 이미지 메인에 표시 및 실제 input 복사
 function confirmImages() {
-  const previewArea = document.getElementById('selectedImagePreview');
-  previewArea.innerHTML = '';
+    console.log("✅ confirmImages 호출됨");
 
-  const mainForm = document.getElementById('registerForm');
+    const previewArea = document.getElementById('selectedImagePreview');
+    previewArea.innerHTML = '';
 
-  // 기존 복사본 제거
-  document.querySelectorAll('.copied-image-input').forEach(el => el.remove());
+    const inputs = document.querySelectorAll('#imageContainer input[type="file"]');
+    let validImageCount = 0;
 
-  const inputs = document.querySelectorAll('#imageContainer input[type="file"]');
-  let validImageCount = 0;
+    inputs.forEach((input) => {
+        if (input.files && input.files.length > 0) {  // ✅ 파일 있는 경우만
+            validImageCount++;
 
-  inputs.forEach((input, index) => {
-    const file = input.files[0];
-    if (file) {
-      validImageCount++;
+            const file = input.files[0];
 
-      // 미리보기
-      const img = document.createElement('img');
-      img.src = URL.createObjectURL(file);
-      img.style.width = '100px';
-      img.style.height = '100px';
-      img.style.objectFit = 'cover';
-      previewArea.appendChild(img);
+            const img = document.createElement('img');
+            img.src = URL.createObjectURL(file);
+            img.style.width = '100px';
+            img.style.height = '100px';
+            img.style.objectFit = 'cover';
+            img.style.marginRight = '5px';
+            previewArea.appendChild(img);
+        }
+    });
 
-      // ✅ 새로운 input 생성 + 파일 복사
-      const newInput = document.createElement('input');
-      newInput.type = 'file';
-      newInput.name = `imgList${index}`;
-      newInput.classList.add('copied-image-input');
-      newInput.style.display = 'none';
-
-      // 🔥 핵심: DataTransfer 사용해서 파일 넣어줘야 실제 전송됨
-      const dt = new DataTransfer();
-      dt.items.add(file);
-      newInput.files = dt.files;
-
-      mainForm.appendChild(newInput);
+    if (validImageCount === 0) {
+        alert("최소 한 장의 이미지를 선택해야 합니다.");
+    } else {
+        closeImageModal();
     }
-  });
-
-  if (validImageCount === 0) {
-    alert("최소 한 장의 이미지를 선택해야 합니다.");
-  } else {
-    closeImageModal();
-  }
 }
+
+
+
+
+
+
 
 
     function readURL(input, previewId) {
