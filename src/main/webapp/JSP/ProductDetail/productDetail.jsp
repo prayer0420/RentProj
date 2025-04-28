@@ -369,6 +369,10 @@
 	 )
 	 
 	 function toggleMark(btn,productNo){
+		 if ('${memberNo}' === '' || '${memberNo}' === 'null') {
+		        alert('로그인이 필요합니다.');
+		        return;
+		    }
 		 $.ajax({
 			url:contextPath + "/markProduct",
 			type:"post",
@@ -481,6 +485,10 @@
 	 
 	// 모달 열기
 	 function openReportModal() {
+		 if ('${memberNo}' === '' || '${memberNo}' === 'null') {
+		        alert('로그인이 필요합니다.');
+		        return;
+		    }
 	   const modal = document.getElementById('reportModal');
 	   modal.style.display = 'flex';
 	   

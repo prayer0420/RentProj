@@ -90,7 +90,7 @@
 	      const price = parseInt("${product.salePrice + product.deliveryPrice}");
 	      console.log(price);
 	      
-	      const orderId = "ORDER_"+productNo+"_"+Date.now()+"_";//예 ORDER_1_2025-01-01
+	      const orderId = "ORDER_"+productNo+"_"+Date.now();//예 ORDER_1_2025-01-01
 	      // 회원 결제
 	      // @docs https://docs.tosspayments.com/sdk/v2/js#tosspaymentspayment
 	      const payment = tossPayments.payment({ customerKey });
