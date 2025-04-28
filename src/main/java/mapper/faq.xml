@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
@@ -11,14 +10,11 @@
 		SELECT * FROM faq_category ORDER BY no ASC
 	</select>
 
-
 	<!-- FAQ 카테고리 생성 -->
 	<insert id="insertFaqCategory" parameterType="faqCategory"
 		useGeneratedKeys="true" keyProperty="no">
 		INSERT INTO faq_category (name) VALUES (#{name})
 	</insert>
-
-
 
 	<!-- FAQ 관련 -->
 	<!-- FAQ 전체 조회 (카테고리 이름 조인 포함) -->
