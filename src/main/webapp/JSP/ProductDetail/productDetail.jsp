@@ -70,8 +70,8 @@
 								<c:otherwise>♡</c:otherwise>
 							</c:choose>
 						</button>
-						<button class="btn-inquiry">🚩</button>
-						<!-- singo.jsp -->
+						<button type="button" class="btn-inquiry" onclick="openReportModal()">🚩</button>
+						<!-- singo.jsp --> 
 					</div>
 					<c:choose>
 						<c:when test="${product.categoryNo == 1}">
@@ -238,8 +238,8 @@
 				</c:if>
 				<!--리뷰 작성-->
 				<form id="review-form" class="review-form" style="display: none;">
-					<input type="hidden" name="productNo" value="${product.no} " /> <input
-						type="hidden" name="memberNo" value="${member.no} " />
+					<input type="hidden" name="productNo" value="${product.no}" /> <input
+						type="hidden" name="memberNo" value="${member.no}" />
 					<div class="review-input-row">
 						<textarea name="content" placeholder="리뷰 내용을 입력하세요"></textarea>
 						<label class="rating-box"> 평점: <select name="score">
@@ -275,8 +275,12 @@
 </body>
 
 <jsp:include page="messageModal.jsp">
-	<jsp:param value="${product.no }" name="productNo" />
-	<jsp:param value="${product.tradeType }" name="tradeType" />
+	<jsp:param value="${product.no}" name="productNo" />
+	<jsp:param value="${product.tradeType}" name="tradeType" />
+</jsp:include>
+<jsp:include page="report.jsp">
+	<jsp:param value="${product.no}" name="productNo"/>
+	<jsp:param value="${product.tradeType}" name="tradeType"/>
 </jsp:include>
 
 
@@ -305,11 +309,23 @@
     }
     //쪽지보내기 모달
 	function openMessageModal() {
-	  document.getElementById('messageModal').style.display = 'flex';
+	  const modal = document.getElementById('messageModal');
+	  modal.style.display = 'flex';
+	  // 약간의 delay 후 활성화
+	   setTimeout(() => {
+	     modal.classList.add('active');
+	   }, 10); // 10ms 딜레이를 줘야 transition이 먹힘
 	}
 	
 	function closeMessageModal() {
-	  document.getElementById('messageModal').style.display = 'none';
+	  const modal = document.getElementById('messageModal');
+	  modal.style.display = 'none';
+	  modal.classList.remove('active');
+	   
+	   // 애니메이션 끝나고 display:none 처리
+	   setTimeout(() => {
+	     modal.style.display = 'none';
+	   }, 400); // transition 시간과 동일 (0.4초)
 	}
 	
 	$('#review-form').on('submit', function (e) {
@@ -462,4 +478,66 @@
 		        });
 		    });
 		});
+	 
+	// 모달 열기
+	 function openReportModal() {
+	   const modal = document.getElementById('reportModal');
+	   modal.style.display = 'flex';
+	   
+	   // 약간의 delay 후 활성화
+	   setTimeout(() => {
+	     modal.classList.add('active');
+	   }, 10); // 10ms 딜레이를 줘야 transition이 먹힘
+	 }
+
+	 // 모달 닫기
+	 function closeReportModal() {
+	   const modal = document.getElementById('reportModal');
+	   
+	   modal.classList.remove('active');
+	   
+	   // 애니메이션 끝나고 display:none 처리
+	   setTimeout(() => {
+	     modal.style.display = 'none';
+	   }, 400); // transition 시간과 동일 (0.4초)
+	 }
+
+		function submitReport() {
+		    const type = document.getElementById('reportReason').value;
+		    const contents = document.getElementById('reportDetail').value;
+		    const title = document.getElementById('reportTitle').value;
+
+		    if (!type || !contents || !title) {
+		        alert('⚠️ 신고 사유, 제목, 내용을 모두 입력해 주세요!');
+		        return;
+		    }
+
+		    // 실제 서버로 비동기 전송하는 부분
+		    $.ajax({
+		        type: 'POST',
+		        url: contextPath + '/report', // 너가 만들고 싶은 신고처리 url
+		        data: {
+		        	type: type,
+		        	contents: contents,
+		        	title:title,
+		            productNo: '${product.no}' // 상품 번호 함께 보내야겠지?
+		        },
+		        success: function(response) {
+		            alert('✅ 신고가 정상적으로 접수되었습니다!');
+		            closeReportModal(); // 모달 닫기
+		            resetReportForm(); // 폼 초기화
+		        },
+		        error: function(xhr, status, error) {
+		            alert('❌ 신고 처리 실패! 다시 시도해주세요.');
+		            console.error(xhr.responseText);
+		        }
+		    });
+		}
+
+		// 신고 폼 초기화 함수
+		function resetReportForm() {
+		    document.getElementById('reportReason').value = '';
+		    document.getElementById('reportDetail').value = '';
+		}
+	 
 </script>

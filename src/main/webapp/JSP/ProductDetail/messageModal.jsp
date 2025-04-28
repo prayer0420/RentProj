@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/CSS/productDetail/messageModal.css" />
 
-<div class="modal-overlay" id="messageModal">
+<div class="modal-overlay" id="messageModal"style="display:none;">
   <form id="messageForm" action="${pageContext.request.contextPath}/message/send" method="post">
     <div class="modal">
       <div class="modal-title">쪽지보내기</div>
