@@ -28,7 +28,7 @@ public class MyMarkList extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 
 		HttpSession session = request.getSession(false);
-		String memberId = (String) session.getAttribute("id");
+		Integer memberNo = (Integer) session.getAttribute("no");
 
 		String pageP = request.getParameter("page");
 		int page = 1;
@@ -39,13 +39,11 @@ public class MyMarkList extends HttpServlet {
 		}
 
 		try {
-			Member member = memberService.getMemberById(memberId);
-			if (member == null) {
+			if (memberNo == null) {
 				response.sendRedirect(request.getContextPath() + "/login");
 				return;
 			}
 
-			Integer memberNo = member.getNo();
 			PageInfo pageInfo = markService.getPageInfo(memberNo, page);
 
 			List<Map<String, Object>> marklist = markService.selectMyMarkList(memberNo, pageInfo);

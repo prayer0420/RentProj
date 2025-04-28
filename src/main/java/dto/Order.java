@@ -20,6 +20,24 @@ public class Order {
 	private String deliveryComp;
 	private String orderId;
 	
+	//reviewList조회용
+    private String title;
+    private String img;
+
+    public String getTitle() {
+        return title;
+    }
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getImg() {
+        return img;
+    }
+    public void setImg(String img) {
+        this.img = img;
+    }
+	
 	// admin 주문조회용
     private String productName; // product.title (조인 결과)
     private String buyerId;     // member.id (조인 결과)
