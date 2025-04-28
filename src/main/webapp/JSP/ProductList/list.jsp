@@ -53,7 +53,7 @@
     const state = {
       searchText: '${fn:escapeXml(param.searchText)}',
       categoryNo: '${empty param.categoryNo ? "0" : param.categoryNo}',
-      tradeType: '${empty param.tradeType ? "sell" : param.tradeType}',
+      tradeType: '${param.tradeType}',
       sort: '${empty param.sort ? "latest" : param.sort}',
       page: ${param.page != null && param.page != "" ? param.page : 1}
     };

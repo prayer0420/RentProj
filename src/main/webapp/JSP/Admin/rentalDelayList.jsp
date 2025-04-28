@@ -57,10 +57,9 @@
 <div class="container">
   <aside>
     <h3>정산관리</h3>
-    <div class="menu inactive">전체주문조회</div>
-    <div class="menu inactive">전체수익조회</div>
-    <div class="menu inactive">판매정산</div>
-    <div class="menu active">대여지연조회</div>
+    <div class="menu inactive"><a href="orderList" style="color: inherit; text-decoration: none;">전체주문조회</a></div>
+    <div class="menu inactive"><a href="settlementList" style="color: inherit; text-decoration: none;">주문정산</a></div>
+    <div class="menu active"><a href="rentalDelayList" style="color: inherit; text-decoration: none;">대여지연조회</a></div>
   </aside>
 
   <main>

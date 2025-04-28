@@ -29,13 +29,18 @@ public class MyInfoModify extends HttpServlet {
 			throws ServletException, IOException {
 		HttpSession session = request.getSession(false);
 
-		Member member = (Member) session.getAttribute("member");
-
-		if (member == null) {
+		String id = (String)session.getAttribute("id");
+		MemberService memberService = new MemberServiceImpl();
+		Member member = null;
+		try {
+			member = memberService.getMemberById(id);
+			System.out.println(member);
+			request.setAttribute("member", member);
+			request.getRequestDispatcher("/JSP/MyPage/myInfoModify.jsp").forward(request, response);
+		} catch (Exception e) {
+			e.printStackTrace();
 			response.sendRedirect(request.getContextPath() + "/login");
-			return;
 		}
-		request.getRequestDispatcher("/JSP/MyPage/myInfoModify.jsp").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -56,26 +61,30 @@ public class MyInfoModify extends HttpServlet {
 
 		// 세션 체크
 		HttpSession session = request.getSession(false);
-		if (session == null || session.getAttribute("member") == null) {
-			response.sendRedirect(request.getContextPath() + "/login");
-			return;
+		/*
+		 * if (session == null || session.getAttribute("member") == null) {
+		 * response.sendRedirect(request.getContextPath() + "/login"); return; }
+		 */
+		String sessionId = (String)session.getAttribute("id");
+		Member member = null;
+		try {
+			member = new MemberServiceImpl().getMemberById(sessionId);
+		} catch (Exception e1) {
+			e1.printStackTrace();
 		}
-
-		Member sessionMember = (Member) session.getAttribute("member");
-		System.out.println(sessionMember.getPassword());
-
+		
 		// 업로드 후 form 필드 데이터 추출 (request가 아닌 multi에서 꺼내야 함)
 		// ⚙️ 입력값 가져오되, 비어있으면 기존 값 유지
-		String id = getOrDefault(multi, "id", sessionMember.getId());
+		String id = getOrDefault(multi, "id", member.getId());
 		String password = getOrDefault(multi, "password", null);
 		System.out.println(password);
 		String confirmPassword = getOrDefault(multi, "confirmPassword", null);
-		String name = getOrDefault(multi, "name", sessionMember.getName());
-		String nickname = getOrDefault(multi, "nickname", sessionMember.getNickname());
-		String phone = getOrDefault(multi, "phone", sessionMember.getPhone());
-		String region1 = getOrDefault(multi, "region1", sessionMember.getRegion1());
-		String region2 = getOrDefault(multi, "region2", sessionMember.getRegion2());
-		String region3 = getOrDefault(multi, "region3", sessionMember.getRegion3());
+		String name = getOrDefault(multi, "name", member.getName());
+		String nickname = getOrDefault(multi, "nickname", member.getNickname());
+		String phone = getOrDefault(multi, "phone", member.getPhone());
+		String region1 = getOrDefault(multi, "region1", member.getRegion1());
+		String region2 = getOrDefault(multi, "region2", member.getRegion2());
+		String region3 = getOrDefault(multi, "region3", member.getRegion3());
 
 		// 비밀번호 확인 불일치 시 오류 처리
 		if (password != null && !password.equals(confirmPassword)) {
@@ -86,58 +95,56 @@ public class MyInfoModify extends HttpServlet {
 
 		//  비밀번호를 입력하지 않았으면 기존 값 유지
 		if (password == null || password.trim().isEmpty()) {
-			password = sessionMember.getPassword();
+			password = member.getPassword();
 			System.out.println("비밀번호 기존값 으로"+password);
 		}
 
 		// 프로필 이미지 처리
 		String newProfileImage = multi.getFilesystemName("profileImage");
-		String profileImage = sessionMember.getProfileImage();
+		String profileImage = member.getProfileImage();
 
 		if (newProfileImage != null) {
 			profileImage = "/upload/profile/" + newProfileImage;
 
 			// 기존 이미지 삭제 (선택사항)
-			String oldImagePath = request.getServletContext().getRealPath(sessionMember.getProfileImage());
+			String oldImagePath = request.getServletContext().getRealPath(member.getProfileImage());
 			File oldFile = new File(oldImagePath);
 			if (oldFile.exists())
 				oldFile.delete();
 		}
 
 		// 업데이트할 Member 객체 생성
-		Member updated = new Member();
-		updated.setId(id);
-		updated.setPassword(password);
-		updated.setNickname(nickname);
-		updated.setName(name);
-		updated.setPhone(phone);
-		updated.setRegion1(region1);
-		updated.setRegion2(region2);
-		updated.setRegion3(region3);
-		updated.setProfileImage(profileImage);
+		Member updatedMember = new Member();
+		updatedMember.setId(id);
+		updatedMember.setPassword(password);
+		updatedMember.setNickname(nickname);
+		updatedMember.setName(name);
+		updatedMember.setPhone(phone);
+		updatedMember.setRegion1(region1);
+		updatedMember.setRegion2(region2);
+		updatedMember.setRegion3(region3);
+		updatedMember.setProfileImage(profileImage);
 
 		// 기존 정보 유지 항목
-		updated.setAddress1(sessionMember.getAddress1());
-		updated.setAddress2(sessionMember.getAddress2());
-		updated.setAddress3(sessionMember.getAddress3());
-		updated.setGradeId(sessionMember.getGradeId());
-		updated.setAdminNo(sessionMember.getAdminNo());
-		updated.setOrderCount(sessionMember.getOrderCount());
-		updated.setLocation(sessionMember.getLocation());
-		updated.setFcmToken(sessionMember.getFcmToken());
-		updated.setLatitude(sessionMember.getLatitude());
-		updated.setLongitude(sessionMember.getLongitude());
+		updatedMember.setAddress1(member.getAddress1());
+		updatedMember.setAddress2(member.getAddress2());
+		updatedMember.setAddress3(member.getAddress3());
+		updatedMember.setGradeId(member.getGradeId());
+		updatedMember.setAdminNo(member.getAdminNo());
+		updatedMember.setOrderCount(member.getOrderCount());
+		updatedMember.setLocation(member.getLocation());
+		updatedMember.setFcmToken(member.getFcmToken());
+		updatedMember.setLatitude(member.getLatitude());
+		updatedMember.setLongitude(member.getLongitude());
 
 		try {
 			MemberService service = new MemberServiceImpl();
 			//DB에 갱신
-			service.updateMember(updated);
-
-			// 세션 갱신
-			session.setAttribute("member", updated);
+			service.updateMember(updatedMember);
 
 			// 수정 완료 후 리다이렉트
 			session.setAttribute("message", "개인정보가 성공적으로 수정되었습니다!");
+			session.setAttribute("id", updatedMember.getId());
 			response.sendRedirect(request.getContextPath() + "/myInfoModify");
 
 		} catch (Exception e) {

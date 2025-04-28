@@ -9,25 +9,11 @@ import dto.FaqCategory;
 
 public class FaqServiceImpl implements FaqService {
 	
-    private FaqDAO faqDAO;
+    private FaqDAO faqDAO = new FaqDAOImpl();
 
-    // 기본 생성자에서 DAO 객체 생성
-    public FaqServiceImpl() {
-        this.faqDAO = new FaqDAOImpl();
-    }
-
-    // FAQ 카테고리 전체 목록 반환
 	@Override
-	public List<FaqCategory> getFaqCategoryList() {
-        return faqDAO.selectFaqCategoryList();
-    }
-
-    // FAQ 카테고리 삽입
-	@Override
-	public FaqCategory insertFaqCategory(String name) {
-        FaqCategory category = new FaqCategory(); // DTO 생성
-        category.setName(name);                   // 사용자 입력값 세팅
-        return faqDAO.insertFaqCategory(category);
+	public boolean registerFaq(Faq faq) {
+        return faqDAO.insertFaq(faq) > 0;
 	}
 
 	@Override
@@ -39,6 +25,32 @@ public class FaqServiceImpl implements FaqService {
 	@Override
 	public Faq faqSelectOne(Integer no) throws Exception {
 		return faqDAO.selectOne(no);
+	}
+	public boolean modifyFaq(Faq faq) {
+        return faqDAO.updateFaq(faq) > 0;
+    }
+
+	@Override
+	public boolean deleteFaqList(int[] faqNos) {
+        return faqDAO.deleteFaqList(faqNos) > 0;
+    }
+
+	@Override
+	public List<Faq> getFaqList() {
+	    List<Faq> faqList = faqDAO.selectFaqList();
+	    return faqList;
+    }
+
+	@Override
+	public List<FaqCategory> getFaqCategoryList() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public FaqCategory insertFaqCategory(String name) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

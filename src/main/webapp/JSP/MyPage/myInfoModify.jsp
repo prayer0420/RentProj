@@ -9,12 +9,14 @@
   <link rel="stylesheet" href="${contextPath}/CSS/mypage/myInfoModify.css">
 </head>
 <body>
-	<c:if test="${not empty sessionScope.message}">
+ 	<c:if test="${not empty sessionScope.message}">
 	  <script>
 	    alert("${sessionScope.message}");
 	  </script>
 	  <c:remove var="message" scope="session" />
-	</c:if>
+	</c:if> 
+	
+	
 	
   <div class="wrapper">
     <div class="container">
@@ -32,7 +34,7 @@
           <form action="${contextPath}/myInfoModify" method="post" enctype="multipart/form-data">
             <div class="form-group">
               <label>아이디</label>
-              <input type="text" name="id" value="${sessionScope.member.id}" readonly />
+              <input type="text" name="id" value="${member.id}" readonly />
             </div>
 			
             <div class="form-group">
@@ -47,32 +49,32 @@
             
             <div class="form-group">
             <label for="name">이름</label>
-        		<input type="text" id="name" name="name"  value="${sessionScope.member.name}" placeholder="이름을 입력하세요">
+        		<input type="text" id="name" name="name"  value="${member.name}" placeholder="이름을 입력하세요">
 			</div>
 			
             <div class="form-group">
               <label>닉네임</label>
-              <input type="text" name="nickname" value="${sessionScope.member.nickname}" placeholder="닉네임 입력" />
+              <input type="text" name="nickname" value="${member.nickname}" placeholder="닉네임 입력" />
             </div>
 
             <div class="form-group">
               <label>휴대폰번호</label>
-              <input type="tel" name="phone" value="${sessionScope.member.phone}" placeholder="010-1234-5678" />
+              <input type="tel" name="phone" value="${member.phone}" placeholder="010-1234-5678" />
             </div>
 
             <div class="form-group">
               <label>거래지역</label>
               <button type="button" id="postSearch">➕ 주소 검색</button>
               <div id="regionList"></div>
-              <input type="hidden" name="region1" id="region1" value="${sessionScope.member.region1}" />
-              <input type="hidden" name="region2" id="region2" value="${sessionScope.member.region2}" />
-              <input type="hidden" name="region3" id="region3" value="${sessionScope.member.region3}" />
+              <input type="hidden" name="region1" id="region1" value="${member.region1}" />
+              <input type="hidden" name="region2" id="region2" value="${member.region2}" />
+              <input type="hidden" name="region3" id="region3" value="${member.region3}" />
             </div>
 
             <div class="form-group">
               <label>프로필 이미지</label>
               <div class="profile-upload">
-                <img src="${sessionScope.member.profileImage != null ? sessionScope.member.profileImage : 'https://cdn-icons-png.flaticon.com/512/149/149071.png'}" alt="프로필 이미지" />
+                <img src="${member.profileImage}" alt="프로필 이미지" />
                 <input type="file" name="profileImage" />
               </div>
             </div>
@@ -90,9 +92,9 @@
   <script>
   // 1) 초기 세션 값을 JS 배열로
   const selectedRegions = [
-    <c:if test="${not empty sessionScope.member.region1}">"${sessionScope.member.region1}",</c:if>
-    <c:if test="${not empty sessionScope.member.region2}">"${sessionScope.member.region2}",</c:if>
-    <c:if test="${not empty sessionScope.member.region3}">"${sessionScope.member.region3}",</c:if>
+    <c:if test="${not empty member.region1}">"${member.region1}",</c:if>
+    <c:if test="${not empty member.region2}">"${member.region2}",</c:if>
+    <c:if test="${not empty member.region3}">"${member.region3}",</c:if>
   ];
 
   // 2) 페이지 로드 시 기존 지역 보여주기
