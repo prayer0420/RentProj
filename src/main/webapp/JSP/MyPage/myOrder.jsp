@@ -25,7 +25,7 @@
           <div class="divider"></div>
 
 		<c:choose>
-			<c:when test="${member.id eq null }">
+			<c:when test="${sessionScope.id eq null }">
 				<span> 로그인이 필요한 페이지입니다.</span>
 			</c:when>
 			<c:otherwise>

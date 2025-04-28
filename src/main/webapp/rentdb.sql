@@ -383,3 +383,37 @@ INSERT INTO grade (gradeNo, gradeName, gradeRate, gradeCount) VALUES
 (4, '플래티넘', 4.5, 30.0),
 (5, '다이아', 4.25, 40.0),
 (6, ' Re:NT', 3.5, 50.0);
+
+
+
+INSERT INTO product (categoryNo, title, content, state, img, deliveryAddr, deliveryPrice, tradeType, secPrice, memberNo, startDate, endDate, salePrice, rentPrice, deliveryStatus, createDate)
+VALUES
+(1, '아이폰 13', '최신형 아이폰', '새상품', '/upload/product1.jpg', '서울 강남구', 3000, '판매', NULL, 1, NULL, NULL, 1200000, NULL, '배송가능', NOW()),
+(1, '갤럭시 S22', '삼성 플래그십 모델', '새상품', '/upload/product2.jpg', '서울 서초구', 3000, '판매', NULL, 1, NULL, NULL, 1100000, NULL, '배송가능', NOW()),
+(2, '닌텐도 스위치', '스위치 풀세트', '중고', '/upload/product3.jpg', '서울 송파구', 2000, '판매', NULL, 1, NULL, NULL, 400000, NULL, '배송가능', NOW()),
+(2, 'PS5', '플스5 새제품', '새상품', '/upload/product4.jpg', '서울 마포구', 5000, '판매', NULL, 1, NULL, NULL, 700000, NULL, '배송가능', NOW()),
+(3, '맥북 프로', 'M2 칩 탑재', '새상품', '/upload/product5.jpg', '서울 강서구', 5000, '판매', NULL, 1, NULL, NULL, 2500000, NULL, '배송가능', NOW()),
+(3, '아이패드 미니6', '아이패드 미니', '중고', '/upload/product6.jpg', '서울 관악구', 3000, '판매', NULL, 1, NULL, NULL, 600000, NULL, '배송가능', NOW()),
+(4, '에어팟 프로2', '새제품', '새상품', '/upload/product7.jpg', '서울 동작구', 2000, '판매', NULL, 1, NULL, NULL, 300000, NULL, '배송가능', NOW()),
+(4, 'LG 울트라 노트북', '초경량 노트북', '중고', '/upload/product8.jpg', '서울 구로구', 4000, '판매', NULL, 1, NULL, NULL, 800000, NULL, '배송가능', NOW()),
+(5, '삼성 모니터 32인치', '커브드 모니터', '중고', '/upload/product9.jpg', '서울 용산구', 3000, '판매', NULL, 1, NULL, NULL, 250000, NULL, '배송가능', NOW()),
+(5, '소니 카메라 A6400', '미러리스 카메라', '중고', '/upload/product10.jpg', '서울 중구', 5000, '판매', NULL, 1, NULL, NULL, 900000, NULL, '배송가능', NOW()),
+(6, 'DJI 드론', '드론 촬영 장비', '새상품', '/upload/product11.jpg', '서울 강북구', 5000, '판매', NULL, 1, NULL, NULL, 1500000, NULL, '배송가능', NOW()),
+(6, '로지텍 키보드', '게이밍 키보드', '중고', '/upload/product12.jpg', '서울 성동구', 2000, '판매', NULL, 1, NULL, NULL, 100000, NULL, '배송가능', NOW()),
+(7, '삼성 갤럭시 탭', '태블릿 중고', '중고', '/upload/product13.jpg', '서울 노원구', 3000, '판매', NULL, 1, NULL, NULL, 350000, NULL, '배송가능', NOW()),
+(7, '브리츠 스피커', '컴퓨터 스피커', '중고', '/upload/product14.jpg', '서울 은평구', 2000, '판매', NULL, 1, NULL, NULL, 50000, NULL, '배송가능', NOW()),
+(8, '나이키 운동화', '에어맥스 한정판', '새상품', '/upload/product15.jpg', '서울 도봉구', 3000, '판매', NULL, 1, NULL, NULL, 180000, NULL, '배송가능', NOW()),
+(8, '아디다스 트랙수트', '상의+하의 세트', '새상품', '/upload/product16.jpg', '서울 금천구', 3000, '판매', NULL, 1, NULL, NULL, 120000, NULL, '배송가능', NOW()),
+(9, '피파 24', '플스용 피파24', '새상품', '/upload/product17.jpg', '서울 서대문구', 2000, '판매', NULL, 1, NULL, NULL, 70000, NULL, '배송가능', NOW()),
+(9, '오큘러스 VR', 'VR 헤드셋', '중고', '/upload/product18.jpg', '서울 종로구', 5000, '판매', NULL, 1, NULL, NULL, 400000, NULL, '배송가능', NOW()),
+(10, '샤오미 무선 청소기', '무선 진공 청소기', '중고', '/upload/product19.jpg', '서울 성북구', 4000, '판매', NULL, 1, NULL, NULL, 150000, NULL, '배송가능', NOW()),
+(10, '루미큐브', '보드게임 루미큐브', '새상품', '/upload/product20.jpg', '서울 중랑구', 2000, '판매', NULL, 1, NULL, NULL, 40000, NULL, '배송가능', NOW());
+
+
+INSERT INTO mark (productNo, memberNo)
+VALUES
+(102, 57), (103, 57), (104, 57), (105, 57), (106, 57),
+(107, 57), (108, 57), (109, 57), (110, 57), (111, 57),
+(112, 57), (113, 57), (114, 57), (115, 57), (116, 57),
+(117, 57), (118, 57), (119, 57), (120, 57), (121, 57);
+

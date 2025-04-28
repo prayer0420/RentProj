@@ -72,6 +72,7 @@
 					<input type="text" id="address" name="address" placeholder="주소">
 					<input type="text" id="detailAddress" name="detailAddress" placeholder="상세주소">
 				</div>
+		<input type="hidden" name="profileImage" value="/CSS/img/profileImage2.png">
 		<input type="hidden" id="fcmToken" name="fcmToken" />
       	</div>
       <div class="buttons">

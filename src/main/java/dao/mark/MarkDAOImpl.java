@@ -1,9 +1,14 @@
 	package dao.mark;
 	
-	import org.apache.ibatis.session.SqlSession;
-	
-	import dto.Mark;
-	import utils.MybatisSqlSessionFactory;
+	import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.ibatis.session.SqlSession;
+
+import dto.Mark;
+import utils.MybatisSqlSessionFactory;
+import utils.PageInfo;
 	
 	public class MarkDAOImpl implements MarkDAO {
 		SqlSession session = MybatisSqlSessionFactory.getSqlSessionFactory().openSession();
@@ -33,5 +38,15 @@
 			session.delete("mapper.mark.deleteMark",mark);
 			session.commit();
 		}
+		
+	    @Override
+	    public List<Map<String, Object>> selectMyMarkList(Map<String, Object> param) throws Exception {
+	        return session.selectList("mapper.mark.selectMyMarkList", param);
+	    }
+
+	    @Override
+	    public int selectMarkCount(Integer memberNo) throws Exception {
+	        return session.selectOne("mapper.mark.selectMarkCount", memberNo);
+	    }
 	
 	}

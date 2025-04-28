@@ -27,18 +27,15 @@ public class MyAddress extends HttpServlet {
 
         // 세션에서 로그인한 사용자 정보 가져오기
         HttpSession session = request.getSession(false);
-        Member sessionMember = (Member) session.getAttribute("member");
-
-        if (sessionMember == null) {
-            response.sendRedirect(request.getContextPath() + "/login");
-            return;
-        }
-
+        String id = (String)session.getAttribute("id");
         MemberService service = new MemberServiceImpl();
         try {
             // DB에서 Member 정보 조회 (배송지 포함)
-            Member member = service.getMemberById(sessionMember.getId());
-
+            Member member = service.getMemberById(id);
+            if (member == null) {
+                response.sendRedirect(request.getContextPath() + "/login");
+                return; 
+            }
             // 배송지 문자열 → 파싱된 객체 리스트로 변환
             List<ParsedAddress> addressList = AddressParser.parseAddresses(member);
 
@@ -57,18 +54,19 @@ public class MyAddress extends HttpServlet {
         request.setCharacterEncoding("utf-8");
 
         HttpSession session = request.getSession(false);
-        Member sessionMember = (Member) session.getAttribute("member");
-
-        if (sessionMember == null) {
-            response.sendRedirect(request.getContextPath() + "/login");
-            return;
-        }
+        String id = (String)session.getAttribute("id");
 
         String action = request.getParameter("action"); // add / update / delete
         MemberService service = new MemberServiceImpl();
 
         try {
-            Member member = service.getMemberById(sessionMember.getId());
+        	
+            Member member = service.getMemberById(id);
+            if (member == null) {
+                response.sendRedirect(request.getContextPath() + "/login");
+                return; 
+            }
+            
             List<String> addresses = new ArrayList<>();
             if (member.getAddress1() != null) addresses.add(member.getAddress1());
             if (member.getAddress2() != null) addresses.add(member.getAddress2());
@@ -132,7 +130,6 @@ public class MyAddress extends HttpServlet {
             member.setAddress3(addresses.size() > 2 ? addresses.get(2) : null);
 
             service.updateMember(member); // DB 저장
-            session.setAttribute("member", member); // 세션 갱신
 
             response.sendRedirect(request.getContextPath() + "/myAddress");
 
