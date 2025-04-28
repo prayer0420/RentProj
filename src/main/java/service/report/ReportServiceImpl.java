@@ -2,10 +2,10 @@ package service.report;
 
 import java.util.List;
 
-import controller.report.Report;
 import dao.report.ReportDAO;
 import dao.report.ReportDAOImpl;
 import dto.ReportedProduct;
+import utils.PageInfo;
 
 public class ReportServiceImpl implements ReportService {
 	private ReportDAO reportDAO;
@@ -47,4 +47,30 @@ public class ReportServiceImpl implements ReportService {
 	public void insertReport(ReportedProduct report) throws Exception {
 		reportDAO.insertReport(report);
 	}
+	
+	//신고내역 조회
+	@Override
+	public List<ReportedProduct> getMyReportList(Integer memberNo, PageInfo pageInfo) throws Exception {
+	    return reportDAO.getMyReportList(memberNo, pageInfo);
+	}
+
+	@Override
+	public PageInfo getMyReportPageInfo(Integer memberNo, int curPage) throws Exception {
+	    int totalCount = reportDAO.getMyReportCount(memberNo);
+	    int pageSize = 12;
+	    int allPage = (int)Math.ceil((double)totalCount/pageSize);
+	    int startPage = ((curPage-1)/5)*5+1;
+	    int endPage = Math.min(startPage+4, allPage);
+
+	    PageInfo pageInfo = new PageInfo();
+	    pageInfo.setCurPage(curPage);
+	    pageInfo.setAllPage(allPage);
+	    pageInfo.setStartPage(startPage);
+	    pageInfo.setEndPage(endPage);
+	    pageInfo.setPageSize(pageSize);
+	    pageInfo.setTotalCount(totalCount);
+
+	    return pageInfo;
+	}
+
 }

@@ -1,13 +1,15 @@
 package dao.report;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
-import controller.report.Report;
 import dto.ReportQueryParams;
 import dto.ReportedProduct;
 import utils.MybatisSqlSessionFactory;
+import utils.PageInfo;
 
 public class ReportDAOImpl implements ReportDAO {
 
@@ -122,5 +124,20 @@ public class ReportDAOImpl implements ReportDAO {
 		sqlSession.insert("mapper.report.insertReport",report);
 		sqlSession.commit();
 		
+	}
+	
+    // 내 신고함 목록
+	@Override
+	public List<ReportedProduct> getMyReportList(Integer memberNo, PageInfo pageInfo) throws Exception {
+	    Map<String, Object> param = new HashMap<>();
+	    param.put("memberNo", memberNo);
+	    param.put("startRow", (pageInfo.getCurPage()-1)*pageInfo.getPageSize());
+	    param.put("pageSize", pageInfo.getPageSize());
+	    return sqlSession.selectList("mapper.report.selectMyReportList", param);
+	}
+
+	@Override
+	public int getMyReportCount(Integer memberNo) throws Exception {
+	    return sqlSession.selectOne("mapper.report.selectMyReportCount", memberNo);
 	}
 }
