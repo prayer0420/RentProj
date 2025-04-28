@@ -142,7 +142,9 @@ public class MypageDAOImpl implements MypageDAO {
 	@Override
 	public Integer deleteProduct(Integer productNo) {
 		
-		return sqlSession.delete("mapper.mypage.deleteMyProduct",productNo);
+		Integer result = sqlSession.delete("mapper.mypage.deleteMyProduct",productNo);
+		sqlSession.commit();
+		return result;
 	}
 
 }
