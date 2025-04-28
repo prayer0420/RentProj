@@ -1,0 +1,15 @@
+package service.settlement;
+
+import java.util.List;
+import java.util.Map;
+
+import dto.Settlement;
+
+public interface SettlementService {
+	// 정산 리스트 조회
+    List<Settlement> getSettlementList(Map<String, Object> searchMap) throws Exception;
+    // 개별 정산 처리 (feeStatus 완료로 변경)
+    boolean processSettlement(int settlementNo) throws Exception;
+    
+    
+}

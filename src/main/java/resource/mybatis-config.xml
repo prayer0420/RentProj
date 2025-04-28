@@ -5,6 +5,12 @@
 	
 	
 <configuration>
+
+    <settings>
+        <!-- DB 컬럼명 스네이크_case → 자바 카멜Case 자동 변환 -->
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+    </settings>
+
 	<typeAliases>
 		<typeAlias type="dto.Product" alias ="product"/>
 		<typeAlias type="dto.Category" alias ="category"/>

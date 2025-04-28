@@ -46,7 +46,7 @@
   <div class="error-box">
     <h2>⚠ 오류가 발생했습니다</h2>
     <p>${errorMessage}</p>
-    <a href="${pageContext.request.contextPath}/categoryList">목록으로 돌아가기</a>
+    <a href="${pageContext.request.contextPath}${returnUrl}">목록으로 돌아가기</a>
   </div>
 
 </body>

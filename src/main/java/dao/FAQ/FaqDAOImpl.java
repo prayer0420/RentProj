@@ -30,7 +30,7 @@ public class FaqDAOImpl implements FaqDAO {
     }
 	// FAQ 다건 삭제
 	@Override
-	public int deleteFaqList(int[] faqNos) {
+	public int deleteFaqList(List<Integer> faqNos) {
         try (SqlSession session = factory.openSession(true)) {
             Map<String, Object> params = new HashMap<>();
             params.put("faqNos", faqNos);
@@ -52,4 +52,11 @@ public class FaqDAOImpl implements FaqDAO {
             return session.selectList("mapper.faq.selectFaqCategoryList");
         }
 	}
+	
+	@Override
+	public Faq selectFaqByNo(int no) {
+        try (SqlSession session = factory.openSession()) {
+            return session.selectOne("mapper.faq.selectFaqByNo", no);
+        }
+    }
 }

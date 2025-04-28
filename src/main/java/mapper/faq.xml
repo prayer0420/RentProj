@@ -62,5 +62,12 @@
             #{no}
         </foreach>
     </delete>
+    
+        <!-- 특정 FAQ 조회 -->
+    <select id="selectFaqByNo" resultType="dto.Faq">
+        SELECT f.no, f.categoryNo, f.title, f.content, f.imgUrl, f.createdAt, f.updatedAt
+        FROM faq f
+        WHERE f.no = #{no}
+    </select>
 
 </mapper>
