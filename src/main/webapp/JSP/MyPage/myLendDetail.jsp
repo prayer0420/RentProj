@@ -33,10 +33,13 @@
 			<c:otherwise>
           
 	          <div class="section product-box">
-	                <img src="https://via.placeholder.com/120x100?text=🚲" alt="자전거">
+	          	<a href="${contextPath }/productDetail?no=${myLendDetail.no }">
+	                <img src="https://via.placeholder.com/120x100?text=🚲" alt="자전거"></a>
 	                <div class="product-info">
-	                    <div style="font-size: 13px; color: gray;">상품번호: ${myLendDetail.no }</div>
-	                    <div class="product-title">${myLendDetail.title }</div>
+	                    <div style="font-size: 13px; color: gray;">
+	                    <a href="${contextPath }/productDetail?no=${myLendDetail.no }">상품번호: ${myLendDetail.no }</a></div>
+	                    <div class="product-title">
+	                    <a href="${contextPath }/productDetail?no=${myLendDetail.no }">${myLendDetail.title }</a></div>
 	                    <div class="price">1일 <fmt:formatNumber value="${myLendDetail.price }" type="number" groupingUsed="true"/>원 </div>
 	                </div>
 	                <span class="status-text">${myLendDetail.orderStatus }</span>
@@ -95,9 +98,9 @@
                     	<c:forEach var="history" items="${lendHistoryList}">
 	                        <tr class="history-row" data-lend-no="${history.orderNo }">
 	                            <td><strong>${history.orderId }</strong></td>
-	                            <td><strong>${history.startDate } ~ ${history.endDate }</strong></td>
+	                            <td><strong><fmt:formatDate value="${history.startDate }" pattern="yyyy년 MM월 dd일"/> ~ <fmt:formatDate value="${history.endDate }" pattern="yyyy년 MM월 dd일"/></strong></td>
 	                            <td><strong>3일</strong></td>
-	                            <td><strong>${history.price }원</strong></td>
+	                            <td><strong><fmt:formatNumber value="${history.price }" type="number" groupingUsed="true" />원</strong></td>
 	                            <td>없음</td>
 	                        </tr>
                         </c:forEach>
@@ -118,10 +121,10 @@
 	<script>
 	$(document).ready(function() {
 	    $('.history-row').click(function() {
-	        const orderNo = $(this).data('order-no');
+	        const orderNo = $(this).data('lend-no');
 	
 	        $.ajax({
-	            url: '/rent/myLendHistoryDetail?orderNo=' + orderNo,
+	            url: '${contextPath}/myLendHistoryDetail?orderNo=' + orderNo,
 	            method: 'GET',
 	            data: { orderNo: orderNo, ts: new Date().getTime() },	// 캐싱 방지
 	            dataType: 'json',

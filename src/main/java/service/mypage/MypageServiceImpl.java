@@ -159,5 +159,11 @@ public class MypageServiceImpl implements MypageService {
 		return mypageDao.selectLendHistoryByProductNo(productNo);
 	}
 
+	@Override
+	public boolean deleteProduct(Integer productNo) throws Exception {
+		
+		return mypageDao.deleteProduct(productNo) > 0;
+	}
+
 
 }

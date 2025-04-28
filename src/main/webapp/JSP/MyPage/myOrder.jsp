@@ -71,14 +71,15 @@
 			
 			            <!-- 상품 정보 영역 -->
 			            <div class="card-content">
+			            <a href="${contextPath }/productDetail?no=${item.no }">
 			              <img
 			                src="${contextPath }/img/camera.jpg"
 			                alt="상품 이미지"
 			                class="product-image"
-			              />
+			              /></a>
 			              <div class="product-info">
-			                <p>상품번호: ${item.productNo}</p>
-			                <h3>${item.title }</h3>
+			                <p><a href="${contextPath }/productDetail?no=${item.no }">상품번호: ${item.productNo}</a></p>
+			                <h3><a href="${contextPath }/productDetail?no=${item.no }">${item.title }</a></h3>
 			                <p>가격: <fmt:formatNumber value="${item.price}" type="number" groupingUsed="true" />원</p>
 			                <p>배송비: <fmt:formatNumber value="${item.deliveryPrice}" type="number" groupingUsed="true" />원</p>
 			              </div>

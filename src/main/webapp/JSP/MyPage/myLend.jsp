@@ -73,14 +73,15 @@
 		
 		            <!-- 상품 정보 영역 -->
 		            <div class="card-content">
+		            <a href="${contextPath }/productDetail?no=${item.no}">
 		              <img
 		                src="${contextPath }/img/camera.jpg"
 		                alt="상품 이미지"
 		                class="product-image"
-		              />
+		              /></a>
 		              <div class="product-info">
-		                <p>${item.no }</p>
-		                <h3>${item.title } </h3>
+		                <p><a href="${contextPath }/productDetail?no=${item.no}">${item.no }</a></p>
+		                <h3><a href="${contextPath }/productDetail?no=${item.no}">${item.title } </a></h3>
 		                <p>1일 <fmt:formatNumber value="${item.price }" type="number" groupingUsed="true" />원</p>
 		                <p class="sec-prices">보증금: <fmt:formatNumber value="${item.secPrice}" type="number" groupingUsed="true"/>원</p>
 		              </div>

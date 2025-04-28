@@ -66,7 +66,7 @@
 		                <span class="order-date">상품등록일: <fmt:formatDate value="${item.createDate}" pattern="yyyy년 MM월 dd일"/> </span>
 		              </div>
 		              <div class="order-status-area">
-		              	  <span class="status-text">${item.deliveryStatus }</span>&nbsp;&nbsp;
+		              	 <!--  <span class="status-text">${item.deliveryStatus }</span>&nbsp;&nbsp;	-->
 		                  <span class="status-text">${item.orderStatus }</span>
 			              <c:choose>
 			              	<c:when test="${item.orderNo eq null }">
@@ -84,22 +84,23 @@
 		
 		            <!-- 상품 정보 영역 -->
 		            <div class="card-content">
+		            	<a href="${contextPath }/productDetail?no=${item.no}&tradeType=판매">
 		              <img
 		                src="${contextPath }/img/camera.jpg"
 		                alt="상품 이미지"
 		                class="product-image"
-		              />
+		              /></a>
 		              <div class="product-info">
-		                <p>${item.no }</p>
-		                <h3>${item.title }</h3>
+		                <p><a href="${contextPath }/productDetail?no=${item.no}&tradeType=판매">${item.no }</a></p>
+		                <h3><a href="${contextPath }/productDetail?no=${item.no}&tradeType=판매">${item.title }</a></h3>
 		                <p>가격: ${item.salePrice }원</p>
 		                <p>배송비: ${item.deliveryPrice}원</p>
 		              </div>
 		              <div class="status-change-btns">
 		               <c:choose>
 		               	<c:when test="${item.deliveryStatus eq '상품게시중'}">
-					        <button type="button" class="open-invoice-btn" data-orderno="${item.orderNo}">상품숨김</button><br>
-					        <button type="button" class="open-invoice-btn" data-orderno="${item.orderNo}">상품삭제</button>
+					        <button type="button" class="hide-btn" data-product-no="${item.no}">상품숨김</button>
+					        <button type="button" class="delete-btn" data-product-no="${item.no}">상품삭제</button>
 					        
 		               	</c:when>
 		               	<c:when test="${item.orderStatus eq '결제완료'}">
@@ -128,12 +129,65 @@
       </div>
     </div>
 					
-		<!-- 푸터 -->
-		  <jsp:include page="/JSP/Header/footer.jsp" />
+		
 
 
           <!-- 송장번호입력 모달 -->
           <jsp:include page="/JSP/MyPage/mypageModal.jsp" />
-					
+          
+          <!-- 상품삭제 모달 -->
+          <jsp:include page="/JSP/MyPage/deleteProductModal.jsp" />
+          
+   <script>       
+        $(document).ready(function() {
+	    let selectedProductNo = null;  // 선택한 상품번호 저장용
+	
+	    // 삭제 버튼 클릭 시 (이벤트 위임)
+	    $(document).on('click','.delete-btn',function(){
+	    	console.log("버튼 클릭됨!"); // 확인용
+	    	console.log("deleteModal 요소 찾기 시도:", $('#deleteModal').length); // 추가
+	    	
+	        selectedProductNo = $(this).data('product-no'); // 버튼에 심어놓은 상품번호 읽어오기
+	        $('#deleteModal').fadeIn(); // 모달 띄우기
+	    });
+	
+	    // 모달에서 '취소' 클릭 시
+	    $('#cancelDelete').click(function() {
+	        $('#deleteModal').fadeOut(); // 모달 닫기
+	        selectedProductNo = null; // 초기화
+	    });
+	
+	    // 모달에서 '확인' 클릭 시 (삭제 실행)
+	    $('#confirmDelete').click(function() {
+	        if (selectedProductNo) {
+	            $.ajax({
+	                url: '${contextPath}/deleteProduct',
+	                method: 'POST',
+	                data: { productNo: selectedProductNo },
+	                dataType: 'json',
+	                success: function(response) {
+	                    if (response.success) {
+	                        alert('상품이 삭제되었습니다.');
+	                        $('#product-' + selectedProductNo).fadeOut(500, function() {
+	                            $(this).remove();
+	                        });
+	                    } else {
+	                        alert('상품 삭제에 실패했습니다.');
+	                    }
+	                    $('#deleteModal').fadeOut();
+	                },
+	                error: function(xhr, status, error) {
+	                    alert('서버 오류로 삭제에 실패했습니다.');
+	                    console.error(error);
+	                    $('#deleteModal').fadeOut();
+	                }
+	            });
+	        }
+	    });
+	});
+</script>			
+
+<!-- 푸터 -->
+		  <jsp:include page="/JSP/Header/footer.jsp" />		
 </body>
 </html>

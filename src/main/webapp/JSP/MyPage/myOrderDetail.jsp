@@ -32,10 +32,13 @@
 			<c:otherwise>
 			
           <div class="section product-box">
-                <img src="https://via.placeholder.com/120x100?text=🚲" alt="자전거">
+                <a href="${contextPath }/productDetail?no=${myOrderDetail.no}">
+                <img src="https://via.placeholder.com/120x100?text=🚲" alt="자전거"></a>
                 <div class="product-info">
-                    <div style="font-size: 13px; color: gray;">상품번호 ${myOrderDetail.productNo }</div>
-                    <div class="product-title">${myOrderDetail.title }</div>
+                    <div style="font-size: 13px; color: gray;">
+                    	<a href="${contextPath }/productDetail?no=${myOrderDetail.no}">상품번호 ${myOrderDetail.productNo }</a></div>
+                    <div class="product-title">
+                    	<a href="${contextPath }/productDetail?no=${myOrderDetail.no}">${myOrderDetail.title }</a></div>
                     <div class="price">판매가격: <fmt:formatNumber value="${myOrderDetail.price}" type="number" groupingUsed="true" /> 원</div>
                 </div>
                 <span class="status-text">${myOrderDetail.deliveryStatus}</span>
