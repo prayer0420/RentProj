@@ -8,16 +8,17 @@
 	<!-- FAQ Category 관련 -->
 	<!-- FAQ 카테고리 전체 조회 -->
 	<select id="selectFaqCategoryList" resultType="faqCategory">
-		SELECT * FROM faq_category ORDER BY no ASC
+		SELECT * FROM
+		faq_category ORDER BY no ASC
 	</select>
 
 
 	<!-- FAQ 카테고리 생성 -->
 	<insert id="insertFaqCategory" parameterType="faqCategory"
 		useGeneratedKeys="true" keyProperty="no">
-		INSERT INTO faq_category (name) VALUES (#{name})
+		INSERT INTO faq_category (name)
+		VALUES (#{name})
 	</insert>
-
 
 
 	<!-- FAQ 관련 -->
@@ -37,34 +38,33 @@
 		ORDER BY f.createdAt DESC
 	</select>
 
-	<insert id="insertFaq" parameterType="faq"
-		useGeneratedKeys="true" keyProperty="no">
-		INSERT INTO faq (category, title, content, imgUrl) VALUES (#{category},
-		#{title}, #{content}, #{imgUrl})
-	</insert>
-
 	<select id="selectAllFaq" resultType="faq">
 		select * from faq
 	</select>
 
 	<select id="faqSelectOne" parameterType="int" resultType="faq">
-		select * from faq where no=#{no}
+		select
+		* from faq where no=#{no}
 	</select>
 	<!-- FAQ 등록 -->
 	<insert id="insertFaq" parameterType="faq"
 		useGeneratedKeys="true" keyProperty="no">
-		INSERT INTO faq (categoryNo, title, content, imgUrl)
-		VALUES (#{categoryNo}, #{title}, #{content}, #{imgUrl})
+		INSERT INTO faq (categoryNo,
+		title, content, imgUrl)
+		VALUES (#{categoryNo}, #{title}, #{content},
+		#{imgUrl})
 	</insert>
 
 	<!-- FAQ 수정 -->
 	<update id="updateFaq" parameterType="faq">
 		UPDATE faq
 		SET
-		categoryNo = #{categoryNo},
+		categoryNo =
+		#{categoryNo},
 		title = #{title},
 		content = #{content},
-		imgUrl = #{imgUrl},
+		imgUrl =
+		#{imgUrl},
 		updatedAt = now()
 		WHERE no = #{no}
 	</update>
