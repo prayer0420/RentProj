@@ -48,8 +48,17 @@
 								class="slide-image" style="display: none;">
 						</c:if>
 
-						<button id="prevBtn" class="slide-btn">◀</button>
-						<button id="nextBtn" class="slide-btn">▶</button>
+						<!-- 이미지 하나도 없을 경우 기본이미지 -->
+						<c:if
+							test="${empty product.img1 and empty product.img2 and empty product.img3 and empty product.img4 and empty product.img5}">
+							<img
+								src="${pageContext.request.contextPath}/img/default_product.png"
+								class="slide-image" style="display: none;">
+						</c:if>
+
+						<button id="prevBtn" class="slide-btn">&lt;</button>
+						<button id="nextBtn" class="slide-btn">&gt;</button>
+						<div id="slideCounter" class="slide-counter">1 / 1</div>
 					</div>
 				</div>
 				<div class="product-details">
@@ -131,6 +140,7 @@
 										<c:when test="${avgScore >= 2.5}">★★★☆☆</c:when>
 										<c:when test="${avgScore >= 1.5}">★★☆☆☆</c:when>
 										<c:when test="${avgScore >= 0.5}">★☆☆☆☆</c:when>
+										<c:when test="${avgScore <0.5}">☆☆☆☆☆</c:when>
 									</c:choose>
 								</span>
 							</div>
@@ -152,6 +162,7 @@
 										action="${pageContext.request.contextPath}/productSellOrder"
 										method="get">
 										<input type="hidden" name="productNo" value="${product.no}" />
+										<input type="hidden" name="tradeType" value="${product.tradeType}" />
 										<button class="btn btn-sell">구매하기</button>
 									</form>
 								</c:when>
@@ -160,6 +171,7 @@
 										action="${pageContext.request.contextPath}/productRentOrder"
 										method="get">
 										<input type="hidden" name="productNo" value="${product.no}" />
+										<input type="hidden" name="tradeType" value="${product.tradeType}" />
 										<button class="btn btn-sell">대여하기</button>
 									</form>
 								</c:when>
@@ -168,12 +180,14 @@
 										action="${pageContext.request.contextPath}/productSellOrder"
 										method="get">
 										<input type="hidden" name="productNo" value="${product.no}" />
+										<input type="hidden" name="tradeType" value="${product.tradeType}" />
 										<button class="btn btn-sell">구매하기</button>
 									</form>
 									<form
 										action="${pageContext.request.contextPath}/productRentOrder"
 										method="get">
 										<input type="hidden" name="productNo" value="${product.no}" />
+										<input type="hidden" name="tradeType" value="${product.tradeType}" />
 										<button class="btn btn-rent">대여하기</button>
 									</form>
 								</c:when>
@@ -214,10 +228,11 @@
 							<c:when test="${avgScore >= 2.5}">★★★☆☆</c:when>
 							<c:when test="${avgScore >= 1.5}">★★☆☆☆</c:when>
 							<c:when test="${avgScore >= 0.5}">★☆☆☆☆</c:when>
+							<c:when test="${avgScore <0.5}">☆☆☆☆☆</c:when>
 						</c:choose>
 					</div>
 				</div>
-				<c:if test="${no != null }">
+				<c:if test="${memberNo != null }">
 					<button id="review-toggle-btn" class="btn btn-review-write">리뷰
 						쓰기</button>
 				</c:if>
@@ -235,7 +250,7 @@
 								<option value="1">1점</option>
 						</select>
 						</label>
-						<button type="submit" class="btn btn-review-submit">등록</button>
+						<button type="submit" class="btn btn-review-submit" id="submitBtn">등록</button>
 					</div>
 				</form>
 				<!--리뷰조회-->
@@ -370,40 +385,52 @@
 		 });
 	 }
 	 
+	// 리뷰 수정 버튼 클릭시
 	 function editReview(no, contents, score) {
-		    $("#review-form").show();
-		    $("textarea[name='content']").val(contents);
-		    $("select[name='score']").val(score);
+	     $("#review-form").show();
+	     $("textarea[name='content']").val(contents);
+	     $("select[name='score']").val(score);
 
-		    if ($("#reviewNo").length === 0) {
-		        $("#review-form").append('<input type="hidden" id="reviewNo" name="no" value="' + no + '">');
-		    } else {
-		        $("#reviewNo").val(no);
-		    }
-		}
-	 
-	 document.addEventListener('DOMContentLoaded', function() {
-		  const slides = document.querySelectorAll('.slide-image');
-		  const prevBtn = document.getElementById('prevBtn');
-		  const nextBtn = document.getElementById('nextBtn');
-		  let currentSlide = 0;
+	     // 수정 모드로 변경
+	     isUpdateMode = true;
+	     updateReviewNo = no;
 
-		  if (slides.length > 0) {
-		    slides[0].style.display = 'block'; // 첫 번째 이미지 보여주기
-		  }
+	     $("#submitBtn").text("수정"); // 버튼 텍스트 변경
+	 }
 
-		  prevBtn.addEventListener('click', function() {
-		    slides[currentSlide].style.display = 'none';
-		    currentSlide = (currentSlide - 1 + slides.length) % slides.length;
-		    slides[currentSlide].style.display = 'block';
-		  });
+	 // 리뷰 작성/수정 폼 제출
+	 $('#review-form').on('submit', function (e) {
+	     e.preventDefault(); // 기본 제출 막기
 
-		  nextBtn.addEventListener('click', function() {
-		    slides[currentSlide].style.display = 'none';
-		    currentSlide = (currentSlide + 1) % slides.length;
-		    slides[currentSlide].style.display = 'block';
-		  });
-		});
+	     const formData = {
+	         content: $('textarea[name="content"]').val(),
+	         score: $('select[name="score"]').val(),
+	         productNo: '${product.no}'
+	     };
+
+	     // 수정 모드일 경우 no도 추가
+	     if (isUpdateMode && updateReviewNo) {
+	         formData.no = updateReviewNo;
+	     }
+
+	     $.ajax({
+	         type: 'POST',
+	         url: isUpdateMode ? '${pageContext.request.contextPath}/reviewUpdate' : '${pageContext.request.contextPath}/reviewWrite',
+	         data: formData,
+	         success: function () {
+	             alert(isUpdateMode ? '리뷰가 수정되었습니다!' : '리뷰가 등록되었습니다!');
+	             $('#review-form')[0].reset();
+	             $('#review-form').hide();
+	             isUpdateMode = false; // 수정모드 해제
+	             updateReviewNo = null; // 수정번호 해제
+	             $("#submitBtn").text("등록"); // 버튼 텍스트 다시 원래대로
+	             $('#review-list-container').load('${pageContext.request.contextPath}/reviewList?productNo=${product.no}');
+	         },
+	         error: function () {
+	             alert(isUpdateMode ? '리뷰 수정 실패' : '리뷰 등록 실패');
+	         }
+	     });
+	 });
 	
 	 
 </script>

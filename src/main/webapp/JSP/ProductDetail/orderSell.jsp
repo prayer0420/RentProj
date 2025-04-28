@@ -13,6 +13,7 @@
 </head>
 
 <body>
+<input type="hidden" name="orderType" value="${orderType}">
 		<!-- 주문/결제 페이지 -->
 		<div class="order-container">
 			<h2 class="order-title">주문/결제</h2>
@@ -32,7 +33,7 @@
 			</div>
 
 			<div class="order-box">
-				<h3 class="order-subtitle">결제 정보</h3>
+				<h3 class="order-subtitle"></h3>
 				<div class="payment-row">
 					<span>상품 금액</span> <strong>${product.salePrice}원</strong>
 				</div>
@@ -85,10 +86,11 @@
 	      const productTitle = "${product.title}";
 	      const memberPhone = "${phone}".replace(/-/g, "");
 	      const memberName = "${nickname}";
+	      const orderType = "${orderType}"
 	      const price = parseInt("${product.salePrice + product.deliveryPrice}");
 	      console.log(price);
 	      
-	      const orderId = "ORDER_"+productNo+"_"+Date.now();//예 ORDER_1_2025-01-01
+	      const orderId = "ORDER_"+productNo+"_"+Date.now()+"_";//예 ORDER_1_2025-01-01
 	      // 회원 결제
 	      // @docs https://docs.tosspayments.com/sdk/v2/js#tosspaymentspayment
 	      const payment = tossPayments.payment({ customerKey });
@@ -129,7 +131,9 @@
 	          },
 	          orderId: orderId, // 고유 주문번호
 	          orderName: productTitle,
-	          successUrl: window.location.origin + "${pageContext.request.contextPath}/success" + "?deliveryAddr=" + encodeURIComponent(document.getElementById('deliveryAddressInput').value),
+	          successUrl: window.location.origin + "${pageContext.request.contextPath}/success" + "?deliveryAddr=" + 
+	        		  encodeURIComponent(document.getElementById('deliveryAddressInput').value)+ "&orderType=" +
+	        		  encodeURIComponent(document.querySelector('input[name="orderType"]').value),
 	          failUrl: window.location.origin + "/fail", // 결제 요청이 실패하면 리다이렉트되는 URL
 	          customerEmail: "",
 	          customerName: memberName,

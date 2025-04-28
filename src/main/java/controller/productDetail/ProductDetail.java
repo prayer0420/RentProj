@@ -48,6 +48,7 @@ public class ProductDetail extends HttpServlet {
 			request.setAttribute("avgScore", avgScore);
 			request.setAttribute("hasOrder", hasOrder);
 			request.setAttribute("checkOrder",checkOrder);
+			request.setAttribute("memberNo", memberNo);
 			System.out.println("product : "+product);	
 			System.out.println("no : "+no);	
 		}catch (Exception e) {

@@ -38,6 +38,7 @@ request.setCharacterEncoding("utf-8");
 		String phone = (String)request.getSession().getAttribute("phone");
 		System.out.println("phone:"+phone);
 		String nickname = (String)request.getSession().getAttribute("nickname");
+		String orderType = request.getParameter("tradeType");
 		ProductService service = new ProductServiceImpl();
 		
 		try {
@@ -50,6 +51,7 @@ request.setCharacterEncoding("utf-8");
 			request.setAttribute("product", product);
 			request.setAttribute("phone",phone);
 			request.setAttribute("nickname",nickname);
+			request.setAttribute("orderType", orderType);
 			request.getRequestDispatcher("/JSP/ProductDetail/orderRent.jsp").forward(request, response);
 		}catch(Exception e) {
 			e.printStackTrace();
