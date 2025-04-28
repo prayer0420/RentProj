@@ -37,7 +37,10 @@ public class CategoryDAOImpl implements CategoryDAO {
 
 	@Override
 	public Integer categoryMaxNo() throws Exception {
-		return sqlSession.selectOne("mapper.category.categoryMaxNo");
+        try (SqlSession session = MybatisSqlSessionFactory.getSqlSessionFactory().openSession()) {
+            Integer result = session.selectOne("mapper.category.categoryMaxNo");
+            return (result != null) ? result : 0; // null이면 0으로 대체
+        }
 		
 	}
 }

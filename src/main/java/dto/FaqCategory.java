@@ -26,6 +26,11 @@ public class FaqCategory {
 	public void setName(String name) {
 		this.name = name;
 	}
+
+	@Override
+	public String toString() {
+		return "FaqCategory [no=" + no + ", name=" + name + "]";
+	}
     
     
 }

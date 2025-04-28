@@ -36,37 +36,34 @@ public class CategoryCreate extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // 업로드 경로 설정 (webapp/upload 폴더)
+		// [1] 업로드 경로 및 업로드 파일 최대 크기 설정
         String path = request.getServletContext().getRealPath("upload");
-        int size = 50 * 1024 * 1024; // 최대 파일 크기: 10MB
+        int size = 50 * 1024 * 1024; // 최대 파일 크기: 50MB
 
-        // 파일 업로드 처리 (파일명 중복 시 자동 이름 변경)
+        // [2] MultipartRequest를 사용해 파일 업로드 처리 (중복 파일명은 자동 변경)
         MultipartRequest multi = new MultipartRequest(request, path, size, "utf-8", new DefaultFileRenamePolicy());
 
-        // form 데이터 파라미터 추출
+        // [3] 전송된 form 데이터 꺼내기
         String name = multi.getParameter("name"); // 카테고리명
         String imgFilename = multi.getFilesystemName("img"); // 업로드된 이미지 파일명
 
-        // DTO 객체 생성
+        // [4] DTO 객체 생성 및 값 설정
         Category category = new Category();
         category.setName(name);
         category.setImgFilename(imgFilename);
 
-        // 서비스 호출하여 DB에 등록
+        // [5] 서비스 호출해 DB에 저장
         try {
             CategoryService service = new CategoryServiceImpl();
             service.registerCategory(category);
 
-            // 클라이언트에게 JSON 또는 단순 텍스트로 응답 가능
-            response.setContentType("application/json; charset=utf-8");
-            response.getWriter().write("success");
-//            response.getWriter().write("{\"status\":\"success\"}");
-            
+            // 저장 성공 시: 카테고리 목록 페이지로 이동
             response.sendRedirect("categoryList");
         } catch (Exception e) {
             e.printStackTrace();
-            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-            response.getWriter().write("{\"status\":\"error\", \"message\":\"카테고리 등록 실패\"}");
+            // 저장 실패 시: 에러 페이지로 포워드
+            request.setAttribute("errorMessage", "카테고리 등록 실패");
+            request.getRequestDispatcher("JSP/Admin/error.jsp").forward(request, response);
         }
     }
 }

@@ -35,9 +35,9 @@ public class MySellDetail extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 		HttpSession session = request.getSession();
-		Member member = (Member) session.getAttribute("member");
+		String id = (String) session.getAttribute("id");
 		
-		if(member == null) {
+		if(id == null) {
 			// 로그인하지 않은 사용자: 로그인 페이지로 리다이렉트
 			response.sendRedirect(request.getContextPath() + "/JSP/Login/login.jsp");
 			return;
@@ -45,7 +45,6 @@ public class MySellDetail extends HttpServlet {
 		
 		try {
 			Integer orderNo = Integer.parseInt(request.getParameter("orderNo"));
-			String id = member.getId();
 			
 			MypageService service = new MypageServiceImpl();
 			Map<String, Object> mySellDetail = service.mySellDetail(orderNo, id);
@@ -57,6 +56,7 @@ public class MySellDetail extends HttpServlet {
 			}
 			
 			request.setAttribute("mySellDetail", mySellDetail);
+			request.setAttribute("orderNo", orderNo);
 			request.getRequestDispatcher("/JSP/MyPage/mySellDetail.jsp").forward(request, response);
 		}catch(Exception e){
 			e.printStackTrace();

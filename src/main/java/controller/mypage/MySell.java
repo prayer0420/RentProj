@@ -46,9 +46,9 @@ public class MySell extends HttpServlet {
 		PageInfo pageInfo = new PageInfo(page);
 		
 		HttpSession session = request.getSession(false);
-		Member member = (session != null)? (Member) session.getAttribute("member") : null;
+		String id = (session != null)? (String) session.getAttribute("id") : null;
 		
-		if(member == null) {
+		if(id == null) {
 			// 로그인하지 않은 사용자
 			request.setAttribute("loginId", null);	//JSP에서 분기 처리용
 			request.getRequestDispatcher("/JSP/MyPage/mySell.jsp").forward(request, response);
@@ -56,7 +56,6 @@ public class MySell extends HttpServlet {
 		}
 		
 		// 로그인 한 사용자
-		String id = member.getId();
 //		System.out.println("로그인ID: "+id);
 		MypageService service = new MypageServiceImpl();
 		try {
@@ -64,7 +63,7 @@ public class MySell extends HttpServlet {
 			request.setAttribute("pageInfo", pageInfo);
 			request.setAttribute("productList", productList);
 //			System.out.println(productList);
-			request.setAttribute("loginId", member); 	// JSP에서 로그인 사용자 정보 활용 가능
+			request.setAttribute("loginId", id); 	// JSP에서 로그인 사용자 정보 활용 가능
 			request.getRequestDispatcher("/JSP/MyPage/mySell.jsp").forward(request, response);
 		}catch (Exception e) {
 			e.printStackTrace();

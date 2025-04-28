@@ -7,12 +7,8 @@ import dao.category.CategoryDAOImpl;
 import dto.Category;
 
 public class CategoryServiceImpl implements CategoryService {
-	private CategoryDAO categoryDAO;
-	
-	public CategoryServiceImpl() {
-		categoryDAO = new CategoryDAOImpl();
-	}
-
+    private CategoryDAO categoryDAO = new CategoryDAOImpl();
+    
 	@Override
 	public List<Category> getAllCategories() throws Exception {
 		

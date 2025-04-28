@@ -42,6 +42,7 @@ public class InvoiceSetting extends HttpServlet {
 			boolean result = service.updateInvoiceInfo(orderNo,deliveryComp,invoiceNo);
 			
 			response.setContentType("application/json");
+			request.setAttribute("orderNo", orderNo);
 	        PrintWriter out = response.getWriter();
 	        out.print("{\"success\":" + result + "}");
 	        out.flush();

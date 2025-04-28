@@ -15,8 +15,8 @@
   <div class="container">
     <aside>
       <h3>회원관리</h3>
-      <div class="menu inactive">회원정보</div>
-      <div class="menu active">회원등급</div>
+      <div class="menu inactive"><a href="memberInfo" style="color: inherit; text-decoration: none;">회원정보</a></div>
+      <div class="menu active"><a href="memberGrade" style="color: inherit; text-decoration: none;">회원등급</a></div>
     </aside>
     <main>
       <div class="breadcrumb">HOME > 회원관리 > 회원등급</div>

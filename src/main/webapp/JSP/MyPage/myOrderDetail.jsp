@@ -25,6 +25,12 @@
           <h2>주문 상세</h2>
           <div class="divider"></div>
           
+          <c:choose>
+			<c:when test="${id eq null }">
+				<span> 로그인이 필요한 페이지입니다.</span>
+			</c:when>
+			<c:otherwise>
+			
           <div class="section product-box">
                 <img src="https://via.placeholder.com/120x100?text=🚲" alt="자전거">
                 <div class="product-info">
@@ -72,6 +78,10 @@
                     <p>결제방법: ${myOrderDetail.paymentType}</p>
                 </div>
             </div>
+            
+            </c:otherwise>
+            </c:choose>
+            
           </section>
         </div>
     </div>

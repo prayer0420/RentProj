@@ -19,6 +19,9 @@
 		<typeAlias type="dto.Mark" alias ="mark"/>
 		<typeAlias type="dto.Faq" alias ="faq"/>  
 		<typeAlias type="dto.FaqCategory" alias ="faqCategory"/>
+		<typeAlias type="dto.Announce" alias ="announce"/>
+		
+		
 	</typeAliases>
 	
   <environments default="pooled">
@@ -52,6 +55,7 @@
 		<mapper resource="mapper/review.xml"/>
 		<mapper resource="mapper/mark.xml"/>
 		<mapper resource="mapper/faq.xml"/>
+		<mapper resource="mapper/announce.xml"/>
 		
 	</mappers>
 </configuration>

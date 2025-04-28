@@ -58,11 +58,11 @@
 <div class="container">
   <aside>
     <h3>FAQ</h3>
-    <div class="menu active">FAQ 분류</div>
-    <div class="menu inactive">FAQ 등록</div>
+    <div class="menu active"><a href="faqCategory" style="color: inherit; text-decoration: none;">FAQ 분류</a></div>
+    <div class="menu inactive"><a href="faqCreate" style="color: inherit; text-decoration: none;">FAQ 등록</a></div>
     <div class="section-gap"></div>
     <h3>공지사항</h3>
-    <div class="menu inactive">공지사항 등록</div>
+    <div class="menu inactive"><a href="announceList" style="color: inherit; text-decoration: none;">공지사항 등록</a></div>
   </aside>
 
   <main>
