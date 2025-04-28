@@ -98,7 +98,7 @@
 		              </div>
 		              <div class="status-change-btns">
 		               <c:choose>
-		               	<c:when test="${item.deliveryStatus eq '상품게시중'}">
+		               	<c:when test="${item.orderNo eq null}">
 					        <button type="button" class="hide-btn" data-product-no="${item.no}">상품숨김</button>
 					        <button type="button" class="delete-btn" data-product-no="${item.no}">상품삭제</button>
 					        
@@ -128,9 +128,6 @@
         </section>
       </div>
     </div>
-					
-		
-
 
           <!-- 송장번호입력 모달 -->
           <jsp:include page="/JSP/MyPage/mypageModal.jsp" />
