@@ -24,7 +24,7 @@
 			p.salePrice AS salePrice,
 			p.secPrice As secPrice,
 			p.rentPrice As rentPrice,
-			p.img AS productImage,
+			p.img1 AS productImage,
 			p.deliveryAddr AS productLocation
 		FROM mark m
 		JOIN product p ON m.productNo = p.no
