@@ -1,5 +1,6 @@
 package controller.productRegister;
 
+import java.io.File;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
@@ -45,6 +46,10 @@ public class ProductRegisterRentSell extends HttpServlet {
 request.setCharacterEncoding("utf-8");
 		
 		String path = request.getServletContext().getRealPath("upload");
+		File uploadDir = new File(path);
+		if (!uploadDir.exists()) {
+		    uploadDir.mkdirs();
+		}
 		int size = 10*1024*1024;
 		
 		MultipartRequest multi = new MultipartRequest(request, path,size,"utf-8",new DefaultFileRenamePolicy());
@@ -69,33 +74,23 @@ request.setCharacterEncoding("utf-8");
 		String endDate = multi.getParameter("endDate");
 		Integer rentPrice = Integer.parseInt(multi.getParameter("rentPrice"));
 		String deliveryStatus = multi.getParameter("deliveryStatus");
-		// 최대 5개의 이미지 받아오기
-		String[] imgList = new String[5];
-		for (int i = 0; i < 5; i++) {
-			String fileName = multi.getFilesystemName("imgList"); // name 속성은 모두 imgList이기 때문에 getFilesystemName은 첫 번째 것만 반환
-			if (i == 0) {
-				imgList[i] = fileName;
-			} else {
-				imgList[i] = multi.getFilesystemName("imgList" + i); // 참고: 이건 동작하지 않음
-			}
-		}
-		// 대안: 직접 파싱 (MultipartRequest는 동일 name의 여러 파일을 다루기 어려움)
-		java.util.Enumeration<?> files = multi.getFileNames();
-		int idx = 0;
-		while (files.hasMoreElements() && idx < 5) {
-			String name = (String) files.nextElement();
-			String fileName = multi.getFilesystemName(name);
-			if (fileName != null) {
-				imgList[idx++] = fileName;
-			}
-		}
-		String img1 = imgList[0];
-		String img2 = imgList[1];
-		String img3 = imgList[2];
-		String img4 = imgList[3];
-		String img5 = imgList[4];
+
+		// 파일 받기
+				String[] imgList = new String[5];
+				imgList[0] = multi.getFilesystemName("imgList0");
+				imgList[1] = multi.getFilesystemName("imgList1");
+				imgList[2] = multi.getFilesystemName("imgList2");
+				imgList[3] = multi.getFilesystemName("imgList3");
+				imgList[4] = multi.getFilesystemName("imgList4");
+
+				// 최소 1장 체크
+				if (imgList[0] == null) {
+				    request.setAttribute("errorMsg", "상품 이미지는 최소 1장이 필요합니다.");
+				    request.getRequestDispatcher("/JSP/ProductRegister/ProductRegisterSell.jsp").forward(request, response);
+				    return;
+				}
 		
-		Product product = new Product(categoryNo, title, content, state, img1,img2,img3,img4,img5, deliveryAddr, deliveryPrice, tradeType, secPrice, memberNo, startDate, endDate, rentPrice, salePrice, deliveryStatus);
+		Product product = new Product(categoryNo, title, content, state, imgList[0],imgList[1],imgList[2],imgList[3],imgList[4], deliveryAddr, deliveryPrice, tradeType, secPrice, memberNo, startDate, endDate, rentPrice, salePrice, deliveryStatus);
 		ProductService service = new ProductServiceImpl();
 		try {
 			service.registRentSell(product);

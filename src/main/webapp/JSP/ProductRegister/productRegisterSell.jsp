@@ -39,7 +39,7 @@
 		const state2 = document.getElementById("state2");
 		const state3 = document.getElementById("state3");
 		const state4 = document.getElementById("state4");
-		const ifile = document.getElementById("ifile");
+		const ifile1 = document.getElementById("ifile1");
 		const content = document.getElementById("content");
 		const deliveryPrice = document.getElementById("deliveryPrice");
       
@@ -109,137 +109,98 @@
     } else if(!state1.checked && !state2.checked && !state3.checked && !state4.checked){
         e.preventDefault();
         alert("상품상태를 선택하셔야 합니다.");
-    } else if (content.value.trim() === "") {
-        e.preventDefault();
-        alert("상품에 대한 내용을 입력하셔야 합니다.");
-    }else if(document.querySelectorAll('.copied-image-input').length === 0 ||
-    	!Array.from(document.querySelectorAll('.copied-image-input')).some(input => input.files.length > 0)){
+    }else if(ifile1.files.length === 0){
     	e.preventDefault();
     	alert("상품 이미지를 선택하셔야 합니다.");
-  	}
+    }else if (content.value.trim() === "") {
+        e.preventDefault();
+        alert("상품에 대한 내용을 입력하셔야 합니다.");
+    }
     });
-      
       
       toggleDeliveryPrice();
-      createImageCard();
-    };
-    //이미지 파일
-var imageCount = 0;
-const MAX_IMAGES = 5;
-
-function createImageCard() {
-    if (imageCount >= MAX_IMAGES) return;
-
-    const container = document.getElementById('imageContainer');
-    const card = document.createElement('div');
-    card.className = 'image-card';
-
-    const img = document.createElement('img');
-    img.src = `${contextPath}/img/plus.jpg`;
-    img.style.cursor = 'pointer';
-
-    const input = document.createElement('input');
-    input.type = 'file';
-    input.accept = 'image/*';
-    input.name = `imgList${imageCount}`;   // ✅ input name을 바로 imageCount로 박는다
-    input.id = `ifile${imageCount}`;
-    input.classList.add('product-image');
-    input.style.display = 'none';
-
-    const deleteBtn = document.createElement('button');
-    deleteBtn.innerText = 'X';
-    deleteBtn.type = 'button';
-    deleteBtn.className = 'img-delete-btn';
-    deleteBtn.style.display = 'none';
-
-    deleteBtn.onclick = () => {
-        if (container.children.length > 1) {
-            container.removeChild(card);
-            imageCount--;
-        } else {
-            alert("이미지는 최소 1장 이상 등록해야 합니다.");
-        }
     };
 
-    img.addEventListener('click', () => input.click());
+    
+    let currentInputIndex = 0;
 
-    input.addEventListener('change', function () {
-        if (input.files && input.files[0]) {
-            const reader = new FileReader();
-            reader.onload = function (e) {
-                img.src = e.target.result;
-                deleteBtn.style.display = 'block';
-            };
-            reader.readAsDataURL(input.files[0]);
+    document.addEventListener('DOMContentLoaded', function() {
+      const addButton = document.getElementById('addImageButton');
 
-            // ✅ 파일 선택 후에 다음 카드 생성
-            if (container.querySelectorAll('.image-card').length < MAX_IMAGES) {
-                imageCount++;
-                createImageCard();
-            }
+      addButton.addEventListener('click', function() {
+        if (currentInputIndex >= 5) {
+          alert('최대 5장까지만 등록할 수 있습니다.');
+          return;
         }
+        document.getElementById('ifile' + currentInputIndex).click();
+      });
     });
 
-    card.appendChild(img);
-    card.appendChild(input);
-    card.appendChild(deleteBtn);
-    container.appendChild(card);
-}
+    // 하나의 파일 읽어서 미리보기 + 삭제버튼 추가
+    function readURL(input, index) {
+      if (input.files && input.files[0]) {
+        const previewArea = document.getElementById('previewArea');
 
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          // 미리보기 이미지 div 생성
+          const wrapper = document.createElement('div');
+          wrapper.style.position = 'relative';
+          wrapper.style.width = '100px';
+          wrapper.style.height = '100px';
+          wrapper.style.marginRight = '5px';
+          wrapper.style.marginBottom = '5px';
 
+          const img = document.createElement('img');
+          img.src = e.target.result;
+          img.style.width = '100%';
+          img.style.height = '100%';
+          img.style.objectFit = 'cover';
+          wrapper.appendChild(img);
 
-//✅ 모달 확인 버튼 클릭 시 선택 이미지 메인에 표시 및 실제 input 복사
-function confirmImages() {
-    console.log("✅ confirmImages 호출됨");
+          // 삭제 버튼 생성
+          const deleteBtn = document.createElement('button');
+          deleteBtn.innerText = 'X';
+          deleteBtn.style.position = 'absolute';
+          deleteBtn.style.top = '0';
+          deleteBtn.style.right = '0';
+          deleteBtn.style.backgroundColor = 'red';
+          deleteBtn.style.color = 'white';
+          deleteBtn.style.border = 'none';
+          deleteBtn.style.borderRadius = '50%';
+          deleteBtn.style.width = '20px';
+          deleteBtn.style.height = '20px';
+          deleteBtn.style.cursor = 'pointer';
+          deleteBtn.style.fontSize = '12px';
+          
+          deleteBtn.onclick = function() {
+            wrapper.remove(); // 미리보기 삭제
+            input.value = ""; // 해당 input 비워주기
 
-    const previewArea = document.getElementById('selectedImagePreview');
-    previewArea.innerHTML = '';
+            // 삭제하고나면 input index 다시 써야 하니까 currentInputIndex 하나 줄인다
+            currentInputIndex--;
+          };
 
-    const inputs = document.querySelectorAll('#imageContainer input[type="file"]');
-    let validImageCount = 0;
+          wrapper.appendChild(deleteBtn);
 
-    inputs.forEach((input) => {
-        if (input.files && input.files.length > 0) {  // ✅ 파일 있는 경우만
-            validImageCount++;
+          previewArea.appendChild(wrapper);
 
-            const file = input.files[0];
-
-            const img = document.createElement('img');
-            img.src = URL.createObjectURL(file);
-            img.style.width = '100px';
-            img.style.height = '100px';
-            img.style.objectFit = 'cover';
-            img.style.marginRight = '5px';
-            previewArea.appendChild(img);
+          currentInputIndex++;
         }
-    });
-
-    if (validImageCount === 0) {
-        alert("최소 한 장의 이미지를 선택해야 합니다.");
-    } else {
-        closeImageModal();
+        reader.readAsDataURL(input.files[0]);
+      }
     }
-}
 
 
+    // plus.jpg 클릭하면 input 파일창 열기
+    document.addEventListener('DOMContentLoaded', function() {
+    	const addButton = document.getElementById('addImageButton');
+    	const fileInput = document.getElementById('ifile');
 
-
-
-
-
-
-    function readURL(input, previewId) {
-    	  if (input.files && input.files[0]) {
-    	    const reader = new FileReader();
-    	    reader.onload = function (e) {
-    	      const img = document.getElementById(previewId);
-    	      if (img) {
-    	        img.src = e.target.result;
-    	      }
-    	    };
-    	    reader.readAsDataURL(input.files[0]);
-    	  }
-    	}
+    	addButton.addEventListener('click', function() {
+    		fileInput.click();
+    	});
+    });
     
     function toggleDeliveryPrice() {
         if (hand.checked) {
@@ -371,20 +332,27 @@ function confirmImages() {
 		</div>
 
 		<div class="container-image">
-			<h4>상품이미지</h4>
-			<button type="button" class="btn-open-modal-image"
-				onClick="openImageModal()">상품 이미지 선택</button>
-			<div id="selectedImagePreview" class="selected-image-preview"
-				style="display: flex; gap: 10px; margin-top: 10px;"></div>
-			<!-- 
-			<img alt="상품이미지" src="<%=request.getContextPath()%>/img/plus.jpg"
-				id="preview" onclick="document.getElementById('ifile').click();">
-			<input type="file" name="img" id="ifile" accept="image/*"
-				style="display: none" onchange="readURL(this)">
-			-->
-		</div>
-		<jsp:include page="productImageModal.jsp"></jsp:include>
+			<h4>상품이미지 (최대 5장)</h4>
+			<hr>
 
+			<div id="previewArea"
+				style="display: flex; gap: 10px; flex-wrap: wrap;">
+				<img alt="상품추가" src="<%=request.getContextPath()%>/img/plus.jpg"
+					id="addImageButton"
+					style="cursor: pointer; width: 100px; height: 100px; object-fit: cover;">
+			</div>
+
+			<input type="file" name="imgList0" id="ifile0" accept="image/*"
+				style="display: none" onchange="readURL(this, 0)"> <input
+				type="file" name="imgList1" id="ifile1" accept="image/*"
+				style="display: none" onchange="readURL(this, 1)"> <input
+				type="file" name="imgList2" id="ifile2" accept="image/*"
+				style="display: none" onchange="readURL(this, 2)"> <input
+				type="file" name="imgList3" id="ifile3" accept="image/*"
+				style="display: none" onchange="readURL(this, 3)"> <input
+				type="file" name="imgList4" id="ifile4" accept="image/*"
+				style="display: none" onchange="readURL(this, 4)">
+		</div>
 		<div class="container-content">
 			<textarea name="content" id="content" placeholder="내용을 입력하세요"></textarea>
 		</div>
@@ -392,4 +360,6 @@ function confirmImages() {
 	</form>
 	<jsp:include page="productAddressModal.jsp"></jsp:include>
 </body>
+<script>
+</script>
 </html>

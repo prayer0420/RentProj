@@ -310,8 +310,9 @@
 .container-image img {
 	margin-top: 40px;
 	text-align: left;
-	width: 200px;
-	height: 200px;
+	float:left;
+	width: 100px;
+	height: 100px;
 	background-color: white;
 	border: 1px solid rgb(228, 242, 220);
 }

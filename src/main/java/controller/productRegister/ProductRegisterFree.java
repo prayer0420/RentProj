@@ -48,39 +48,31 @@ public class ProductRegisterFree extends HttpServlet {
 		
 		MultipartRequest multi = new MultipartRequest(request, path,size,"utf-8",new DefaultFileRenamePolicy());
 	
-		Integer memberNo = Integer.parseInt(multi.getParameter("memberNo"));
+//		Integer memberNo = Integer.parseInt(multi.getParameter("memberNo"));
+		Integer memberNo = 1;
 		Integer categoryNo = Integer.parseInt(multi.getParameter("categoryNo"));
 		String title = multi.getParameter("title");
 		String content = multi.getParameter("content");
 		String deliveryAddr = multi.getParameter("deliveryAddr");
 		String tradeType = multi.getParameter("tradeType");
-		// 최대 5개의 이미지 받아오기
-		String[] imgList = new String[5];
-		for (int i = 0; i < 5; i++) {
-			String fileName = multi.getFilesystemName("imgList"); // name 속성은 모두 imgList이기 때문에 getFilesystemName은 첫 번째 것만 반환
-			if (i == 0) {
-				imgList[i] = fileName;
-			} else {
-				imgList[i] = multi.getFilesystemName("imgList" + i); // 참고: 이건 동작하지 않음
-			}
-		}
-		// 대안: 직접 파싱 (MultipartRequest는 동일 name의 여러 파일을 다루기 어려움)
-		java.util.Enumeration<?> files = multi.getFileNames();
-		int idx = 0;
-		while (files.hasMoreElements() && idx < 5) {
-			String name = (String) files.nextElement();
-			String fileName = multi.getFilesystemName(name);
-			if (fileName != null) {
-				imgList[idx++] = fileName;
-			}
-		}
-		String img1 = imgList[0];
-		String img2 = imgList[1];
-		String img3 = imgList[2];
-		String img4 = imgList[3];
-		String img5 = imgList[4];
+
+		// 파일 받기
+				String[] imgList = new String[5];
+				imgList[0] = multi.getFilesystemName("imgList0");
+				imgList[1] = multi.getFilesystemName("imgList1");
+				imgList[2] = multi.getFilesystemName("imgList2");
+				imgList[3] = multi.getFilesystemName("imgList3");
+				imgList[4] = multi.getFilesystemName("imgList4");
+
+				// 최소 1장 체크
+				if (imgList[0] == null) {
+				    request.setAttribute("errorMsg", "상품 이미지는 최소 1장이 필요합니다.");
+				    request.getRequestDispatcher("/JSP/ProductRegister/ProductRegisterSell.jsp").forward(request, response);
+				    return;
+				}
 		
-		Product product = new Product(categoryNo, title, content, img1,img2,img3,img4,img5,deliveryAddr ,tradeType, memberNo);
+		
+		Product product = new Product(categoryNo, title, content, imgList[0],imgList[1],imgList[2],imgList[3],imgList[4],deliveryAddr ,tradeType, memberNo);
 		
 		ProductService service = new ProductServiceImpl();
 		

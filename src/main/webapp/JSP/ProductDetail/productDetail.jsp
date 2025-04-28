@@ -21,8 +21,36 @@
 			<c:if test="${checkOrder}">이미 구매/대여된 상품입니다.</c:if>
 			<div class="product-layout">
 				<div class="product-image">
-					<img src="https://cdn-icons-png.flaticon.com/512/1041/1041916.png"
-						alt="버즈 이미지" />
+					<div class="slider">
+						<c:if test="${not empty product.img1}">
+							<img
+								src="${pageContext.request.contextPath}/upload/${product.img1}"
+								class="slide-image" style="display: none;">
+						</c:if>
+						<c:if test="${not empty product.img2}">
+							<img
+								src="${pageContext.request.contextPath}/upload/${product.img2}"
+								class="slide-image" style="display: none;">
+						</c:if>
+						<c:if test="${not empty product.img3}">
+							<img
+								src="${pageContext.request.contextPath}/upload/${product.img3}"
+								class="slide-image" style="display: none;">
+						</c:if>
+						<c:if test="${not empty product.img4}">
+							<img
+								src="${pageContext.request.contextPath}/upload/${product.img4}"
+								class="slide-image" style="display: none;">
+						</c:if>
+						<c:if test="${not empty product.img5}">
+							<img
+								src="${pageContext.request.contextPath}/upload/${product.img5}"
+								class="slide-image" style="display: none;">
+						</c:if>
+
+						<button id="prevBtn" class="slide-btn">◀</button>
+						<button id="nextBtn" class="slide-btn">▶</button>
+					</div>
 				</div>
 				<div class="product-details">
 					<div class="top-icons">
@@ -37,37 +65,37 @@
 						<!-- singo.jsp -->
 					</div>
 					<c:choose>
-					<c:when test="${product.categoryNo == 1}">
-						<div class="category">의류/패션/악세사리</div>
-					</c:when>
-					<c:when test="${product.categoryNo == 2}">
-						<div class="category">PC/모바일</div>
-					</c:when>
-					<c:when test="${product.categoryNo == 3}">
-						<div class="category">가전제품</div>
-					</c:when>
-					<c:when test="${product.categoryNo == 4}">
-						<div class="category">뷰티/미용</div>
-					</c:when>
-					<c:when test="${product.categoryNo == 5}">
-						<div class="category">캠핑/스포츠/레저</div>
-					</c:when>
-					<c:when test="${product.categoryNo == 6}">
-						<div class="category">생활/주방용품</div>
-					</c:when>
-					<c:when test="${product.categoryNo == 7}">
-						<div class="category">가구인테리어</div>
-					</c:when>
-					<c:when test="${product.categoryNo == 8}">
-						<div class="category">유아동/출산</div>
-					</c:when>
-					<c:when test="${product.categoryNo == 9}">
-						<div class="category">애완동물용품</div>
-					</c:when>
-					<c:when test="${product.categoryNo == 10}">
-						<div class="category">기타</div>
-					</c:when>
-					
+						<c:when test="${product.categoryNo == 1}">
+							<div class="category">의류/패션/악세사리</div>
+						</c:when>
+						<c:when test="${product.categoryNo == 2}">
+							<div class="category">PC/모바일</div>
+						</c:when>
+						<c:when test="${product.categoryNo == 3}">
+							<div class="category">가전제품</div>
+						</c:when>
+						<c:when test="${product.categoryNo == 4}">
+							<div class="category">뷰티/미용</div>
+						</c:when>
+						<c:when test="${product.categoryNo == 5}">
+							<div class="category">캠핑/스포츠/레저</div>
+						</c:when>
+						<c:when test="${product.categoryNo == 6}">
+							<div class="category">생활/주방용품</div>
+						</c:when>
+						<c:when test="${product.categoryNo == 7}">
+							<div class="category">가구인테리어</div>
+						</c:when>
+						<c:when test="${product.categoryNo == 8}">
+							<div class="category">유아동/출산</div>
+						</c:when>
+						<c:when test="${product.categoryNo == 9}">
+							<div class="category">애완동물용품</div>
+						</c:when>
+						<c:when test="${product.categoryNo == 10}">
+							<div class="category">기타</div>
+						</c:when>
+
 					</c:choose>
 					<div class="product-id">상품고유번호:${product.no}</div>
 					<div class="title">${product.title}</div>
@@ -214,11 +242,11 @@
 				<div id="review-list-container">
 					<jsp:include page="reviewList.jsp" />
 				</div>
-				
+
 				<!-- 달력 -->
 				<jsp:include page="calendarModal.jsp" />
 				<button onclick="openCalendar()">📅 대여 가능 날짜 보기</button>
-			
+
 			</div>
 		</div>
 	</div>
@@ -354,6 +382,28 @@
 		    }
 		}
 	 
+	 document.addEventListener('DOMContentLoaded', function() {
+		  const slides = document.querySelectorAll('.slide-image');
+		  const prevBtn = document.getElementById('prevBtn');
+		  const nextBtn = document.getElementById('nextBtn');
+		  let currentSlide = 0;
+
+		  if (slides.length > 0) {
+		    slides[0].style.display = 'block'; // 첫 번째 이미지 보여주기
+		  }
+
+		  prevBtn.addEventListener('click', function() {
+		    slides[currentSlide].style.display = 'none';
+		    currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+		    slides[currentSlide].style.display = 'block';
+		  });
+
+		  nextBtn.addEventListener('click', function() {
+		    slides[currentSlide].style.display = 'none';
+		    currentSlide = (currentSlide + 1) % slides.length;
+		    slides[currentSlide].style.display = 'block';
+		  });
+		});
 	
 	 
 </script>

@@ -9,7 +9,7 @@
 <div class="modal" id="imageModal" style="display: none;">
 	<div class="modal-content">
 		<div class="modal-header">
-			<button class="close" onclick="closeImageModal()">×</button>
+			<button type="button" class="close" onclick="closeImageModal()">×</button>
 			<h3>사진 추가</h3>
 		</div>
 		<div class="modal-img-list" id="imageContainer">
