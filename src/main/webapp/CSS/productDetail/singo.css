@@ -1,86 +1,93 @@
-@charset "UTF-8";
-
-body {
-	font-family: 'Noto Sans KR', sans-serif;
-	background: #eee;
+/* 신고하기 모달 전체 배경 */
+/* 신고하기 모달 전체 배경 */
+#reportModal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: none; /* 기본은 숨겨져 있음 */
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
 }
 
-.report {
-	width: 400px;
-	margin: 50px auto;
-	background: #fff;
-	border-radius: 8px;
-	padding: 20px;
-	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+/* 모달 내부 박스 */
+#reportModal .modal-content {
+  background: #fffdf9;
+  padding: 30px;
+  border-radius: 20px;
+  width: 400px;
+  max-width: 90%;
+  text-align: center;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+  transform: translateY(100px); /* 처음에는 아래쪽에 살짝 숨겨진 상태 */
+  opacity: 0; /* 투명 */
+  transition: all 0.4s ease; /* 부드럽게 */
 }
 
-.report h3 {
-	margin-top: 0;
+/* 모달이 열릴 때 활성화시키는 클래스 */
+#reportModal.active .modal-content {
+  transform: translateY(0); /* 위로 올라옴 */
+  opacity: 1; /* 완전히 보임 */
 }
 
-.report select, .report input, .report textarea {
-	width: 100%;
-	padding: 10px;
-	margin-top: 10px;
-	box-sizing: border-box;
-	border: 1px solid #ccc;
-	border-radius: 6px;
+/* 신고 모달 제목 */
+#reportModal .modal-content h2 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 22px;
+  font-weight: bold;
 }
 
-.report textarea {
-	resize: vertical;
-	height: 100px;
+/* 신고 모달 select, textarea 공통 */
+#reportModal input[type="text"],
+#reportModal select,
+#reportModal textarea {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0 20px 0;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-sizing: border-box;
 }
 
-.report .btn-submit {
-	margin-top: 20px;
-	background: #38b8ab;
-	border: none;
-	color: white;
-	font-weight: bold;
-	padding: 12px;
-	width: 100%;
-	border-radius: 6px;
-	cursor: pointer;
+/* input 포커스 스타일 (선택시 효과) */
+#reportModal input[type="text"]:focus,
+#reportModal select:focus,
+#reportModal textarea:focus {
+  border-color: #4a90e2;
+  outline: none;
 }
 
-.report .btn-cancel {
-	background: #ccc;
-	color: #333;
+/* 신고 모달 버튼 영역 */
+#reportModal .modal-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
 }
 
-.error-text {
-	color: red;
-	font-size: 13px;
-	margin-top: 5px;
+/* 각 버튼 공통 스타일 */
+#reportModal .modal-buttons button {
+  flex: 1;
+  margin: 0 5px;
+  padding: 10px;
+  font-size: 15px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
 }
 
-.hidden {
-	display: none;
+/* 보내기 버튼 (초록) */
+#reportModal .modal-buttons .submit-btn {
+  background-color: #28a745; /* 초록색 */
+  color: white;
 }
 
-.confirm-box, .complete-box {
-	text-align: center;
-	padding: 30px 10px;
-}
-
-.confirm-box button, .complete-box button {
-	padding: 10px 20px;
-	margin: 10px;
-	border: none;
-	border-radius: 5px;
-}
-
-.confirm-box .cancel {
-	background: #ccc;
-}
-
-.confirm-box .ok {
-	background: #e53935;
-	color: white;
-	cursor: pointer;
-}
-
-.complete-box .close {
-	cursor: pointer;
+/* 닫기 버튼 (회색) */
+#reportModal .modal-buttons .cancel-btn {
+  background-color: #e0e0e0; /* 밝은 회색 */
+  color: #333;
 }

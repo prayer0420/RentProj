@@ -16,4 +16,5 @@ public interface ReviewService {
     List<Order> getWritableReviewList(Integer memberNo) throws Exception;
     List<Review> getMyReviewList(Integer memberNo) throws Exception;
     List<Review> getMyProductReviewList(Integer memberNo) throws Exception;
+	void updateReview(Review review) throws Exception;
 }

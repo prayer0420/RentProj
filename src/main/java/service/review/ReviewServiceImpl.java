@@ -51,4 +51,9 @@ public class ReviewServiceImpl implements ReviewService {
 	        return reviewDAO.getMyProductReviewList(memberNo);
 	    }
 
+	@Override
+	public void updateReview(Review review) throws Exception {
+		reviewDAO.updateReview(review);
+	}
+
 }

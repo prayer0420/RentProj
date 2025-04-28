@@ -6,6 +6,16 @@ import dto.Faq;
 import dto.FaqCategory;
 
 public interface FaqDAO {
+
+
+    // FAQ 카테고리 추가
+    FaqCategory insertFaqCategory(FaqCategory category);
+    
+    List<Faq> selectAllFaq()throws Exception;
+    
+    Faq selectOne(Integer no) throws Exception;
+    
+    
     int insertFaq(Faq faq); // 등록
     int updateFaq(Faq faq); // 수정
     int deleteFaqList(int[] faqNos); // 다건 삭제

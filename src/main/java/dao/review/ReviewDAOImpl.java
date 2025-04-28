@@ -51,4 +51,11 @@ public class ReviewDAOImpl implements ReviewDAO {
         return session.selectList("mapper.review.getMyProductReviewList", memberNo);
     }
 
+	@Override
+	public void updateReview(Review review) throws Exception {
+		session.update("mapper.review.updateReview",review);
+		session.commit();
+		
+	}
+
 }

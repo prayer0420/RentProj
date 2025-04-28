@@ -12,26 +12,6 @@
 			<h3>배송지 목록</h3>
 		</div>
 		<div class="modal-address-list">
-			<%--       <c:choose>
-        <c:when test="${not empty addressList}">
-          <c:forEach var="addr" items="${addressList}">
-            <jsp:include page="addressCard.jsp">
-              <jsp:param name="id" value="${addr.id}" />
-              <jsp:param name="alias" value="${addr.alias}" />
-              <jsp:param name="recipient" value="${addr.recipient}" />
-              <jsp:param name="phone" value="${addr.phone}" />
-              <jsp:param name="zipcode" value="${addr.zipcode}" />
-              <jsp:param name="address" value="${addr.address}" />
-              <jsp:param name="detail" value="${addr.detail}" />
-              <jsp:param name="memo" value="${addr.memo}" />
-              <jsp:param name="isDefault" value="${addr.isDefault}" />
-            </jsp:include>
-          </c:forEach>
-        </c:when>
-        <c:otherwise>
-          <p class="empty-text">등록된 배송지가 없습니다.</p>
-        </c:otherwise>
-      </c:choose> --%>
 		</div>
 			<c:if test="${address1!=null}">
 				<div class="address-card">

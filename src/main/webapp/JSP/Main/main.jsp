@@ -20,7 +20,7 @@
 <section class="banner">
   <div class="banner-container">
     <h2>RE:NT에서 렌트하세요!</h2>
-    <a href="../Service/service.jsp"><button>이용가이드 &gt;</button></a>
+    <a href="${contextPath}/service"><button>이용가이드 &gt;</button></a>
   </div>
   <div class="banner-img">
     <img src="${contextPath}/img/rent.jpg" alt="이벤트 이미지">
@@ -33,12 +33,13 @@
   <div class="product-grid">
     <c:forEach var="p" items="${popularList}">
       <div class="product-card">
+        <img src="${p.img1}" alt="">
         <c:choose>
-          <c:when test="${empty p.img}">
+          <c:when test="${empty p.img1}">
             <img src="${contextPath}/img/default_product.png" alt="기본 이미지" loading="lazy"/>
           </c:when>
           <c:otherwise>
-            <img src="${p.img}" alt="${p.title}" loading="lazy" />
+            <img src="${p.img1}" alt="${p.title}" loading="lazy" />
           </c:otherwise>
         </c:choose>
         <div class="product-name">${p.title}</div>
@@ -62,12 +63,13 @@
   <div class="product-grid">
     <c:forEach var="p" items="${localList}">
       <div class="product-card">
+        <img src="${p.img1}" alt="">
         <c:choose>
-          <c:when test="${empty p.img}">
+          <c:when test="${empty p.img1}">
             <img src="${contextPath}/img/default_product.png" alt="기본 이미지" />
           </c:when>
           <c:otherwise>
-            <img src="${p.img}" alt="${p.title}" />
+            <img src="${p.img1}" alt="${p.title}" />
           </c:otherwise>
         </c:choose>
         <div class="product-name">${p.title}</div>

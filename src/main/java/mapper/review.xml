@@ -15,8 +15,8 @@
 	</delete>
 	
 	<!-- 리뷰수정 -->
-	<update id="updateReview" parameterType="int">
-		update review set contents=#{contents} where memberNo=#{memberNo}
+	<update id="updateReview" parameterType="review">
+		update review set contents=#{contents}, score=#{score}, date=#{date} where no=#{no}
 	</update>
 
 

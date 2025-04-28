@@ -71,12 +71,13 @@ public class Order {
 	
 
 	// 일반 구매(보증금, 대여기간 없음)
-	public Order(Integer memberNo, Integer price, Integer productNo, String deliveryAddr,String orderId) {
+	public Order(Integer memberNo, Integer price, Integer productNo, String deliveryAddr,String orderId,String orderType) {
 		this.memberNo = memberNo;
 		this.price = price;
 		this.productNo = productNo;
 		this.deliveryAddr = deliveryAddr;
 		this.orderId=orderId;
+		this.orderType=orderType;
 	}
 	
 	// 나눔(택배 경우)

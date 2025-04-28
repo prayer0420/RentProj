@@ -24,6 +24,16 @@ public class ReportedProduct {
 	 // 필드명은 'hide'로 하고 getter는 'isHide()'로 작성하는 것이 일반적인 패턴
     private boolean hide;
     
+    public ReportedProduct() {}
+    
+    public ReportedProduct(int memberNo,String contents,String type,String title,int productNo) {
+    	this.memberNo=memberNo;
+    	this.contents=contents;
+    	this.type=type;
+    	this.title=title;
+    	this.productNo=productNo;
+    }
+    
 	public int getReportNo() {
 		return reportNo;
 	}

@@ -35,6 +35,8 @@ public class OrderSuccess extends HttpServlet {
 	    String amount = request.getParameter("amount");
 	    Product product =(Product) request.getAttribute("product");
 	    
+	    String orderType = (String)request.getParameter("orderType");
+	    
 	    String deliveryAddr = request.getParameter("deliveryAddr");
 	    
 
@@ -50,6 +52,7 @@ public class OrderSuccess extends HttpServlet {
 	    request.setAttribute("productNo",productNo);
 	    request.setAttribute("product",product);
 	    request.setAttribute("deliveryAddr", deliveryAddr);
+	    request.setAttribute("orderType",orderType);
 	    
 	    //confirm서블릿으로 넘기기
 		request.getRequestDispatcher("/confirm").forward(request, response);

@@ -19,7 +19,7 @@
 		<typeAlias type="dto.Mark" alias ="mark"/>
 		<typeAlias type="dto.Faq" alias ="faq"/>  
 		<typeAlias type="dto.FaqCategory" alias ="faqCategory"/>
-		<typeAlias type="dto.Announce" alias ="announce"/>
+		<typeAlias type="dto.Announce" alias="announce"/>
 		
 		
 	</typeAliases>

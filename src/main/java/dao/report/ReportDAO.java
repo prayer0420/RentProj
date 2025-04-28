@@ -2,6 +2,7 @@ package dao.report;
 
 import java.util.List;
 
+import controller.report.Report;
 import dto.ReportedProduct;
 
 public interface ReportDAO {
@@ -17,6 +18,8 @@ public interface ReportDAO {
     int getNewReportsCount(); 
     // 신고 상태 업데이트 (처리된 상태로)
     boolean updateReportStatus(int productNo);
+    
+    void insertReport(ReportedProduct report) throws Exception;
     
 	
 }

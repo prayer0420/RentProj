@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 
+import controller.report.Report;
 import dto.ReportQueryParams;
 import dto.ReportedProduct;
 import utils.MybatisSqlSessionFactory;
@@ -114,5 +115,12 @@ public class ReportDAOImpl implements ReportDAO {
 	        e.printStackTrace();
 	        return false;
 	    }
+	}
+
+	@Override
+	public void insertReport(ReportedProduct report) throws Exception {
+		sqlSession.insert("mapper.report.insertReport",report);
+		sqlSession.commit();
+		
 	}
 }
