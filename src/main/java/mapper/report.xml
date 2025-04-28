@@ -96,7 +96,13 @@
 	    SET status = 'processed' 
 	    WHERE productNo = #{no}  <!-- productNo로 해당 신고된 상품을 찾기 -->
 	</update>
+
+  <!-- 신고하기 -->
+  	<insert id="insertReport" parameterType="report" useGeneratedKeys="true" keyProperty="no">
+  		insert into report (no,memberNo,contents,type,title,productNo) values(#{reportNo},#{memberNo},#{contents},#{type},#{title},#{productNo})
+  	</insert>
+
 	
-	</mapper>
+</mapper>
 	
 	

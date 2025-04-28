@@ -1,16 +1,24 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="contextPath" value="${pageContext.request.contextPath}" />
 
-<link rel="stylesheet" href="${pageContext.request.contextPath}/CSS/ProductList/productList.css" />
-
+<link rel="stylesheet" href="${contextPath}/CSS/ProductList/productList.css" />
 <div class="products-container">
   <div class="products">
     <c:forEach var="p" items="${productList}">
-    <a href="${pageContext.request.contextPath}/productDetail?no=${p.no}&tradeType=${p.tradeType}">
+    <a href="${contextPath}/productDetail?no=${p.no}&tradeType=${p.tradeType}">
       <div class="product-card">
         <!-- 상품 이미지 -->
-        <img src="${p.img}" alt="${p.title}" />
+        
+		<c:choose>
+		  <c:when test="${empty p.img1}">
+		    <img src="${contextPath}/img/default_product.png" alt="기본 이미지" loading="lazy"/>
+		  </c:when>
+		  <c:otherwise>
+		    <img src="${contextPath}/upload/${p.img1}" alt="${p.title}" loading="lazy"/>
+		  </c:otherwise>
+		</c:choose>
 
         <!-- 상품 제목 -->
         <div class="product-title">${p.title}</div>
@@ -34,19 +42,45 @@
         <!-- 업로드된 시간 표시 -->
         <div class="product-meta">${p.timeAgo}</div>
       </div>
+      </a>
     </c:forEach>
   </div>
 </div>
-</a>
-<!-- 페이징 -->
-<div id="paging">
-  <c:if test="${pageInfo.curPage > 1}">
-    <a href="#" data-page="${pageInfo.curPage - 1}">&lt;</a>
-  </c:if>
-  <c:forEach begin="${pageInfo.startPage}" end="${pageInfo.endPage}" var="i">
-    <a href="#" data-page="${i}" class="${i == pageInfo.curPage ? 'select':'btn'}">${i}</a>
-  </c:forEach>
-  <c:if test="${pageInfo.curPage < pageInfo.allPage}">
-    <a href="#" data-page="${pageInfo.curPage + 1}">&gt;</a>
-  </c:if>
-</div>
+
+<!-- 페이징: 항상 출력되도록 고정 -->
+<c:if test="${pageInfo.allPage > 1}">
+  <div id="paging">
+  
+    <%-- 이전 화살표 (첫 페이지엔 disabled) --%>
+    <c:choose>
+      <c:when test="${pageInfo.curPage == 1}">
+        <span class="disabled">&laquo;</span>
+      </c:when>
+      <c:otherwise>
+        <a href="#" data-page="${pageInfo.curPage - 1}">&laquo;</a>
+      </c:otherwise>
+    </c:choose>
+
+    <%-- 1부터 allPage까지 번호 쭉 뿌리기 --%>
+    <c:forEach var="i" begin="1" end="${pageInfo.allPage}">
+      <c:choose>
+        <c:when test="${pageInfo.curPage == i}">
+          <span class="active">${i}</span>
+        </c:when>
+        <c:otherwise>
+          <a href="#" data-page="${i}">${i}</a>
+        </c:otherwise>
+      </c:choose>
+    </c:forEach>
+
+    <%-- 다음 화살표 (마지막 페이지엔 disabled) --%>
+    <c:choose>
+      <c:when test="${pageInfo.curPage == pageInfo.allPage}">
+        <span class="disabled">&raquo;</span>
+      </c:when>
+      <c:otherwise>
+        <a href="#" data-page="${pageInfo.curPage + 1}">&raquo;</a>
+      </c:otherwise>
+    </c:choose>
+  </div>
+</c:if>

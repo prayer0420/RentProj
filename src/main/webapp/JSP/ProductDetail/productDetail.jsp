@@ -21,8 +21,45 @@
 			<c:if test="${checkOrder}">이미 구매/대여된 상품입니다.</c:if>
 			<div class="product-layout">
 				<div class="product-image">
-					<img src="https://cdn-icons-png.flaticon.com/512/1041/1041916.png"
-						alt="버즈 이미지" />
+					<div class="slider">
+						<c:if test="${not empty product.img1}">
+							<img
+								src="${pageContext.request.contextPath}/upload/${product.img1}"
+								class="slide-image" style="display: none;">
+						</c:if>
+						<c:if test="${not empty product.img2}">
+							<img
+								src="${pageContext.request.contextPath}/upload/${product.img2}"
+								class="slide-image" style="display: none;">
+						</c:if>
+						<c:if test="${not empty product.img3}">
+							<img
+								src="${pageContext.request.contextPath}/upload/${product.img3}"
+								class="slide-image" style="display: none;">
+						</c:if>
+						<c:if test="${not empty product.img4}">
+							<img
+								src="${pageContext.request.contextPath}/upload/${product.img4}"
+								class="slide-image" style="display: none;">
+						</c:if>
+						<c:if test="${not empty product.img5}">
+							<img
+								src="${pageContext.request.contextPath}/upload/${product.img5}"
+								class="slide-image" style="display: none;">
+						</c:if>
+
+						<!-- 이미지 하나도 없을 경우 기본이미지 -->
+						<c:if
+							test="${empty product.img1 and empty product.img2 and empty product.img3 and empty product.img4 and empty product.img5}">
+							<img
+								src="${pageContext.request.contextPath}/img/default_product.png"
+								class="slide-image" style="display: none;">
+						</c:if>
+
+						<button id="prevBtn" class="slide-btn">&lt;</button>
+						<button id="nextBtn" class="slide-btn">&gt;</button>
+						<div id="slideCounter" class="slide-counter">1 / 1</div>
+					</div>
 				</div>
 				<div class="product-details">
 					<div class="top-icons">
@@ -33,11 +70,43 @@
 								<c:otherwise>♡</c:otherwise>
 							</c:choose>
 						</button>
-						<button class="btn-inquiry">🚩</button>
-						<!-- singo.jsp -->
+						<button type="button" class="btn-inquiry" onclick="openReportModal()">🚩</button>
+						<!-- singo.jsp --> 
 					</div>
-					<div class="category">${product.categoryNo}</div>
-					<div class="product-id">${product.no}</div>
+					<c:choose>
+						<c:when test="${product.categoryNo == 1}">
+							<div class="category">의류/패션/악세사리</div>
+						</c:when>
+						<c:when test="${product.categoryNo == 2}">
+							<div class="category">PC/모바일</div>
+						</c:when>
+						<c:when test="${product.categoryNo == 3}">
+							<div class="category">가전제품</div>
+						</c:when>
+						<c:when test="${product.categoryNo == 4}">
+							<div class="category">뷰티/미용</div>
+						</c:when>
+						<c:when test="${product.categoryNo == 5}">
+							<div class="category">캠핑/스포츠/레저</div>
+						</c:when>
+						<c:when test="${product.categoryNo == 6}">
+							<div class="category">생활/주방용품</div>
+						</c:when>
+						<c:when test="${product.categoryNo == 7}">
+							<div class="category">가구인테리어</div>
+						</c:when>
+						<c:when test="${product.categoryNo == 8}">
+							<div class="category">유아동/출산</div>
+						</c:when>
+						<c:when test="${product.categoryNo == 9}">
+							<div class="category">애완동물용품</div>
+						</c:when>
+						<c:when test="${product.categoryNo == 10}">
+							<div class="category">기타</div>
+						</c:when>
+
+					</c:choose>
+					<div class="product-id">상품고유번호:${product.no}</div>
 					<div class="title">${product.title}</div>
 
 					<c:choose>
@@ -71,6 +140,7 @@
 										<c:when test="${avgScore >= 2.5}">★★★☆☆</c:when>
 										<c:when test="${avgScore >= 1.5}">★★☆☆☆</c:when>
 										<c:when test="${avgScore >= 0.5}">★☆☆☆☆</c:when>
+										<c:when test="${avgScore <0.5}">☆☆☆☆☆</c:when>
 									</c:choose>
 								</span>
 							</div>
@@ -78,8 +148,8 @@
 					</div>
 
 					<div class="likes-views">
-						<div>❤️ {}</div>
-						<div>👁️ ${product.viewCnt}</div>
+						<div>❤️</div>
+						<div>👁️</div>
 					</div>
 					<div class="btn-box">
 						<c:if test="${hasOrder}">
@@ -92,6 +162,7 @@
 										action="${pageContext.request.contextPath}/productSellOrder"
 										method="get">
 										<input type="hidden" name="productNo" value="${product.no}" />
+										<input type="hidden" name="tradeType" value="${product.tradeType}" />
 										<button class="btn btn-sell">구매하기</button>
 									</form>
 								</c:when>
@@ -100,6 +171,7 @@
 										action="${pageContext.request.contextPath}/productRentOrder"
 										method="get">
 										<input type="hidden" name="productNo" value="${product.no}" />
+										<input type="hidden" name="tradeType" value="${product.tradeType}" />
 										<button class="btn btn-sell">대여하기</button>
 									</form>
 								</c:when>
@@ -108,12 +180,14 @@
 										action="${pageContext.request.contextPath}/productSellOrder"
 										method="get">
 										<input type="hidden" name="productNo" value="${product.no}" />
+										<input type="hidden" name="tradeType" value="${product.tradeType}" />
 										<button class="btn btn-sell">구매하기</button>
 									</form>
 									<form
 										action="${pageContext.request.contextPath}/productRentOrder"
 										method="get">
 										<input type="hidden" name="productNo" value="${product.no}" />
+										<input type="hidden" name="tradeType" value="${product.tradeType}" />
 										<button class="btn btn-rent">대여하기</button>
 									</form>
 								</c:when>
@@ -154,17 +228,18 @@
 							<c:when test="${avgScore >= 2.5}">★★★☆☆</c:when>
 							<c:when test="${avgScore >= 1.5}">★★☆☆☆</c:when>
 							<c:when test="${avgScore >= 0.5}">★☆☆☆☆</c:when>
+							<c:when test="${avgScore <0.5}">☆☆☆☆☆</c:when>
 						</c:choose>
 					</div>
 				</div>
-				<c:if test="${no != null }">
+				<c:if test="${memberNo != null }">
 					<button id="review-toggle-btn" class="btn btn-review-write">리뷰
 						쓰기</button>
 				</c:if>
 				<!--리뷰 작성-->
 				<form id="review-form" class="review-form" style="display: none;">
-					<input type="hidden" name="productNo" value="${product.no} }" /> <input
-						type="hidden" name="memberNo" value="${member.no} }" />
+					<input type="hidden" name="productNo" value="${product.no}" /> <input
+						type="hidden" name="memberNo" value="${member.no}" />
 					<div class="review-input-row">
 						<textarea name="content" placeholder="리뷰 내용을 입력하세요"></textarea>
 						<label class="rating-box"> 평점: <select name="score">
@@ -175,7 +250,7 @@
 								<option value="1">1점</option>
 						</select>
 						</label>
-						<button type="submit" class="btn btn-review-submit">등록</button>
+						<button type="submit" class="btn btn-review-submit" id="submitBtn">등록</button>
 					</div>
 				</form>
 				<!--리뷰조회-->
@@ -183,7 +258,10 @@
 					<jsp:include page="reviewList.jsp" />
 				</div>
 
-			
+				<!-- 달력 -->
+				<jsp:include page="calendarModal.jsp" />
+				<button onclick="openCalendar()">📅 대여 가능 날짜 보기</button>
+
 			</div>
 		</div>
 	</div>
@@ -197,9 +275,15 @@
 </body>
 
 <jsp:include page="messageModal.jsp">
-	<jsp:param value="${product.no }" name="productNo" />
-	<jsp:param value="${product.tradeType }" name="tradeType" />
+	<jsp:param value="${product.no}" name="productNo" />
+	<jsp:param value="${product.tradeType}" name="tradeType" />
 </jsp:include>
+<jsp:include page="report.jsp">
+	<jsp:param value="${product.no}" name="productNo"/>
+	<jsp:param value="${product.tradeType}" name="tradeType"/>
+</jsp:include>
+
+
 
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -225,45 +309,70 @@
     }
     //쪽지보내기 모달
 	function openMessageModal() {
-	  document.getElementById('messageModal').style.display = 'flex';
+	  const modal = document.getElementById('messageModal');
+	  modal.style.display = 'flex';
+	  // 약간의 delay 후 활성화
+	   setTimeout(() => {
+	     modal.classList.add('active');
+	   }, 10); // 10ms 딜레이를 줘야 transition이 먹힘
 	}
 	
 	function closeMessageModal() {
-	  document.getElementById('messageModal').style.display = 'none';
+	  const modal = document.getElementById('messageModal');
+	  modal.style.display = 'none';
+	  modal.classList.remove('active');
+	   
+	   // 애니메이션 끝나고 display:none 처리
+	   setTimeout(() => {
+	     modal.style.display = 'none';
+	   }, 400); // transition 시간과 동일 (0.4초)
 	}
 	
-	 $('#review-form').on('submit', function (e) {
-		    e.preventDefault(); // 기본 제출 막기
+	$('#review-form').on('submit', function (e) {
+		  e.preventDefault(); // 기본 제출 막기
 
-		    const formData = {
-		      content: $('textarea[name="content"]').val(),
-		      score: $('select[name="score"]').val(),
-		      productNo: '${product.no}'
-		    };
+		  const reviewNo = $('#reviewNo').val(); // 수정 시 존재함
+		  const isUpdate = !!reviewNo;
 
-		    $.ajax({
-		      type: 'POST',
-		      url: '${pageContext.request.contextPath}/reviewWrite', // ← 리뷰 등록 서블릿
-		      data: formData,
-		      success: function () {
-		        alert('리뷰가 등록되었습니다!');
-		        $('#review-form')[0].reset();
-		        $('#review-form').hide();
+		  const formData = {
+		    content: $('textarea[name="content"]').val(),
+		    score: $('select[name="score"]').val(),
+		    productNo: '${product.no}'
+		  };
 
-		        // 🔁 리뷰 리스트를 다시 불러오기
-		        $('#review-list-container').load('${pageContext.request.contextPath}/reviewList?productNo=${product.no}');
-		      },
-		      error: function () {
-		        alert('리뷰 등록에 실패했습니다.');
-		      }
-		    });
+		  if (isUpdate) {
+		    formData.no = reviewNo; // 수정 시 필요
+		  }
+
+		  console.log("보낼 데이터:", formData); // 디버깅용
+
+		  $.ajax({
+		    type: 'POST',
+		    url: isUpdate ? '${pageContext.request.contextPath}/reviewUpdate' : '${pageContext.request.contextPath}/reviewWrite',
+		    data: formData,
+		    success: function () {
+		      alert(isUpdate ? '리뷰가 수정되었습니다!' : '리뷰가 등록되었습니다!');
+		      $('#review-form')[0].reset();
+		      $('#review-form').hide();
+		      $('#reviewNo').remove(); // 수정용 hidden 필드 제거
+		      $('#review-list-container').load('${pageContext.request.contextPath}/reviewList?productNo=${product.no}');
+		    },
+		    error: function () {
+		      alert(isUpdate ? '리뷰 수정 실패' : '리뷰 등록 실패');
+		    }
 		  });
+		});
+
 	
 	 $('#review-list-container').load(
 		'${pageContext.request.contextPath}/reviewList?productNo=${product.no}'		 
 	 )
 	 
 	 function toggleMark(btn,productNo){
+		 if ('${memberNo}' === '' || '${memberNo}' === 'null') {
+		        alert('로그인이 필요합니다.');
+		        return;
+		    }
 		 $.ajax({
 			url:contextPath + "/markProduct",
 			type:"post",
@@ -296,6 +405,147 @@
 		 });
 	 }
 	 
+	// 리뷰 수정 버튼 클릭시
+	 function editReview(no, contents, score) {
+	     $("#review-form").show();
+	     $("textarea[name='content']").val(contents);
+	     $("select[name='score']").val(score);
+
+	     // 수정 모드로 변경
+	     isUpdateMode = true;
+	     updateReviewNo = no;
+
+	     $("#submitBtn").text("수정"); // 버튼 텍스트 변경
+	 }
 	
-	
+	 // 리뷰 작성/수정 폼 제출
+	 $('#review-form').on('submit', function (e) {
+	     e.preventDefault(); // 기본 제출 막기
+
+	     const formData = {
+	         content: $('textarea[name="content"]').val(),
+	         score: $('select[name="score"]').val(),
+	         productNo: '${product.no}'
+	     };
+
+	     // 수정 모드일 경우 no도 추가
+	     if (isUpdateMode && updateReviewNo) {
+	         formData.no = updateReviewNo;
+	     }
+
+	     $.ajax({
+	         type: 'POST',
+	         url: isUpdateMode ? '${pageContext.request.contextPath}/reviewUpdate' : '${pageContext.request.contextPath}/reviewWrite',
+	         data: formData,
+	         success: function () {
+	             alert(isUpdateMode ? '리뷰가 수정되었습니다!' : '리뷰가 등록되었습니다!');
+	             $('#review-form')[0].reset();
+	             $('#review-form').hide();
+	             isUpdateMode = false; // 수정모드 해제
+	             updateReviewNo = null; // 수정번호 해제
+	             $("#submitBtn").text("등록"); // 버튼 텍스트 다시 원래대로
+	             $('#review-list-container').load('${pageContext.request.contextPath}/reviewList?productNo=${product.no}');
+	         },
+	         error: function () {
+	             alert(isUpdateMode ? '리뷰 수정 실패' : '리뷰 등록 실패');
+	         }
+	     });
+	 });
+	 
+	 
+	 $(document).ready(function() {
+		    $("#sendMessageBtn").click(function(e) {
+		        e.preventDefault(); // 기본 동작 막아
+
+		        const formData = {
+		            receiver: $("input[name='receiver']").val(),
+		            productTitle: $("input[name='productTitle']").val(),
+		            productNo: $("input[name='productNo']").val(),
+		            no: $("input[name='no']").val(),
+		            tradeType: $("input[name='tradeType']").val(),
+		            noteContent: $("#message").val() // textarea id="message"
+		        };
+
+		        $.ajax({
+		            type: "POST",
+		            url: contextPath + "/message/send",
+		            data: formData,
+		            success: function(response) {
+		                alert("쪽지가 성공적으로 보내졌습니다!");
+		                closeMessageModal(); // 모달 닫기
+		                $("#messageForm")[0].reset(); // 폼 초기화
+		            },
+		            error: function(xhr, status, error) {
+		                alert("쪽지 보내기 실패ㅠㅠ 다시 시도해주세요!");
+		                console.error(xhr.responseText);
+		            }
+		        });
+		    });
+		});
+	 
+	// 모달 열기
+	 function openReportModal() {
+		 if ('${memberNo}' === '' || '${memberNo}' === 'null') {
+		        alert('로그인이 필요합니다.');
+		        return;
+		    }
+	   const modal = document.getElementById('reportModal');
+	   modal.style.display = 'flex';
+	   
+	   // 약간의 delay 후 활성화
+	   setTimeout(() => {
+	     modal.classList.add('active');
+	   }, 10); // 10ms 딜레이를 줘야 transition이 먹힘
+	 }
+
+	 // 모달 닫기
+	 function closeReportModal() {
+	   const modal = document.getElementById('reportModal');
+	   
+	   modal.classList.remove('active');
+	   
+	   // 애니메이션 끝나고 display:none 처리
+	   setTimeout(() => {
+	     modal.style.display = 'none';
+	   }, 400); // transition 시간과 동일 (0.4초)
+	 }
+
+		function submitReport() {
+		    const type = document.getElementById('reportReason').value;
+		    const contents = document.getElementById('reportDetail').value;
+		    const title = document.getElementById('reportTitle').value;
+
+		    if (!type || !contents || !title) {
+		        alert('⚠️ 신고 사유, 제목, 내용을 모두 입력해 주세요!');
+		        return;
+		    }
+
+		    // 실제 서버로 비동기 전송하는 부분
+		    $.ajax({
+		        type: 'POST',
+		        url: contextPath + '/report', // 너가 만들고 싶은 신고처리 url
+		        data: {
+		        	type: type,
+		        	contents: contents,
+		        	title:title,
+		            productNo: '${product.no}' // 상품 번호 함께 보내야겠지?
+		        },
+		        success: function(response) {
+		            alert('✅ 신고가 정상적으로 접수되었습니다!');
+		            closeReportModal(); // 모달 닫기
+		            resetReportForm(); // 폼 초기화
+		        },
+		        error: function(xhr, status, error) {
+		            alert('❌ 신고 처리 실패! 다시 시도해주세요.');
+		            console.error(xhr.responseText);
+		        }
+		    });
+		}
+
+		// 신고 폼 초기화 함수
+		function resetReportForm() {
+		    document.getElementById('reportReason').value = '';
+		    document.getElementById('reportDetail').value = '';
+		}
+	 
 </script>

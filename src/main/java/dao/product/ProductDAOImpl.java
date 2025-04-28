@@ -89,4 +89,14 @@ public class ProductDAOImpl implements ProductDAO {
 	public List<Product> selectPopularProducts(int limit) {
 		return sqlSession.selectList("mapper.product.selectPopularProducts", limit);
 	}
+	
+	//거리에 따른 상품조회
+	@Override
+	public List<Product> selectNearbyProducts(double lat, double lng, int limit) {
+	    Map<String, Object> map = new HashMap<>();
+	    map.put("lat", lat);
+	    map.put("lng", lng);
+	    map.put("limit", limit);
+	    return sqlSession.selectList("mapper.product.selectNearbyProducts", map);
+	}
 }

@@ -9,7 +9,11 @@ public class Product {
 	private String title;
 	private String content;
 	private String state;
-	private String img;
+	private String img1;
+	private String img2;
+	private String img3;
+	private String img4;
+	private String img5;
 	private String deliveryAddr;
 	private Integer deliveryPrice;
 	private String tradeType;
@@ -23,19 +27,47 @@ public class Product {
 	private Integer viewCnt;
 	private String deliveryStatus;
 	private String nickname;
+	private Double latitude;
+	private Double longitude;
+	private Double distance; 
 	
+	
+	public Double getDistance() {
+	    return distance;
+	}
+
+	public void setDistance(Double distance) {
+	    this.distance = distance;
+	}
+	
+	
+	public Double getLatitude() {
+		return latitude;
+	}
+	public void setLatitude(Double latitude) {
+		this.latitude = latitude;
+	}
+	public Double getLongitude() {
+		return longitude;
+	}
+	public void setLongitude(Double longitude) {
+		this.longitude = longitude;
+	}
 	public Product() {}
 	public Product(
 			Integer categoryNo,String title,
-			String content,String state,String img,String deliveryAddr,
-			Integer deliveryPrice,String tradeType,Integer secPrice,Integer memberNo,
-			String startDate,String endDate,Integer rentPrice,
-			String deliveryStatus) {
+			String content,String state,String img1,String img2,String img3,String img4,String img5,
+			String deliveryAddr,Integer deliveryPrice,String tradeType,Integer secPrice,Integer memberNo,
+			String startDate,String endDate,Integer rentPrice, String deliveryStatus) {
 		this.categoryNo = categoryNo;
 		this.title = title;
 		this.content = content;
 		this.state = state;
-		this.img = img;
+		this.img1 = img1;
+		this.img2 = img2;
+		this.img3 = img3;
+		this.img4 = img4;
+		this.img5 = img5;
 		this.deliveryAddr = deliveryAddr;
 		this.deliveryPrice = deliveryPrice;
 		this.tradeType = tradeType;
@@ -47,14 +79,18 @@ public class Product {
 		this.deliveryStatus = deliveryStatus;
 	}
 	
-	public Product(Integer categoryNo,String title,String content,String state,String img,
-			String deliveryAddr,Integer deliveryPrice,String tradeType,Integer memberNo,
-			Integer salePrice,String deliveryStatus) {
+	public Product(Integer categoryNo,String title,String content,String state,String img1,
+			String img2,String img3,String img4,String img5, String deliveryAddr,Integer deliveryPrice,
+			String tradeType,Integer memberNo, Integer salePrice,String deliveryStatus) {
 		this.categoryNo = categoryNo;
 		this.title = title;
 		this.content = content;
 		this.state = state;
-		this.img = img;
+		this.img1 = img1;
+		this.img2 = img2;
+		this.img3 = img3;
+		this.img4 = img4;
+		this.img5 = img5;
 		this.deliveryAddr = deliveryAddr;
 		this.deliveryPrice = deliveryPrice;
 		this.tradeType = tradeType;
@@ -64,15 +100,19 @@ public class Product {
 	}
 	
 	public Product(Integer categoryNo,String title,
-			String content,String state,String img,String deliveryAddr,
-			Integer deliveryPrice,String tradeType,Integer secPrice,Integer memberNo,
+			String content,String state,String img1,String img2,String img3,String img4,String img5,
+			String deliveryAddr,Integer deliveryPrice,String tradeType,Integer secPrice,Integer memberNo,
 			String startDate,String endDate,Integer rentPrice,Integer salePrice,
 			String deliveryStatus) {
 		this.categoryNo = categoryNo;
 		this.title = title;
 		this.content = content;
 		this.state = state;
-		this.img = img;
+		this.img1 = img1;
+		this.img2 = img2;
+		this.img3 = img3;
+		this.img4 = img4;
+		this.img5 = img5;
 		this.deliveryAddr = deliveryAddr;
 		this.deliveryPrice = deliveryPrice;
 		this.tradeType = tradeType;
@@ -85,11 +125,17 @@ public class Product {
 		this.deliveryStatus = deliveryStatus;
 	}
 	
-	public Product(Integer categoryNo,String title,String content, String img,String deliveryAddr, String tradeType,Integer memberNo) {
+	public Product(Integer categoryNo,String title,String content, String img1,
+			String img2,String img3,String img4,String img5,
+			String deliveryAddr, String tradeType,Integer memberNo) {
 		this.categoryNo = categoryNo;
 		this.title = title;
 		this.content = content;
-		this.img = img;
+		this.img1 = img1;
+		this.img2 = img2;
+		this.img3 = img3;
+		this.img4 = img4;
+		this.img5 = img5;
 		this.deliveryAddr = deliveryAddr;
 		this.tradeType = tradeType;
 		this.memberNo = memberNo;
@@ -132,11 +178,11 @@ public class Product {
 	public void setState(String state) {
 		this.state = state;
 	}
-	public String getImg() {
-		return img;
+	public String getImg1() {
+		return img1;
 	}
-	public void setImg(String img) {
-		this.img = img;
+	public void setImg1(String img1) {
+		this.img1 = img1;
 	}
 	public String getDeliveryAddr() {
 		return deliveryAddr;
@@ -222,6 +268,33 @@ public class Product {
 	}
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
+	}
+	
+	
+	
+	public String getImg2() {
+		return img2;
+	}
+	public void setImg2(String img2) {
+		this.img2 = img2;
+	}
+	public String getImg3() {
+		return img3;
+	}
+	public void setImg3(String img3) {
+		this.img3 = img3;
+	}
+	public String getImg4() {
+		return img4;
+	}
+	public void setImg4(String img4) {
+		this.img4 = img4;
+	}
+	public String getImg5() {
+		return img5;
+	}
+	public void setImg5(String img5) {
+		this.img5 = img5;
 	}
 	public String getTimeAgo() {
         if (createDate == null) return "";

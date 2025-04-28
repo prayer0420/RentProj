@@ -161,7 +161,7 @@
 		  <div class="category-row inline">
 		    <label for="categoryName">카테고리명</label>
 		    <input type="text" class="search-input" id="categoryName" name="name" required="required">
-		    <button class="btn-save" id="regCategory">✔ 등록</button>
+		    <button class="btn-save" id="regCategory">✔ 저장</button>
 		  </div>
 		
 		  <!-- 이미지 선택 -->

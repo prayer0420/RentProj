@@ -14,11 +14,6 @@ import service.product.ProductService;
 import service.product.ProductServiceImpl;
 import utils.PageInfo;
 
-/**
- * 상품 목록만 비동기(AJAX)로 응답하는 서블릿
- * 요청 경로: /productList
- * 응답 JSP: /JSP/ProductList/productList.jsp (fragment)
- */
 @WebServlet("/productList")
 public class ProductList extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -28,41 +23,68 @@ public class ProductList extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 
-		// 1. 클라이언트로부터 전달된 요청 파라미터 수집
-		String searchText  = req.getParameter("searchText");    // 검색어
-		String categoryNoP = req.getParameter("categoryNo");    // 카테고리 번호
-		String tradeType   = req.getParameter("tradeType");     // 거래 유형
-		String sort        = req.getParameter("sort");          // 정렬 기준
-		String pageP       = req.getParameter("page");          // 현재 페이지 번호
+		System.out.println("\n\n🟢 [ProductList 서블릿] 요청 시작 ------------------------------------");
 
-		// 2. 문자열 파라미터 → 숫자(Integer) 변환
+		// 1. 파라미터 수집
+		String searchText  = req.getParameter("searchText");
+		String categoryNoP = req.getParameter("categoryNo");
+		String tradeType   = req.getParameter("tradeType");
+		String sort        = req.getParameter("sort");
+		String pageP       = req.getParameter("page");
+
+		Double lat = (Double) req.getSession().getAttribute("latitude");
+		Double lng = (Double) req.getSession().getAttribute("longitude");
+
+		System.out.printf("📥 파라미터 수신 → searchText=%s, categoryNo=%s, tradeType=%s, sort=%s, page=%s, lat=%s, lng=%s\n",
+				searchText, categoryNoP, tradeType, sort, pageP, lat, lng);
+
+		if (tradeType != null && tradeType.trim().isEmpty()) {
+			tradeType = null;
+		}
+
+		// 2. 파라미터 파싱
 		Integer categoryNo = null;
-		if (categoryNoP != null && !categoryNoP.isEmpty()) {
-			try {
-				categoryNo = Integer.valueOf(categoryNoP);
-			} catch (NumberFormatException e) {
-				categoryNo = null; // 잘못된 값이면 null로 처리
-			}
+		try {
+			categoryNo = (categoryNoP != null && !categoryNoP.isEmpty()) ? Integer.valueOf(categoryNoP) : null;
+		} catch (NumberFormatException e) {
+			System.out.println("❌ categoryNo 파싱 실패 → 기본값 null");
+			categoryNo = null;
 		}
 
-		int page = 1; // 기본 페이지 1
-		if (pageP != null && !pageP.isEmpty()) {
-			try {
-				page = Integer.parseInt(pageP);
-			} catch (NumberFormatException e) {
-				page = 1;
-			}
+		int page = 1;
+		try {
+			page = (pageP != null && !pageP.isEmpty()) ? Integer.parseInt(pageP) : 1;
+		} catch (NumberFormatException e) {
+			System.out.println("❌ page 파싱 실패 → 기본값 1");
+			page = 1;
 		}
 
-		// 3. 페이징 정보 계산 + 상품 목록 조회
+		// 3. getPageInfo (소요시간 측정)
+		long t1 = System.currentTimeMillis();
 		PageInfo pageInfo = productService.getPageInfo(searchText, categoryNoP, tradeType, sort, page);
-		List<Product> productList = productService.getProducts(searchText, categoryNo, tradeType, sort, pageInfo);
+		long t2 = System.currentTimeMillis();
+		System.out.println("⏱️ getPageInfo 소요 시간: " + (t2 - t1) + "ms");
 
-		// 4. 상품 목록 + 페이지 정보 JSP에 전달
+		// 4. 상품 목록 조회
+		List<Product> productList;
+		long t3 = System.currentTimeMillis();
+		if ("distance".equals(sort) && lat != null && lng != null) {
+			System.out.println("📌 거리순 정렬 → 좌표 사용하여 상품 조회");
+			productList = productService.getProducts(searchText, categoryNo, tradeType, sort, pageInfo, lat, lng);
+		} else {
+			productList = productService.getProducts(searchText, categoryNo, tradeType, sort, pageInfo, null, null);
+		}
+		long t4 = System.currentTimeMillis();
+		System.out.println("⏱️ getProducts 소요 시간: " + (t4 - t3) + "ms");
+
+		// 5. 결과 로깅
+		System.out.println("📦 조회된 상품 수: " + productList.size());
+		System.out.println("📄 pageInfo: " + pageInfo);
+		System.out.println("✅ 전체 처리 완료: " + (t4 - t1) + "ms");
+
+		// 6. request에 값 저장 + JSP로 forward
 		req.setAttribute("productList", productList);
 		req.setAttribute("pageInfo", pageInfo);
-
-		// 5. AJAX용 상품 리스트 JSP 프래그먼트로 이동
 		req.getRequestDispatcher("/JSP/ProductList/productList.jsp")
 		   .forward(req, resp);
 	}

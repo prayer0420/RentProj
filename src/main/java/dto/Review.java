@@ -9,10 +9,19 @@ public class Review {
 	String title;
 	String contents;
 	Integer score;
-	Date date;
+	String date;
 	Integer productNo;
 	String memberNickname;
 	
+	String img;
+	
+	
+	public String getImg() {
+		return img;
+	}
+	public void setImg(String img) {
+		this.img = img;
+	}
 	public Review(){}
 	public Review(Integer memberNo,String contents,Integer score,Integer productNo,String memberNickname){
 		this.memberNo = memberNo;
@@ -20,6 +29,13 @@ public class Review {
 		this.score = score;
 		this.productNo = productNo;
 		this.memberNickname = memberNickname;
+	}
+	
+	public Review(Integer no,String contents,Integer score,String date) {
+		this.no = no;
+		this.contents = contents;
+		this.score = score;
+		this.date = date;
 	}
 
 	public Integer getNo() {
@@ -62,11 +78,11 @@ public class Review {
 		this.score = score;
 	}
 
-	public Date getDate() {
+	public String getDate() {
 		return date;
 	}
 
-	public void setDate(Date date) {
+	public void setDate(String date) {
 		this.date = date;
 	}
 

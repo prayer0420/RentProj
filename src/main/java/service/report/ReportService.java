@@ -1,5 +1,7 @@
 package service.report;
 import java.util.List;
+
+import controller.report.Report;
 import dto.ReportedProduct;
 public interface ReportService {
  
@@ -10,5 +12,6 @@ public interface ReportService {
 	boolean hideReport(String[] productNo); // 새로운 신고 건 수 조회(새로운 신고가 처리되지 않은 건) 
 	int getNewReportsCount(); // 신고 상태 업데이트 (처리된 상태로) 
 	boolean updateReportStatus(int productNo); 
+	void insertReport(ReportedProduct report)throws Exception;
 }
  

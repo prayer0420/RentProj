@@ -13,20 +13,19 @@
 
         .tabs {
             display: flex;
-
             margin-bottom: 20px;
             flex-wrap: wrap;
         }
 
         .tab {
-            padding: 10px 20px;
+            padding: 10px 15px;
             border: 1px solid #ccc;
             background-color: white;
             border-radius: 4px;
             cursor: pointer;
             font-size: 14px;
             text-align: center;
-            width: 160px;
+            width: 130px;
         }
 
         .tab:hover {

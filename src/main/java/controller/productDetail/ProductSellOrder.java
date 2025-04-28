@@ -37,6 +37,8 @@ public class ProductSellOrder extends HttpServlet {
 		int productNo = Integer.parseInt(request.getParameter("productNo"));
 		String phone = (String)request.getSession().getAttribute("phone");
 		String nickname = (String)request.getSession().getAttribute("nickname");
+		String orderType = request.getParameter("tradeType");
+		System.out.println("orderType"+orderType);
 		ProductService service = new ProductServiceImpl();
 		
 		try {
@@ -49,6 +51,7 @@ public class ProductSellOrder extends HttpServlet {
 			request.setAttribute("product", product);
 			request.setAttribute("phone",phone);
 			request.setAttribute("nickname",nickname);
+			request.setAttribute("orderType", orderType);
 			request.getRequestDispatcher("/JSP/ProductDetail/orderSell.jsp").forward(request, response);
 		}catch(Exception e) {
 			e.printStackTrace();

@@ -1,6 +1,4 @@
-package controller.category;
-
-
+package controller.productRegister;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -10,16 +8,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class FaqCategory
+ * Servlet implementation class ProductRegister
  */
-@WebServlet("/faqCategory")
-public class FaqCategory extends HttpServlet {
+@WebServlet("/productRegister")
+public class ProductRegister extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public FaqCategory() {
+    public ProductRegister() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -28,8 +26,13 @@ public class FaqCategory extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("fagCategory.jsp").forward(request, response);
-
+		
+		request.setCharacterEncoding("utf-8");
+		
+		Integer memberNo = (Integer) request.getSession().getAttribute("no");
+		
+		request.setAttribute("memberNo", memberNo);
+		request.getRequestDispatcher("/JSP/ProductRegister/productRegister.jsp").forward(request, response);
 	}
 
 	/**

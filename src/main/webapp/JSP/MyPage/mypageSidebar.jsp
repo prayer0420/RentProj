@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>   
-<% String id = (String)session.getAttribute("id"); %>
+<%-- <% String id = (String)session.getAttribute("id"); %> --%>
 <c:set var="contextPath" value="${pageContext.request.contextPath }" />
 <!DOCTYPE html>
 <html>
@@ -18,13 +18,13 @@
           <!-- 사용자 프로필 -->
           <div class="profile-section" id="member">
 	          <c:choose>
-	          	<c:when test="${id eq null }">
+  				<c:when test="${sessionScope.id eq null}">
 					<a href="${contextPath}/login">로그인</a>
 	          	</c:when>
 	          	<c:otherwise>
 	          		<img src="${contextPath }/img/tiger.png" alt="사용자 이미지" />
-		            <div class="user-id"><span><b>${id}</b></span>&nbsp;<span>님</span></div>
-		            <div class="membership"><span>${grade.gradeName }</span>&nbsp;<span>회원</span></div>
+		            <div class="user-id"><span><b>${sessionScope.id}</b></span>&nbsp;<span>님</span></div>
+		            <div class="membership"><span>${grade.gradeName}</span>&nbsp;<span>회원</span></div>
 		            <div class="total-count">총 거래 수: ${member.orderCount}회</div>
 	          	</c:otherwise>
 	          </c:choose>
@@ -56,9 +56,9 @@
           </div>
 
           <!-- 일반 메뉴 항목 -->
-          <div class="simple-item"><a href="markList">찜한 상품</a></div>
+          <div class="simple-item"><a href="myMarkList">찜한 상품</a></div>
           <div class="simple-item"><a href="noteList">쪽지함</a></div>
-          <div class="simple-item"><a href="myReview">나의 리뷰</a></div>
+          <div class="simple-item"><a href="myReviewList">나의 리뷰</a></div>
           <div class="simple-item"><a href="myReport">나의 신고목록</a></div>
           <div class="simple-item"><a href="myAdAdmin">광고 관리</a></div>
 

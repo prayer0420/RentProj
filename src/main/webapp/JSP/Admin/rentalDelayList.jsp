@@ -5,6 +5,47 @@
   <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
+<style>
+	.modal {
+	  display: none;
+	  position: fixed;
+	  z-index: 9999;
+	  top: 0; left: 0;
+	  width: 100%;
+	  height: 100%;
+	  background: rgba(0, 0, 0, 0.5);
+	}
+	
+	.modal-content {
+	  background-color: white;
+	  margin: 10% auto;
+	  padding: 20px;
+	  width: 400px;
+	  border: 1px solid #888;
+	  border-radius: 6px;
+	  position: relative;
+	}
+	
+	.modal-title {
+	  text-align: center;
+	  font-weight: bold;
+	  font-size: 18px;
+	  margin-bottom: 15px;
+	}
+	
+	.modal-close {
+	  text-align: right;
+	  margin-bottom: 10px;
+	}
+	
+	.modal-close button {
+	  background-color: #26c6da;
+	  color: white;
+	  border: none;
+	  padding: 6px 12px;
+	  border-radius: 4px;
+	  cursor: pointer;
+</style>
 <head>
   <meta charset="UTF-8">
   <title>대여지연조회</title>
@@ -16,10 +57,9 @@
 <div class="container">
   <aside>
     <h3>정산관리</h3>
-    <div class="menu inactive">전체주문조회</div>
-    <div class="menu inactive">전체수익조회</div>
-    <div class="menu inactive">판매정산</div>
-    <div class="menu active">대여지연조회</div>
+    <div class="menu inactive"><a href="orderList" style="color: inherit; text-decoration: none;">전체주문조회</a></div>
+    <div class="menu inactive"><a href="settlementList" style="color: inherit; text-decoration: none;">주문정산</a></div>
+    <div class="menu active"><a href="rentalDelayList" style="color: inherit; text-decoration: none;">대여지연조회</a></div>
   </aside>
 
   <main>
@@ -46,7 +86,7 @@
     
 
 		<div style="margin-bottom:10px; font-weight:bold;">
-		    🔍 검색된 총 지연주문 수: <span style="color:#007bff;">${not empty orderlist ? fn:length(orderlist) : 0}</span>건
+		    🔍 검색된 총 지연주문 수: <span style="color:#007bff;">${not empty orderList ? fn:length(orderList) : 0}</span>건
 		</div>
 
   <table>
@@ -79,8 +119,8 @@
 		      <td>${order.orderNo}</td>
 		      <td>${order.productNo}</td>
 		      <td><a href="${pageContext.request.contextPath}/productDetail?no=${order.productNo}">${order.productName}</a></td> <!-- product.title -->
-		      <td><a href="memberDetail?memberId=${order.buyerId}">${order.buyerId}</a></td>   <!-- member.id (구매자) -->
-		      <td><a href="memberDetail?memberId=${order.sellerId}">${order.sellerId}</a></td>  <!-- member.id (판매자) -->
+		      <td><a href="javascript:void(0);" onclick="openMemberDetail('${order.buyerId}')">${order.buyerId}</a></td>   <!-- member.id (구매자) -->
+		      <td><a href="javascript:void(0);" onclick="openMemberDetail('${order.sellerId}')">${order.sellerId}</a></td>  <!-- member.id (판매자) -->
 		      <td>${order.orderType}</td>
 		      <td><fmt:formatDate value="${order.startDate}" pattern="yyyy-MM-dd" /></td>
 		      <td><fmt:formatDate value="${order.endDate}" pattern="yyyy-MM-dd" /></td>
@@ -97,7 +137,43 @@
     <div class="notice">
       * 구매자/판매자 선택 시 각 회원의 상세 정보 페이지 제공
     </div>
+    
+    <!-- 모달 HTML -->
+		<div id="memberModal" class="modal">
+		  <div class="modal-content">
+		    <div class="modal-title">[회원정보상세]</div>
+		    <div class="modal-close">
+		      <button onclick="document.getElementById('memberModal').style.display='none'">닫기</button>
+		    </div>
+		    <div id="memberDetailBody"></div>
+		  </div>
+		</div>
+		
+		
   </main>
  </div>
+ 
+ 	<!-- 판매자 구매자id 눌렀을때 상세 정보 팝업 추가 -->
+ 	<script>
+		function openMemberDetail(memberId) {
+		  fetch('${pageContext.request.contextPath}/memberDetailModal?memberId=' + memberId)
+		    .then(res => res.text())
+		    .then(html => {
+		      document.getElementById('memberDetailBody').innerHTML = html;
+		      document.getElementById('memberModal').style.display = 'block';
+		    }).catch(err => {
+		      document.getElementById('memberDetailBody').innerHTML = '<p>회원 정보를 불러오지 못했습니다.</p>';
+		    });
+		}
+		
+			// 모달 닫기
+			window.addEventListener('click', function(event) {
+			  const modal = document.getElementById('memberModal');
+			  // 바깥 영역만 클릭되었을 때
+			  if (event.target === modal) {
+			    modal.style.display = 'none';
+			  }
+			});
+		</script>	
 </body>
 </html>

@@ -42,12 +42,14 @@ public class Join extends HttpServlet {
 		String detailAddress = request.getParameter("detailAddress");
 		String totalAddress = addrAlias+"@@"+address+"@@"+postcode+"@@"+detailAddress;
 		String region1 = request.getParameter("region1");
+		String profileImage = request.getParameter("profileImage");
 		
 		//builder시작(필수값 전달)
 		Member member= new Member(id, password, name,nickname, phone, totalAddress, region1);
 		
 		//선택값 있으면 추가
 		member.setAdminNo(0);
+		member.setProfileImage(profileImage);
 		
 		String region2 = request.getParameter("region2");
 		if(region2 != null && !region2.isEmpty()) {
@@ -58,6 +60,7 @@ public class Join extends HttpServlet {
 		if(region3 != null && !region3.isEmpty()) {
 			member.setRegion3(region3);
 		}
+		
 		
 		//토큰 저장
 		String fcmToken = request.getParameter("fcmToken");

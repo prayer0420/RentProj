@@ -71,7 +71,7 @@ public class Category {
 	}
 	@Override
 	public String toString() {
-		return "Category [no=" + no + ", name=" + name + ", sortOrder=" + sortOrder + ", isActive=" + isActive + "]";
+	    return "Category [no=" + no + ", name=" + name + ", sortOrder=" + sortOrder + ", isActive=" + isActive + ", imgFilename=" + imgFilename + "]";
 	}
 	
 	

@@ -20,6 +20,24 @@ public class Order {
 	private String deliveryComp;
 	private String orderId;
 	
+	//reviewList조회용
+    private String title;
+    private String img;
+
+    public String getTitle() {
+        return title;
+    }
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getImg() {
+        return img;
+    }
+    public void setImg(String img) {
+        this.img = img;
+    }
+	
 	// admin 주문조회용
     private String productName; // product.title (조인 결과)
     private String buyerId;     // member.id (조인 결과)
@@ -53,12 +71,13 @@ public class Order {
 	
 
 	// 일반 구매(보증금, 대여기간 없음)
-	public Order(Integer memberNo, Integer price, Integer productNo, String deliveryAddr,String orderId) {
+	public Order(Integer memberNo, Integer price, Integer productNo, String deliveryAddr,String orderId,String orderType) {
 		this.memberNo = memberNo;
 		this.price = price;
 		this.productNo = productNo;
 		this.deliveryAddr = deliveryAddr;
 		this.orderId=orderId;
+		this.orderType=orderType;
 	}
 	
 	// 나눔(택배 경우)

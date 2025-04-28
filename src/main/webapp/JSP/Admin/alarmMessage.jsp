@@ -50,7 +50,7 @@
   <div class="container">
     <aside>
       <h3>알림관리</h3>
-      <div class="menu active">알림등록</div>
+      <div class="menu active"><a href="alarmMessage" style="color: inherit; text-decoration: none;">알림등록</a></div>
     </aside>
 	<script src="https://code.jquery.com/jquery-3.7.1.js"></script> 
     <main>

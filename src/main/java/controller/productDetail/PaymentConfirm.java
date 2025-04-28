@@ -61,6 +61,7 @@ public class PaymentConfirm extends HttpServlet {
 		Integer memberNo = (Integer)request.getSession().getAttribute("no");
 		Integer price = Integer.parseInt(amount);
 		String deliveryAddr = (String) request.getAttribute("deliveryAddr");
+		String orderType = (String)request.getAttribute("orderType");
 
 		// 여기서 orderId로부터 productNo 추출 (예: ORDER_123_1710000000)
 		String[] parts = orderId.split("_");
@@ -96,7 +97,7 @@ public class PaymentConfirm extends HttpServlet {
 		}
 		reader.close();
 
-		Order order = new Order(memberNo, price,productNo, deliveryAddr,orderId);
+		Order order = new Order(memberNo, price,productNo, deliveryAddr,orderId,orderType);
 		OrderService service = new OrderServiceImpl();
 		try {
 			if (status == 200) {

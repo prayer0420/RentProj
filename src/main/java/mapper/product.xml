@@ -11,10 +11,10 @@
 	<!-- 판매 상품 등록 -->
 	<insert id="insertProductSell" parameterType="product"
 		useGeneratedKeys="true" keyProperty="no">
-		INSERT INTO product (no, categoryNo, title, content, state, img,
+		INSERT INTO product (no, categoryNo, title, content, state, img1,img2,img3,img4,img5,
 		deliveryAddr,
 		deliveryPrice, tradeType, memberNo, salePrice, deliveryStatus)
-		VALUES (#{no}, #{categoryNo}, #{title}, #{content}, #{state}, #{img},
+		VALUES (#{no}, #{categoryNo}, #{title}, #{content}, #{state}, #{img1},#{img2},#{img3},#{img4},#{img5},
 		#{deliveryAddr},
 		#{deliveryPrice}, #{tradeType}, #{memberNo}, #{salePrice}, #{deliveryStatus})
 	</insert>
@@ -22,11 +22,11 @@
 	<!-- 대여 상품 등록 -->
 	<insert id="insertProductRent" parameterType="product"
 		useGeneratedKeys="true" keyProperty="no">
-		INSERT INTO product (no, categoryNo, title, content, state, img,
+		INSERT INTO product (no, categoryNo, title, content, state, img1,img2,img3,img4,img5,
 		deliveryAddr,
 		deliveryPrice, tradeType, secPrice, memberNo, startDate, endDate,
 		rentPrice, deliveryStatus)
-		VALUES (#{no}, #{categoryNo}, #{title}, #{content}, #{state}, #{img},
+		VALUES (#{no}, #{categoryNo}, #{title}, #{content}, #{state}, #{img1},#{img2},#{img3},#{img4},#{img5},
 		#{deliveryAddr},
 		#{deliveryPrice}, #{tradeType}, #{secPrice}, #{memberNo}, #{startDate}, #{endDate},
 		#{rentPrice}, #{deliveryStatus})
@@ -35,11 +35,11 @@
 	<!-- 판매+대여 상품 등록 -->
 	<insert id="insertProductRentSell" parameterType="product"
 		useGeneratedKeys="true" keyProperty="no">
-		INSERT INTO product (no, categoryNo, title, content, state, img,
+		INSERT INTO product (no, categoryNo, title, content, state, img1,img2,img3,img4,img5,
 		deliveryAddr,
 		deliveryPrice, tradeType, secPrice, memberNo, salePrice, startDate, endDate,
 		rentPrice, deliveryStatus)
-		VALUES (#{no}, #{categoryNo}, #{title}, #{content}, #{state}, #{img},
+		VALUES (#{no}, #{categoryNo}, #{title}, #{content}, #{state}, #{img1},#{img2},#{img3},#{img4},#{img5},
 		#{deliveryAddr},
 		#{deliveryPrice}, #{tradeType}, #{secPrice}, #{memberNo}, #{salePrice}, #{startDate},
 		#{endDate}, #{rentPrice}, #{deliveryStatus})
@@ -48,9 +48,9 @@
 	<!-- 나눔 상품 등록 -->
 	<insert id="insertProductFree" parameterType="product"
 		useGeneratedKeys="true" keyProperty="no">
-		INSERT INTO product (no, categoryNo, title, content, img, deliveryAddr,
+		INSERT INTO product (no, categoryNo, title, content, img1,img2,img3,img4,img5, deliveryAddr,
 		tradeType, memberNo)
-		VALUES (#{no}, #{categoryNo}, #{title}, #{content}, #{img}, #{deliveryAddr},
+		VALUES (#{no}, #{categoryNo}, #{title}, #{content}, #{img1},#{img2},#{img3},#{img4},#{img5}, #{deliveryAddr},
 		#{tradeType}, #{memberNo})
 	</insert>
 	
@@ -59,25 +59,24 @@
 		select p.*,m.nickname from product p join member m on (p.memberNo=m.no) where p.no=#{no}
 	</select>
 	
-	
-
 	<!-- 상품 조회 카드 resultMap -->
 	<resultMap id="productMap" type="dto.Product">
 		<id property="no" column="no" />
 		<result property="title" column="title" />
-		<result property="img" column="img" />
+		<result property="img1" column="img1" />
 		<result property="salePrice" column="salePrice" />
 		<result property="rentPrice" column="rentPrice" />
 		<result property="secPrice" column="secPrice" />
 		<result property="tradeType" column="tradeType" />
 		<result property="createDate" column="createDate" />
+		<result property="latitude" column="latitude" />
+		<result property="longitude" column="longitude" />
 	</resultMap>
 
 	<!-- 메인 AJAX용 상품 조회: 검색 + 카테고리 + 필터 + 정렬 -->
-	<select id="selectProducts" resultMap="productMap"
-		parameterType="map">
-		SELECT no, title, img, salePrice, rentPrice, secPrice, tradeType,
-		createDate
+	<select id="selectProducts" resultMap="productMap" parameterType="map">
+		SELECT no, title, img1, salePrice, rentPrice, secPrice, tradeType, createDate,
+		       latitude, longitude
 		FROM product
 		<where>
 			<if test="searchText != null and searchText != ''">
@@ -91,21 +90,19 @@
 			</if>
 		</where>
 		<choose>
-			<when test="sort == 'recommend'">
-				ORDER BY view_cnt DESC
-			</when>
-			<when test="sort == 'priceAsc'">
-				ORDER BY COALESCE(salePrice, rentPrice) ASC
-			</when>
-			<when test="sort == 'priceDesc'">
-				ORDER BY COALESCE(salePrice, rentPrice) DESC
-			</when>
-			<otherwise>
-				ORDER BY createDate DESC
-			</otherwise>
+		  <when test="sort == 'priceAsc'">
+		    ORDER BY COALESCE(salePrice, rentPrice) ASC
+		  </when>
+		  <when test="sort == 'priceDesc'">
+		    ORDER BY COALESCE(salePrice, rentPrice) DESC
+		  </when>
+		  <otherwise>
+		    ORDER BY createDate DESC
+		  </otherwise>
 		</choose>
 		LIMIT #{offset}, #{limit}
 	</select>
+
 
 	<!-- 총 상품 수 (검색/필터 기준 없음) -->
 	<select id="countAll" parameterType="map" resultType="int">
@@ -139,7 +136,7 @@
 	<!-- 메인에서 인기 상품 (조회수 기준 정렬) -->
 	<select id="selectPopularProducts" resultMap="productMap"
 		parameterType="int">
-		SELECT no, title, img, salePrice, rentPrice, tradeType
+		SELECT no, title, img1, salePrice, rentPrice, tradeType
 		FROM product
 		ORDER BY view_cnt DESC
 		LIMIT #{limit}
@@ -149,6 +146,4 @@
 	<select id="selectAll" resultMap="productMap">
   		SELECT * FROM product
 	</select>
-	
-
 </mapper>
