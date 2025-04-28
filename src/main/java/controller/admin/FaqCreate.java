@@ -87,14 +87,9 @@ public class FaqCreate extends HttpServlet {
 
         try {
             success = faqService.registerFaq(faq);
-
+            response.sendRedirect("faqCreate");
             // 성공 여부에 따라 JSON 응답
-            response.setContentType("application/json;charset=UTF-8");
-            response.getWriter().write("{\"success\": " + success + "}");
         } catch (Exception e) {
-            e.printStackTrace();
-            response.setContentType("application/json;charset=UTF-8");
-            response.getWriter().write("{\"success\": false, \"message\": \"FAQ 등록 실패\"}");
         }
     }
 }
