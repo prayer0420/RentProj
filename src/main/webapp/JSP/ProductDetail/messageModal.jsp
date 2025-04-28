@@ -2,7 +2,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/CSS/productDetail/messageModal.css" />
 
 <div class="modal-overlay" id="messageModal">
-  <form action="${pageContext.request.contextPath}/message/send" method="post">
+  <form id="messageForm" action="${pageContext.request.contextPath}/message/send" method="post">
     <div class="modal">
       <div class="modal-title">쪽지보내기</div>
       <div class="modal-sub">상품 상세페이지 - 쪽지보내기</div>
@@ -31,7 +31,7 @@
       </div>
 
       <div class="modal-actions">
-        <button type="submit" class="btn-submit">보내기</button>
+        <button type="button" class="btn-submit" id="sendMessageBtn">보내기</button>
         <button type="button" class="btn-close" onclick="closeMessageModal()">닫기</button>
       </div>
     </div>

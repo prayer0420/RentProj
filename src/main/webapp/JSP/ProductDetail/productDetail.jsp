@@ -238,8 +238,8 @@
 				</c:if>
 				<!--리뷰 작성-->
 				<form id="review-form" class="review-form" style="display: none;">
-					<input type="hidden" name="productNo" value="${product.no} }" /> <input
-						type="hidden" name="memberNo" value="${member.no} }" />
+					<input type="hidden" name="productNo" value="${product.no} " /> <input
+						type="hidden" name="memberNo" value="${member.no} " />
 					<div class="review-input-row">
 						<textarea name="content" placeholder="리뷰 내용을 입력하세요"></textarea>
 						<label class="rating-box"> 평점: <select name="score">
@@ -397,7 +397,7 @@
 
 	     $("#submitBtn").text("수정"); // 버튼 텍스트 변경
 	 }
-
+	
 	 // 리뷰 작성/수정 폼 제출
 	 $('#review-form').on('submit', function (e) {
 	     e.preventDefault(); // 기본 제출 막기
@@ -431,6 +431,35 @@
 	         }
 	     });
 	 });
-	
 	 
+	 
+	 $(document).ready(function() {
+		    $("#sendMessageBtn").click(function(e) {
+		        e.preventDefault(); // 기본 동작 막아
+
+		        const formData = {
+		            receiver: $("input[name='receiver']").val(),
+		            productTitle: $("input[name='productTitle']").val(),
+		            productNo: $("input[name='productNo']").val(),
+		            no: $("input[name='no']").val(),
+		            tradeType: $("input[name='tradeType']").val(),
+		            noteContent: $("#message").val() // textarea id="message"
+		        };
+
+		        $.ajax({
+		            type: "POST",
+		            url: contextPath + "/message/send",
+		            data: formData,
+		            success: function(response) {
+		                alert("쪽지가 성공적으로 보내졌습니다!");
+		                closeMessageModal(); // 모달 닫기
+		                $("#messageForm")[0].reset(); // 폼 초기화
+		            },
+		            error: function(xhr, status, error) {
+		                alert("쪽지 보내기 실패ㅠㅠ 다시 시도해주세요!");
+		                console.error(xhr.responseText);
+		            }
+		        });
+		    });
+		});
 </script>

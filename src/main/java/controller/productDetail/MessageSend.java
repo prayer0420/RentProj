@@ -1,6 +1,7 @@
 package controller.productDetail;
 
 import java.io.IOException;
+import java.net.URLEncoder;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -40,12 +41,13 @@ public class MessageSend extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 		
-		Integer productNo = Integer.parseInt(request.getParameter("productNo"));
+		Integer productNo = Integer.parseInt(request.getParameter("productNo").trim());
 //		Integer memberNo = Integer.parseInt(request.getParameter("memberNo"));
 		Integer memberNo = 1;
 		String noteContent = request.getParameter("noteContent");
 		String receiver = request.getParameter("receiver");
 		String tradeType = request.getParameter("tradeType");
+		String encodedTradeType = URLEncoder.encode(tradeType,"utf-8");
 		
 		
 		
@@ -54,7 +56,7 @@ public class MessageSend extends HttpServlet {
 		try {
 			service.insertNote(note);
 			request.setAttribute("note", note);
-			response.sendRedirect(request.getContextPath()+"/productDetail?no="+productNo+"&tradeType="+tradeType);
+			response.setStatus(HttpServletResponse.SC_OK); // 200 OK
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
