@@ -58,7 +58,7 @@
           <!-- 일반 메뉴 항목 -->
           <div class="simple-item"><a href="myMarkList">찜한 상품</a></div>
           <div class="simple-item"><a href="noteList">쪽지함</a></div>
-          <div class="simple-item"><a href="myReview">나의 리뷰</a></div>
+          <div class="simple-item"><a href="myReviewList">나의 리뷰</a></div>
           <div class="simple-item"><a href="myReport">나의 신고목록</a></div>
           <div class="simple-item"><a href="myAdAdmin">광고 관리</a></div>
 

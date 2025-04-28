@@ -28,5 +28,35 @@
 		select round(avg(score),1)from review where productNo = #{productNo}
 	</select>
 	
+	 <!-- 리뷰 작성 가능한 상품 목록 -->
+    <select id="getWritableReviewList" parameterType="int" resultType="order">
+        SELECT o.orderNo, o.orderDate, o.productNo, p.title, p.img
+        FROM `order` o
+        JOIN product p ON o.productNo = p.no
+        LEFT JOIN review r ON o.productNo = r.productNo AND o.memberNo = r.memberNo
+        WHERE o.memberNo = #{memberNo}
+          AND (o.orderStatus = '대여종료' OR o.orderStatus = '거래완료')
+          AND r.no IS NULL
+        ORDER BY o.orderDate DESC
+    </select>
+
+    <!-- 내가 작성한 리뷰 목록 -->
+    <select id="getMyReviewList" parameterType="int" resultType="review">
+        SELECT r.*, p.title, p.img
+        FROM review r
+        JOIN product p ON r.productNo = p.no
+        WHERE r.memberNo = #{memberNo}
+        ORDER BY r.date DESC
+    </select>
+
+    <!-- 내 상품에 달린 리뷰 목록 -->
+    <select id="getMyProductReviewList" parameterType="int" resultType="review">
+        SELECT r.*, p.title, p.img
+        FROM review r
+        JOIN product p ON r.productNo = p.no
+        WHERE p.memberNo = #{memberNo}
+        ORDER BY r.date DESC
+    </select>
+	
 	
 </mapper>

@@ -139,7 +139,6 @@
 		<select id="checkOrder" resultType="int">
 			select count(*) from `order` where productNo=#{productNo}
 		</select>
-		
   
   </mapper>
   
