@@ -16,4 +16,6 @@ public interface ReviewDAO {
     List<Review> getReviewList(ReviewQueryParams params) throws Exception;
     
 	void updateReview(Review review) throws Exception;
+	
+	int checkMyReview(Integer productNo,Integer memberNo) throws Exception;
 }

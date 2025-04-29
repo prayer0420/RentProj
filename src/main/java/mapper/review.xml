@@ -97,4 +97,8 @@
         </choose>
     </select>
 
+	<select id="checkMyReview" resultType="Integer">
+		select count(*) from review where productNo=#{productNo} and memberNo=#{memberNo}
+	</select>
+
 </mapper>

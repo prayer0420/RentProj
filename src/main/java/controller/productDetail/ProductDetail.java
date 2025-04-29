@@ -42,6 +42,7 @@ public class ProductDetail extends HttpServlet {
 			double avgScore = reviewService.selectAvgScore(no);
 			boolean hasOrder = orderService.hasMemberOrderProduct(memberNo, no);
 			boolean checkOrder = orderService.checkOrder(no);
+			boolean checkMyReview = reviewService.checkMyReview(no, memberNo);
 			
 			request.setAttribute("product", product);
 			request.setAttribute("productNo", no);
@@ -49,6 +50,7 @@ public class ProductDetail extends HttpServlet {
 			request.setAttribute("hasOrder", hasOrder);
 			request.setAttribute("checkOrder",checkOrder);
 			request.setAttribute("memberNo", memberNo);
+			request.setAttribute("checkMyReview",checkMyReview);
 			System.out.println("product : "+product);	
 			System.out.println("no : "+no);	
 		}catch (Exception e) {

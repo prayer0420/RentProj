@@ -1,6 +1,8 @@
 package dao.review;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
@@ -51,6 +53,14 @@ public class ReviewDAOImpl implements ReviewDAO {
 		session.update("mapper.review.updateReview",review);
 		session.commit();
 		
+	}
+
+	@Override
+	public int checkMyReview(Integer productNo, Integer memberNo) throws Exception {
+		Map<String,Object> map = new HashMap<>();
+		map.put("productNo", productNo);
+		map.put("memberNo", memberNo);
+		return session.selectOne("mapper.review.checkMyReview",map);
 	}
 
 }

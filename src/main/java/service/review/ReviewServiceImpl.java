@@ -73,4 +73,9 @@ public class ReviewServiceImpl implements ReviewService {
 		reviewDAO.updateReview(review);
 	}
 
+	@Override
+	public boolean checkMyReview(Integer productNo, Integer memberNo) throws Exception {
+		return reviewDAO.checkMyReview(productNo, memberNo)>0;
+	}
+
 }

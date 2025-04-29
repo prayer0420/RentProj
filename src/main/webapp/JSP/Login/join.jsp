@@ -241,7 +241,6 @@
 		});
 </script>
 
-<!--일반회원용-->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
   import { getMessaging, getToken, onMessage } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-messaging.js";
@@ -259,26 +258,28 @@
   const app = initializeApp(firebaseConfig);
   const messaging = getMessaging(app);
 
-  // ✅ 서비스워커 수동 등록
-  navigator.serviceWorker.register("/rent/firebase-messaging-sw.js")
-    .then((registration) => {
-      console.log("서비스워커 등록 완료:", registration);
+  // ✅ 알림 권한 요청 → 허용 시 서비스워커 등록 및 토큰 요청
+  Notification.requestPermission().then(permission => {
+    if (permission === 'granted') {
+      navigator.serviceWorker.register("/rent/firebase-messaging-sw.js")
+        .then((registration) => {
+          console.log("서비스워커 등록 완료:", registration);
 
-      // 등록된 서비스워커 사용해서 토큰 요청
-      getToken(messaging, {
-        vapidKey: "BKf2ZnmnAxGrBS6VogRScPinuISeM-n_I7Dn4k-4uSZ7FxAjeJCFxg7tJMFfZ0HvlKCeH4qv85F8L7r4rdweVT8",
-        serviceWorkerRegistration: registration,
-      })
+          return getToken(messaging, {
+            vapidKey: "BKf2ZnmnAxGrBS6VogRScPinuISeM-n_I7Dn4k-4uSZ7FxAjeJCFxg7tJMFfZ0HvlKCeH4qv85F8L7r4rdweVT8",
+            serviceWorkerRegistration: registration
+          });
+        })
         .then((currentToken) => {
           if (currentToken) {
             document.getElementById("fcmToken").value = currentToken;
             console.log("FCM Token:", currentToken);
           } else {
-            console.warn("No registration token available.");
+            console.warn("토큰이 없습니다. 권한이 없거나 사용자 거부");
           }
         })
         .catch((err) => {
-          console.error("토큰 가져오기 실패:", err);
+          console.error("토큰 요청 실패:", err);
         });
 
       // 메시지 수신 처리
@@ -286,10 +287,11 @@
         console.log("Foreground 메시지 수신됨:", payload);
         alert(`새 알림: ${payload.notification.title}`);
       });
-    })
-    .catch((err) => {
-      console.error("서비스워커 등록 실패:", err);
-    });
+
+    } else {
+      console.warn("알림 권한이 거부되었습니다:", permission);
+    }
+  });
 </script>
 
 

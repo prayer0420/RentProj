@@ -237,7 +237,7 @@
 		method="post" enctype="multipart/form-data" class="container">
 		<input type="hidden" name="tradeType" value="대여/판매">
 		<div class="container-header">
-			<h2>판매등록</h2>
+			<h2>판매/대여 등록</h2>
 		</div>
 		<hr>
 		<div class="container-admit">
@@ -261,16 +261,16 @@
 		<div class="container-category">
 			<select name="categoryNo" id="categoryList" class="category-list">
 				<option selected="">카테고리 선택</option>
-				<option value="1">의류/패션/악세사리</option>
-				<option value="2">PC용품/디지털</option>
-				<option value="3">가전제품</option>
-				<option value="4">뷰티/미용</option>
-				<option value="5">캠핑/스포츠/레져</option>
-				<option value="6">생활/주방용품</option>
-				<option value="7">가구/인테리어</option>
-				<option value="8">유아동/출산</option>
-				<option value="9">애완동물용품</option>
-				<option value="10">기타</option>
+				<option value="2">의류/패션/악세사리</option>
+				<option value="3">PC용품/디지털</option>
+				<option value="4">가전제품</option>
+				<option value="5">뷰티/미용</option>
+				<option value="6">캠핑/스포츠/레져</option>
+				<option value="7">생활/주방용품</option>
+				<option value="8">가구/인테리어</option>
+				<option value="9">유아동/출산</option>
+				<option value="10">애완동물용품</option>
+				<option value="11">기타</option>
 			</select> <input type="text" id="title" name="title" placeholder="제목을 입력하세요">
 		</div>
 		<div class="container-charge">
@@ -351,21 +351,27 @@
 		</div>
 
 		<div class="container-image">
-			  <h4>상품이미지 (최대 5장)</h4>
-			  <hr>
-			
-			  <div id="previewArea" style="display: flex; gap: 10px; flex-wrap: wrap;">
-			    <img alt="상품추가" src="<%=request.getContextPath()%>/img/plus.jpg"
-			      id="addImageButton"
-			      style="cursor: pointer; width: 100px; height: 100px; object-fit: cover;">
-		 </div>
+			<h4>상품이미지 (최대 5장)</h4>
+			<hr>
 
-  <input type="file" name="imgList0" id="ifile0" accept="image/*" style="display: none" onchange="readURL(this, 0)">
-  <input type="file" name="imgList1" id="ifile1" accept="image/*" style="display: none" onchange="readURL(this, 1)">
-  <input type="file" name="imgList2" id="ifile2" accept="image/*" style="display: none" onchange="readURL(this, 2)">
-  <input type="file" name="imgList3" id="ifile3" accept="image/*" style="display: none" onchange="readURL(this, 3)">
-  <input type="file" name="imgList4" id="ifile4" accept="image/*" style="display: none" onchange="readURL(this, 4)">
-</div>
+			<div id="previewArea"
+				style="display: flex; gap: 10px; flex-wrap: wrap;">
+				<img alt="상품추가" src="<%=request.getContextPath()%>/img/plus.jpg"
+					id="addImageButton"
+					style="cursor: pointer; width: 100px; height: 100px; object-fit: cover;">
+			</div>
+
+			<input type="file" name="imgList0" id="ifile0" accept="image/*"
+				style="display: none" onchange="readURL(this, 0)"> <input
+				type="file" name="imgList1" id="ifile1" accept="image/*"
+				style="display: none" onchange="readURL(this, 1)"> <input
+				type="file" name="imgList2" id="ifile2" accept="image/*"
+				style="display: none" onchange="readURL(this, 2)"> <input
+				type="file" name="imgList3" id="ifile3" accept="image/*"
+				style="display: none" onchange="readURL(this, 3)"> <input
+				type="file" name="imgList4" id="ifile4" accept="image/*"
+				style="display: none" onchange="readURL(this, 4)">
+		</div>
 
 		<div class="container-content">
 			<textarea name="content" id="content" placeholder="내용을 입력하세요"></textarea>
