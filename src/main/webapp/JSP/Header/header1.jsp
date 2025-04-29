@@ -42,7 +42,7 @@
 				<!-- 알림 모달 포함 (정적 include) -->
 				<jsp:include page="/JSP/Header/alarm.jsp" />
 				
-				<button><a href="myInfoModify">📄 마이페이지</a></button>
+				<button><a href="myOrder">📄 마이페이지</a></button>
 				<c:choose>
 					<c:when test="${not empty sessionScope.id}">
 						<button id="btn-logout">🚪 로그아웃</button>

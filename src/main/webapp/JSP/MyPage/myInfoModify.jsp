@@ -9,13 +9,15 @@
   <link rel="stylesheet" href="${contextPath}/CSS/mypage/myInfoModify.css">
 </head>
 <body>
+
+  <jsp:include page="/JSP/Header/header.jsp" />
+
  	<c:if test="${not empty sessionScope.message}">
 	  <script>
 	    alert("${sessionScope.message}");
 	  </script>
 	  <c:remove var="message" scope="session" />
 	</c:if> 
-	
 	
 	
   <div class="wrapper">
