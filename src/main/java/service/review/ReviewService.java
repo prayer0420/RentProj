@@ -2,8 +2,9 @@ package service.review;
 
 import java.util.List;
 
-import dto.Order;
 import dto.Review;
+import dto.ReviewQueryParams;
+import utils.PageInfo;
 
 public interface ReviewService {
 	void insertReview(Review review) throws Exception;
@@ -13,8 +14,9 @@ public interface ReviewService {
 	
 	
 	//myReviewList
-    List<Order> getWritableReviewList(Integer memberNo) throws Exception;
-    List<Review> getMyReviewList(Integer memberNo) throws Exception;
-    List<Review> getMyProductReviewList(Integer memberNo) throws Exception;
+	int getReviewCount(ReviewQueryParams params) throws Exception;
+    List<Review> getReviewList(ReviewQueryParams params) throws Exception;
+    PageInfo getReviewPageInfo(ReviewQueryParams params) throws Exception;
+
 	void updateReview(Review review) throws Exception;
 }

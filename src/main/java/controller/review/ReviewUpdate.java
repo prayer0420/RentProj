@@ -43,7 +43,7 @@ public class ReviewUpdate extends HttpServlet {
 
          String date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 
-         Review review = new Review(no, contents, score, date);
+         Review review = new Review(no, contents, score, score, date);
          ReviewService service = new ReviewServiceImpl();
          try {
         	 service.updateReview(review);

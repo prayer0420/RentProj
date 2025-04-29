@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
@@ -44,32 +44,30 @@
           <c:otherwise>
             <div class="marklist-grid">
               <c:forEach var="item" items="${marklist}">
-                <div class="marklist-card">
+                <div class="marklist-card" onclick="location.href='${contextPath}/productDetail?no=${item.productNo}'">
                   <input type="checkbox" class="check-item" name="marklistIds" value="${item.productNo}">
-                  
                   <a href="${contextPath}/productDetail?no=${item.productNo}" class="product-img">
                     <img src="${item.productImage}" alt="상품 이미지">
                   </a>
 
-					<div class="product-info">
-					  <p class="product-no">상품번호: ${item.productNo}</p>
-					  <h3 class="product-title">${item.productTitle}</h3>
-					  
-					  <c:if test="${item.salePrice != null}">
-					    <p class="product-price sale">판매가: <fmt:formatNumber value="${item.salePrice}" type="number"/>원</p>
-					  </c:if>
-					
-					  <c:if test="${item.rentPrice != null}">
-					    <p class="product-price rent">대여가: <fmt:formatNumber value="${item.rentPrice}" type="number"/>원</p>
-					  </c:if>
-					
-					  <c:if test="${item.secPrice != null}">
-					    <p class="product-price deposit">보증금: <fmt:formatNumber value="${item.secPrice}" type="number"/>원</p>
-					  </c:if>
-					
-					  <p class="product-location">${item.productLocation}</p>
-					</div>
-					
+                  <div class="product-info">
+                    <p class="product-no">상품번호: ${item.productNo}</p>
+                    <h3 class="product-title">${item.productTitle}</h3>
+                    
+                    <c:if test="${item.salePrice != null}">
+                      <p class="product-price sale">판매가: <fmt:formatNumber value="${item.salePrice}" type="number"/>원</p>
+                    </c:if>
+                  
+                    <c:if test="${item.rentPrice != null}">
+                      <p class="product-price rent">대여가: <fmt:formatNumber value="${item.rentPrice}" type="number"/>원</p>
+                    </c:if>
+                  
+                    <c:if test="${item.secPrice != null}">
+                      <p class="product-price deposit">보증금: <fmt:formatNumber value="${item.secPrice}" type="number"/>원</p>
+                    </c:if>
+                  
+                    <p class="product-location">${item.productLocation}</p>
+                  </div>
                 </div>
               </c:forEach>
             </div>

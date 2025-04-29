@@ -22,7 +22,7 @@ public class Order {
 	
 	//reviewList조회용
     private String title;
-    private String img;
+    private String img1;
 
     public String getTitle() {
         return title;
@@ -32,10 +32,10 @@ public class Order {
     }
 
     public String getImg() {
-        return img;
+        return img1;
     }
     public void setImg(String img) {
-        this.img = img;
+        this.img1 = img;
     }
 	
 	// admin 주문조회용
