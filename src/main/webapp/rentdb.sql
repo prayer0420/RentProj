@@ -384,6 +384,13 @@ INSERT INTO grade (gradeNo, gradeName, gradeRate, gradeCount) VALUES
 (5, '다이아', 4.25, 40.0),
 (6, ' Re:NT', 3.5, 50.0);
 
+-- 등급 카운트용
+ALTER TABLE member
+ADD COLUMN settlementCount INT DEFAULT 0;
+
+-- 최종정산금액 (관리용)
+ALTER TABLE settlement
+ADD COLUMN finalSettleAmount DECIMAL(10,2) DEFAULT 0.00;
 
 
 INSERT INTO product (categoryNo, title, content, state, img, deliveryAddr, deliveryPrice, tradeType, secPrice, memberNo, startDate, endDate, salePrice, rentPrice, deliveryStatus, createDate)
@@ -538,25 +545,9 @@ VALUES
 (10, '다음에도 이용할게요.', '좋은 경험이었습니다.', 5, NOW(), 10);
 
 
-ALTER TABLE product ADD COLUMN deleted VARCHAR(10) DEFAULT 'N';
-
-UPDATE product SET deleted='N' WHERE NO = 102;
-UPDATE product SET deleted='N' WHERE NO = 103;
-UPDATE product SET deleted='N' WHERE NO = 104;
-UPDATE product SET deleted='N' WHERE NO = 105;
-UPDATE product SET deleted='N' WHERE NO = 106;
-UPDATE product SET deleted='N' WHERE NO = 107;
-UPDATE product SET deleted='N' WHERE NO = 108;
-UPDATE product SET deleted='N' WHERE NO = 109;
-UPDATE product SET deleted='N' WHERE NO = 110;
-UPDATE product SET deleted='N' WHERE NO = 111;
-UPDATE product SET deleted='N' WHERE NO = 112;
-UPDATE product SET deleted='N' WHERE NO = 113;
-UPDATE product SET deleted='N' WHERE NO = 114;
-UPDATE product SET deleted='N' WHERE NO = 115;
-UPDATE product SET deleted='N' WHERE NO = 116;
-UPDATE product SET deleted='N' WHERE NO = 117;
-UPDATE product SET deleted='N' WHERE NO = 118;
-UPDATE product SET deleted='N' WHERE NO = 119;
-UPDATE product SET deleted='N' WHERE NO = 120;
-
+INSERT INTO report (memberNo, contents, type, date, title, productNo, status) VALUES
+(57, '금지된 품목이 올라왔습니다.', '금지품목', NOW(), '금지 품목 신고', 106, 'new'),
+(57, '사기 판매가 의심됩니다.', '사기의심', NOW(), '사기 의심 신고', 102, 'new'),
+(57, '사진과 설명이 다릅니다.', '콘텐츠부적절', NOW(), '허위 정보 신고', 103, 'new'),
+(57, '중복 게시물입니다.', '콘텐츠부적절', NOW(), '중복 게시 신고', 104, 'new'),
+(57, '상품 설명에 비속어가 포함되어 있습니다.', '콘텐츠부적절', NOW(), '부적절한 내용 신고', 105, 'new');

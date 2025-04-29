@@ -63,6 +63,7 @@ public class CategoryCreate extends HttpServlet {
             e.printStackTrace();
             // 저장 실패 시: 에러 페이지로 포워드
             request.setAttribute("errorMessage", "카테고리 등록 실패");
+            request.setAttribute("returnUrl", "/categoryList"); // 돌아갈 경로
             request.getRequestDispatcher("JSP/Admin/error.jsp").forward(request, response);
         }
     }

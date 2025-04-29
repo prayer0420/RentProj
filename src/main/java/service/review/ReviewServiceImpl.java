@@ -4,8 +4,9 @@ import java.util.List;
 
 import dao.review.ReviewDAO;
 import dao.review.ReviewDAOImpl;
-import dto.Order;
 import dto.Review;
+import dto.ReviewQueryParams;
+import utils.PageInfo;
 
 public class ReviewServiceImpl implements ReviewService {
 	ReviewDAO reviewDAO;
@@ -36,21 +37,37 @@ public class ReviewServiceImpl implements ReviewService {
 	
 	
 	//myReviewList
-	 @Override
-	    public List<Order> getWritableReviewList(Integer memberNo) throws Exception {
-	        return reviewDAO.getWritableReviewList(memberNo);
-	    }
+    @Override
+    public int getReviewCount(ReviewQueryParams params) throws Exception {
+        return reviewDAO.getReviewCount(params);
+    }
 
-	    @Override
-	    public List<Review> getMyReviewList(Integer memberNo) throws Exception {
-	        return reviewDAO.getMyReviewList(memberNo);
-	    }
+    @Override
+    public List<Review> getReviewList(ReviewQueryParams params) throws Exception {
+        return reviewDAO.getReviewList(params);
+    }
+    
+    @Override
+    public PageInfo getReviewPageInfo(ReviewQueryParams params) throws Exception {
+        int totalCount = reviewDAO.getReviewCount(params);
+        int pageSize = params.getPageSize();
+        int allPage = (int)Math.ceil((double)totalCount / pageSize);
 
-	    @Override
-	    public List<Review> getMyProductReviewList(Integer memberNo) throws Exception {
-	        return reviewDAO.getMyProductReviewList(memberNo);
-	    }
+        int curPage = (params.getStartRow() / pageSize) + 1;
+        int startPage = ((curPage - 1) / 5) * 5 + 1;
+        int endPage = Math.min(startPage + 4, allPage);
 
+        PageInfo pageInfo = new PageInfo();
+        pageInfo.setCurPage(curPage);
+        pageInfo.setAllPage(allPage);
+        pageInfo.setStartPage(startPage);
+        pageInfo.setEndPage(endPage);
+        pageInfo.setTotalCount(totalCount);
+        pageInfo.setPageSize(pageSize);
+
+        return pageInfo;
+    }
+    
 	@Override
 	public void updateReview(Review review) throws Exception {
 		reviewDAO.updateReview(review);
