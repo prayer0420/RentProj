@@ -19,7 +19,6 @@ public class FaqServiceImpl implements FaqService {
             e.printStackTrace();
             return false;
         }
-        return faqDAO.insertFaq(faq) > 0;
 	}
 
 	@Override
@@ -32,9 +31,9 @@ public class FaqServiceImpl implements FaqService {
 	public Faq faqSelectOne(Integer no) throws Exception {
 		return faqDAO.selectOne(no);
 	}
-	public boolean modifyFaq(Faq faq) {
-        return faqDAO.updateFaq(faq) > 0;
-    }
+//	public boolean modifyFaq(Faq faq) {
+//        return faqDAO.updateFaq(faq) > 0;
+//    }
 
 	@Override
 	public boolean modifyFaq(Faq faq) {
@@ -60,6 +59,10 @@ public class FaqServiceImpl implements FaqService {
 	@Override
 	public Faq getFaqByNo(int no) {
         return faqDAO.selectFaqByNo(no);
+        
+        
+        
+	}
 	public List<FaqCategory> getFaqCategoryList() {
 		// TODO Auto-generated method stub
 		return null;

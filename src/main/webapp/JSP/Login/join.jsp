@@ -256,17 +256,42 @@
     measurementId: "G-YTCKLHYEX2"
   };
 
-  initializeApp(firebaseConfig);
-  const messaging = getMessaging();
+  const app = initializeApp(firebaseConfig);
+  const messaging = getMessaging(app);
 
-  getToken(messaging, {
-    vapidKey: 'BKf2ZnmnAxGrBS6VogRScPinuISeM-n_I7Dn4k-4uSZ7FxAjeJCFxg7tJMFfZ0HvlKCeH4qv85F8L7r4rdweVT8'
-  }).then((currentToken) => {
-    if (currentToken) {
-      document.getElementById("fcmToken").value = currentToken;
-    }
-  }).catch(console.error);
+  // ✅ 서비스워커 수동 등록
+  navigator.serviceWorker.register("/rent/firebase-messaging-sw.js")
+    .then((registration) => {
+      console.log("서비스워커 등록 완료:", registration);
+
+      // 등록된 서비스워커 사용해서 토큰 요청
+      getToken(messaging, {
+        vapidKey: "BKf2ZnmnAxGrBS6VogRScPinuISeM-n_I7Dn4k-4uSZ7FxAjeJCFxg7tJMFfZ0HvlKCeH4qv85F8L7r4rdweVT8",
+        serviceWorkerRegistration: registration,
+      })
+        .then((currentToken) => {
+          if (currentToken) {
+            document.getElementById("fcmToken").value = currentToken;
+            console.log("FCM Token:", currentToken);
+          } else {
+            console.warn("No registration token available.");
+          }
+        })
+        .catch((err) => {
+          console.error("토큰 가져오기 실패:", err);
+        });
+
+      // 메시지 수신 처리
+      onMessage(messaging, (payload) => {
+        console.log("Foreground 메시지 수신됨:", payload);
+        alert(`새 알림: ${payload.notification.title}`);
+      });
+    })
+    .catch((err) => {
+      console.error("서비스워커 등록 실패:", err);
+    });
 </script>
+
 
 </body>
 </html>
