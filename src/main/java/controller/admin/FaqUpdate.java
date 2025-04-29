@@ -37,53 +37,57 @@ public class FaqUpdate extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        // [1] 업로드 경로 및 최대 파일 크기 설정
-        String savePath = request.getServletContext().getRealPath("/upload");
+
+        // [1] 업로드 경로 설정
+        String uploadPath = request.getServletContext().getRealPath("/upload");
         int maxSize = 5 * 1024 * 1024; // 5MB
-
-        // [2] MultipartRequest로 파일 업로드 및 파라미터 받기
-        MultipartRequest multi = new MultipartRequest(
-            request, 
-            savePath, 
-            maxSize, 
-            "UTF-8", 
-            new DefaultFileRenamePolicy()
-        );
-
-        // [3] form 데이터 꺼내기
-        int no = Integer.parseInt(multi.getParameter("no"));
-        int categoryNo = Integer.parseInt(multi.getParameter("categoryNo"));
-        String title = multi.getParameter("title");
-        String content = multi.getParameter("content");
-        String imgUrl = multi.getFilesystemName("ifile"); // 새로 업로드된 파일명
-
-        // 기존 이미지가 유지되어야 하는 경우
-        if (imgUrl == null) {
-            imgUrl = multi.getParameter("existingImage"); // 기존 이미지명 유지
-        }
-
-        // [4] DTO 객체에 데이터 설정
-        Faq faq = new Faq();
-        faq.setNo(no);
-        faq.setCategoryNo(categoryNo);
-        faq.setTitle(title);
-        faq.setContent(content);
-        faq.setImgUrl(imgUrl);
-
-        // [5] Service 호출하여 DB 수정
-        FaqService faqService = new FaqServiceImpl();
-        boolean success = false;
-
         try {
-            success = faqService.modifyFaq(faq);
+            MultipartRequest multi = new MultipartRequest(
+                    request,
+                    uploadPath,
+                    10 * 1024 * 1024,
+                    "utf-8",
+                    new DefaultFileRenamePolicy()
+            );
 
-            // 성공 여부에 따라 JSON 응답
+            // [2] 파라미터 수집
+            String faqNoStr = multi.getParameter("faqNo");
+            if (faqNoStr == null || faqNoStr.trim().isEmpty()) {
+                response.getWriter().write("{\"success\": false, \"message\": \"faqNo 누락\"}");
+                return;
+            }
+
+            int faqNo = Integer.parseInt(faqNoStr.trim());
+            int categoryNo = Integer.parseInt(multi.getParameter("categoryNo"));
+            String title = multi.getParameter("title");
+            String content = multi.getParameter("content");
+
+            // [3] 이미지 처리
+            String imgUrl = multi.getFilesystemName("ifile");
+            if (imgUrl == null) {
+                imgUrl = multi.getParameter("existingImage"); // 기존 이미지 유지
+            }
+
+            // [4] DTO 생성
+            Faq faq = new Faq();
+            faq.setNo(faqNo);
+            faq.setCategoryNo(categoryNo);
+            faq.setTitle(title);
+            faq.setContent(content);
+            faq.setImgUrl(imgUrl);
+
+            // [5] 서비스 호출
+            FaqService service = new FaqServiceImpl();
+            service.modifyFaq(faq);
+
+            // [6] 성공 응답
             response.setContentType("application/json;charset=UTF-8");
-            response.getWriter().write("{\"success\": " + success + "}");
+            response.getWriter().write("{\"success\": true}");
+
         } catch (Exception e) {
             e.printStackTrace();
-            response.setContentType("application/json;charset=UTF-8");
-            response.getWriter().write("{\"success\": false, \"message\": \"FAQ 수정 실패\"}");
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            response.getWriter().write("{\"success\": false, \"message\": \"서버 오류: " + e.getMessage() + "\"}");
         }
     }
 }

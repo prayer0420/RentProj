@@ -141,7 +141,7 @@
       <!-- 등록/수정 모달 (하나의 폼으로 통합) -->
       <div class="modal" id="faqDetailModal" tabindex="-1" aria-labelledby="faqDetailModalLabel" aria-hidden="true">
         <div class="modal-dialog">
-          <form action="${pageContext.request.contextPath}/faqCreate" method="post" enctype="multipart/form-data">
+          <form id="faqForm"  action="${pageContext.request.contextPath}/faqCreate" method="post" enctype="multipart/form-data">
           <div class="modal-content">            
           
             <div class="modal-header">
@@ -150,7 +150,7 @@
             </div>
             <div class="modal-body">
               <input type="hidden" id="modalMode"> <!-- 'create' or 'edit' -->
-              <input type="hidden" id="faqNo"> <!-- edit 시에만 사용 -->
+              <input type="hidden" id="faqNo" name="faqNo">  <!-- edit 시에만 사용 -->
               <table>
                 <tr>
                   <th style="background-color: #e6f0f8;">유형</th>
@@ -167,16 +167,19 @@
                   <td><input type="text" id="faqTitle" class="form-control form-control-sm" name="title"></td>
                 </tr>
                 <tr>
-                  <th style="background-color: #e6f0f8;">이미지선택</th>
-                  <td>
-                    <input type="file" name="ifile" id="ifile" class="form-control form-control-sm">
-                    <c:if test="${not empty faq.imgUrl}">
-                      <div id="file-name-display" style="margin-top: 10px;">
-                        이미지 파일: <span id="selected-file-name">${faq.imgUrl}</span>
-                      </div>
-                    </c:if>
-                  </td>
-                </tr>
+				  <th style="background-color: #e6f0f8;">이미지선택</th>
+				  <td>
+				    <!-- 커스텀 버튼 + 숨겨진 파일 선택 input -->
+				    <label for="ifile" class="btn btn-secondary btn-sm">파일 선택</label>
+				    <input type="file" name="ifile" id="ifile" style="display:none">
+				
+				    <!-- 파일명 출력 -->
+				    <span id="selected-file-name" style="margin-left: 10px;">첨부파일 없음</span>
+				
+				    <!-- 기존 파일명을 백업해 서버에 넘김 -->
+				    <input type="hidden" name="existingImage" id="existingImage">
+				  </td>
+				</tr>
                 <tr>
                   <th style="background-color: #e6f0f8; vertical-align: top;">내용</th>
                   <td style="background-color: #f0fafa;">
@@ -198,9 +201,25 @@
 
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
   <script>
-  	$("#saveFaq").click(function() {
-  		
-  	})
+	  $("#ifile").change(function () {
+		  const filename = $(this).val().split("\\").pop(); // 경로 제외한 파일명 추출
+		  $("#selected-file-name").text(filename || "첨부파일 없음");
+	});
+  
+ 	 $("#btnOpenCreateModal").click(function () {
+	  // 입력값 초기화
+	  $("#modalMode").val("create");
+	  $("#faqNo").val("");
+	  $("#faqType").val($("#faqType option:first").val()); // 첫 번째 옵션 선택
+	  $("#faqTitle").val("");
+	  $("#faqContent").val("");
+	  $("#ifile").val(""); // 파일 인풋 초기화
+	  $("#selected-file-name").text("첨부파일 없음");
+	  $("#existingImage").val("");
+
+	  // 모달 제목도 초기화
+	  $("#faqDetailModalLabel").text("FAQ 등록");
+	});
   	
 	  // 전체 선택
 	  $("#chkAll").click(function () {
@@ -271,33 +290,68 @@
 	  	        $("#faqTitle").val(faq.title); // 제목
 	  	        $("#faqContent").val(faq.content); // 내용
 	
-	  	        // 파일명이 있으면 표시
-	  	        if (faq.imgUrl) {
-	  	          $("#selected-file-name").text(faq.imgUrl);
-	  	        } else {
-	  	          $("#selected-file-name").text("첨부파일 없음");
-	  	        }
-	
-	  	        // 모달 제목도 "FAQ 수정"으로 변경
+	  	   // 파일명 처리
+				if (faq.imgUrl) {
+				  $("#selected-file-name").text(faq.imgUrl);
+				  $("#existingImage").val(faq.imgUrl);
+				} else {
+				  $("#selected-file-name").text("첨부파일 없음");
+				  $("#existingImage").val("");
+				}
+
+	  	        // 모달 제목 수정
 	  	        $("#faqDetailModalLabel").text("FAQ 수정");
-	
+
 	  	        // 모달 열기
 	  	        $("#faqDetailModal").modal("show");
 	  	      } else {
 	  	        alert("FAQ 데이터를 불러올 수 없습니다.");
 	  	      }
 	  	    },
-	
 	  	    error: function (xhr, status, error) {
 	  	      console.log("xhr.responseText:", xhr.responseText);
-	  	      console.log("status:", status);
-	  	      console.log("error:", error);
 	  	      alert("FAQ 조회 실패: " + xhr.status);
 	  	    }
-	  	    
+	  	  });
 	  	});
+
+	  	$("#saveFaq").click(function (e) {
+	  	  const mode = $("#modalMode").val();
+
+	  	  if (mode === "create") {
+	  	    // ✅ 등록: form 전송 그대로 진행
+	  	    $("#faqForm")[0].submit();
+	  	    return;
+	  	  }
+
+	  	  // ✅ 수정: ajax 처리
+	  	  e.preventDefault(); // form 기본 제출 막기
+
+	  	  const formData = new FormData($("#faqForm")[0]);
+	  	  
+	  	for (let pair of formData.entries()) {
+	  	    console.log(pair[0]+ ': ' + pair[1]);
+	  	}
+
+	  	  $.ajax({
+	  	    url: "${pageContext.request.contextPath}/faqUpdate",
+	  	    type: "POST",
+	  	    data: formData,
+	  	    processData: false,
+	  	    contentType: false,
+	  	    success: function (res) {
+	  	      if (res.success) {
+	  	        alert("수정 완료");
+	  	        location.reload();
+	  	      } else {
+	  	        alert("수정 실패: " + (res.message || ""));
+	  	      }
+	  	    },
+	  	    error: function () {
+	  	      alert("서버 오류 발생");
+	  	    }
+	  	  });
 	  	});
-	  
   </script>
 </body>
 
