@@ -71,12 +71,13 @@
       <result property="createDate" column="createDate" />
       <result property="latitude" column="latitude" />
       <result property="longitude" column="longitude" />
+      <result property="deliveryAddr" column="deliveryAddr" />
    </resultMap>
 
    <!-- 메인 AJAX용 상품 조회: 검색 + 카테고리 + 필터 + 정렬 -->
    <select id="selectProducts" resultMap="productMap" parameterType="map">
       SELECT no, title, img1, salePrice, rentPrice, secPrice, tradeType, createDate,
-             latitude, longitude
+             latitude, longitude, deliveryAddr
       FROM product
       <where>
          <if test="searchText != null and searchText != ''">

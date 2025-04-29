@@ -59,6 +59,7 @@ public class ReviewServiceImpl implements ReviewService {
         int curPage = (params.getStartRow() / pageSize) + 1;
         int startPage = ((curPage - 1) / 5) * 5 + 1;
         int endPage = Math.min(startPage + 4, allPage);
+        System.out.println("[Service] PageInfo - totalCount: " + totalCount + ", allPage: " + allPage);
 
         PageInfo pageInfo = new PageInfo();
         pageInfo.setCurPage(curPage);

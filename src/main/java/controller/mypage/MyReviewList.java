@@ -28,15 +28,22 @@ public class MyReviewList extends HttpServlet {
 
         Integer memberNo = (Integer) session.getAttribute("no");
         String type = request.getParameter("type");
-        if (type == null) type = "writable"; // 기본 writable
+        if (type == null) type = "writable";
 
         int page = parsePageParam(request.getParameter("page"));
 
+        System.out.println("[MyReviewList] memberNo: " + memberNo);
+        System.out.println("[MyReviewList] type: " + type);
+        System.out.println("[MyReviewList] page: " + page);
+
         try {
             ReviewQueryParams params = new ReviewQueryParams(memberNo, type, page);
+            System.out.println("[MyReviewList] startRow: " + params.getStartRow());
 
             List<Review> list = reviewService.getReviewList(params);
             PageInfo pageInfo = reviewService.getReviewPageInfo(params);
+
+            System.out.println("[MyReviewList] list size: " + (list != null ? list.size() : "null"));
 
             request.setAttribute("list", list);
             request.setAttribute("pageInfo", pageInfo);
@@ -50,14 +57,8 @@ public class MyReviewList extends HttpServlet {
     }
 
     private int parsePageParam(String param) {
-        if (param == null || param.isEmpty()) {
-            return 1;
-        }
-        try {
-            return Integer.parseInt(param);
-        } catch (NumberFormatException e) {
-            return 1;
-        }
+        if (param == null || param.isEmpty()) return 1;
+        try { return Integer.parseInt(param); } catch (NumberFormatException e) { return 1; }
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
