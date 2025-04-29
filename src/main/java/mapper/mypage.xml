@@ -45,7 +45,7 @@
 	<select id="selectOrderCnt" parameterType="String" resultType="Integer">
 		select count(*) from `Order` o join member m
 		on (o.memberNo = m.no)
-		where m.id=#{id} and o.orderType='구매'
+		where m.id=#{id} and o.orderType='판매'
 	</select>
 	
 	<!-- 나의 구매상품 리스트(MyOrder) 불러오기 -->
@@ -54,7 +54,7 @@
 		from `order` o 
 		left join product p on (p.no = o.productNo)
 		join member m on (o.memberNo=m.no)
-        where m.id=#{id} and o.orderType='구매'
+        where m.id=#{id} and o.orderType='판매'
         order by o.orderNo desc limit #{row},5
 	</select>
 	
@@ -65,7 +65,7 @@
         join `Order` o On (o.productNo = p.no)
         join member m1 On (o.memberNo = m1.no)
 		  JOIN member m2 ON p.memberNo = m2.no
-		  where o.orderNo=#{orderNo} and m1.id=#{id} and o.orderType='구매'
+		  where o.orderNo=#{orderNo} and m1.id=#{id} and o.orderType='판매'
 	</select>
 	
 	<!-- 나의 빌린상품 전체 숫자 (*페이징에 필요) -->

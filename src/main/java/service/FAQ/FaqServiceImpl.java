@@ -59,6 +59,9 @@ public class FaqServiceImpl implements FaqService {
 	@Override
 	public Faq getFaqByNo(int no) {
         return faqDAO.selectFaqByNo(no);
+        
+        
+        
 	}
 	public List<FaqCategory> getFaqCategoryList() {
 		// TODO Auto-generated method stub

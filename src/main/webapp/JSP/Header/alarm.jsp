@@ -205,8 +205,10 @@ function clearAllAlarms() {
 </script>
 
 <script>
+  const contextPath = "${contextPath}"; // JSP 변수를 JS 변수로 먼저 저장
+
   if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('${contextPath}/firebase-messaging-sw.js')
+    navigator.serviceWorker.register(contextPath + '/firebase-messaging-sw.js')
       .then(function(registration) {
         console.log("✅ Service Worker 등록 성공", registration);
       })
@@ -217,3 +219,4 @@ function clearAllAlarms() {
     console.warn("Service Worker 지원 안 됨");
   }
 </script>
+

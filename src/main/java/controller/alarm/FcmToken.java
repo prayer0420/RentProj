@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.ibatis.reflection.SystemMetaObject;
+
 import dto.Member;
 import service.alarm.FcmService;
 import service.alarm.FcmServiceImpl;
@@ -40,6 +42,7 @@ public class FcmToken extends HttpServlet {
 	        
 	        if (member != null) {
 	            String id = member.getId();
+	            System.out.println("토큰저장");
 	            fcmService.regFcmToken(id, fcmToken); //토큰 저장
 	            
 	            //최초 로그인인 경우에만 서버가 알림을 전송
