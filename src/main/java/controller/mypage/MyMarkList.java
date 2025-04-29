@@ -37,7 +37,7 @@ public class MyMarkList extends HttpServlet {
 		} catch (NumberFormatException e) {
 			System.out.println("❌ page 파싱 실패 → 기본 1페이지");
 		}
-
+		
 		try {
 			if (memberNo == null) {
 				response.sendRedirect(request.getContextPath() + "/login");
@@ -47,7 +47,7 @@ public class MyMarkList extends HttpServlet {
 			PageInfo pageInfo = markService.getPageInfo(memberNo, page);
 
 			List<Map<String, Object>> marklist = markService.selectMyMarkList(memberNo, pageInfo);
-
+			System.out.println("찜정보"+marklist );
 			request.setAttribute("marklist", marklist);
 			request.setAttribute("pageInfo", pageInfo);
 

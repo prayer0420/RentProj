@@ -32,13 +32,13 @@
 			<c:forEach var="report" items="${reportList}">
 			  <div class="report-card">
 			    <div class="report-info">
-			      <h3 class="report-title">${report.title}</h3> <!-- 신고 제목 -->
-			      <p class="report-type">사유: ${report.type}</p> <!-- 신고 사유 -->
+			      <h3 class="report-title">${report.title}</h3> 
+			      <p class="report-type">사유: ${report.type}</p> 
 			      <p class="report-date"> 신고일자:
 			        <fmt:formatDate value="${report.date}" pattern="yyyy년 MM월 dd일 HH:mm" />
 			      </p>
-			      <p class="report-contents">신고내용: ${report.contents}</p> <!-- 신고 내용 -->
-			      <p class="product-title">상품명: ${report.productTitle}</p> <!-- 상품 제목 추가 -->
+			      <p class="report-contents">신고내용: ${report.contents}</p> 
+			      <p class="product-title">상품명: ${report.productTitle}</p>
 			
 			      <!-- 🔥 상품 상세보기 버튼 추가 -->
 			      <button class="go-detail-btn" onclick="location.href='${contextPath}/productDetail?no=${report.productNo}'">

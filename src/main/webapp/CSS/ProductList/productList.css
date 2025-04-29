@@ -80,17 +80,18 @@
 .product-card {
   background-color: var(--bg-card);
   border-radius: 16px;
-  padding: 16px;
+  padding: 14px; 
   text-align: center;
   box-shadow: 0 2px 5px rgba(0,0,0,0.05);
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  gap: 10px;
+  justify-content: start; 
+  gap: 6px; 
   position: relative;
-  height: 400px; /* ✅ 고정 높이 */
+  height: 400px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
+
 
 .product-card:hover {
   transform: translateY(-6px);
@@ -129,10 +130,10 @@
 
 /* 가격 정보 */
 .product-price {
-  font-size: 15px;
-  line-height: 1.5;
-  height: 42px;
-  overflow: hidden;
+  font-size: 14px;
+  line-height: 1.4;
+  height: auto;
+  margin-top: 4px;
 }
 
 .product-price .sale {
@@ -148,14 +149,17 @@
 }
 
 /* 거래유형 뱃지 */
-.product-type {
+.product-type{
+	display:none;
+}
+/* .product-type {
   font-size: 14px;
   color: #fff;
   padding: 6px 12px;
   border-radius: 12px;
   display: inline-block;
   margin-top: 6px;
-}
+} */
 
 .product-type.판매 { background-color: var(--판매-active); }
 .product-type.대여 { background-color: var(--대여-active); }
@@ -232,4 +236,17 @@
 #paging a[data-page^="<"]:hover,
 #paging a[data-page^=">"]:hover {
   color: var(--paging-arrow-hover);
+}
+
+.product-location {
+  font-size: 0.8rem;
+  color: #888888;
+  margin-top: 2px; 
+}
+
+
+.product-price .free {
+  color: #2ecc71; 
+  font-weight: bold;
+  font-size: 15px;
 }

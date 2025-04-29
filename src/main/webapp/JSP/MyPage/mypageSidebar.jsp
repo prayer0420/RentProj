@@ -28,7 +28,6 @@
 		            <div class="total-count">총 거래 수: ${member.orderCount}회</div>
 	          	</c:otherwise>
 	          </c:choose>
-            
           </div>
 
           <div class="divider"></div>

@@ -134,3 +134,16 @@ body {
   text-align: right;
   margin-top: auto;
 }
+
+/* 상품의 직거래 위치 */
+.product-location {
+  font-size: 12px;  
+  color: #888888;   
+  margin-top: 4px;  
+}
+
+.product-price .free {
+  color: #2ecc71; /* 초록색 */
+  font-weight: bold;
+  font-size: 15px;
+}

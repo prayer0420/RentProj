@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 
@@ -32,60 +33,95 @@
   <div class="section-title">오늘의 인기 상품이에요!</div>
   <div class="product-grid">
     <c:forEach var="p" items="${popularList}">
-      <div class="product-card">
-        <img src="${p.img1}" alt="">
-        <c:choose>
-          <c:when test="${empty p.img1}">
-            <img src="${contextPath}/img/default_product.png" alt="기본 이미지" loading="lazy"/>
-          </c:when>
-          <c:otherwise>
-            <img src="${p.img1}" alt="${p.title}" loading="lazy" />
-          </c:otherwise>
-        </c:choose>
-        <div class="product-name">${p.title}</div>
-        <div class="product-price">
-          <c:if test="${not empty p.salePrice}">
-            <span class="sale">판매가 ${p.salePrice}원</span><br/>
-          </c:if>
-          <c:if test="${not empty p.rentPrice}">
-            <span class="rent">대여 ${p.rentPrice}원</span><br/>
-          </c:if>
+      <a href="${contextPath}/productDetail?no=${p.no}&tradeType=${p.tradeType}">
+        <div class="product-card">
+          <c:choose>
+            <c:when test="${empty p.img1}">
+              <img src="${contextPath}/img/default_product.png" alt="기본 이미지" loading="lazy"/>
+            </c:when>
+            <c:otherwise>
+              <img src="${p.img1}" alt="${p.title}" loading="lazy" />
+            </c:otherwise>
+          </c:choose>
+          <div class="product-name">${p.title}</div>
+          
+			<div class="product-price">
+			  <c:choose>
+			    <c:when test="${p.tradeType == '나눔'}">
+			      <span class="free">무료나눔</span><br/>
+			    </c:when>
+			    <c:otherwise>
+			      <c:if test="${not empty p.salePrice}">
+			        <span class="sale">판매가 <fmt:formatNumber value="${p.salePrice}" type="number" />원</span><br/>
+			      </c:if>
+			      <c:if test="${not empty p.rentPrice}">
+			        <span class="rent">대여 <fmt:formatNumber value="${p.rentPrice}" type="number" />원</span><br/>
+			      </c:if>
+			      <c:if test="${p.tradeType == '대여' or p.tradeType == '판매대여'}">
+			        <c:if test="${not empty p.secPrice}">
+			          <span class="deposit">보증금 <fmt:formatNumber value="${p.secPrice}" type="number" />원</span>
+			        </c:if>
+			      </c:if>
+			    </c:otherwise>
+			  </c:choose>
+			</div>
+
+          <div class="product-location">${p.deliveryAddr}</div>
+          <div class="product-time">${p.timeAgo}</div>
         </div>
-        <div class="product-time">${p.timeAgo}</div>
-      </div>
+      </a>
     </c:forEach>
   </div>
 </section>
+
 
 <!-- 🔸 내 동네 상품 -->
 <section>
   <div class="section-title">내 동네에서 이런 것도 빌릴 수 있어요!</div>
   <div class="product-grid">
     <c:forEach var="p" items="${localList}">
-      <div class="product-card">
-        <img src="${p.img1}" alt="">
-        <c:choose>
-          <c:when test="${empty p.img1}">
-            <img src="${contextPath}/img/default_product.png" alt="기본 이미지" />
-          </c:when>
-          <c:otherwise>
-            <img src="${p.img1}" alt="${p.title}" />
-          </c:otherwise>
-        </c:choose>
-        <div class="product-name">${p.title}</div>
-        <div class="product-price">
-          <c:if test="${not empty p.salePrice}">
-            <span class="sale">판매가 ${p.salePrice}원</span><br/>
-          </c:if>
-          <c:if test="${not empty p.rentPrice}">
-            <span class="rent">대여 ${p.rentPrice}원</span><br/>
-          </c:if>
+      <a href="${contextPath}/productDetail?no=${p.no}&tradeType=${p.tradeType}">
+        <div class="product-card">
+          <c:choose>
+            <c:when test="${empty p.img1}">
+              <img src="${contextPath}/img/default_product.png" alt="기본 이미지" />
+            </c:when>
+            <c:otherwise>
+              <img src="${p.img1}" alt="${p.title}" />
+            </c:otherwise>
+          </c:choose>
+          <div class="product-name">${p.title}</div>
+          
+			<div class="product-price">
+			  <c:choose>
+			    <c:when test="${p.tradeType == '나눔'}">
+			      <span class="free">무료나눔</span><br/>
+			    </c:when>
+			    <c:otherwise>
+			      <c:if test="${not empty p.salePrice}">
+			        <span class="sale">판매가 <fmt:formatNumber value="${p.salePrice}" type="number" />원</span><br/>
+			      </c:if>
+			      <c:if test="${not empty p.rentPrice}">
+			        <span class="rent">대여 <fmt:formatNumber value="${p.rentPrice}" type="number" />원</span><br/>
+			      </c:if>
+			      <c:if test="${p.tradeType == '대여' or p.tradeType == '판매대여'}">
+			        <c:if test="${not empty p.secPrice}">
+			          <span class="deposit">보증금 <fmt:formatNumber value="${p.secPrice}" type="number" />원</span>
+			        </c:if>
+			      </c:if>
+			    </c:otherwise>
+			  </c:choose>
+			</div>
+          
+          <div class="product-location">${p.deliveryAddr}</div>
+          <div class="product-time">${p.timeAgo}</div>
+        
         </div>
-        <div class="product-time">${p.timeAgo}</div>
-      </div>
+      </a>
     </c:forEach>
   </div>
 </section>
+
 
 <jsp:include page="../Header/footer.jsp"/>
 

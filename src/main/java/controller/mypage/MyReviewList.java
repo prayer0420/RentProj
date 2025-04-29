@@ -27,36 +27,27 @@ public class MyReviewList extends HttpServlet {
         }
 
         Integer memberNo = (Integer) session.getAttribute("no");
+        String type = request.getParameter("type");
+        if (type == null) type = "writable";
+
+        int page = parsePageParam(request.getParameter("page"));
+
+        System.out.println("[MyReviewList] memberNo: " + memberNo);
+        System.out.println("[MyReviewList] type: " + type);
+        System.out.println("[MyReviewList] page: " + page);
 
         try {
-            // 🛠️ 탭별 페이지 파라미터 받기
-            int writablePage = parsePageParam(request.getParameter("writablePage"));
-            int writtenPage = parsePageParam(request.getParameter("writtenPage"));
-            int myProductPage = parsePageParam(request.getParameter("myProductPage"));
+            ReviewQueryParams params = new ReviewQueryParams(memberNo, type, page);
+            System.out.println("[MyReviewList] startRow: " + params.getStartRow());
 
-            // 🛠️ 파라미터 객체 생성
-            ReviewQueryParams writableParams = new ReviewQueryParams(memberNo, "writable", writablePage);
-            ReviewQueryParams writtenParams = new ReviewQueryParams(memberNo, "written", writtenPage);
-            ReviewQueryParams myProductParams = new ReviewQueryParams(memberNo, "myproduct", myProductPage);
+            List<Review> list = reviewService.getReviewList(params);
+            PageInfo pageInfo = reviewService.getReviewPageInfo(params);
 
-            // 🛠️ 리스트 불러오기
-            List<Review> writableList = reviewService.getReviewList(writableParams);
-            List<Review> writtenList = reviewService.getReviewList(writtenParams);
-            List<Review> myProductList = reviewService.getReviewList(myProductParams);
+            System.out.println("[MyReviewList] list size: " + (list != null ? list.size() : "null"));
 
-            // 🛠️ PageInfo 불러오기
-            PageInfo writablePageInfo = reviewService.getReviewPageInfo(writableParams);
-            PageInfo writtenPageInfo = reviewService.getReviewPageInfo(writtenParams);
-            PageInfo myProductPageInfo = reviewService.getReviewPageInfo(myProductParams);
-
-            // 🛠️ JSP로 넘기기
-            request.setAttribute("writableList", writableList);
-            request.setAttribute("writtenList", writtenList);
-            request.setAttribute("myProductList", myProductList);
-
-            request.setAttribute("writablePageInfo", writablePageInfo);
-            request.setAttribute("writtenPageInfo", writtenPageInfo);
-            request.setAttribute("myProductPageInfo", myProductPageInfo);
+            request.setAttribute("list", list);
+            request.setAttribute("pageInfo", pageInfo);
+            request.setAttribute("type", type);
 
             request.getRequestDispatcher("/JSP/MyPage/myReviewList.jsp").forward(request, response);
         } catch (Exception e) {
@@ -66,14 +57,8 @@ public class MyReviewList extends HttpServlet {
     }
 
     private int parsePageParam(String param) {
-        if (param == null || param.isEmpty()) {
-            return 1;
-        }
-        try {
-            return Integer.parseInt(param);
-        } catch (NumberFormatException e) {
-            return 1; // 이상한 값 들어오면 기본 1페이지
-        }
+        if (param == null || param.isEmpty()) return 1;
+        try { return Integer.parseInt(param); } catch (NumberFormatException e) { return 1; }
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
