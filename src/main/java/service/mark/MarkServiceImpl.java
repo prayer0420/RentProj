@@ -41,6 +41,7 @@ public class MarkServiceImpl implements MarkService {
     public List<Map<String, Object>> selectMyMarkList(Integer memberNo, PageInfo pageInfo) throws Exception {
         Map<String, Object> param = new HashMap<>();
         param.put("memberNo", memberNo);
+        System.out.println("memberNo"+memberNo);
         param.put("startRow", (pageInfo.getCurPage() - 1) * pageInfo.getPageSize());
         param.put("pageSize", pageInfo.getPageSize()); // 페이지당 6개
 

@@ -15,7 +15,6 @@ public class ProductServiceImpl implements ProductService {
 	private ProductDAO productDAO;
 	private CategoryDAO categoryDAO;
 
-	private static final int PAGE_SIZE = 10;
 	private static final int PAGE_BLOCK = 5;
 
 	public ProductServiceImpl() {
@@ -101,24 +100,32 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public PageInfo getPageInfo(String searchText, String categoryNo, String tradeType, String sort, int page) {
-
 		int totalRecord;
-		long t1 = System.currentTimeMillis();
+
+		System.out.println("🧩 [PageInfo] Params - searchText: " + searchText + ", categoryNo: " + categoryNo + ", tradeType: " + tradeType + ", page: " + page);
 
 		if (searchText != null && !searchText.isBlank()) {
 			totalRecord = productDAO.countByName(searchText, tradeType);
+			System.out.println("🔢 [PageInfo] countByName result: " + totalRecord);
 		} else if (categoryNo != null && !categoryNo.isBlank() && !"0".equals(categoryNo)) {
 			totalRecord = productDAO.countByCategory(Integer.parseInt(categoryNo), tradeType);
+			System.out.println("🔢 [PageInfo] countByCategory result: " + totalRecord);
 		} else {
 			totalRecord = productDAO.countAll(tradeType);
+			System.out.println("🔢 [PageInfo] countAll result: " + totalRecord);
 		}
-
-		int totalPage = (int) Math.ceil((double) totalRecord / PAGE_SIZE);
+		int pageSize = 12; 
+		int totalPage = (int) Math.ceil((double) totalRecord / pageSize);
 		int startPage = ((page - 1) / PAGE_BLOCK) * PAGE_BLOCK + 1;
 		int endPage = Math.min(startPage + PAGE_BLOCK - 1, totalPage);
 
-		return new PageInfo(page, totalPage, startPage, endPage);
+		PageInfo pageInfo = new PageInfo(page, totalPage, startPage, endPage);
+		System.out.println("📦 [PageInfo] pageSize: " + pageInfo.getPageSize());
+
+		return pageInfo;
 	}
+
+
 
 	@Override
 	public Product selectProductOne(Integer no) throws Exception {

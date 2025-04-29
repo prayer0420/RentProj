@@ -38,64 +38,66 @@
         WHERE p.memberNo = #{memberNo}
         ORDER BY r.date DESC
     </select>
+    
+    
+	<!-- 리뷰 리스트 조회 -->
+	<select id="getReviewList" parameterType="map" resultType="review">
+	    <choose>
+	        <when test="type == 'writable'">
+	            SELECT o.orderNo, o.orderDate AS date, o.productNo, p.title, p.img1 AS img
+	            FROM `order` o
+	            JOIN product p ON o.productNo = p.no
+	            LEFT JOIN review r ON o.productNo = r.productNo AND o.memberNo = r.memberNo
+	            WHERE o.memberNo = #{memberNo}
+	              AND (o.orderStatus = '대여종료' OR o.orderStatus = '거래완료')
+	              AND r.no IS NULL
+	            ORDER BY o.orderDate DESC
+	            LIMIT #{startRow}, #{pageSize}
+	        </when>
+	        <when test="type == 'written'">
+	            SELECT r.no, r.memberNo, r.contents, r.score, r.productNo, r.date, p.title, p.img1 AS img
+	            FROM review r
+	            JOIN product p ON r.productNo = p.no
+	            WHERE r.memberNo = #{memberNo}
+	            ORDER BY r.date DESC
+	            LIMIT #{startRow}, #{pageSize}
+	        </when>
+	        <when test="type == 'myproduct'">
+	            SELECT r.no, r.memberNo, r.contents, r.score, r.productNo, r.date, p.title, p.img1 AS img
+	            FROM review r
+	            JOIN product p ON r.productNo = p.no
+	            WHERE p.memberNo = #{memberNo}
+	            ORDER BY r.date DESC
+	            LIMIT #{startRow}, #{pageSize}
+	        </when>
+	    </choose>
+	</select>
+	
+	<!-- 리뷰 개수 조회 -->
+	<select id="getReviewCount" parameterType="map" resultType="int">
+	    <choose>
+	        <when test="type == 'writable'">
+	            SELECT COUNT(*)
+	            FROM `order` o
+	            LEFT JOIN review r ON o.productNo = r.productNo AND o.memberNo = r.memberNo
+	            WHERE o.memberNo = #{memberNo}
+	              AND (o.orderStatus = '대여종료' OR o.orderStatus = '거래완료')
+	              AND r.no IS NULL
+	        </when>
+	        <when test="type == 'written'">
+	            SELECT COUNT(*)
+	            FROM review
+	            WHERE memberNo = #{memberNo}
+	        </when>
+	        <when test="type == 'myproduct'">
+	            SELECT COUNT(*)
+	            FROM review r
+	            JOIN product p ON r.productNo = p.no
+	            WHERE p.memberNo = #{memberNo}
+	        </when>
+	    </choose>
+	</select>
 
-    <!-- 리뷰 전체 개수 조회 -->
-    <select id="getReviewCount" parameterType="map" resultType="int">
-        <choose>
-            <when test="type == 'writable'">
-                SELECT COUNT(*)
-                FROM `order` o
-                LEFT JOIN review r ON o.productNo = r.productNo AND o.memberNo = r.memberNo
-                WHERE o.memberNo = #{memberNo}
-                  AND (o.orderStatus = '대여종료' OR o.orderStatus = '거래완료')
-                  AND r.no IS NULL
-            </when>
-            <when test="type == 'written'">
-                SELECT COUNT(*)
-                FROM review
-                WHERE memberNo = #{memberNo}
-            </when>
-            <when test="type == 'myproduct'">
-                SELECT COUNT(*)
-                FROM review r
-                JOIN product p ON r.productNo = p.no
-                WHERE p.memberNo = #{memberNo}
-            </when>
-        </choose>
-    </select>
-
-    <!-- 리뷰 리스트 조회 -->
-    <select id="getReviewList" parameterType="map" resultType="review">
-        <choose>
-            <when test="type == 'writable'">
-                SELECT o.orderNo, o.orderDate AS date, o.productNo, p.title, p.img1 AS img
-                FROM `order` o
-                JOIN product p ON o.productNo = p.no
-                LEFT JOIN review r ON o.productNo = r.productNo AND o.memberNo = r.memberNo
-                WHERE o.memberNo = #{memberNo}
-                  AND (o.orderStatus = '대여종료' OR o.orderStatus = '거래완료')
-                  AND r.no IS NULL
-                ORDER BY o.orderDate DESC
-                LIMIT #{startRow}, #{pageSize}
-            </when>
-            <when test="type == 'written'">
-                SELECT r.no, r.memberNo, r.contents, r.score, r.productNo, r.date, p.title, p.img1 AS img
-                FROM review r
-                JOIN product p ON r.productNo = p.no
-                WHERE r.memberNo = #{memberNo}
-                ORDER BY r.date DESC
-                LIMIT #{startRow}, #{pageSize}
-            </when>
-            <when test="type == 'myproduct'">
-                SELECT r.no, r.memberNo, r.contents, r.score, r.productNo, r.date, p.title, p.img1 AS img
-                FROM review r
-                JOIN product p ON r.productNo = p.no
-                WHERE p.memberNo = #{memberNo}
-                ORDER BY r.date DESC
-                LIMIT #{startRow}, #{pageSize}
-            </when>
-        </choose>
-    </select>
 
 	<select id="checkMyReview" resultType="Integer">
 		select count(*) from review where productNo=#{productNo} and memberNo=#{memberNo}
