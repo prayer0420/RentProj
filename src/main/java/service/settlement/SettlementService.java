@@ -10,6 +10,7 @@ public interface SettlementService {
     List<Settlement> getSettlementList(Map<String, Object> searchMap) throws Exception;
     // 개별 정산 처리 (feeStatus 완료로 변경)
     boolean processSettlement(int settlementNo) throws Exception;
-    
+    // 수수료율 가져와 수수료 및 정산 금액 계산
+    void insertSettlementByOrderNo(int orderNo) throws Exception;
     
 }

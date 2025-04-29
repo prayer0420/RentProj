@@ -22,6 +22,8 @@ public class Settlement {
 
     private String payTime;        // 결제 일시 (settlement.payTime)
     private String settlementCompletedAt; // 정산 완료 일시 (settlement.settlementCompletedAt)
+    
+    private String revenueType;
 
     // 검색 조건용 필드
     private String searchStartDate; // 검색 시작 날짜
@@ -152,7 +154,13 @@ public class Settlement {
 		this.orderType = orderType;
 	}
     
-    
+	public String getRevenueType() {
+	    return revenueType;
+	}
+
+	public void setRevenueType(String revenueType) {
+	    this.revenueType = revenueType;
+	}
     
 
 }

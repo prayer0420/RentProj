@@ -8,6 +8,7 @@ import java.util.Map;
 import org.apache.ibatis.session.SqlSession;
 
 import dto.Member;
+import dto.Order;
 import dto.Settlement;
 import utils.MybatisSqlSessionFactory;
 
@@ -86,5 +87,20 @@ public class SettlementDAOImpl implements SettlementDAO {
 	    try (SqlSession sqlSession = MybatisSqlSessionFactory.getSqlSessionFactory().openSession(true)) {
 	        return sqlSession.insert("mapper.settlement.insertSettlement", settlement);
 	    }
+	}
+
+	@Override
+	public Order selectOrderInfo(int orderNo) throws Exception {
+	    try (SqlSession sqlSession = MybatisSqlSessionFactory.getSqlSessionFactory().openSession()) {
+	    return sqlSession.selectOne("mapper.settlement.selectOrderInfo", orderNo);
+	    }
+	}
+
+	@Override
+	public double selectGradeRate(int gradeId) throws Exception {
+	    try (SqlSession sqlSession = MybatisSqlSessionFactory.getSqlSessionFactory().openSession()) {
+        return sqlSession.selectOne("mapper.settlement.selectGradeRate", gradeId);
+	    }
+	
 	}
 }
