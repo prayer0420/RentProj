@@ -117,39 +117,6 @@
     
     <!-- 푸터 -->
 	<jsp:include page="/JSP/Header/footer.jsp" />
-		  
-	<script>
-	$(document).ready(function() {
-	    $('.history-row').click(function() {
-	        const orderNo = $(this).data('lend-no');
 	
-	        $.ajax({
-	            url: '${contextPath}/myLendHistoryDetail?orderNo=' + orderNo,
-	            method: 'GET',
-	            data: { orderNo: orderNo, ts: new Date().getTime() },	// 캐싱 방지
-	            dataType: 'json',
-	            cache: false,
-	            success: function(data) {
-	            	console.log("응답데이터: ", data);
-	                $('#detailInvoice').text(data.invoiceNo);
-	                $('#detailCourier').text(data.deliveryComp);
-	                $('#detailDeliverAddr').text(data.deliveryAddr);
-	                $('#detailMemId').text(data.id);
-	                $('#detailMemPhone').text(data.phone);
-	                $('#detailOrderDate').text(data.orderDate);
-	                $('#detailStartDate').text(data.startDate);
-	                $('#detailEndDate').text(data.endDate);
-	                $('#detailDayPrice').text(data.price);
-	                $('#detailSecPrice').text(data.secPrice);
-	                $('#detailDelPrice').text(data.deliveryPrice);
-	            },
-	            error: function(err) {
-	                alert("대여 상세정보를 불러오는 데 실패했습니다.");
-	                console.log(err);
-	            }
-	        });
-	    });
-	});
-	</script>
 </body>
 </html>

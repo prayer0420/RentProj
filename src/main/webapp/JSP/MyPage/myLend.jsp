@@ -62,9 +62,16 @@
 		                <span class="order-date">상품등록일: <fmt:formatDate value="${item.createDate }" pattern="yyyy년 MM월 dd일"/></span>
 		              </div>
 		              <div class="order-status-area">
-		              	
-		                <span class="status-text">${item.orderStatus}</span>
-		                <a href="${contextPath }/myLendDetail?orderNo=${item.orderNo}" class="order-detail-link">주문 상세보기 &gt;</a>
+		              	<c:choose>
+			              	<c:when test="${item.orderNo eq null }">
+		                  		<span class="status-text">상품게시중</span>&nbsp;&nbsp;&nbsp;&nbsp;
+			              		<span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+			              	</c:when>
+			              	<c:otherwise>
+		                		<span class="status-text">${item.orderStatus}</span>
+		                		<a href="${contextPath }/myLendDetail?orderNo=${item.orderNo}" class="order-detail-link">주문 상세보기 &gt;</a>
+		             		</c:otherwise>
+		              	</c:choose>
 		              </div>
 		            </div>
 		
@@ -88,16 +95,16 @@
 		              
 		               <div class="status-change-btns">
 		               <c:choose>
-		               	<c:when test="${item.deliveryStatus eq '상품게시중'}">
-					        <button type="button" class="open-invoice-btn" data-orderno="${item.orderNo}">상품숨김</button><br>
-					        <button type="button" class="open-invoice-btn" data-orderno="${item.orderNo}">상품삭제</button>
+		               	<c:when test="${item.orderNo eq null}">
+					        <button type="button" class="hide-btn" data-product-no="${item.no}">상품숨김</button>
+					        <button type="button" class="delete-btn" data-product-no="${item.no}">상품삭제</button>
 					        
 		               	</c:when>
 		               	<c:when test="${item.orderStatus eq '결제완료'}">
 					        <button type="button" class="open-invoice-btn" data-orderno="${item.orderNo}">송장번호입력</button>
 		               	</c:when>
 		               	<c:when test="${item.orderStatus eq '배송완료'}">
-					        <button type="button" class="open-invoice-btn" data-orderno="${item.orderNo}">대여거래종료</button>
+					        <button type="button" class="open-invoice-btn" data-orderno="${item.orderNo}">상품반납확인</button>
 		               	</c:when>
 		               </c:choose>
 		              </div>
@@ -120,12 +127,64 @@
       </div>
     </div>
 
-   <!-- 푸터 -->
-	<jsp:include page="/JSP/Header/footer.jsp" />
-
-
+   
    <!-- 송장번호입력 모달 -->
    <jsp:include page="/JSP/MyPage/mypageModal.jsp" />
+   
+   <!-- 상품삭제 모달 -->
+   <jsp:include page="/JSP/MyPage/deleteProductModal.jsp" />
+   
+   <!-- 푸터 -->
+	<jsp:include page="/JSP/Header/footer.jsp" />
+   
+    <script>       
+        $(document).ready(function() {
+	    let selectedProductNo = null;  // 선택한 상품번호 저장용
+	
+	    // 삭제 버튼 클릭 시 (이벤트 위임)
+	    $(document).on('click','.delete-btn',function(){
+	    	console.log("버튼 클릭됨!"); // 확인용
+	    	console.log("deleteModal 요소 찾기 시도:", $('#deleteModal').length); // 추가
+	    	
+	        selectedProductNo = $(this).data('product-no'); // 버튼에 심어놓은 상품번호 읽어오기
+	        $('#deleteModal').fadeIn(); // 모달 띄우기
+	    });
+	
+	    // 모달에서 '취소' 클릭 시
+	    $('#cancelDelete').click(function() {
+	        $('#deleteModal').fadeOut(); // 모달 닫기
+	        selectedProductNo = null; // 초기화
+	    });
+	
+	    // 모달에서 '확인' 클릭 시 (삭제 실행)
+	    $('#confirmDelete').click(function() {
+	        if (selectedProductNo) {
+	            $.ajax({
+	                url: '${contextPath}/deleteProduct',
+	                method: 'POST',
+	                data: { productNo: selectedProductNo },
+	                dataType: 'json',
+	                success: function(response) {
+	                    if (response.success) {
+	                        alert('상품이 삭제되었습니다.');
+	                        $('#product-' + selectedProductNo).fadeOut(500, function() {
+	                            $(this).remove();
+	                        });
+	                    } else {
+	                        alert('상품 삭제에 실패했습니다.');
+	                    }
+	                    $('#deleteModal').fadeOut();
+	                },
+	                error: function(xhr, status, error) {
+	                    alert('서버 오류로 삭제에 실패했습니다.');
+	                    console.error(error);
+	                    $('#deleteModal').fadeOut();
+	                }
+	            });
+	        }
+	    });
+	});
+</script>			
    
 </body>
 </html>
