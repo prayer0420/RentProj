@@ -536,3 +536,27 @@ VALUES
 (8, '정말 편했어요.', '편리하게 이용했습니다.', 5, NOW(), 8),
 (9, '아주 만족!', '가격 대비 훌륭합니다.', 5, NOW(), 9),
 (10, '다음에도 이용할게요.', '좋은 경험이었습니다.', 5, NOW(), 10);
+
+
+ALTER TABLE product ADD COLUMN deleted VARCHAR(10) DEFAULT 'N';
+
+UPDATE product SET deleted='N' WHERE NO = 102;
+UPDATE product SET deleted='N' WHERE NO = 103;
+UPDATE product SET deleted='N' WHERE NO = 104;
+UPDATE product SET deleted='N' WHERE NO = 105;
+UPDATE product SET deleted='N' WHERE NO = 106;
+UPDATE product SET deleted='N' WHERE NO = 107;
+UPDATE product SET deleted='N' WHERE NO = 108;
+UPDATE product SET deleted='N' WHERE NO = 109;
+UPDATE product SET deleted='N' WHERE NO = 110;
+UPDATE product SET deleted='N' WHERE NO = 111;
+UPDATE product SET deleted='N' WHERE NO = 112;
+UPDATE product SET deleted='N' WHERE NO = 113;
+UPDATE product SET deleted='N' WHERE NO = 114;
+UPDATE product SET deleted='N' WHERE NO = 115;
+UPDATE product SET deleted='N' WHERE NO = 116;
+UPDATE product SET deleted='N' WHERE NO = 117;
+UPDATE product SET deleted='N' WHERE NO = 118;
+UPDATE product SET deleted='N' WHERE NO = 119;
+UPDATE product SET deleted='N' WHERE NO = 120;
+
