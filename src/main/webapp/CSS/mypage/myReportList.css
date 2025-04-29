@@ -1,0 +1,145 @@
+@charset "UTF-8";
+
+/* --- 전체 틀 --- */
+.wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.container {
+  display: flex;
+}
+
+.content {
+  flex: 1;
+  margin-left: 30px;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.divider {
+  height: 2px;
+  background-color: #dcdcdc;
+  margin-bottom: 25px;
+  
+}
+
+/* --- 신고 카드 그리드 --- */
+.report-grid {
+	margin-top:20px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+/* --- 신고 카드 스타일 --- */
+.report-card {
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.report-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.12);
+}
+
+.report-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* --- 글씨 스타일 --- */
+.report-title {
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+}
+
+.report-type {
+  font-size: 14px;
+  color: #00796b;
+  font-weight: 600;
+}
+
+.report-date {
+  font-size: 13px;
+  color: #888;
+}
+
+.report-contents {
+  font-size: 15px;
+  color: #555;
+  line-height: 1.4;
+}
+
+.product-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #5d4037;
+  margin-top: 8px;
+}
+
+/* --- 상세보기 버튼 --- */
+.go-detail-btn {
+  margin-top: 15px;
+  padding: 10px 18px;
+  background: #66bb6a;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.go-detail-btn:hover {
+  background: #43a047;
+}
+
+/* --- 빈 목록 텍스트 --- */
+.empty-text {
+  text-align: center;
+  font-size: 18px;
+  color: #bbb;
+  margin-top: 40px;
+}
+
+/* --- 페이징 버튼 --- */
+.paging {
+  margin-top: 35px;
+  text-align: center;
+}
+
+.page-btn {
+  margin: 0 6px;
+  padding: 7px 14px;
+  background: white;
+  border: 1px solid #bbb;
+  border-radius: 6px;
+  text-decoration: none;
+  color: #555;
+  font-size: 14px;
+  font-weight: bold;
+  transition: background 0.2s, color 0.2s;
+}
+
+.page-btn:hover {
+  background: #eee;
+}
+
+.page-btn.active {
+  background: #2e7d32;
+  color: white;
+  border: none;
+}

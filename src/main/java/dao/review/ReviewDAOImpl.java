@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 
+import dto.Order;
 import dto.Review;
 import utils.MybatisSqlSessionFactory;
 
@@ -32,6 +33,29 @@ public class ReviewDAOImpl implements ReviewDAO {
 	public void deleteReview(Integer memberNo) throws Exception {
 		session.delete("mapper.review.deleteReview",memberNo);
 		session.commit();
+	}
+	
+	//myReviewList
+    @Override
+    public List<Order> getWritableReviewList(Integer memberNo) throws Exception {
+        return session.selectList("mapper.review.getWritableReviewList", memberNo);
+    }
+
+    @Override
+    public List<Review> getMyReviewList(Integer memberNo) throws Exception {
+        return session.selectList("mapper.review.getMyReviewList", memberNo);
+    }
+
+    @Override
+    public List<Review> getMyProductReviewList(Integer memberNo) throws Exception {
+        return session.selectList("mapper.review.getMyProductReviewList", memberNo);
+    }
+
+	@Override
+	public void updateReview(Review review) throws Exception {
+		session.update("mapper.review.updateReview",review);
+		session.commit();
+		
 	}
 
 }

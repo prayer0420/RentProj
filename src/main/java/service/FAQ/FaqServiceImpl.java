@@ -5,6 +5,7 @@ import java.util.List;
 import dao.FAQ.FaqDAO;
 import dao.FAQ.FaqDAOImpl;
 import dto.Faq;
+import dto.FaqCategory;
 
 public class FaqServiceImpl implements FaqService {
 	
@@ -18,6 +19,21 @@ public class FaqServiceImpl implements FaqService {
             e.printStackTrace();
             return false;
         }
+        return faqDAO.insertFaq(faq) > 0;
+	}
+
+	@Override
+	public List<Faq> selectAllFaq() throws Exception {
+		return faqDAO.selectAllFaq();
+		
+	}
+
+	@Override
+	public Faq faqSelectOne(Integer no) throws Exception {
+		return faqDAO.selectOne(no);
+	}
+	public boolean modifyFaq(Faq faq) {
+        return faqDAO.updateFaq(faq) > 0;
     }
 
 	@Override
@@ -44,6 +60,15 @@ public class FaqServiceImpl implements FaqService {
 	@Override
 	public Faq getFaqByNo(int no) {
         return faqDAO.selectFaqByNo(no);
+	public List<FaqCategory> getFaqCategoryList() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public FaqCategory insertFaqCategory(String name) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

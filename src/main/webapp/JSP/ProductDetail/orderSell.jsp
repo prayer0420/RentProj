@@ -13,6 +13,7 @@
 </head>
 
 <body>
+<input type="hidden" name="orderType" value="${orderType}">
 		<!-- 주문/결제 페이지 -->
 		<div class="order-container">
 			<h2 class="order-title">주문/결제</h2>
@@ -20,8 +21,8 @@
 			<div class="order-box">
 				<h3 class="order-subtitle">주문 배송정보</h3>
 				<div class="address-title">
-					<span class="address-name">집</span>
-					<button class="default-address">기본 배송지</button>
+					<span class="address-name"></span>
+					<button class="default-address"></button>
 				</div>
 				<div class="address-info">
 					<span class="phone"></span><br><span class="addressRegion"></span>
@@ -32,7 +33,7 @@
 			</div>
 
 			<div class="order-box">
-				<h3 class="order-subtitle">결제 정보</h3>
+				<h3 class="order-subtitle"></h3>
 				<div class="payment-row">
 					<span>상품 금액</span> <strong>${product.salePrice}원</strong>
 				</div>
@@ -85,6 +86,7 @@
 	      const productTitle = "${product.title}";
 	      const memberPhone = "${phone}".replace(/-/g, "");
 	      const memberName = "${nickname}";
+	      const orderType = "${orderType}"
 	      const price = parseInt("${product.salePrice + product.deliveryPrice}");
 	      console.log(price);
 	      
@@ -129,7 +131,9 @@
 	          },
 	          orderId: orderId, // 고유 주문번호
 	          orderName: productTitle,
-	          successUrl: window.location.origin + "${pageContext.request.contextPath}/success" + "?deliveryAddr=" + encodeURIComponent(document.getElementById('deliveryAddressInput').value),
+	          successUrl: window.location.origin + "${pageContext.request.contextPath}/success" + "?deliveryAddr=" + 
+	        		  encodeURIComponent(document.getElementById('deliveryAddressInput').value)+ "&orderType=" +
+	        		  encodeURIComponent(document.querySelector('input[name="orderType"]').value),
 	          failUrl: window.location.origin + "/fail", // 결제 요청이 실패하면 리다이렉트되는 URL
 	          customerEmail: "",
 	          customerName: memberName,

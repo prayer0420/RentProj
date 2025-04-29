@@ -15,5 +15,29 @@
 	<delete id="deleteMark" parameterType="Mark">
 		delete from mark where memberNo=#{memberNo} and productNo=#{productNo}
 	</delete>
+	
+	<select id="selectMyMarkList" parameterType="map" resultType="map">
+		SELECT 
+			m.no,
+			m.productNo,
+			p.title AS productTitle,
+			p.salePrice AS salePrice,
+			p.secPrice As secPrice,
+			p.rentPrice As rentPrice,
+			p.img1 AS productImage,
+			p.deliveryAddr AS productLocation
+		FROM mark m
+		JOIN product p ON m.productNo = p.no
+		WHERE m.memberNo = #{memberNo}
+		ORDER BY m.no DESC
+		LIMIT #{startRow}, #{pageSize}
+	</select>
+
+
+    <select id="selectMarkCount" parameterType="int" resultType="int">
+        SELECT COUNT(*) FROM mark WHERE memberNo = #{memberNo}
+    </select>
+
+	
 
 </mapper>

@@ -5,36 +5,42 @@
 
 <mapper namespace="mapper.faq">
 
-  <!-- FAQ Category 관련 -->
-  <!-- FAQ 카테고리 전체 조회 -->
-  <select id="selectFaqCategoryList" resultType="faqCategory">
-    SELECT * FROM faq_category ORDER BY no ASC
-  </select>
+	<!-- FAQ Category 관련 -->
+	<!-- FAQ 카테고리 전체 조회 -->
+	<select id="selectFaqCategoryList" resultType="faqCategory">
+		SELECT * FROM
+		faq_category ORDER BY no ASC
+	</select>
 
 
-  <!-- FAQ 카테고리 생성 -->
-  <insert id="insertFaqCategory" parameterType="faqCategory" useGeneratedKeys="true" keyProperty="no">
-    INSERT INTO faq_category (name) VALUES (#{name})
-  </insert>
+	<!-- FAQ 카테고리 생성 -->
+	<insert id="insertFaqCategory" parameterType="faqCategory"
+		useGeneratedKeys="true" keyProperty="no">
+		INSERT INTO faq_category (name)
+		VALUES (#{name})
+	</insert>
 
 
+	<!-- FAQ 관련 -->
+	<!-- FAQ 전체 조회 (카테고리 이름 조인 포함) -->
+	<select id="selectFaqList" resultType="faq">
+		SELECT
+		f.no,
+		f.categoryNo,
+		c.name AS categoryName,
+		f.title,
+		f.content,
+		f.createdAt,
+		f.updatedAt,
+		f.imgUrl
+		FROM faq f
+		LEFT JOIN faq_category c ON f.categoryNo = c.no
+		ORDER BY f.createdAt DESC
+	</select>
 
-  <!-- FAQ 관련 -->
-  <!-- FAQ 전체 조회 (카테고리 이름 조인 포함) -->
-    <select id="selectFaqList" resultType="faq">
-        SELECT 
-            f.no,
-            f.categoryNo,
-            c.name AS categoryName,
-            f.title,
-            f.content,
-            f.createdAt,
-            f.updatedAt,
-            f.imgUrl
-        FROM faq f
-        LEFT JOIN faq_category c ON f.categoryNo = c.no
-        ORDER BY f.createdAt DESC
-    </select>
+	<select id="selectAllFaq" resultType="faq">
+		select * from faq
+	</select>
 
     <!-- FAQ 등록 -->
     <insert id="insertFaq" parameterType="faq" useGeneratedKeys="true" keyProperty="no">
@@ -69,5 +75,10 @@
         FROM faq f
         WHERE f.no = #{no}
     </select>
+	<select id="faqSelectOne" parameterType="int" resultType="faq">
+		select
+		* from faq where no=#{no}
+	</select>
+
 
 </mapper>

@@ -14,6 +14,32 @@ import utils.MybatisSqlSessionFactory;
 public class FaqDAOImpl implements FaqDAO {
     // SqlSessionFactory 생성
 	private SqlSessionFactory factory = MybatisSqlSessionFactory.getSqlSessionFactory(); 
+	private SqlSession session = MybatisSqlSessionFactory.getSqlSessionFactory().openSession();
+
+    // FAQ 카테고리 하나를 DB에 추가하는 메서드
+    @Override
+    public FaqCategory insertFaqCategory(FaqCategory category) {
+        // auto-commit 설정된 SqlSession 사용
+        try (SqlSession session = factory.openSession(true)) {
+            int result = session.insert("mapper.faq.insertFaqCategory", category);
+            if (result > 0) {
+                return category; // keyProperty="no" 때문에 no 값 자동 세팅됨
+            } else {
+                return null;
+            }
+        } catch (Exception e) {
+            System.out.println("카테고리 삽입 실패: " + e.getMessage());
+            return null;
+        }
+    }
+	@Override
+	public List<Faq> selectAllFaq() {
+		return session.selectList("mapper.faq.selectAllFaq");
+	}
+	@Override
+	public Faq selectOne(Integer no) throws Exception {
+		return session.selectOne("mapper.faq.faqSelectOne",no);
+	}
 	// FAQ 등록
 	@Override
 	public int insertFaq(Faq faq) {

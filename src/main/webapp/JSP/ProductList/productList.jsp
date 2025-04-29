@@ -10,12 +10,13 @@
     <a href="${contextPath}/productDetail?no=${p.no}&tradeType=${p.tradeType}">
       <div class="product-card">
         <!-- 상품 이미지 -->
+        
 		<c:choose>
-		  <c:when test="${empty p.img}">
+		  <c:when test="${empty p.img1}">
 		    <img src="${contextPath}/img/default_product.png" alt="기본 이미지" loading="lazy"/>
 		  </c:when>
 		  <c:otherwise>
-		    <img src="${p.img}" alt="${p.title}" loading="lazy"/>
+		    <img src="${contextPath}/upload/${p.img1}" alt="${p.title}" loading="lazy"/>
 		  </c:otherwise>
 		</c:choose>
 

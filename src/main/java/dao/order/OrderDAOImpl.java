@@ -1,5 +1,6 @@
 package dao.order;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -35,7 +36,10 @@ public class OrderDAOImpl implements OrderDAO {
 
 	@Override    
 	public int hasMemberOrderProduct(Integer memberNo, Integer productNo) throws Exception {
-		return session.selectOne("mapper.order.hasMemberOrderProduct",Map.of("memberNo",memberNo,"productNo",productNo));
+		Map<String,Object> params = new HashMap<>();
+		params.put("memberNo", memberNo);
+		params.put("productNo", productNo);
+		return session.selectOne("mapper.order.hasMemberOrderProduct",params);
 	
 	}
 
