@@ -14,8 +14,7 @@ public interface SettlementDAO {
     int updateSettlementStatus(int settlementNo) throws Exception;
     // 회원번호 조회 (정산번호로)
     int selectMemberNoBySettlementNo(int settlementNo) throws Exception;
-    // 회원 settlementCount 1 증가
-    int updateMemberSettlementCount(int memberNo) throws Exception;
+ 
     
     // 회원 정보 조회
     Member selectMemberInfo(int memberNo) throws Exception;
@@ -27,5 +26,9 @@ public interface SettlementDAO {
     Settlement selectSettlementInfo(int settlementNo) throws Exception;
     // 최종 정산 금액 업데이트
     int updateFinalSettleAmount(int settlementNo, BigDecimal finalAmount) throws Exception;
+    
+    // 주문 상태 변경 시 settlement 자동 insert 
+    int insertSettlement(Settlement settlement) throws Exception;
+
     
 }

@@ -48,13 +48,17 @@ public class SettlementList extends HttpServlet {
         String startDate = request.getParameter("startDate");
         String endDate = request.getParameter("endDate");
         String revenueType = request.getParameter("revenueType"); // 판매/대여 타입
+        String searchFeeStatus = request.getParameter("searchFeeStatus"); //정산 대기/완료 타입
+
 
         // [2] 검색 조건을 Map에 담기
         Map<String, Object> searchMap = new HashMap<>();
         searchMap.put("searchStartDate", startDate);
         searchMap.put("searchEndDate", endDate);
         searchMap.put("searchRevenueType", revenueType);
-        searchMap.put("searchFeeStatus", "COMPLETE"); // 항상 정산완료만 검색
+        if (searchFeeStatus != null && !searchFeeStatus.isEmpty()) {
+            searchMap.put("searchFeeStatus", searchFeeStatus);
+        }
         
         try {
         // [3] Service 호출 (리스트 가져오기)

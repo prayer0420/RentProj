@@ -38,13 +38,6 @@ public class SettlementDAOImpl implements SettlementDAO {
 	    }
 	}
 
-	@Override
-	public int updateMemberSettlementCount(int memberNo) throws Exception {
-		// 회원 settlementCount 1 증가
-		try (SqlSession sqlSession = MybatisSqlSessionFactory.getSqlSessionFactory().openSession(true)) {
-	        return sqlSession.update("mapper.settlement.updateMemberSettlementCount", memberNo);
-	    }
-	}
 
 	@Override
 	public Member selectMemberInfo(int memberNo) throws Exception {
@@ -84,6 +77,14 @@ public class SettlementDAOImpl implements SettlementDAO {
 	        param.put("settlementNo", settlementNo);
 	        param.put("finalAmount", finalAmount);
 	        return sqlSession.update("mapper.settlement.updateFinalSettleAmount", param);
+	    }
+	}
+
+	@Override
+	public int insertSettlement(Settlement settlement) throws Exception {
+		// 주문 상태 변경 시 settlement 자동 insert 
+	    try (SqlSession sqlSession = MybatisSqlSessionFactory.getSqlSessionFactory().openSession(true)) {
+	        return sqlSession.insert("mapper.settlement.insertSettlement", settlement);
 	    }
 	}
 }

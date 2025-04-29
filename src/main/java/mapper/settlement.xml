@@ -20,17 +20,10 @@
 	    WHERE s.settlementNo = #{settlementNo}
 	</select>
 	
-	<!-- 회원 settlementCount +1 증가 -->
-	<update id="updateMemberSettlementCount">
-	    UPDATE member
-	    SET settlementCount = settlementCount + 1
-	    WHERE memberNo = #{memberNo}
-	</update>
-	
 	
 		<!-- 회원 기본 정보 조회 -->
 	<select id="selectMemberInfo" resultType="dto.Member">
-	    SELECT memberNo, gradeNo, settlementCount
+	    SELECT memberNo, gradeNo, orderCount
 	    FROM member
 	    WHERE memberNo = #{memberNo}
 	</select>
@@ -69,5 +62,59 @@
 	    WHERE settlementNo = #{settlementNo}
 	</update>
 		
+	<insert id="insertSettlement" parameterType="dto.Settlement">
+    INSERT INTO settlement (
+        memberNo,
+        orderNo,
+        productNo,
+        feeStatus,
+        revenueType,
+        payTime
+    ) VALUES (
+        #{memberNo},
+        #{orderNo},
+        #{productNo},
+        'PENDING',       <!-- 기본 상태는 대기 (관리자가 정산하면 COMPLETE로 바뀜) -->
+        #{revenueType},
+        NOW()
+    )
+	</insert>
+	
+	<!-- 정산 리스트 검색 (searchMap 기준) -->
+	<select id="selectSettlementList" parameterType="map" resultType="dto.Settlement">
+	    SELECT 
+	        s.settlementNo,
+	        s.orderNo,
+	        s.memberNo,
+	        s.productNo,
+	        p.title as productTitle,
+	        o.price,
+	        o.deliveryPrice,
+	        o.secPrice,
+	        g.gradeRate,
+	        s.feeAmount,
+	        s.finalSettleAmount,
+	        s.payTime,
+	        s.feeStatus
+	    FROM settlement s
+	    LEFT JOIN `order` o ON s.orderNo = o.orderNo
+	    LEFT JOIN `product` p ON o.productNo = p.no
+	    LEFT JOIN member m ON s.memberNo = m.no
+	    LEFT JOIN grade g ON m.gradeId = g.gradeNo
+	    WHERE 1=1
+	    <if test="searchStartDate != null &amp;&amp; searchStartDate != ''">
+	        AND DATE(s.payTime) &gt;= #{searchStartDate}
+	    </if>
+	    <if test="searchEndDate != null &amp;&amp; searchEndDate != ''">
+	        AND DATE(s.payTime) &lt;= #{searchEndDate}
+	    </if>
+	    <if test="searchRevenueType != null &amp;&amp; searchRevenueType != ''">
+	        AND s.revenueType = #{searchRevenueType}
+	    </if>
+	    <if test="searchFeeStatus != null &amp;&amp; searchFeeStatus != ''">
+	        AND s.feeStatus = #{searchFeeStatus}
+	    </if>
+	    ORDER BY s.payTime DESC
+	</select>
 	
 	</mapper>
