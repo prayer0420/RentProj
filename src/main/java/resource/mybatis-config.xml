@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE configuration
-	PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
-	"http://mybatis.org/dtd/mybatis-3-config.dtd">
-	
-	
+   PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-config.dtd">
+   
+   
 <configuration>
-	<typeAliases>
-		<typeAlias type="dto.Product" alias ="product"/>
-		<typeAlias type="dto.Category" alias ="category"/>
-		<typeAlias type="dto.Member" alias ="member"/>
-		<typeAlias type="dto.Order" alias ="order"/>
-		<typeAlias type="dto.Grade" alias ="grade"/>
-		<typeAlias type="dto.Note" alias ="note"/>
-		<typeAlias type="dto.ReportedProduct" alias ="report"/>
-		<typeAlias type="dto.AlarmMessage" alias ="alarmMessage"/>
-		<typeAlias type="dto.Alarm" alias ="alarm"/>
-		<typeAlias type="dto.Review" alias ="review"/>
-		<typeAlias type="dto.Mark" alias ="mark"/>
-		<typeAlias type="dto.Faq" alias ="faq"/>  
-		<typeAlias type="dto.FaqCategory" alias ="faqCategory"/>
-		<typeAlias type="dto.Announce" alias="announce"/>
-		
-		
-	</typeAliases>
-	
+   <typeAliases>
+      <typeAlias type="dto.Product" alias ="product"/>
+      <typeAlias type="dto.Category" alias ="category"/>
+      <typeAlias type="dto.Member" alias ="member"/>
+      <typeAlias type="dto.Order" alias ="order"/>
+      <typeAlias type="dto.Grade" alias ="grade"/>
+      <typeAlias type="dto.Note" alias ="note"/>
+      <typeAlias type="dto.ReportedProduct" alias ="report"/>
+      <typeAlias type="dto.AlarmMessage" alias ="alarmMessage"/>
+      <typeAlias type="dto.Alarm" alias ="alarm"/>
+      <typeAlias type="dto.Review" alias ="review"/>
+      <typeAlias type="dto.Mark" alias ="mark"/>
+      <typeAlias type="dto.Faq" alias ="faq"/>  
+      <typeAlias type="dto.FaqCategory" alias ="faqCategory"/>
+      <typeAlias type="dto.Announce" alias="announce"/>
+      
+      
+   </typeAliases>
+   
   <environments default="pooled">
     <environment id="pooled">
       <transactionManager type="JDBC"/>
@@ -41,24 +41,24 @@
       </dataSource>
     </environment>
   </environments>
-	
-	<!--수정 필요-->
-	<mappers>
-		
-		<mapper resource="mapper/product.xml"/>
-		<mapper resource="mapper/category.xml"/>
-		<mapper resource="mapper/member.xml"/>
-		<mapper resource="mapper/order.xml"/>
-		<mapper resource="mapper/mypage.xml"/>
-		<mapper resource="mapper/grade.xml"/>
-		<mapper resource="mapper/note.xml"/>
-		<mapper resource="mapper/report.xml"/>
-		<mapper resource="mapper/alarmList.xml"/>
-		<mapper resource="mapper/alarm.xml"/>
-		<mapper resource="mapper/review.xml"/>
-		<mapper resource="mapper/mark.xml"/>
-		<mapper resource="mapper/faq.xml"/>
-		<mapper resource="mapper/announce.xml"/>
-		
-	</mappers>
+   
+   <!--수정 필요-->
+   <mappers>
+      
+      <mapper resource="mapper/product.xml"/>
+      <mapper resource="mapper/category.xml"/>
+      <mapper resource="mapper/member.xml"/>
+      <mapper resource="mapper/order.xml"/>
+      <mapper resource="mapper/mypage.xml"/>
+      <mapper resource="mapper/grade.xml"/>
+      <mapper resource="mapper/note.xml"/>
+      <mapper resource="mapper/report.xml"/>
+      <mapper resource="mapper/alarmList.xml"/>
+      <mapper resource="mapper/alarm.xml"/>
+      <mapper resource="mapper/review.xml"/>
+      <mapper resource="mapper/mark.xml"/>
+      <mapper resource="mapper/faq.xml"/>
+      <mapper resource="mapper/announce.xml"/>
+      
+   </mappers>
 </configuration>

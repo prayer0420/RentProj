@@ -22,7 +22,9 @@
 	  width: 400px;
 	  border-radius: 10px;
 	  position: relative;
+	  text-align: center;
 	}
+
 	
 	/* 닫기 버튼 (X) */
 	.close {

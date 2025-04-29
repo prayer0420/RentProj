@@ -33,4 +33,7 @@ public interface MypageService {
 	// 대여이력 리스트 불러오기
 	List<Order> getLendHistoryByProductNo(Integer productNo) throws Exception;
 
+	// 나의 판매상품 리스트(mySell)에서 게시중인 상품 삭제
+	boolean deleteProduct(Integer productNo) throws Exception;
+
 }

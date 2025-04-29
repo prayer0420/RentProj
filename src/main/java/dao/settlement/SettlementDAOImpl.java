@@ -1,0 +1,89 @@
+package dao.settlement;
+
+import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.ibatis.session.SqlSession;
+
+import dto.Member;
+import dto.Settlement;
+import utils.MybatisSqlSessionFactory;
+
+public class SettlementDAOImpl implements SettlementDAO {
+	
+
+	@Override
+    public List<Settlement> selectSettlementList(Map<String, Object> searchMap) throws Exception {
+        // 검색조건으로 정산 리스트 조회
+		try (SqlSession sqlSession = MybatisSqlSessionFactory.getSqlSessionFactory().openSession()) {
+            return sqlSession.selectList("mapper.settlement.selectSettlementList", searchMap);
+        }
+    }
+
+	@Override
+	public int updateSettlementStatus(int settlementNo) throws Exception {
+        // 정산 상태를 COMPLETE로 업데이트
+        try (SqlSession sqlSession = MybatisSqlSessionFactory.getSqlSessionFactory().openSession(true)) { // 오토커밋
+            return sqlSession.update("mapper.settlement.updateSettlementStatus", settlementNo);
+        }
+    }
+	
+	@Override
+	public int selectMemberNoBySettlementNo(int settlementNo) throws Exception {
+		// 회원번호 조회 (정산번호로)
+		try (SqlSession sqlSession = MybatisSqlSessionFactory.getSqlSessionFactory().openSession()) {
+	        return sqlSession.selectOne("mapper.settlement.selectMemberNoBySettlementNo", settlementNo);
+	    }
+	}
+
+	@Override
+	public int updateMemberSettlementCount(int memberNo) throws Exception {
+		// 회원 settlementCount 1 증가
+		try (SqlSession sqlSession = MybatisSqlSessionFactory.getSqlSessionFactory().openSession(true)) {
+	        return sqlSession.update("mapper.settlement.updateMemberSettlementCount", memberNo);
+	    }
+	}
+
+	@Override
+	public Member selectMemberInfo(int memberNo) throws Exception {
+	    try (SqlSession sqlSession = MybatisSqlSessionFactory.getSqlSessionFactory().openSession()) {
+	        return sqlSession.selectOne("mapper.settlement.selectMemberInfo", memberNo);
+	    }
+	}
+
+	@Override
+	public int selectGradeCount(int gradeNo) throws Exception {
+	    try (SqlSession sqlSession = MybatisSqlSessionFactory.getSqlSessionFactory().openSession()) {
+	        return sqlSession.selectOne("mapper.settlement.selectGradeCount", gradeNo);
+	    }
+	}
+
+	@Override
+	public int updateMemberGradeNo(int memberNo, int gradeNo) throws Exception {
+	    try (SqlSession sqlSession = MybatisSqlSessionFactory.getSqlSessionFactory().openSession(true)) {
+	        Map<String, Object> param = new HashMap<>();
+	        param.put("memberNo", memberNo);
+	        param.put("gradeNo", gradeNo);
+	        return sqlSession.update("mapper.settlement.updateMemberGradeNo", param);
+	    }
+	}
+
+	@Override
+	public Settlement selectSettlementInfo(int settlementNo) throws Exception {
+	    try (SqlSession sqlSession = MybatisSqlSessionFactory.getSqlSessionFactory().openSession()) {
+	        return sqlSession.selectOne("mapper.settlement.selectSettlementInfo", settlementNo);
+	    }
+	}
+
+	@Override
+	public int updateFinalSettleAmount(int settlementNo, BigDecimal finalAmount) throws Exception {
+	    try (SqlSession sqlSession = MybatisSqlSessionFactory.getSqlSessionFactory().openSession(true)) {
+	        Map<String, Object> param = new HashMap<>();
+	        param.put("settlementNo", settlementNo);
+	        param.put("finalAmount", finalAmount);
+	        return sqlSession.update("mapper.settlement.updateFinalSettleAmount", param);
+	    }
+	}
+}
