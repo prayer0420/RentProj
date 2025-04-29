@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 
-import dto.Order;
 import dto.Review;
+import dto.ReviewQueryParams;
 import utils.MybatisSqlSessionFactory;
 
 public class ReviewDAOImpl implements ReviewDAO {
@@ -36,19 +36,14 @@ public class ReviewDAOImpl implements ReviewDAO {
 	}
 	
 	//myReviewList
-    @Override
-    public List<Order> getWritableReviewList(Integer memberNo) throws Exception {
-        return session.selectList("mapper.review.getWritableReviewList", memberNo);
+	@Override
+    public int getReviewCount(ReviewQueryParams params) throws Exception {
+        return session.selectOne("mapper.review.getReviewCount", params);
     }
 
     @Override
-    public List<Review> getMyReviewList(Integer memberNo) throws Exception {
-        return session.selectList("mapper.review.getMyReviewList", memberNo);
-    }
-
-    @Override
-    public List<Review> getMyProductReviewList(Integer memberNo) throws Exception {
-        return session.selectList("mapper.review.getMyProductReviewList", memberNo);
+    public List<Review> getReviewList(ReviewQueryParams params) throws Exception {
+        return session.selectList("mapper.review.getReviewList", params);
     }
 
 	@Override
