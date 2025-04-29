@@ -13,6 +13,12 @@ public class FaqServiceImpl implements FaqService {
 
 	@Override
 	public boolean registerFaq(Faq faq) {
+        try {
+            return faqDAO.insertFaq(faq) > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
         return faqDAO.insertFaq(faq) > 0;
 	}
 
@@ -31,8 +37,18 @@ public class FaqServiceImpl implements FaqService {
     }
 
 	@Override
-	public boolean deleteFaqList(int[] faqNos) {
-        return faqDAO.deleteFaqList(faqNos) > 0;
+	public boolean modifyFaq(Faq faq) {
+        try {
+            return faqDAO.updateFaq(faq) > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+	@Override
+	public boolean deleteFaqList(List<Integer> faqNos) {
+	    return faqDAO.deleteFaqList(faqNos) > 0;
     }
 
 	@Override
@@ -42,6 +58,8 @@ public class FaqServiceImpl implements FaqService {
     }
 
 	@Override
+	public Faq getFaqByNo(int no) {
+        return faqDAO.selectFaqByNo(no);
 	public List<FaqCategory> getFaqCategoryList() {
 		// TODO Auto-generated method stub
 		return null;

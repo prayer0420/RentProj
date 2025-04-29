@@ -1,1 +1,73 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="mapper.settlement">
+
+  <!-- 정산 상태 업데이트 쿼리 추가 -->
+  <update id="updateSettlementStatus">
+    UPDATE settlement
+    SET feeStatus = 'COMPLETE'
+    WHERE settlementNo = #{settlementNo}
+  </update>
+
+	<!-- 정산번호로 회원번호 찾기 -->	
+	<select id="selectMemberNoBySettlementNo" resultType="int">
+	    SELECT o.memberNo
+	    FROM settlement s
+	    INNER JOIN `order` o ON s.orderNo = o.orderNo
+	    WHERE s.settlementNo = #{settlementNo}
+	</select>
+	
+	<!-- 회원 settlementCount +1 증가 -->
+	<update id="updateMemberSettlementCount">
+	    UPDATE member
+	    SET settlementCount = settlementCount + 1
+	    WHERE memberNo = #{memberNo}
+	</update>
+	
+	
+		<!-- 회원 기본 정보 조회 -->
+	<select id="selectMemberInfo" resultType="dto.Member">
+	    SELECT memberNo, gradeNo, settlementCount
+	    FROM member
+	    WHERE memberNo = #{memberNo}
+	</select>
+	
+	<!-- 다음 등급의 기준 카운트 조회 -->
+	<select id="selectGradeCount" resultType="int">
+	    SELECT gradeCount
+	    FROM grade
+	    WHERE gradeNo = #{gradeNo}
+	</select>
+	
+	<!-- 회원 등급 승급 -->
+	<update id="updateMemberGradeNo">
+	    UPDATE member
+	    SET gradeNo = #{gradeNo}
+	    WHERE memberNo = #{memberNo}
+	</update>	
+	
+	<!-- 정산 상세 조회 (판매가, 보증금, 배송비, 수수료) -->
+	<select id="selectSettlementInfo" resultType="dto.Settlement">
+	    SELECT 
+	        o.price,
+	        o.secPrice,
+	        o.orderType,
+	        o.deliveryPrice,
+	        s.feeAmount
+	    FROM settlement s
+	    INNER JOIN `order` o ON s.orderNo = o.orderNo
+	    WHERE s.settlementNo = #{settlementNo}
+	</select>
+	
+	<!-- 최종 정산 금액 업데이트 -->
+	<update id="updateFinalSettleAmount">
+	    UPDATE settlement
+	    SET finalSettleAmount = #{finalAmount}
+	    WHERE settlementNo = #{settlementNo}
+	</update>
+		
+	
+	</mapper>

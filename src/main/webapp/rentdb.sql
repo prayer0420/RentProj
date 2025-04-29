@@ -384,6 +384,13 @@ INSERT INTO grade (gradeNo, gradeName, gradeRate, gradeCount) VALUES
 (5, '다이아', 4.25, 40.0),
 (6, ' Re:NT', 3.5, 50.0);
 
+-- 등급 카운트용
+ALTER TABLE member
+ADD COLUMN settlementCount INT DEFAULT 0;
+
+-- 최종정산금액 (관리용)
+ALTER TABLE settlement
+ADD COLUMN finalSettleAmount DECIMAL(10,2) DEFAULT 0.00;
 
 
 INSERT INTO product (categoryNo, title, content, state, img, deliveryAddr, deliveryPrice, tradeType, secPrice, memberNo, startDate, endDate, salePrice, rentPrice, deliveryStatus, createDate)
