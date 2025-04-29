@@ -12,8 +12,8 @@ import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 import dto.Announce;
-import service.AnnounceService;
-import service.AnnounceServiceImpl;
+import service.announce.AnnounceService;
+import service.announce.AnnounceServiceImpl;
 
 /**
  * Servlet implementation class AnnounceUpdate

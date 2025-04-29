@@ -28,6 +28,12 @@
 <!-- 검색 폼 -->
 <form action="${pageContext.request.contextPath}/settlementList" method="post" class="search-box">
   <div class="row g-3 align-items-center">
+      <label for="searchFeeStatus">정산 상태:</label>
+    <select name="searchFeeStatus" id="searchFeeStatus">
+      <option value="">전체</option>
+      <option value="PENDING" <c:if test="${param.searchFeeStatus == 'PENDING'}">selected</c:if>>대기</option>
+      <option value="COMPLETE" <c:if test="${param.searchFeeStatus == 'COMPLETE'}">selected</c:if>>완료</option>
+    </select>
     <div class="col-auto">
       <label>결제일 시작</label>
       <input type="date" name="startDate" class="form-control" value="${param.startDate}">
@@ -101,9 +107,25 @@
             <td><fmt:formatNumber value="${settle.feeAmount}" type="number" /> 원</td>
             <td><fmt:formatNumber value="${settle.finalSettleAmount}" type="number" /> 원</td>
             <td>${settle.payTime}</td>
-              <button type="button" class="btn-settle" data-settlement-no="${settle.settlementNo}" style="padding: 6px 12px; background: #26c6da; color: white; border: none; border-radius: 4px;">
-                정산하기
-              </button>
+          
+          <td>
+            <c:choose>
+              <c:when test="${settle.feeStatus == 'PENDING'}">
+                <button type="button" class="btn-settle" 
+                        data-settlement-no="${settle.settlementNo}" 
+                        style="padding: 6px 12px; background: #26c6da; color: white; border: none; border-radius: 4px;">
+                  정산하기
+                </button>
+              </c:when>
+              <c:otherwise>
+                <button type="button" disabled
+                        style="padding: 6px 12px; background: #d3d3d3; color: white; border: none; border-radius: 4px; cursor: default;">
+                  ✔ 정산완료
+                </button>
+              </c:otherwise>
+            </c:choose>
+          </td>
+
           </tr>
         </c:forEach>
       </c:when>
@@ -136,7 +158,7 @@
 	          button.prop("disabled", true);
 	          button.text("✔ 정산완료");
 	          button.css({
-	            "background": "#28a745", // 초록색으로 변경
+	            "background": "#d3d3d3", // 연회색으로 변경
 	            "cursor": "default"
 	          });
 	        } else {

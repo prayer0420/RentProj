@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 
 import dto.Announce;
-import service.AnnounceService;
-import service.AnnounceServiceImpl;
+import service.announce.AnnounceService;
+import service.announce.AnnounceServiceImpl;
 
 /**
  * Servlet implementation class AnnounceDetail

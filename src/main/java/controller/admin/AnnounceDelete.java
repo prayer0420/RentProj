@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import service.AnnounceService;
-import service.AnnounceServiceImpl;
+import service.announce.AnnounceService;
+import service.announce.AnnounceServiceImpl;
 
 /**
  * Servlet implementation class AnnounceDelete

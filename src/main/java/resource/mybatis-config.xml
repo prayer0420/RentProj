@@ -20,6 +20,8 @@
       <typeAlias type="dto.Faq" alias ="faq"/>  
       <typeAlias type="dto.FaqCategory" alias ="faqCategory"/>
       <typeAlias type="dto.Announce" alias="announce"/>
+      <typeAlias type="dto.Settlement" alias="settlement"/>
+      
       
       
    </typeAliases>
@@ -59,6 +61,7 @@
       <mapper resource="mapper/mark.xml"/>
       <mapper resource="mapper/faq.xml"/>
       <mapper resource="mapper/announce.xml"/>
+      <mapper resource="mapper/settlement.xml" />
       
    </mappers>
 </configuration>

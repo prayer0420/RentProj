@@ -26,9 +26,6 @@ public class Member {
 	Double latitude;
 	Double longitude;
 	
-	// 등급 카운트용(구매:정산완료 / 대여:상품회수완료 / 나눔:나눔완료 시, count+1 필요)
-	Integer settlementCount;
-	
 	
 	//기본생성자(myBatis용)
 	public Member() {}
@@ -247,13 +244,6 @@ public class Member {
 	    this.longitude = longitude;
 	}
 
-	public Integer getSettlementCount() {
-		return settlementCount;
-	}
-
-	public void setSettlementCount(Integer settlementCount) {
-		this.settlementCount = settlementCount;
-	}
 	
 	
 
