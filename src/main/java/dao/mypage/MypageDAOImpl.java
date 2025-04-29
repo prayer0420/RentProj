@@ -147,4 +147,19 @@ public class MypageDAOImpl implements MypageDAO {
 		return result;
 	}
 
+	@Override
+	public boolean updateOrderStatusToCompleted(Integer orderNo) {
+		Integer result = 0;
+        try {
+            result = sqlSession.update("mapper.mypage.updateOrderStatusToCompleted", orderNo);
+            sqlSession.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            sqlSession.rollback();
+        } finally {
+            sqlSession.close();
+        }
+        return result > 0;
+	}
+
 }

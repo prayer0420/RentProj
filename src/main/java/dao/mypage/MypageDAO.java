@@ -50,5 +50,10 @@ public interface MypageDAO {
 	// 
 	Integer deleteProduct(Integer productNo);
 	
+	// 구매확정 버튼 누르면 orderStatus 업데이트
+	boolean updateOrderStatusToCompleted(Integer orderNo);
+	
+	
+	
 
 }
