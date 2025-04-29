@@ -44,7 +44,7 @@ public class ProductDetail extends HttpServlet {
 			boolean checkOrder = orderService.checkOrder(no);
 			
 			request.setAttribute("product", product);
-			request.setAttribute("productNo", product.getNo());
+			request.setAttribute("productNo", no);
 			request.setAttribute("avgScore", avgScore);
 			request.setAttribute("hasOrder", hasOrder);
 			request.setAttribute("checkOrder",checkOrder);

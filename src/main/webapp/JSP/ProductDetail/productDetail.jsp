@@ -118,7 +118,7 @@
 						<c:when test="${product.tradeType == '판매' }">
 							<div class="sale-price">${product.salePrice}원</div>
 						</c:when>
-						<c:when test="${product.tradeType == '판매대여' }">
+						<c:when test="${product.tradeType == '판매/대여' }">
 							<div class="rent-price">${product.rentPrice}원/1일</div>
 							<div class="sec-price">보증금 ${product.secPrice}원</div>
 							<div class="sale-price">판매가 ${product.salePrice}원</div>
@@ -175,7 +175,7 @@
 										<button class="btn btn-sell">대여하기</button>
 									</form>
 								</c:when>
-								<c:when test="${product.tradeType=='판매대여' }">
+								<c:when test="${product.tradeType=='판매/대여' }">
 									<form
 										action="${pageContext.request.contextPath}/productSellOrder"
 										method="get">

@@ -39,7 +39,7 @@
 		const state2 = document.getElementById("state2");
 		const state3 = document.getElementById("state3");
 		const state4 = document.getElementById("state4");
-		const ifile1 = document.getElementById("ifile1");
+		const ifile1 = document.getElementById("ifile0");
 		const content = document.getElementById("content");
 		const deliveryPrice = document.getElementById("deliveryPrice");
       
@@ -109,7 +109,7 @@
     } else if(!state1.checked && !state2.checked && !state3.checked && !state4.checked){
         e.preventDefault();
         alert("상품상태를 선택하셔야 합니다.");
-    }else if(ifile1.files.length === 0){
+    }else if(ifile0.files.length === 0){
     	e.preventDefault();
     	alert("상품 이미지를 선택하셔야 합니다.");
     }else if (content.value.trim() === "") {
