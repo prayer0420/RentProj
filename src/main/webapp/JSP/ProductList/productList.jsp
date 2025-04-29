@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 
 <link rel="stylesheet" href="${contextPath}/CSS/ProductList/productList.css" />
@@ -19,25 +20,36 @@
 		    <img src="${contextPath}/upload/${p.img1}" alt="${p.title}" loading="lazy"/>
 		  </c:otherwise>
 		</c:choose>
-
+		
         <!-- 상품 제목 -->
         <div class="product-title">${p.title}</div>
 
-        <!-- 가격 및 타입 -->
-        <div class="product-info">
-          <div class="product-price">
-            <c:if test="${p.salePrice != null}">
-              <span class="sale">판매가 ${p.salePrice}원</span><br/>
-            </c:if>
-            <c:if test="${p.rentPrice != null}">
-              <span class="rent">대여 ${p.rentPrice}원 / 1일</span><br/>
-            </c:if>
-            <c:if test="${p.secPrice != null}">
-              <span class="deposit">보증금 ${p.secPrice}원</span>
-            </c:if>
-          </div>
-          <div class="product-type">${p.tradeType}</div>
-        </div>
+		<!-- 가격 및 타입 -->
+		<div class="product-price">
+		  <c:choose>
+		    <c:when test="${p.tradeType == '나눔'}">
+		      <span class="free">무료나눔</span><br/>
+		    </c:when>
+		    <c:otherwise>
+		      <c:if test="${p.salePrice != null}">
+		        <span class="sale">판매가 <fmt:formatNumber value="${p.salePrice}" type="number" />원</span><br/>
+		      </c:if>
+		      <c:if test="${p.rentPrice != null}">
+		        <span class="rent">대여 <fmt:formatNumber value="${p.rentPrice}" type="number" />원 / 1일</span><br/>
+		      </c:if>
+		      <c:if test="${p.tradeType == '대여' or p.tradeType == '판매대여'}">
+		        <c:if test="${p.secPrice != null}">
+		          <span class="deposit">보증금 <fmt:formatNumber value="${p.secPrice}" type="number" />원</span>
+		        </c:if>
+		      </c:if>
+		    </c:otherwise>
+		  </c:choose>
+		</div>
+		<div class="product-type">${p.tradeType}</div>
+
+		
+		<!--직거래지역 -->
+        <div class="product-location">${p.deliveryAddr}</div>
 
         <!-- 업로드된 시간 표시 -->
         <div class="product-meta">${p.timeAgo}</div>

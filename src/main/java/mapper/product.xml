@@ -115,13 +115,14 @@
    </select>
 
    <!-- 검색어 포함 상품 수 -->
-   <select id="countByName" parameterType="map" resultType="int">
-      SELECT COUNT(*) FROM product
-      WHERE title LIKE CONCAT('%', #{name}, '%')
-      <if test="tradeType != null">
-         AND tradeType = #{tradeType}
-      </if>
-   </select>
+	<select id="countByName" parameterType="map" resultType="int">
+	  SELECT COUNT(*) FROM product
+	  WHERE title LIKE CONCAT('%', #{searchText}, '%')
+	  <if test="tradeType != null">
+	    AND tradeType = #{tradeType}
+	  </if>
+	</select>
+
 
    <!-- 카테고리별 상품 수 -->
    <select id="countByCategory" parameterType="map"
@@ -136,7 +137,7 @@
    <!-- 메인에서 인기 상품 (조회수 기준 정렬) -->
    <select id="selectPopularProducts" resultMap="productMap"
       parameterType="int">
-      SELECT no, title, img1, salePrice, rentPrice, tradeType
+      SELECT no, title, img1, salePrice, rentPrice, tradeType, deliveryAddr
       FROM product
       ORDER BY view_cnt DESC
       LIMIT #{limit}
