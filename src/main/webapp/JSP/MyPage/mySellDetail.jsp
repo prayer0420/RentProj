@@ -26,10 +26,11 @@
           <div class="divider"></div>
           
           <div class="section product-box">
-                <img src="https://via.placeholder.com/120x100?text=🚲" alt="자전거">
+                <a href="${contextPath }/productDetail?no=${mySellDetail.no}&tradeType=판매">
+                <img src="https://via.placeholder.com/120x100?text=🚲" alt="자전거" /></a>
                 <div class="product-info">
-                    <div style="font-size: 13px; color: gray;">상품번호 ${mySellDetail.no }</div>
-                    <div class="product-title">${mySellDetail.title }</div>
+                    <div style="font-size: 13px; color: gray;"><a href="${contextPath }/productDetail?no=${mySellDetail.no}&tradeType=판매">상품번호 ${mySellDetail.no }</a></div>
+                    <div class="product-title"><a href="${contextPath }/productDetail?no=${mySellDetail.no}&tradeType=판매">${mySellDetail.title }</a></div>
                     <div class="price"><fmt:formatNumber value="${mySellDetail.salePrice}" type="number" groupingUsed="true" />원</div>
                 </div>
             </div>

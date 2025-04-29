@@ -31,10 +31,13 @@
 			<c:otherwise>
           
 	          <div class="section product-box">
-	                <img src="${contextPath }/img/bicycle.jpg" alt="자전거">
+	          	<a href="${contextPath }/productDetail?no=${myRentDetail.no }">
+	                <img src="${contextPath }/img/bicycle.jpg" alt="자전거"></a>
 	                <div class="product-info">
-	                    <div style="font-size: 13px; color: gray;">상품번호 ${myRentDetail.productNo }</div>
-	                    <div class="product-title">${myRentDetail.title }</div>
+	                    <div style="font-size: 13px; color: gray;">
+	                    <a href="${contextPath }/productDetail?no=${myRentDetail.no }">상품번호 ${myRentDetail.productNo }</a></div>
+	                    <div class="product-title">
+	                    <a href="${contextPath }/productDetail?no=${myRentDetail.no }">${myRentDetail.title }</a></div>
 	                    <div class="price">1일 <fmt:formatNumber value="${myRentDetail.rentPrice }" type="number" groupingUsed="true" />원</div>
 	                </div>
 	                <span class="status-text">${myRentDetail.orderStatus }</span>

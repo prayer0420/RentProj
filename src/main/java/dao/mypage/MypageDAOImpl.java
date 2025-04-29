@@ -138,4 +138,13 @@ public class MypageDAOImpl implements MypageDAO {
 		return sqlSession.selectList("mapper.mypage.selectLendHistoryByProductNo",productNo);
 	}
 
+	// 나의 판매상품 리스트(mySell)에서 상품 삭제
+	@Override
+	public Integer deleteProduct(Integer productNo) {
+		
+		Integer result = sqlSession.delete("mapper.mypage.deleteMyProduct",productNo);
+		sqlSession.commit();
+		return result;
+	}
+
 }
