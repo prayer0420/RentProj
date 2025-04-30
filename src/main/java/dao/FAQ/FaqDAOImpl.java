@@ -50,10 +50,12 @@ public class FaqDAOImpl implements FaqDAO {
 	// FAQ 수정
 	@Override
 	public int updateFaq(Faq faq) {
-        try (SqlSession session = factory.openSession(true)) {
-            return session.update("mapper.faq.updateFaq", faq);
-        }
-    }
+		    try (SqlSession session = factory.openSession(true)) {
+		        int result = session.update("mapper.faq.updateFaq", faq);
+		        return result;
+		    }
+		}
+
 	// FAQ 다건 삭제
 	@Override
 	public int deleteFaqList(List<Integer> faqNos) {

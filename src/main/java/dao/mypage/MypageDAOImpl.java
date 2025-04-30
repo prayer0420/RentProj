@@ -1,165 +1,178 @@
 package dao.mypage;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import org.apache.ibatis.session.SqlSession;
-
 import dto.Order;
-import dto.Product;
 import utils.MybatisSqlSessionFactory;
 
 public class MypageDAOImpl implements MypageDAO {
-	private SqlSession sqlSession = MybatisSqlSessionFactory.getSqlSessionFactory().openSession();
 
-	// 나의 판매상품 전체 카운트 불러오기(페이징) 
-	@Override
-	public Integer selectProductCountById(String id) throws Exception {
-		return sqlSession.selectOne("mapper.mypage.selectProductCnt",id);
-	}
-	
-	//나의 판매상품 리스트 불러오기
-	@Override
-	public List<Map<String, Object>> selectProductListByPage(Map<String, Object> paramMap) throws Exception {
-		return sqlSession.selectList("mapper.mypage.selectProductListByPage", paramMap);
-	}
-	
-	//위치 업데이트
-	@Override
-	public void updateLocation(String memberId, double latitude, double longitude) {
-	    Map<String, Object> params = new HashMap<>();
-	    params.put("memberId", memberId);
-	    params.put("latitude", latitude);
-	    params.put("longitude", longitude);
-	    sqlSession.update("mapper.member.updateLocation", params);
-	    sqlSession.commit();
-	}
+    @Override
+    public Integer selectProductCountById(String id) throws Exception {
+        try (SqlSession session = MybatisSqlSessionFactory.getSqlSessionFactory().openSession()) {
+            return session.selectOne("mapper.mypage.selectProductCnt", id);
+        }
+    }
 
-	// 마이페이지 판매상품 거래내역 상세 불러오기
-	@Override
-	public Map<String, Object> selectMySellDetail(Integer orderNo, String id) throws Exception{
-		Map<String,Object> param = new HashMap<String, Object>();
-		param.put("orderNo",orderNo);
-		param.put("id",id);
-		return sqlSession.selectOne("mapper.mypage.selectMySellDetail",param);
-	}
+    @Override
+    public List<Map<String, Object>> selectProductListByPage(Map<String, Object> paramMap) throws Exception {
+        try (SqlSession session = MybatisSqlSessionFactory.getSqlSessionFactory().openSession()) {
+            return session.selectList("mapper.mypage.selectProductListByPage", paramMap);
+        }
+    }
 
-	// 송장번호/택배사 업데이트
-	@Override
-	public boolean updateInvoiceInfo(Integer orderNo, String deliveryComp, String invoiceNo) throws Exception {
-		Map<String,Object> param = new HashMap<>();
-		param.put("orderNo", orderNo);
-		param.put("deliveryComp", deliveryComp);
-		param.put("invoiceNo", invoiceNo);
-		Integer result = sqlSession.update("mapper.mypage.updateInvoiceNo",param);
-		sqlSession.commit();
-		return result == 1;
-	}
+    @Override
+    public void updateLocation(String memberId, double latitude, double longitude) {
+        try (SqlSession session = MybatisSqlSessionFactory.getSqlSessionFactory().openSession()) {
+            Map<String, Object> params = new HashMap<>();
+            params.put("memberId", memberId);
+            params.put("latitude", latitude);
+            params.put("longitude", longitude);
+            session.update("mapper.member.updateLocation", params);
+            session.commit();
+        }
+    }
 
-	// 나의 구매내역 전체 카운트 불러오기(페이징)
-	@Override
-	public Integer selectOrderCountById(String id) throws Exception {
-		
-		return sqlSession.selectOne("mapper.mypage.selectOrderCnt",id);
-	}
+    @Override
+    public Map<String, Object> selectMySellDetail(Integer orderNo, String id) throws Exception {
+        try (SqlSession session = MybatisSqlSessionFactory.getSqlSessionFactory().openSession()) {
+            Map<String, Object> param = new HashMap<>();
+            param.put("orderNo", orderNo);
+            param.put("id", id);
+            return session.selectOne("mapper.mypage.selectMySellDetail", param);
+        }
+    }
 
-	// 나의 구매내역 리스트 불러오기
-	@Override
-	public List<Map<String,Object>> selectOrderListByPage(Map<String, Object> paramMap) throws Exception {
-		
-		return sqlSession.selectList("mapper.mypage.selectOrderListByPage",paramMap);
-	}
+    @Override
+    public boolean updateInvoiceInfo(Integer orderNo, String deliveryComp, String invoiceNo) throws Exception {
+        try (SqlSession session = MybatisSqlSessionFactory.getSqlSessionFactory().openSession()) {
+            Map<String, Object> param = new HashMap<>();
+            param.put("orderNo", orderNo);
+            param.put("deliveryComp", deliveryComp);
+            param.put("invoiceNo", invoiceNo);
+            Integer result = session.update("mapper.mypage.updateInvoiceNo", param);
+            session.commit();
+            return result == 1;
+        }
+    }
 
-	// 나의 구매내역 상세 불러오기
-	@Override
-	public Map<String, Object> selectMyOrderDetail(Integer orderNo, String id) throws Exception {
-		Map<String,Object> param = new HashMap<>();
-		param.put("orderNo",orderNo);
-		param.put("id",id);
-		return sqlSession.selectOne("mapper.mypage.selectMyOrderDetail", param);
-	}
+    @Override
+    public Integer selectOrderCountById(String id) throws Exception {
+        try (SqlSession session = MybatisSqlSessionFactory.getSqlSessionFactory().openSession()) {
+            return session.selectOne("mapper.mypage.selectOrderCnt", id);
+        }
+    }
 
-	// 나의 빌린상품 전체 카운트 불러오기(페이징)
-	@Override
-	public Integer selectRentCountById(String id) throws Exception{
-		
-		return sqlSession.selectOne("mapper.mypage.selectRentCnt",id);
-	}
+    @Override
+    public List<Map<String, Object>> selectOrderListByPage(Map<String, Object> paramMap) throws Exception {
+        try (SqlSession session = MybatisSqlSessionFactory.getSqlSessionFactory().openSession()) {
+            return session.selectList("mapper.mypage.selectOrderListByPage", paramMap);
+        }
+    }
 
-	// 나의 빌린상품 리스트 불러오기
-	@Override
-	public List<Map<String, Object>> selectRentListByPage(Map<String, Object> paramMap) throws Exception{
-		
-		return sqlSession.selectList("mapper.mypage.selectRentListByPage",paramMap);
-	}
+    @Override
+    public Map<String, Object> selectMyOrderDetail(Integer orderNo, String id) throws Exception {
+        try (SqlSession session = MybatisSqlSessionFactory.getSqlSessionFactory().openSession()) {
+            Map<String, Object> param = new HashMap<>();
+            param.put("orderNo", orderNo);
+            param.put("id", id);
+            return session.selectOne("mapper.mypage.selectMyOrderDetail", param);
+        }
+    }
 
-	// 나의 빌리기 내역 상세 불러오기
-	@Override
-	public Map<String, Object> selectMyRentDetail(Integer orderNo, String id) throws Exception {
-		Map<String,Object> param = new HashMap<>();
-		param.put("orderNo",orderNo);
-		param.put("id",id);
-		return sqlSession.selectOne("mapper.mypage.selectMyRentDetail",param);
-	}
+    @Override
+    public Integer selectRentCountById(String id) throws Exception {
+        try (SqlSession session = MybatisSqlSessionFactory.getSqlSessionFactory().openSession()) {
+            return session.selectOne("mapper.mypage.selectRentCnt", id);
+        }
+    }
 
-	@Override
-	public Integer selectLendCountById(String id) {
-		
-		return sqlSession.selectOne("mapper.mypage.selectLendCnt",id);
-	}
+    @Override
+    public List<Map<String, Object>> selectRentListByPage(Map<String, Object> paramMap) throws Exception {
+        try (SqlSession session = MybatisSqlSessionFactory.getSqlSessionFactory().openSession()) {
+            return session.selectList("mapper.mypage.selectRentListByPage", paramMap);
+        }
+    }
 
-	@Override
-	public List<Map<String, Object>> selectLendListByPage(Map<String, Object> paramMap) {
-		
-		return sqlSession.selectList("mapper.mypage.selectLendListByPage",paramMap);
-	}
+    @Override
+    public Map<String, Object> selectMyRentDetail(Integer orderNo, String id) throws Exception {
+        try (SqlSession session = MybatisSqlSessionFactory.getSqlSessionFactory().openSession()) {
+            Map<String, Object> param = new HashMap<>();
+            param.put("orderNo", orderNo);
+            param.put("id", id);
+            return session.selectOne("mapper.mypage.selectMyRentDetail", param);
+        }
+    }
 
-	// 나의 대여(빌려준)내역 상세 불러오기
-	@Override
-	public Map<String, Object> selectMyLendDetail(Integer orderNo, String id) {
-		Map<String,Object> param = new HashMap<>();
-		param.put("orderNo", orderNo);
-		param.put("id", id);
-		return sqlSession.selectOne("mapper.mypage.selectMyLendDetail",param);
-	}
+    @Override
+    public Integer selectLendCountById(String id) {
+        try (SqlSession session = MybatisSqlSessionFactory.getSqlSessionFactory().openSession()) {
+            return session.selectOne("mapper.mypage.selectLendCnt", id);
+        }
+    }
 
-	@Override
-	public Map<String, Object> selectLendDetailByOrderNo(String id, Integer orderNo) throws Exception {
-		Map<String,Object> param = new HashMap<>();
-		param.put("orderNo", orderNo);
-		param.put("id", id);
-		return sqlSession.selectOne("mapper.mypage.selectLendHistoryDetail",param);
-	}
+    @Override
+    public List<Map<String, Object>> selectLendListByPage(Map<String, Object> paramMap) {
+        try (SqlSession session = MybatisSqlSessionFactory.getSqlSessionFactory().openSession()) {
+            return session.selectList("mapper.mypage.selectLendListByPage", paramMap);
+        }
+    }
 
-	@Override
-	public List<Order> selectLendHistoryByProductNo(Integer productNo) {
-		
-		return sqlSession.selectList("mapper.mypage.selectLendHistoryByProductNo",productNo);
-	}
+    @Override
+    public Map<String, Object> selectMyLendDetail(Integer orderNo, String id) {
+        try (SqlSession session = MybatisSqlSessionFactory.getSqlSessionFactory().openSession()) {
+            Map<String, Object> param = new HashMap<>();
+            param.put("orderNo", orderNo);
+            param.put("id", id);
+            return session.selectOne("mapper.mypage.selectMyLendDetail", param);
+        }
+    }
 
-	// 나의 판매상품 리스트(mySell)에서 상품 삭제
-	@Override
-	public Integer deleteProduct(Integer productNo) {
-		
-		Integer result = sqlSession.delete("mapper.mypage.deleteMyProduct",productNo);
-		sqlSession.commit();
-		return result;
-	}
+    @Override
+    public Map<String, Object> selectLendDetailByOrderNo(String id, Integer orderNo) throws Exception {
+        try (SqlSession session = MybatisSqlSessionFactory.getSqlSessionFactory().openSession()) {
+            Map<String, Object> param = new HashMap<>();
+            param.put("orderNo", orderNo);
+            param.put("id", id);
+            return session.selectOne("mapper.mypage.selectLendHistoryDetail", param);
+        }
+    }
 
-	@Override
-	public boolean updateOrderStatusToCompleted(Integer orderNo) {
-		Integer result = 0;
-        try {
-            result = sqlSession.update("mapper.mypage.updateOrderStatusToCompleted", orderNo);
-            sqlSession.commit();
+    @Override
+    public List<Order> selectLendHistoryByProductNo(Integer productNo) {
+        try (SqlSession session = MybatisSqlSessionFactory.getSqlSessionFactory().openSession()) {
+            return session.selectList("mapper.mypage.selectLendHistoryByProductNo", productNo);
+        }
+    }
+
+    @Override
+    public Integer deleteProduct(Integer productNo) {
+        try (SqlSession session = MybatisSqlSessionFactory.getSqlSessionFactory().openSession()) {
+            Integer result = session.delete("mapper.mypage.deleteMyProduct", productNo);
+            session.commit();
+            return result;
+        }
+    }
+
+    @Override
+    public boolean updateOrderStatusToCompleted(Integer orderNo) {
+        try (SqlSession session = MybatisSqlSessionFactory.getSqlSessionFactory().openSession()) {
+            Integer result = session.update("mapper.mypage.updateOrderStatusToCompleted", orderNo);
+            session.commit();
+            return result > 0;
         } catch (Exception e) {
             e.printStackTrace();
-            sqlSession.rollback();
-        } finally {
-            sqlSession.close();
+            return false;
         }
-        return result > 0;
-	}
+    }
 
-}
+	@Override
+	public boolean hideProduct(Integer productNo) {
+        try (SqlSession session = MybatisSqlSessionFactory.getSqlSessionFactory().openSession()) {
+            Integer result = session.update("mapper.mypage.hideMyProduct", productNo);
+            session.commit();
+            return result == 1;
+        }
+	}
+} 

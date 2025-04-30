@@ -55,8 +55,8 @@
                     <h4>구매 정보</h4>
                     <p>주문번호: ${mySellDetail.orderId }</p>
                     <p>주문일: <fmt:formatDate value="${mySellDetail.orderDate}" pattern="yyyy년 MM월 dd일" /> </p>
-                    <p>상품출고일: 2025-03-06</p>
-                    <p>구매확정일: 2025-03-09</p>
+                    <p>상품출고일: </p>
+                    <p>구매확정일: </p>
                     <p>&nbsp;&nbsp;</p>
                 </div>
                 <div class="info-box">

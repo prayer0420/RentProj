@@ -29,6 +29,7 @@
 			    const orderNo = $("#orderNo").val();
 			    const deliveryComp = $("#deliveryComp").val();
 			    const invoiceNo = $("#invoiceNo").val();
+			    const redirectUrl = $("#redirectUrl").val(); // 리다이렉트용 URL
 		
 		    $.ajax({
 		        type: "POST",
@@ -40,7 +41,7 @@
 		        },
 		        success: function (res) {
 		            // 성공 시 페이지 리다이렉트
-		            window.location.href = "/rent/mySellDetail?orderNo="+orderNo;
+		            window.location.href = redirectUrl + "?orderNo=" + orderNo;	//동적 리다이렉트
 		        },
 		        error: function (xhr, status, error) {
 		            alert("송장 등록에 실패했습니다. 다시 시도해주세요.");
@@ -73,6 +74,7 @@
 				<span class="close">&times;</span>
 				<form id="invoiceForm">
 					<input type="hidden" id="orderNo" value="${item.orderNo}" />
+					<input type="hidden" id="redirectUrl" value="${redirectUrl}" /> <!-- 리다이렉트 URL 세팅 -->
 					<label for="deliveryComp">택배사</label>
 					<input type="text" id="deliveryComp" required /><br>
 					<label for="invoiceNo">송장번호</label>

@@ -42,6 +42,8 @@ public class Order {
     private String productName; // product.title (조인 결과)
     private String buyerId;     // member.id (조인 결과)
     private String sellerId;    // member.id (조인 결과)
+    
+    private String revenueType; // "판매" / "대여" (정산용)
 
 	// 기본생성자
 	public Order() {}
@@ -266,5 +268,13 @@ public class Order {
 	public void setSellerId(String sellerId) {
 		this.sellerId = sellerId;
 	}
+	public String getRevenueType() {
+		return revenueType;
+	}
+	public void setRevenueType(String revenueType) {
+		this.revenueType = revenueType;
+	}
+	
+	
 	
 }

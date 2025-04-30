@@ -273,7 +273,7 @@
 	</c:if>
 </body>
 
-<jsp:include page="messageModal.jsp">
+<jsp:include page="noteModal.jsp">
 	<jsp:param value="${product.no}" name="productNo" />
 	<jsp:param value="${product.tradeType}" name="tradeType" />
 </jsp:include>
@@ -488,35 +488,29 @@
 	 });
 	 */
 	 
-	 $(document).ready(function() {
-		    $("#sendMessageBtn").click(function(e) {
-		        e.preventDefault(); // 기본 동작 막아
+	 $(document).ready(function () {
+		  $("#sendMessageBtn").click(function (e) {
+		    e.preventDefault();
 
-		        const formData = {
-		            receiver: $("input[name='receiver']").val(),
-		            productTitle: $("input[name='productTitle']").val(),
-		            productNo: $("input[name='productNo']").val(),
-		            no: $("input[name='no']").val(),
-		            tradeType: $("input[name='tradeType']").val(),
-		            noteContent: $("#message").val() // textarea id="message"
-		        };
+		    const formData = {
+		      receiverNo: $("input[name='receiverNo']").val(),
+		      productNo: $("input[name='productNo']").val(),
+		      noteContent: $("#noteContent").val()
+		    };
 
-		        $.ajax({
-		            type: "POST",
-		            url: contextPath + "/message/send",
-		            data: formData,
-		            success: function(response) {
-		                alert("쪽지가 성공적으로 보내졌습니다!");
-		                closeMessageModal(); // 모달 닫기
-		                $("#messageForm")[0].reset(); // 폼 초기화
-		            },
-		            error: function(xhr, status, error) {
-		                alert("쪽지 보내기 실패ㅠㅠ 다시 시도해주세요!");
-		                console.error(xhr.responseText);
-		            }
-		        });
-		    });
-		});
+		    $.ajax({
+		      type: "POST",
+		      url: contextPath + "/noteSend",
+		      data: formData,
+		      success: function (response) {
+		        alert("쪽지가 성공적으로 보내졌습니다!");
+		        closeMessageModal();
+		        $("#messageForm")[0].reset();
+		      },
+		      error: function (xhr, status, error) {
+		        alert("쪽지 보내기 실패ㅠㅠ 다시 시도해주세요!");
+		        console.error(xhr.responseText);
+		      }
 	 
 	// 모달 열기
 	 function openReportModal() {

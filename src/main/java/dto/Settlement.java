@@ -1,5 +1,7 @@
 package dto;
 
+import java.sql.Timestamp;
+
 public class Settlement {
 
     private int settlementNo;      // 정산 번호 (settlement)
@@ -18,16 +20,18 @@ public class Settlement {
     private int finalSettleAmount; // 최종 정산 금액 (물품가 - 수수료 + 배송비 + 보증금)
 
     private String orderStatus;    // 주문 상태 (order.orderStatus)
-    private String feeStatus;      // 정산 상태 (settlement.feeStatus) ex) WAIT, COMPLETE
+    private String feeStatus;      // 정산 상태 (settlement.feeStatus) 
 
     private String payTime;        // 결제 일시 (settlement.payTime)
-    private String settlementCompletedAt; // 정산 완료 일시 (settlement.settlementCompletedAt)
+    private Timestamp settlementCompletedAt; // 정산 완료 일시 (settlement.settlementCompletedAt)
+    
+    private String revenueType;
 
     // 검색 조건용 필드
     private String searchStartDate; // 검색 시작 날짜
     private String searchEndDate;   // 검색 끝 날짜
     private String searchRevenueType; // 판매/대여 타입
-    private String searchFeeStatus; // 검색 정산 상태 (COMPLETE 고정해서 쓸 수도 있음)
+    private String searchFeeStatus; // 검색 정산 상태 
     
     private String orderType;
 	
@@ -115,10 +119,12 @@ public class Settlement {
 	public void setPayTime(String payTime) {
 		this.payTime = payTime;
 	}
-	public String getSettlementCompletedAt() {
+	
+	
+	public Timestamp getSettlementCompletedAt() {
 		return settlementCompletedAt;
 	}
-	public void setSettlementCompletedAt(String settlementCompletedAt) {
+	public void setSettlementCompletedAt(Timestamp settlementCompletedAt) {
 		this.settlementCompletedAt = settlementCompletedAt;
 	}
 	public String getSearchStartDate() {
@@ -152,7 +158,13 @@ public class Settlement {
 		this.orderType = orderType;
 	}
     
-    
+	public String getRevenueType() {
+	    return revenueType;
+	}
+
+	public void setRevenueType(String revenueType) {
+	    this.revenueType = revenueType;
+	}
     
 
 }

@@ -1,10 +1,41 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD mapper 3.0//EN"
-	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-	
-<mapper namespace="mapper.note">
-	<insert id="insertNote" parameterType="Note" useGeneratedKeys="true" keyProperty="no">
-		insert into note (noteNo,productNo,memberNo,noteContent,receiver) values (#{noteNo},#{productNo},#{memberNo},#{noteContent},#{receiver})
-	</insert>
-	
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="note">
+
+  <insert id="insertNote" parameterType="Note">
+    INSERT INTO note (productNo, memberNo, receiverNo, noteContent, curdate)
+    VALUES (#{productNo}, #{memberNo}, #{receiverNo}, #{noteContent}, NOW())
+  </insert>
+
+  <select id="selectReceivedNotes" parameterType="int" resultType="Note">
+    SELECT 
+      n.noteNo, n.productNo, n.memberNo, n.receiverNo, n.noteContent, n.curdate,
+      m1.nickname AS senderNickname,
+      p.title AS productTitle
+    FROM note n
+    JOIN member m1 ON n.memberNo = m1.no
+    JOIN product p ON n.productNo = p.no
+    WHERE n.receiverNo = #{memberNo}
+    ORDER BY n.curdate DESC
+  </select>
+
+  <select id="selectSentNotes" parameterType="int" resultType="Note">
+    SELECT 
+      n.noteNo, n.productNo, n.memberNo, n.receiverNo, n.noteContent, n.curdate,
+      m2.nickname AS receiverNickname,
+      p.title AS productTitle
+    FROM note n
+    JOIN member m2 ON n.receiverNo = m2.no
+    JOIN product p ON n.productNo = p.no
+    WHERE n.memberNo = #{memberNo}
+    ORDER BY n.curdate DESC
+  </select>
+
+  <delete id="deleteNote" parameterType="int">
+    DELETE FROM note WHERE noteNo = #{noteNo}
+  </delete>
+
 </mapper>

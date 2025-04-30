@@ -45,21 +45,23 @@ public class SettlementList extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // [1] 검색 조건 받기
-        String startDate = request.getParameter("startDate");
-        String endDate = request.getParameter("endDate");
-        String revenueType = request.getParameter("revenueType"); // 판매/대여 타입
+		request.setCharacterEncoding("UTF-8");
+        String revenueType = request.getParameter("searchRevenueType"); // 판매/대여 타입
         String searchFeeStatus = request.getParameter("searchFeeStatus"); //정산 대기/완료 타입
-
+        String completedStart = trimOrNull(request.getParameter("completedStart"));
+        String completedEnd = trimOrNull(request.getParameter("completedEnd"));
+        
 
         // [2] 검색 조건을 Map에 담기
         Map<String, Object> searchMap = new HashMap<>();
-        searchMap.put("searchStartDate", startDate);
-        searchMap.put("searchEndDate", endDate);
         searchMap.put("searchRevenueType", revenueType);
         if (searchFeeStatus != null && !searchFeeStatus.isEmpty()) {
             searchMap.put("searchFeeStatus", searchFeeStatus);
         }
+        searchMap.put("completedStart", completedStart);
+        searchMap.put("completedEnd", completedEnd);
         
+        System.out.println("searchMap = " + searchMap); // 디버깅
         try {
         // [3] Service 호출 (리스트 가져오기)
         List<Settlement> settlementList = settlementService.getSettlementList(searchMap);
@@ -73,6 +75,7 @@ public class SettlementList extends HttpServlet {
         // [5] 결과를 JSP에 전달
         request.setAttribute("settlementList", settlementList);
         request.setAttribute("totalFeeAmount", totalFeeAmount);
+        request.setAttribute("searchMap", searchMap); // 검색 조건도 넘기면 JSP에서 쓸 수 있음
         request.getRequestDispatcher("/JSP/Admin/settlementList.jsp").forward(request, response);
         
         } catch (Exception e) {
@@ -84,4 +87,7 @@ public class SettlementList extends HttpServlet {
         }
     }
 	
+		private String trimOrNull(String param) {
+        return (param != null && !param.trim().isEmpty()) ? param.trim() : null;
+    }
 }

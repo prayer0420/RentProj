@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import dto.Member;
+import dto.Order;
 import dto.Settlement;
 
 public interface SettlementDAO {
@@ -29,6 +30,12 @@ public interface SettlementDAO {
     
     // 주문 상태 변경 시 settlement 자동 insert 
     int insertSettlement(Settlement settlement) throws Exception;
-
     
+    // 주문 정보 조회 (orderNo 기준)
+    Order selectOrderInfo(int orderNo) throws Exception;
+
+   // 
+    double selectGradeRate(int gradeId) throws Exception;
+    // 정산완료 시간 업데이트
+    int updateSettlementCompletedAt(int settlementNo) throws Exception;
 }

@@ -1,0 +1,216 @@
+@charset "UTF-8";
+
+/*────────────────────────────────────────────
+  기본 변수 (연한 살구톤 적용)
+────────────────────────────────────────────*/
+:root {
+  --bg-page:       #f9fafb;
+  --note-header:   #fdf6f3;
+  --note-hover:    #fff1ec;
+  --note-detail:   #fffaf7;
+  --text-main:     #4e4e4e;
+  --text-sub:      #7b6d66;
+  --border:        #ecdcd6;
+  --accent:        #f2cfc2;
+  --accent-hover:  #ffe8df;
+  --radius:        8px;
+  --shadow:        0 2px 6px rgba(0, 0, 0, 0.03);
+}
+
+/*────────────────────────────────────────────
+  전체 Layout
+────────────────────────────────────────────*/
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+  background-color: var(--bg-page);
+  color: var(--text-main);
+  margin: 0;
+  padding: 0;
+}
+
+.wrapper {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+.container {
+  display: flex;
+}
+
+.content {
+  flex: 1;
+  margin-left: 30px;
+}
+
+/*────────────────────────────────────────────
+  제목 & 구분선
+────────────────────────────────────────────*/
+.title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 16px;
+  color: var(--text-main);
+}
+
+.divider {
+  height: 1px;
+  background-color: var(--border);
+  margin: 20px 0;
+}
+
+/*────────────────────────────────────────────
+  탭 버튼 (받은 쪽지 / 보낸 쪽지)
+────────────────────────────────────────────*/
+.note-tabs {
+  display: flex;
+  gap: 10px;
+  margin: 12px 0 18px;
+
+}
+
+.tab-button {
+  padding: 6px 12px;
+  background-color: #fff;
+  border: 1px solid var(--accent);
+  border-radius: var(--radius);
+  font-size: 13px;
+  color: var(--text-sub);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+
+}
+
+.tab-button.active {
+  background-color: var(--accent);
+  color: #fff;
+  border: 1px solid var(--accent);
+  font-weight: 600;
+}
+
+.tab-button:hover {
+  background-color: var(--accent-hover);
+}
+
+/*────────────────────────────────────────────
+  삭제 버튼
+────────────────────────────────────────────*/
+.note-actions-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.delete-selected-btn {
+  padding: 5px 10px;
+  font-size: 12px;
+  background-color: #fff;
+  border: 1px solid var(--accent);
+  color: var(--text-sub);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.delete-selected-btn:hover {
+  background-color: var(--accent-hover);
+}
+
+/*────────────────────────────────────────────
+  테이블 헤더
+────────────────────────────────────────────*/
+.note-header-row {
+  display: grid;
+  grid-template-columns: 40px 1.5fr 2fr 2fr 1.5fr 1fr;
+  background-color: var(--note-header);
+  padding: 12px 16px;
+  font-weight: 500;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  color: var(--text-main);
+  font-size: 13px;
+}
+
+/*────────────────────────────────────────────
+  노트 행
+────────────────────────────────────────────*/
+.note-list {
+  display: none;
+}
+
+.note-list.active {
+  display: block;
+}
+
+.note-row {
+  display: grid;
+  grid-template-columns: 40px 1.5fr 2fr 2fr 1.5fr 1fr;
+  align-items: center;
+  padding: 12px 16px;
+  background-color: white;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.note-row:hover {
+  /* background-color: var(--note-hover); → 제거 또는 주석 처리 */
+  background-color: white;  /* 또는 아예 제거해도 됨 */
+}
+
+/*────────────────────────────────────────────
+  노트 상세
+────────────────────────────────────────────*/
+.note-detail {
+  grid-column: 1 / -1;
+  display: none;
+  margin-top: 4px;
+  padding: 16px 20px;
+  background-color: var(--note-detail);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  font-size: 14px;
+  color: var(--text-sub);
+}
+
+.note-detail.open {
+  display: block;
+}
+
+/*────────────────────────────────────────────
+  상세/답장 버튼
+────────────────────────────────────────────*/
+.note-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.btn-detail,
+.btn-reply {
+  padding: 5px 10px;
+  font-size: 12px;
+  border-radius: var(--radius);
+  border: 1px solid var(--accent);
+  background-color: white;
+  color: var(--text-sub);
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-detail:hover,
+.btn-reply:hover {
+  background-color: var(--accent-hover);
+}
+
+/*────────────────────────────────────────────
+  체크박스
+────────────────────────────────────────────*/
+input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--text-sub);
+}

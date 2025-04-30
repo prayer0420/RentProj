@@ -5,43 +5,40 @@
 
 <mapper namespace="mapper.settlement">
 
-  <!-- 정산 상태 업데이트 쿼리 추가 -->
-  <update id="updateSettlementStatus">
-    UPDATE settlement
-    SET feeStatus = 'COMPLETE'
-    WHERE settlementNo = #{settlementNo}
-  </update>
+	
+	<!-- 정산번호로 회원번호 조회 -->
+	<select id="selectMemberNoBySettlementNo" parameterType="int" resultType="int">
+	    SELECT memberNo
+	    FROM settlement
+	    WHERE settlementNo = #{settlementNo}
+	</select>	
 
-	<!-- 정산번호로 회원번호 찾기 -->	
-	<select id="selectMemberNoBySettlementNo" resultType="int">
-	    SELECT o.memberNo
-	    FROM settlement s
-	    INNER JOIN `order` o ON s.orderNo = o.orderNo
-	    WHERE s.settlementNo = #{settlementNo}
-	</select>
 	
 	
-		<!-- 회원 기본 정보 조회 -->
-	<select id="selectMemberInfo" resultType="dto.Member">
-	    SELECT memberNo, gradeNo, orderCount
+	<!-- 회원 정보 조회 -->
+	<select id="selectMemberInfo" parameterType="int" resultType="dto.Member">
+	    SELECT
+	        no AS memberNo,
+	        gradeId,
+	        orderCount
 	    FROM member
-	    WHERE memberNo = #{memberNo}
+	    WHERE no = #{memberNo}
 	</select>
 	
-	<!-- 다음 등급의 기준 카운트 조회 -->
-	<select id="selectGradeCount" resultType="int">
+	<!-- 등급별 orderCount 기준 조회 -->
+	<select id="selectGradeCount" parameterType="int" resultType="int">
 	    SELECT gradeCount
 	    FROM grade
 	    WHERE gradeNo = #{gradeNo}
-	</select>
+	</select>	
 	
-	<!-- 회원 등급 승급 -->
-	<update id="updateMemberGradeNo">
+	<!-- 회원 등급 변경 -->
+	<update id="updateMemberGradeNo" parameterType="map">
 	    UPDATE member
-	    SET gradeNo = #{gradeNo}
-	    WHERE memberNo = #{memberNo}
-	</update>	
-	
+	    SET gradeId = #{gradeNo}
+	    WHERE no = #{memberNo}
+	</update>
+		
 	<!-- 정산 상세 조회 (판매가, 보증금, 배송비, 수수료) -->
 	<select id="selectSettlementInfo" resultType="dto.Settlement">
 	    SELECT 
@@ -62,22 +59,18 @@
 	    WHERE settlementNo = #{settlementNo}
 	</update>
 		
+	
+	<!-- settlement insert -->
 	<insert id="insertSettlement" parameterType="dto.Settlement">
-    INSERT INTO settlement (
-        memberNo,
-        orderNo,
-        productNo,
-        feeStatus,
-        revenueType,
-        payTime
-    ) VALUES (
-        #{memberNo},
-        #{orderNo},
-        #{productNo},
-        'PENDING',       <!-- 기본 상태는 대기 (관리자가 정산하면 COMPLETE로 바뀜) -->
-        #{revenueType},
-        NOW()
-    )
+	    INSERT INTO settlement (
+	        orderNo, memberNo, productNo, revenueType, price, deliveryPrice, secPrice,
+	        gradeRate, feeAmount, finalSettleAmount, feeStatus, payTime
+	    ) VALUES (
+	        #{orderNo}, #{memberNo}, #{productNo}, #{revenueType},
+	        #{price}, #{deliveryPrice}, #{secPrice},
+	        #{gradeRate}, #{feeAmount}, #{finalSettleAmount},
+	        #{feeStatus}, NOW()
+	    )
 	</insert>
 	
 	<!-- 정산 리스트 검색 (searchMap 기준) -->
@@ -94,6 +87,8 @@
 	        g.gradeRate,
 	        s.feeAmount,
 	        s.finalSettleAmount,
+	        s.revenueType,
+       		s.settlementCompletedAt,
 	        s.payTime,
 	        s.feeStatus
 	    FROM settlement s
@@ -102,19 +97,54 @@
 	    LEFT JOIN member m ON s.memberNo = m.no
 	    LEFT JOIN grade g ON m.gradeId = g.gradeNo
 	    WHERE 1=1
-	    <if test="searchStartDate != null &amp;&amp; searchStartDate != ''">
-	        AND DATE(s.payTime) &gt;= #{searchStartDate}
-	    </if>
-	    <if test="searchEndDate != null &amp;&amp; searchEndDate != ''">
-	        AND DATE(s.payTime) &lt;= #{searchEndDate}
-	    </if>
+
 	    <if test="searchRevenueType != null &amp;&amp; searchRevenueType != ''">
 	        AND s.revenueType = #{searchRevenueType}
 	    </if>
 	    <if test="searchFeeStatus != null &amp;&amp; searchFeeStatus != ''">
 	        AND s.feeStatus = #{searchFeeStatus}
 	    </if>
+	    <if test="completedStart != null and completedStart != ''">
+		  AND s.settlementCompletedAt &gt;= #{completedStart}
+		</if>
+		<if test="completedEnd != null and completedEnd != ''">
+		  AND s.settlementCompletedAt &lt;= #{completedEnd}
+		</if>	
 	    ORDER BY s.payTime DESC
 	</select>
+
+	<!-- 주문 정보 조회 -->	
+	<select id="selectOrderInfo" parameterType="int" resultType="dto.Order">
+	    SELECT
+	        orderNo,
+	        memberNo,
+	        productNo,
+	        price,
+	        deliveryPrice,
+	        secPrice,
+	        revenueType
+	    FROM `order`
+	    WHERE orderNo = #{orderNo}
+	</select>	
+	
+	<!-- 등급 수수료율 조회 -->
+	<select id="selectGradeRate" parameterType="int" resultType="double">
+	    SELECT gradeRate
+	    FROM grade
+	    WHERE gradeNo = #{gradeId}
+	</select>		
+	
+	<!-- 정산완료시간 업데이트 -->
+	<update id="updateSettlementCompletedAt" parameterType="int">
+    UPDATE settlement
+    SET settlementCompletedAt = NOW()
+    WHERE settlementNo = #{settlementNo}
+	</update>						
+	
+	<update id="updateSettlementStatus" parameterType="int">
+	  UPDATE settlement
+	  SET feeStatus = 'COMPLETE'
+	  WHERE settlementNo = #{settlementNo}
+	</update>			
 	
 	</mapper>

@@ -68,7 +68,7 @@ public class ReviewServiceImpl implements ReviewService {
         return pageInfo;
     }
 
-    
+
 	@Override
 	public void updateReview(Review review) throws Exception {
 		reviewDAO.updateReview(review);
@@ -80,4 +80,3 @@ public class ReviewServiceImpl implements ReviewService {
 	}
 
 }
-

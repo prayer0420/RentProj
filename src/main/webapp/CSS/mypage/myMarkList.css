@@ -39,26 +39,26 @@
 .left-action label {
   font-size: 14px;
   font-weight: 600;
-  color: #2e7d32; /* 진한 초록 계열로 통일 */
+  color: #8C6E5D;  /* 부드러운 브라운 */
 }
 
-/* 선택삭제 버튼 */
+/* 선택삭제 버튼 (살구톤) */
 .delete-selected-btn {
   margin-left: 10px;
-  padding: 5px 12px; /* ✅ 더 작게 (기존 6px 14px보다 축소) */
-  background: #a8e6cf;
-  color: #2e7d32;
-  font-weight: bold;
-  border: none;
+  padding: 5px 10px;
+  background: #FFF6F2;
+  color: #8C6E5D;
+  font-weight: 600;
+  border: 1px solid #F2CFC2;
   border-radius: 6px;
-  font-size: 12px; /* ✅ 글씨도 13px → 12px로 더 작게 */
-  transition: background 0.3s, transform 0.2s;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  font-size: 12px;
+  transition: background-color 0.2s, transform 0.2s;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
   cursor: pointer;
 }
 
 .delete-selected-btn:hover {
-  background: #81c784;
+  background: #FFE8DF;
   transform: translateY(-2px);
 }
 
@@ -165,21 +165,28 @@
 
 .page-btn {
   margin: 0 5px;
-  padding: 6px 12px;
-  background: white;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  padding: 5px 10px;
+  background: #FFF6F2;
+  border: 1px solid #F2CFC2;
+  border-radius: 6px;
   text-decoration: none;
-  color: black;
-  font-size: 14px;
+  color: #8C6E5D;
+  font-size: 13px;
+  transition: background-color 0.2s;
+}
+
+.page-btn:hover {
+  background: #FFE8DF;
 }
 
 .page-btn.active {
-  background: #333;
+  background: #F2CFC2;
   color: white;
+  font-weight: bold;
+  border: none;
 }
 
 .page-btn.disabled {
-  color: #bbb;
+  color: #c4b2aa;
   pointer-events: none;
 }

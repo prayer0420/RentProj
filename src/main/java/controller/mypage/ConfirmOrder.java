@@ -1,5 +1,6 @@
 package controller.mypage;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
@@ -7,6 +8,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.json.simple.JSONObject;
 
 import service.mypage.MypageService;
 import service.mypage.MypageServiceImpl;
@@ -32,21 +35,23 @@ public class ConfirmOrder extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 		
-		String orderNoStr =  request.getParameter("orderNo");
-        boolean success = false;
-
-        if (orderNoStr != null) {
-            try {
-                Integer orderNo = Integer.parseInt(orderNoStr);
-                MypageService service = new MypageServiceImpl();
-                success = service.confirmOrder(orderNo);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-
-        response.setContentType("text/plain;charset=UTF-8");
-        response.getWriter().write(success ? "success" : "fail");
+		try {
+			Integer orderNo = Integer.parseInt(request.getParameter("orderNo"));
+	        
+			MypageService service = new MypageServiceImpl();
+	        boolean result = service.confirmOrder(orderNo);
+	
+	        response.setContentType("application/json; charset=UTF-8");
+		        if (result) {
+		            response.getWriter().write("{\"success\": true}");
+		        } else {
+		            response.getWriter().write("{\"success\": false}");
+		        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        response.setContentType("application/json; charset=UTF-8");
+	        response.getWriter().write("{\"success\": false}");
+	    }
 		
 	}
 
