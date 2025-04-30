@@ -66,13 +66,13 @@
 		                <span class="order-date">상품등록일: <fmt:formatDate value="${item.createDate}" pattern="yyyy년 MM월 dd일"/> </span>
 		              </div>
 		              <div class="order-status-area">
-		              	 <!--  <span class="status-text">${item.deliveryStatus }</span>&nbsp;&nbsp;	-->
-		                  <span class="status-text">${item.orderStatus }</span>
 			              <c:choose>
 			              	<c:when test="${item.orderNo eq null }">
-			              		<span>&nbsp;</span>
+		                  	<span class="status-text">상품게시중</span>&nbsp;&nbsp;&nbsp;&nbsp;
+			              		<span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
 			              	</c:when>
 			              	<c:otherwise>
+			              		<span class="status-text">${item.orderStatus }</span>
 			                	<a href="${contextPath }/mySellDetail?orderNo=${item.orderNo }" class="order-detail-link">거래 상세보기 &gt;</a>
 			                </c:otherwise>
 			              </c:choose>
@@ -93,8 +93,8 @@
 		              <div class="product-info">
 		                <p><a href="${contextPath }/productDetail?no=${item.no}&tradeType=판매">${item.no }</a></p>
 		                <h3><a href="${contextPath }/productDetail?no=${item.no}&tradeType=판매">${item.title }</a></h3>
-		                <p>가격: ${item.salePrice }원</p>
-		                <p>배송비: ${item.deliveryPrice}원</p>
+		                <p>가격:&nbsp;<fmt:formatNumber value="${item.salePrice }" type="number" groupingUsed="true"/>원</p>
+		                <p>배송비:&nbsp;<fmt:formatNumber value="${item.deliveryPrice}" type="number" groupingUsed="true"/>원</p>
 		              </div>
 		              <div class="status-change-btns">
 		               <c:choose>
@@ -106,8 +106,8 @@
 		               	<c:when test="${item.orderStatus eq '결제완료'}">
 					        <button type="button" class="open-invoice-btn" data-orderno="${item.orderNo}">송장번호입력</button>
 		               	</c:when>
-		               	<c:when test="${item.orderStatus eq '배송완료'}">
-					        <button type="button" class="open-invoice-btn" data-orderno="${item.orderNo}">대여거래종료</button>
+		               	<c:when test="${item.orderStatus eq '구매완료'}">
+					        <span class="status-text">거래완료</span>&nbsp;&nbsp;&nbsp;&nbsp;
 		               	</c:when>
 		               </c:choose>
 		              </div>

@@ -41,9 +41,9 @@ public class ReviewUpdate extends HttpServlet {
          String contents = request.getParameter("content");
          Integer score = Integer.parseInt(request.getParameter("score"));
 
-         String date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+         Date date = new Date();
 
-         Review review = new Review(no, contents, score, score, date);
+         Review review = new Review(no, contents, score, date);
          ReviewService service = new ReviewServiceImpl();
          try {
         	 service.updateReview(review);

@@ -74,34 +74,34 @@
 						<!-- singo.jsp --> 
 					</div>
 					<c:choose>
-						<c:when test="${product.categoryNo == 1}">
+						<c:when test="${product.categoryNo == 2}">
 							<div class="category">의류/패션/악세사리</div>
 						</c:when>
-						<c:when test="${product.categoryNo == 2}">
+						<c:when test="${product.categoryNo == 3}">
 							<div class="category">PC/모바일</div>
 						</c:when>
-						<c:when test="${product.categoryNo == 3}">
+						<c:when test="${product.categoryNo == 4}">
 							<div class="category">가전제품</div>
 						</c:when>
-						<c:when test="${product.categoryNo == 4}">
+						<c:when test="${product.categoryNo == 5}">
 							<div class="category">뷰티/미용</div>
 						</c:when>
-						<c:when test="${product.categoryNo == 5}">
+						<c:when test="${product.categoryNo == 6}">
 							<div class="category">캠핑/스포츠/레저</div>
 						</c:when>
-						<c:when test="${product.categoryNo == 6}">
+						<c:when test="${product.categoryNo == 7}">
 							<div class="category">생활/주방용품</div>
 						</c:when>
-						<c:when test="${product.categoryNo == 7}">
+						<c:when test="${product.categoryNo == 8}">
 							<div class="category">가구인테리어</div>
 						</c:when>
-						<c:when test="${product.categoryNo == 8}">
+						<c:when test="${product.categoryNo == 9}">
 							<div class="category">유아동/출산</div>
 						</c:when>
-						<c:when test="${product.categoryNo == 9}">
+						<c:when test="${product.categoryNo == 10}">
 							<div class="category">애완동물용품</div>
 						</c:when>
-						<c:when test="${product.categoryNo == 10}">
+						<c:when test="${product.categoryNo == 11}">
 							<div class="category">기타</div>
 						</c:when>
 
@@ -118,7 +118,7 @@
 						<c:when test="${product.tradeType == '판매' }">
 							<div class="sale-price">${product.salePrice}원</div>
 						</c:when>
-						<c:when test="${product.tradeType == '판매대여' }">
+						<c:when test="${product.tradeType == '판매/대여' }">
 							<div class="rent-price">${product.rentPrice}원/1일</div>
 							<div class="sec-price">보증금 ${product.secPrice}원</div>
 							<div class="sale-price">판매가 ${product.salePrice}원</div>
@@ -152,7 +152,7 @@
 						<div>👁️</div>
 					</div>
 					<div class="btn-box">
-						<c:if test="${hasOrder}">
+						<c:if test="${memberNo != null}">
 							<button class="btn btn-message" onclick="openMessageModal()">쪽지보내기</button>
 						</c:if>
 						<c:if test="${not checkOrder}">
@@ -175,7 +175,7 @@
 										<button class="btn btn-sell">대여하기</button>
 									</form>
 								</c:when>
-								<c:when test="${product.tradeType=='판매대여' }">
+								<c:when test="${product.tradeType=='판매/대여' }">
 									<form
 										action="${pageContext.request.contextPath}/productSellOrder"
 										method="get">
@@ -232,9 +232,8 @@
 						</c:choose>
 					</div>
 				</div>
-				<c:if test="${memberNo != null }">
-					<button id="review-toggle-btn" class="btn btn-review-write">리뷰
-						쓰기</button>
+				<c:if test="${memberNo != null and not checkMyReview}">
+					<button id="review-toggle-btn" class="btn btn-review-write">리뷰쓰기</button>
 				</c:if>
 				<!--리뷰 작성-->
 				<form id="review-form" class="review-form" style="display: none;">
@@ -327,41 +326,70 @@
 	     modal.style.display = 'none';
 	   }, 400); // transition 시간과 동일 (0.4초)
 	}
-	
+	let isUpdateMode = false;     // 등록/수정 모드 플래그
+	let updateReviewNo = null;    // 수정할 리뷰 번호 저장
+
+	// 수정 버튼 클릭 시
+	function editReview(no, contents, score) {
+    console.log("editReview 호출: no = " + no);
+
+    $("#review-form").show();
+    $("textarea[name='content']").val(contents);
+    $("select[name='score']").val(score);
+
+    // 혹시 이전 hidden 있으면 지우고
+    $('#review-form').find('input[name="reviewNo"]').remove();
+
+    // 다시 숨겨진 input 추가
+    $('<input>', {
+        type: 'hidden',
+        name: 'reviewNo',
+        value: no
+    }).appendTo('#review-form');
+
+    $("#submitBtn").text("수정");
+}
+
+	// 리뷰 폼 제출
 	$('#review-form').on('submit', function (e) {
-		  e.preventDefault(); // 기본 제출 막기
+    e.preventDefault();
 
-		  const reviewNo = $('#reviewNo').val(); // 수정 시 존재함
-		  const isUpdate = !!reviewNo;
+    const reviewNo = $('input[name="reviewNo"]').val(); 
+    console.log("submit 시 reviewNo:", reviewNo);   // ⭐⭐ 찍어
 
-		  const formData = {
-		    content: $('textarea[name="content"]').val(),
-		    score: $('select[name="score"]').val(),
-		    productNo: '${product.no}'
-		  };
+    const isUpdate = !!reviewNo;
+    console.log("isUpdate = ", isUpdate);             // ⭐⭐ 찍어
 
-		  if (isUpdate) {
-		    formData.no = reviewNo; // 수정 시 필요
-		  }
+    const formData = {
+        content: $('textarea[name="content"]').val(),
+        score: $('select[name="score"]').val(),
+        productNo: '${product.no}'
+    };
 
-		  console.log("보낼 데이터:", formData); // 디버깅용
+    if (isUpdate) {
+        formData.no = reviewNo;
+    }
 
-		  $.ajax({
-		    type: 'POST',
-		    url: isUpdate ? '${pageContext.request.contextPath}/reviewUpdate' : '${pageContext.request.contextPath}/reviewWrite',
-		    data: formData,
-		    success: function () {
-		      alert(isUpdate ? '리뷰가 수정되었습니다!' : '리뷰가 등록되었습니다!');
-		      $('#review-form')[0].reset();
-		      $('#review-form').hide();
-		      $('#reviewNo').remove(); // 수정용 hidden 필드 제거
-		      $('#review-list-container').load('${pageContext.request.contextPath}/reviewList?productNo=${product.no}');
-		    },
-		    error: function () {
-		      alert(isUpdate ? '리뷰 수정 실패' : '리뷰 등록 실패');
-		    }
-		  });
-		});
+    console.log("보내는 formData = ", formData);       // ⭐⭐ 찍어
+
+    $.ajax({
+        type: 'POST',
+        url: isUpdate ? '${pageContext.request.contextPath}/reviewUpdate' : '${pageContext.request.contextPath}/reviewWrite',
+        data: formData,
+        success: function () {
+            alert(isUpdate ? '리뷰가 수정되었습니다!' : '리뷰가 등록되었습니다!');
+            $('#review-form')[0].reset();
+            $('#review-form').hide();
+            $("#submitBtn").text("등록");
+            $('input[name="reviewNo"]').remove();
+            $('#review-list-container').load('${pageContext.request.contextPath}/reviewList?productNo=${product.no}');
+        },
+        error: function () {
+            alert(isUpdate ? '리뷰 수정 실패' : '리뷰 등록 실패');
+        }
+    });
+    location.reload();
+});
 
 	
 	 $('#review-list-container').load(
@@ -396,6 +424,7 @@
 			data:{no:reviewNo},
 			success:function(){
 				alert("리뷰가 삭제되었습니다.");
+				
 				// 🔁 리뷰 리스트를 다시 불러오기
 		        $('#review-list-container').load('${pageContext.request.contextPath}/reviewList?productNo=${product.no}');
 			},
@@ -403,21 +432,28 @@
 		        alert('삭제 실패');
 		      }
 		 });
+		 location.reload();
 	 }
-	 
+	 /*
 	// 리뷰 수정 버튼 클릭시
 	 function editReview(no, contents, score) {
-	     $("#review-form").show();
-	     $("textarea[name='content']").val(contents);
-	     $("select[name='score']").val(score);
-
-	     // 수정 모드로 변경
-	     isUpdateMode = true;
-	     updateReviewNo = no;
-
-	     $("#submitBtn").text("수정"); // 버튼 텍스트 변경
-	 }
+	    $("#review-form").show();
+	    $("textarea[name='content']").val(contents);
+	    $("select[name='score']").val(score);
 	
+	    // 기존에 reviewNo hidden 있으면 지우고 다시 추가
+	    $("#review-form").find("input[name='reviewNo']").remove();
+	
+	    // 수정할 리뷰 번호를 hidden input으로 추가
+	    $('<input>').attr({
+	        type: 'hidden',
+	        id: 'reviewNo',   // id 꼭 맞춰야함
+	        name: 'reviewNo', // name도 맞춰야함
+	        value: no
+	    }).appendTo('#review-form');
+	
+	    $("#submitBtn").text("수정");
+	}
 	 // 리뷰 작성/수정 폼 제출
 	 $('#review-form').on('submit', function (e) {
 	     e.preventDefault(); // 기본 제출 막기
@@ -451,7 +487,7 @@
 	         }
 	     });
 	 });
-	 
+	 */
 	 
 	 $(document).ready(function() {
 		    $("#sendMessageBtn").click(function(e) {

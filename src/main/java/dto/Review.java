@@ -37,6 +37,7 @@ public class Review {
 		this.score = score;
 		this.date = date;
 	}
+	
 
 	public Integer getNo() {
 		return no;

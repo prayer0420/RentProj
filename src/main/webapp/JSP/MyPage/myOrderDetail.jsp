@@ -54,17 +54,6 @@
                 </div>
                 
                 <div class="info-box">
-                    <h4>배송정보</h4>
-                    <p>송장번호: ${myOrderDetail.invoiceNo }</p>
-                    <p>택배사: ${myOrderDetail.deliveryComp }</p>
-                    <p>받는이: ${myOrderDetail.name}</p>
-                    <p>배송지: ${myOrderDetail.deliveryAddr }</p>
-                </div>
-                
-            </div>
-
-            <div class="info-grid" style="margin-top: 20px;">
-                <div class="info-box">
                     <h4>판매자 정보</h4>
                     <p>아이디: ${myOrderDetail.id }</p>
                     <p>연락처: ${myOrderDetail.phone }</p>
@@ -73,6 +62,18 @@
                     <button class="btn">판매자의 다른 상품-></button>
                     
                 </div>
+                
+            </div>
+
+            <div class="info-grid" style="margin-top: 20px;">
+                <div class="info-box">
+                    <h4>배송정보</h4>
+                    <p>송장번호: ${myOrderDetail.invoiceNo }</p>
+                    <p>택배사: ${myOrderDetail.deliveryComp }</p>
+                    <p>받는이: ${myOrderDetail.name}</p>
+                    <p>배송지: ${myOrderDetail.deliveryAddr }</p>
+                </div>
+                
                 <div class="info-box">
                     <h4>결제정보</h4>
                     <p><strong>총 결제금액: <fmt:formatNumber value="${myOrderDetail.price + myOrderDetail.deliveryPrice}" type="number" groupingUsed="true"/>원</strong> </p>

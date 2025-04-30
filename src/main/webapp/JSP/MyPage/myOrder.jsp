@@ -88,11 +88,12 @@
 				                <c:when test="${item.orderStatus eq '결제완료'}">
 							        <button type="button" class="open-cancel-btn" data-orderno="${item.orderNo}">주문취소</button>
 							   </c:when> 
-							   <c:when test="${item.orderStatus eq '배송완료'}">
+							   <c:when test="${item.orderStatus eq '배송중'}">
 							        <button type="button" class="open-confirm-btn" data-orderno="${item.orderNo}">구매확정</button>
 							   </c:when>
 							   <c:when test="${item.orderStatus eq '구매완료'}">
-							        <button type="button" class="open-review-btn" data-orderno="${item.orderNo}">리뷰쓰러가기</button>
+							        <button type="button" class="open-review-btn" data-orderno="${item.orderNo}">
+							        <a href="${contextPath }/productDetail?no=${item.no }">리뷰쓰러가기</a></button>
 							   </c:when>  
 							   <c:otherwise>
 								    <span>&nbsp;</span>
@@ -117,8 +118,53 @@
       </div>
     </div>
 
+<!-- 모달 추가 -->
+  <jsp:include page="/JSP/MyPage/confirmOrderModal.jsp"/>
+
 <!-- 푸터 -->
   <jsp:include page="/JSP/Header/footer.jsp" />
+  
+<script>
+
+let selectedOrderNo = null;
+
+// 구매확정 버튼 클릭
+document.querySelectorAll('.confirmOrderBtn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    selectedOrderNo = this.dataset.orderNo;
+    document.getElementById('confirmModal').style.display = 'block';
+  });
+});
+
+// 모달 '확인' 버튼 클릭
+document.getElementById('confirmYesBtn').addEventListener('click', function() {
+  if (selectedOrderNo) {
+    fetch('${pageContext.request.contextPath}/confirmOrder', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: 'orderNo=' + selectedOrderNo
+    })
+    .then(response => response.text())
+    .then(result => {
+      if (result === 'success') {
+        alert('구매 확정되었습니다.');
+        location.reload();  // 새로고침해서 업데이트된 주문 상태를 보여줌
+      } else {
+        alert('구매 확정 실패');
+      }
+    });
+  }
+  document.getElementById('confirmModal').style.display = 'none';
+});
+
+// 모달 '취소' 버튼 클릭
+document.getElementById('confirmNoBtn').addEventListener('click', function() {
+  document.getElementById('confirmModal').style.display = 'none';
+});
+
+</script>  
 
 </body>
 </html>
