@@ -53,7 +53,6 @@ public class ProductDetail extends HttpServlet {
 			boolean isMark = markService.existsMark(memberNo, no);
 			
 			
-			
 			request.setAttribute("product", product);
 			request.setAttribute("productNo", no);
 			request.setAttribute("avgScore", avgScore);
@@ -65,6 +64,7 @@ public class ProductDetail extends HttpServlet {
 			request.setAttribute("endDate", product.getEndDate());
 			request.setAttribute("countMarkProduct", countMarkProduct);
 			request.setAttribute("isMark", isMark);
+			request.setAttribute("viewCnt", product.getViewCnt());
 			System.out.println("product : "+product);	
 			System.out.println("no : "+no);	
 			System.out.println("startDate"+product.getStartDate());

@@ -148,4 +148,12 @@
    <select id="selectAll" resultMap="productMap">
         SELECT * FROM product
    </select>
+   
+   <update id="incrementViewCount" parameterType="int">
+   		update product set view_cnt = view_cnt+1 where no=#{no}
+   </update>
+   <select id="selectViewCount" parameterType="int" resultType="int">
+  	 select view_cnt from product where no=#{no}
+   </select>
+   
 </mapper>

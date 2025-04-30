@@ -31,6 +31,10 @@ public interface ProductDAO {
     
     //거리에 따른 상품조회
     List<Product> selectNearbyProducts(double lat, double lng, int limit);
+    
+    void incrementViewCount(int no) throws Exception;
+    
+    int selectViewCount(int no) throws Exception;
 
     
 }
