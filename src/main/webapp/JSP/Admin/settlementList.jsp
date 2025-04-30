@@ -17,9 +17,9 @@
 <div class="container">
   <aside>
     <h3>정산관리</h3>
-    <div class="menu inactive">전체주문조회</div>
-    <div class="menu active">주문정산</div>
-    <div class="menu inactive">대여지연조회</div>
+    <div class="menu inactive"><a href="orderList" style="color: inherit; text-decoration: none;">전체주문조회</a></div>
+    <div class="menu active"><a href="settlementList" style="color: inherit; text-decoration: none;">주문정산</a></div>
+    <div class="menu inactive"><a href="rentalDelayList" style="color: inherit; text-decoration: none;">대여지연조회</a></div>
   </aside>
 
   <main>
@@ -119,7 +119,7 @@
           <td>
             <c:choose>
               <c:when test="${settle.feeStatus == 'PENDING'}">
-                <button type="button" class="btn-settle" 
+                <button type="button" class="btn-do-settlement" 
                         data-settlement-no="${settle.settlementNo}" 
                         style="padding: 6px 12px; background: #26c6da; color: white; border: none; border-radius: 4px;">
                   정산하기
@@ -146,40 +146,33 @@
   </tbody>
 </table>
 
-	<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-	<script>
-	$(document).ready(function() {
-	  $(".btn-settle").click(function() {
-	    if (!confirm("정산을 진행하시겠습니까?")) {
-	      return;
-	    }
-	
-	    const settlementNo = $(this).data("settlement-no");
-	    const button = $(this);
-	
-	    $.ajax({
-	      url: "${pageContext.request.contextPath}/doSettlement", // 서버 URL
-	      method: "POST",
-	      data: { settlementNo: settlementNo },
-	      success: function(result) {
-	        if (result === 'true') {
-	          button.prop("disabled", true);
-	          button.text("✔ 정산완료");
-	          button.css({
-	            "background": "#d3d3d3", // 연회색으로 변경
-	            "cursor": "default"
-	          });
-	        } else {
-	          alert("정산 처리에 실패했습니다.");
-	        }
-	      },
-	      error: function() {
-	        alert("서버 통신 중 오류가 발생했습니다.");
-	      }
-	    });
-	  });
-	});
-	</script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script>
+  $(document).ready(function() {
+    $(".btn-do-settlement").click(function() {
+      if (!confirm("정산을 진행하시겠습니까?")) {
+        return;
+      }
+
+      const settlementNo = $(this).data("settlement-no");
+      const button = $(this);
+
+      $.ajax({
+        url: "${pageContext.request.contextPath}/doSettlement",
+        method: "POST",
+        data: { settlementNo: settlementNo },
+        complete: function () {
+          button.prop("disabled", true);
+          button.text("✔ 정산완료");
+          button.css({
+            "background": "#d3d3d3",
+            "cursor": "default"
+          });
+        }
+      });
+    });
+  });
+</script>
 
 </body>
 </html>

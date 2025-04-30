@@ -118,6 +118,7 @@
 			JOIN member m2 ON p.memberNo = m2.no          
 		    WHERE o.orderType = '대여'
 		      AND o.endDate &lt; NOW()
+		      AND o.orderStatus != '상품회수완료'
 		      <if test="type != null and keyword != null and keyword != ''">
 			    <choose>
 			      <when test="type == 'orderNo'">

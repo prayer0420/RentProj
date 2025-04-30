@@ -139,6 +139,12 @@
     UPDATE settlement
     SET settlementCompletedAt = NOW()
     WHERE settlementNo = #{settlementNo}
-	</update>								
+	</update>						
+	
+	<update id="updateSettlementStatus" parameterType="int">
+	  UPDATE settlement
+	  SET feeStatus = 'COMPLETE'
+	  WHERE settlementNo = #{settlementNo}
+	</update>			
 	
 	</mapper>
