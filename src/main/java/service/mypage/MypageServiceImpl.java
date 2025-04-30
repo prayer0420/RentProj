@@ -166,16 +166,29 @@ public class MypageServiceImpl implements MypageService {
 	}
 
 	@Override
+	public boolean hideProduct(Integer productNo) throws Exception {
+		
+		return mypageDao.hideProduct(productNo) > 0;
+	}
+	
+	@Override
 	public boolean confirmOrder(Integer orderNo) throws Exception {
 		
-		return mypageDao.updateOrderStatusToCompleted(orderNo);
+		return mypageDao.updateOrderStatusToCompleted(orderNo) >0;
 	}
 
 	@Override
-	public boolean hideProduct(int productNo) throws Exception {
+	public boolean rentStart(Integer orderNo) throws Exception {
 		
-		return mypageDao.hideProduct(productNo);
+		return mypageDao.updateRentStart(orderNo) >0;
 	}
+
+	@Override
+	public boolean returnSetInvoiceInfo(Integer orderNo, String reDeliveryComp, String reInvoiceNo) throws Exception {
+		
+		return mypageDao.updateReturnInvoiceInfo(orderNo, reDeliveryComp, reInvoiceNo);
+	}
+
 
 
 }

@@ -156,23 +156,43 @@ public class MypageDAOImpl implements MypageDAO {
     }
 
     @Override
-    public boolean updateOrderStatusToCompleted(Integer orderNo) {
+    public Integer hideProduct(Integer productNo) {
+    	try (SqlSession session = MybatisSqlSessionFactory.getSqlSessionFactory().openSession()) {
+    		Integer result = session.update("mapper.mypage.hideMyProduct", productNo);
+    		session.commit();
+    		return result;
+    	}
+    }
+    
+    @Override
+    public Integer updateOrderStatusToCompleted(Integer orderNo) {
         try (SqlSession session = MybatisSqlSessionFactory.getSqlSessionFactory().openSession()) {
             Integer result = session.update("mapper.mypage.updateOrderStatusToCompleted", orderNo);
             session.commit();
-            return result > 0;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
+            return result;
         }
     }
 
 	@Override
-	public boolean hideProduct(Integer productNo) {
-        try (SqlSession session = MybatisSqlSessionFactory.getSqlSessionFactory().openSession()) {
-            Integer result = session.update("mapper.mypage.hideMyProduct", productNo);
+	public Integer updateRentStart(Integer orderNo) {
+		try (SqlSession session = MybatisSqlSessionFactory.getSqlSessionFactory().openSession()) {
+    		Integer result = session.update("mapper.mypage.updateRentStart", orderNo);
+    		session.commit();
+    		return result;
+    	}
+	}
+
+	@Override
+	public boolean updateReturnInvoiceInfo(Integer orderNo, String reDeliveryComp, String reInvoiceNo) {
+		try (SqlSession session = MybatisSqlSessionFactory.getSqlSessionFactory().openSession()) {
+            Map<String, Object> param = new HashMap<>();
+            param.put("orderNo", orderNo);
+            param.put("reDeliveryComp", reDeliveryComp);
+            param.put("reInvoiceNo", reInvoiceNo);
+            Integer result = session.update("mapper.mypage.updateReturnInvoiceInfo", param);
             session.commit();
             return result == 1;
         }
 	}
+
 } 

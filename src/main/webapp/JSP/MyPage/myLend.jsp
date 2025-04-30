@@ -133,6 +133,10 @@
       <jsp:param name="redirectUrl" value="/rent/myLendDetail"/>
 	</jsp:include>
    
+   
+   <!-- 상품숨기기 모달 -->
+   <jsp:include page="/JSP/MyPage/hideProduct.jsp" />
+   
    <!-- 상품삭제 모달 -->
    <jsp:include page="/JSP/MyPage/deleteProductModal.jsp" />
    

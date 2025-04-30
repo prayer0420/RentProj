@@ -50,11 +50,17 @@ public interface MypageDAO {
 	// 상품삭제 버튼 누르면 삭제(삭제 상태로 업데이트)
 	Integer deleteProduct(Integer productNo);
 	
-	// 구매확정 버튼 누르면 orderStatus 업데이트
-	boolean updateOrderStatusToCompleted(Integer orderNo);
-	
 	// 상품 숨기기 버튼 누르면 숨기기
-	boolean hideProduct(Integer productNo);
+	Integer hideProduct(Integer productNo);
+	
+	// 구매확정 버튼 누르면 orderStatus 업데이트 ('구매완료')
+	Integer updateOrderStatusToCompleted(Integer orderNo);
+	
+	// 빌리기시작 버튼 누르면 orderStatus 업데이트 ('대여중')
+	Integer updateRentStart(Integer orderNo);
+	
+	// 반납송장번호 입력 업데이트
+	boolean updateReturnInvoiceInfo(Integer orderNo, String reDeliveryComp, String reInvoiceNo);
 	
 	
 	
