@@ -1,22 +1,24 @@
 @charset "UTF-8";
 
 /*────────────────────────────────────────────
-  기본 변수
+  기본 변수 (연한 살구톤 적용)
 ────────────────────────────────────────────*/
 :root {
   --bg-page:       #f9fafb;
-  --table-header:  #fdfbf7;  /* 헤더1 */
-  --row-hover:     #fae9a8;  /* 헤더2 */
-  --row-open:      #fae9a8;
-  --text-main:     #1a202c;
-  --text-sub:      #4b5563;
-  --border:        #e5e7eb;
+  --note-header:   #fdf6f3;
+  --note-hover:    #fff1ec;
+  --note-detail:   #fffaf7;
+  --text-main:     #4e4e4e;
+  --text-sub:      #7b6d66;
+  --border:        #ecdcd6;
+  --accent:        #f2cfc2;
+  --accent-hover:  #ffe8df;
   --radius:        8px;
-  --shadow:        0 2px 6px rgba(0, 0, 0, 0.04);
+  --shadow:        0 2px 6px rgba(0, 0, 0, 0.03);
 }
 
 /*────────────────────────────────────────────
-  Layout
+  전체 Layout
 ────────────────────────────────────────────*/
 body {
   font-family: 'Noto Sans KR', sans-serif;
@@ -42,12 +44,13 @@ body {
 }
 
 /*────────────────────────────────────────────
-  Title & Divider
+  제목 & 구분선
 ────────────────────────────────────────────*/
 .title {
   font-size: 24px;
   font-weight: bold;
   margin-bottom: 16px;
+  color: var(--text-main);
 }
 
 .divider {
@@ -57,35 +60,38 @@ body {
 }
 
 /*────────────────────────────────────────────
-  Tabs
+  탭 버튼 (받은 쪽지 / 보낸 쪽지)
 ────────────────────────────────────────────*/
 .note-tabs {
   display: flex;
   gap: 10px;
-  margin-bottom: 16px;
-  margin-top : 10px;
+  margin: 12px 0 18px;
 }
 
 .tab-button {
-  padding: 8px 14px;
-  background-color: white;
-  border: 1px solid #cfcfcf;
-  border-radius: 8px;
-  color: #1a202c;
+  padding: 6px 12px;
+  background-color: #fff;
+  border: 1px solid var(--accent);
+  border-radius: var(--radius);
+  font-size: 13px;
+  color: var(--text-sub);
   cursor: pointer;
-  font-weight: 500;
-  transition: all 0.2s ease;
+  transition: background-color 0.2s ease;
 }
 
 .tab-button.active {
-  background-color: white;       
-  color: #1a202c;
-  font-weight: 700;
-  border: 2px solid #1a202c;     
+  background-color: var(--accent);
+  color: #fff;
+  border: 1px solid var(--accent);
+  font-weight: 600;
+}
+
+.tab-button:hover {
+  background-color: var(--accent-hover);
 }
 
 /*────────────────────────────────────────────
-  Actions
+  삭제 버튼
 ────────────────────────────────────────────*/
 .note-actions-bar {
   display: flex;
@@ -95,35 +101,37 @@ body {
 }
 
 .delete-selected-btn {
-  padding: 8px 14px;
-  background-color: white;
-  border: 1px solid var(--border);
-  color: var(--text-main);
+  padding: 5px 10px;
+  font-size: 12px;
+  background-color: #fff;
+  border: 1px solid var(--accent);
+  color: var(--text-sub);
   border-radius: var(--radius);
   cursor: pointer;
+  transition: background-color 0.2s;
 }
 
 .delete-selected-btn:hover {
-  background-color: #f3f4f6;
+  background-color: var(--accent-hover);
 }
 
 /*────────────────────────────────────────────
-  Table Headers
+  테이블 헤더
 ────────────────────────────────────────────*/
 .note-header-row {
   display: grid;
   grid-template-columns: 40px 1.5fr 2fr 2fr 1.5fr 1fr;
-  background-color: #f5ede2; /* ← 새로운 부드러운 헤더 색상 */
+  background-color: var(--note-header);
   padding: 12px 16px;
   font-weight: 500;
   border-top: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
   color: var(--text-main);
-  font-size: 14px;
+  font-size: 13px;
 }
 
 /*────────────────────────────────────────────
-  Row Items
+  노트 행
 ────────────────────────────────────────────*/
 .note-list {
   display: none;
@@ -137,7 +145,7 @@ body {
   display: grid;
   grid-template-columns: 40px 1.5fr 2fr 2fr 1.5fr 1fr;
   align-items: center;
-  padding: 14px 16px;
+  padding: 12px 16px;
   background-color: white;
   border-bottom: 1px solid var(--border);
   cursor: pointer;
@@ -145,19 +153,19 @@ body {
 }
 
 .note-row:hover {
-  background-color: rgb(253, 243, 230)/* 따뜻한 살구색 */; 
-  
+  /* background-color: var(--note-hover); → 제거 또는 주석 처리 */
+  background-color: white;  /* 또는 아예 제거해도 됨 */
 }
 
 /*────────────────────────────────────────────
-  Note Detail Content
+  노트 상세
 ────────────────────────────────────────────*/
 .note-detail {
   grid-column: 1 / -1;
   display: none;
   margin-top: 4px;
   padding: 16px 20px;
-  background-color: rgb(253, 251, 247); /* 밝은 크림톤 */
+  background-color: var(--note-detail);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
@@ -170,37 +178,37 @@ body {
 }
 
 /*────────────────────────────────────────────
-  Note Buttons
+  상세/답장 버튼
 ────────────────────────────────────────────*/
 .note-actions {
   display: flex;
   justify-content: flex-end;
-  gap: 10px;
-  margin-top: 10px;
+  gap: 8px;
+  margin-top: 8px;
 }
 
 .btn-detail,
 .btn-reply {
-  padding: 6px 12px;
-  font-size: 13px;
+  padding: 5px 10px;
+  font-size: 12px;
   border-radius: var(--radius);
-  border: 1px solid var(--border);
+  border: 1px solid var(--accent);
   background-color: white;
-  color: var(--text-main);
+  color: var(--text-sub);
   cursor: pointer;
   transition: background-color 0.2s;
 }
 
 .btn-detail:hover,
 .btn-reply:hover {
-  background-color:  rgb(253, 243, 230);
+  background-color: var(--accent-hover);
 }
 
 /*────────────────────────────────────────────
-  Checkbox
+  체크박스
 ────────────────────────────────────────────*/
 input[type="checkbox"] {
-  width: 18px;
-  height: 18px;
-  accent-color: #4b5563;
+  width: 16px;
+  height: 16px;
+  accent-color: var(--text-sub);
 }
