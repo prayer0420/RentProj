@@ -70,8 +70,9 @@
 								<c:otherwise>♡</c:otherwise>
 							</c:choose>
 						</button>
-						<button type="button" class="btn-inquiry" onclick="openReportModal()">🚩</button>
-						<!-- singo.jsp --> 
+						<button type="button" class="btn-inquiry"
+							onclick="openReportModal()">🚩</button>
+						<!-- singo.jsp -->
 					</div>
 					<c:choose>
 						<c:when test="${product.categoryNo == 2}">
@@ -162,34 +163,42 @@
 										action="${pageContext.request.contextPath}/productSellOrder"
 										method="get">
 										<input type="hidden" name="productNo" value="${product.no}" />
-										<input type="hidden" name="tradeType" value="${product.tradeType}" />
+										<input type="hidden" name="tradeType"
+											value="${product.tradeType}" />
 										<button class="btn btn-sell">구매하기</button>
 									</form>
 								</c:when>
 								<c:when test="${product.tradeType=='대여' }">
-									<form
-										action="${pageContext.request.contextPath}/productRentOrder"
-										method="get">
-										<input type="hidden" name="productNo" value="${product.no}" />
-										<input type="hidden" name="tradeType" value="${product.tradeType}" />
-										<button class="btn btn-sell">대여하기</button>
-									</form>
+									<!-- 대여하기 버튼 클릭 시 calendarModal 열도록 수정 -->
+									<button class="btn btn-rent" onclick="openCalendar()">대여하기</button>
+
+									<!-- calendarModal 포함 -->
+									<jsp:include page="calendarModal.jsp">
+										<jsp:param name="productNo" value="${product.no}" />
+										<jsp:param name="productStart" value="${product.startDate}" />
+										<jsp:param name="productEnd" value="${product.endDate}" />
+									</jsp:include>
 								</c:when>
 								<c:when test="${product.tradeType=='판매/대여' }">
+									<!-- 구매하기 폼 그대로 유지 -->
 									<form
 										action="${pageContext.request.contextPath}/productSellOrder"
 										method="get">
 										<input type="hidden" name="productNo" value="${product.no}" />
-										<input type="hidden" name="tradeType" value="${product.tradeType}" />
+										<input type="hidden" name="tradeType"
+											value="${product.tradeType}" />
 										<button class="btn btn-sell">구매하기</button>
 									</form>
-									<form
-										action="${pageContext.request.contextPath}/productRentOrder"
-										method="get">
-										<input type="hidden" name="productNo" value="${product.no}" />
-										<input type="hidden" name="tradeType" value="${product.tradeType}" />
-										<button class="btn btn-rent">대여하기</button>
-									</form>
+
+									<!-- 대여 버튼은 calendarModal 호출용으로 변경 -->
+									<button class="btn btn-rent" onclick="openCalendar()">대여하기</button>
+
+									<!-- calendarModal 포함 -->
+									<jsp:include page="calendarModal.jsp">
+										<jsp:param name="productNo" value="${product.no}" />
+										<jsp:param name="productStart" value="${product.startDate}" />
+										<jsp:param name="productEnd" value="${product.endDate}" />
+									</jsp:include>
 								</c:when>
 							</c:choose>
 						</c:if>
@@ -257,10 +266,6 @@
 					<jsp:include page="reviewList.jsp" />
 				</div>
 
-				<!-- 달력 -->
-				<jsp:include page="calendarModal.jsp" />
-				<button onclick="openCalendar()">📅 대여 가능 날짜 보기</button>
-
 			</div>
 		</div>
 	</div>
@@ -278,10 +283,9 @@
 	<jsp:param value="${product.tradeType}" name="tradeType" />
 </jsp:include>
 <jsp:include page="report.jsp">
-	<jsp:param value="${product.no}" name="productNo"/>
-	<jsp:param value="${product.tradeType}" name="tradeType"/>
+	<jsp:param value="${product.no}" name="productNo" />
+	<jsp:param value="${product.tradeType}" name="tradeType" />
 </jsp:include>
-
 
 
 
@@ -583,5 +587,6 @@
 		    document.getElementById('reportReason').value = '';
 		    document.getElementById('reportDetail').value = '';
 		}
+		
 	 
 </script>

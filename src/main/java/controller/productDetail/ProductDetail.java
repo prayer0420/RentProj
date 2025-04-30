@@ -51,8 +51,12 @@ public class ProductDetail extends HttpServlet {
 			request.setAttribute("checkOrder",checkOrder);
 			request.setAttribute("memberNo", memberNo);
 			request.setAttribute("checkMyReview",checkMyReview);
+			request.setAttribute("startDate", product.getStartDate());
+			request.setAttribute("endDate", product.getEndDate());
 			System.out.println("product : "+product);	
 			System.out.println("no : "+no);	
+			System.out.println("startDate"+product.getStartDate());
+			System.out.println("startDate"+product.getEndDate());
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
