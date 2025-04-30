@@ -89,8 +89,11 @@
 				                <c:when test="${item.orderStatus eq '결제완료'}">
 							        <button type="button" class="open-cancel-btn" data-orderno="${item.orderNo}">주문취소</button>
 							   </c:when> 
-							   <c:when test="${item.orderStatus eq '배송완료'}">
-							        <button type="button" class="open-confirm-btn" data-orderno="${item.orderNo}">빌려쓰기 시작</button>
+							   <c:when test="${item.orderStatus eq '배송중'}">
+							        <button type="button" class="open-delivery-btn" data-orderno="${item.orderNo}">빌려쓰기 시작</button>
+							   </c:when>
+							   <c:when test="${item.orderStatus eq '대여중'}">
+							        <button type="button" class="open-rent-btn" data-orderno="${item.orderNo}">반납송장번호입력</button>
 							   </c:when>
 							   <c:when test="${item.orderStatus eq '거래완료'}">
 							        <button type="button" class="open-review-btn" data-orderno="${item.orderNo}">리뷰쓰러가기</button>
