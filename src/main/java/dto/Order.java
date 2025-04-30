@@ -73,13 +73,15 @@ public class Order {
 	
 
 	// 일반 구매(보증금, 대여기간 없음)
-	public Order(Integer memberNo, Integer price, Integer productNo, String deliveryAddr,String orderId,String orderType) {
+	public Order(Integer memberNo, Integer price, Integer productNo, String deliveryAddr,String orderId,String orderType,Date startDate,Date endDate) {
 		this.memberNo = memberNo;
 		this.price = price;
 		this.productNo = productNo;
 		this.deliveryAddr = deliveryAddr;
 		this.orderId=orderId;
 		this.orderType=orderType;
+		this.startDate=startDate;
+		this.endDate=endDate;
 	}
 	
 	// 나눔(택배 경우)

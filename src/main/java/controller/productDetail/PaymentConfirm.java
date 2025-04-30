@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.sql.Date;
 import java.util.Base64;
 
 import javax.servlet.ServletException;
@@ -16,9 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import dto.Member;
 import dto.Order;
-import dto.Product;
 import service.order.OrderService;
 import service.order.OrderServiceImpl;
 
@@ -62,6 +61,25 @@ public class PaymentConfirm extends HttpServlet {
 		Integer price = Integer.parseInt(amount);
 		String deliveryAddr = (String) request.getAttribute("deliveryAddr");
 		String orderType = (String)request.getAttribute("orderType");
+//		String start = (String) request.getAttribute("startDate");
+//		String end = (String) request.getAttribute("endDate");
+//		
+//		System.out.println("결제 끝 startDate = " + start);
+//		System.out.println("결제 끝 endDate = " + end);
+		
+		String start = (String) session.getAttribute("startDate");
+		String end = (String) session.getAttribute("endDate");
+
+		System.out.println("결제 끝 startDate = " + start);
+		System.out.println("결제 끝 endDate = " + end);
+		if (start == null || !start.matches("\\d{4}-\\d{2}-\\d{2}")) {
+		    throw new IllegalArgumentException("startDate 값이 잘못되었습니다: " + start);
+		}
+		if (end == null || !end.matches("\\d{4}-\\d{2}-\\d{2}")) {
+		    throw new IllegalArgumentException("endDate 값이 잘못되었습니다: " + end);
+		}
+		Date startDate = Date.valueOf(start);
+		Date endDate = Date.valueOf(end);
 
 		// 여기서 orderId로부터 productNo 추출 (예: ORDER_123_1710000000)
 		String[] parts = orderId.split("_");
@@ -97,7 +115,7 @@ public class PaymentConfirm extends HttpServlet {
 		}
 		reader.close();
 
-		Order order = new Order(memberNo, price,productNo, deliveryAddr,orderId,orderType);
+		Order order = new Order(memberNo, price,productNo, deliveryAddr,orderId,orderType,startDate,endDate);
 		OrderService service = new OrderServiceImpl();
 		try {
 			if (status == 200) {

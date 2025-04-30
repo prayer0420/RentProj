@@ -7,6 +7,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import dto.Product;
 
@@ -36,14 +37,23 @@ public class OrderSuccess extends HttpServlet {
 	    Product product =(Product) request.getAttribute("product");
 	    
 	    String orderType = (String)request.getParameter("orderType");
+	    String startDate = request.getParameter("startDate");
+	    String endDate = request.getParameter("endDate");
+
+	    System.out.println("✅ /success 서블릿에서 받은 startDate = " + startDate);
+	    System.out.println("✅ /success 서블릿에서 받은 endDate = " + endDate);
+
 	    
 	    String deliveryAddr = request.getParameter("deliveryAddr");
-	    
 
 	    
 	    // 여기서 orderId로부터 productNo 추출 (예: ORDER_123_1710000000)
 	    String[] parts = orderId.split("_");
 	    String productNo = parts[1]; // "123"
+	    
+	    HttpSession session = request.getSession();
+	    session.setAttribute("startDate", startDate);
+	    session.setAttribute("endDate", endDate);
 	    
 	    // request에 담아서 JSP로 넘김
 	    request.setAttribute("paymentKey", paymentKey);
@@ -53,6 +63,8 @@ public class OrderSuccess extends HttpServlet {
 	    request.setAttribute("product",product);
 	    request.setAttribute("deliveryAddr", deliveryAddr);
 	    request.setAttribute("orderType",orderType);
+//	    request.setAttribute("startDate",startDate);
+//	    request.setAttribute("endDate",endDate);
 	    
 	    //confirm서블릿으로 넘기기
 		request.getRequestDispatcher("/confirm").forward(request, response);

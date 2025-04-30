@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.rental">
+
+
+	<!-- 예약 날짜 조회 -->
+	<select id="selectByProductNo" parameterType="int"
+		resultType="Rental">
+		select
+		r.startDate AS startDate,
+		r.endDate AS endDate,
+		r.no AS no,
+		r.productNo AS productNo,
+		r.memberNo AS memberNo,
+		m.nickname AS nickName
+		from rental r
+		join member m ON r.memberNo = m.no
+		where r.productNo = #{productNo}
+	</select>
+
+
+	<!-- 겹치는 날짜 있는지 확인 -->
+	<select id="countRentalDate" parameterType="map"
+		resultType="int">
+		SELECT COUNT(*) FROM rental
+		WHERE productNo = #{productNo}
+		AND (
+		(startDate <![CDATA[<= #{endDate}]]>
+		AND endDate >= #{startDate})
+		)
+	</select>
+
+	<!-- 예약 등록 -->
+	<insert id="insertRental" parameterType="dto.Rental">
+		INSERT INTO rental
+		(productNo, memberNo, startDate, endDate)
+		VALUES (#{productNo},
+		#{memberNo}, #{startDate}, #{endDate})
+	</insert>
+
+</mapper>

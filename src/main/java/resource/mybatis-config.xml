@@ -21,9 +21,7 @@
       <typeAlias type="dto.FaqCategory" alias ="faqCategory"/>
       <typeAlias type="dto.Announce" alias="announce"/>
       <typeAlias type="dto.Settlement" alias="settlement"/>
-      
-      
-      
+      <typeAlias type="dto.Rental" alias="rental"/>
    </typeAliases>
    
   <environments default="pooled">
@@ -46,7 +44,6 @@
    
    <!--수정 필요-->
    <mappers>
-      
       <mapper resource="mapper/product.xml"/>
       <mapper resource="mapper/category.xml"/>
       <mapper resource="mapper/member.xml"/>
@@ -62,6 +59,7 @@
       <mapper resource="mapper/faq.xml"/>
       <mapper resource="mapper/announce.xml"/>
       <mapper resource="mapper/settlement.xml" />
+      <mapper resource="mapper/rental.xml" />
       
    </mappers>
 </configuration>

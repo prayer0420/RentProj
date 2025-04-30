@@ -78,6 +78,11 @@
                 }
             });
             
+            document.getElementById("startDate").addEventListener("change", function () {
+            	  const startDate = this.value;
+            	  document.getElementById("endDate").min = startDate;
+            	});
+            
             //필수등록 여부
             registerForm.addEventListener("submit", function (e) {
             	console.log(categoryList);
@@ -271,7 +276,7 @@
 		<div class="container-security">
 			<h4>보증금</h4>
 			<input type="text" id="secPrice" class="rent-security"
-				placeholder="보증금 가격" id="secPrice" name="secPrice">
+				placeholder="보증금 가격" name="secPrice">
 		</div>
 		<div class="container-delivery">
 			<h4>배송비</h4>
@@ -285,10 +290,12 @@
 		</div>
 		<div class="container-date">
 			<h4>대여가능 날짜</h4>
-			<label>대여시작일</label> <input type="date" id="startDate"
-				class="dateinput" placeholder="대여시작일" name="startDate"> <span>~</span>
-			<label>대여반납일</label> <input type="date" id="endDate"
-				class="dateinput" placeholder="대여반납일" name="endDate">
+			<label>대여시작일</label> 
+			<input type="date" id="startDate"class="dateinput" placeholder="대여시작일" name="startDate"
+				min="<%=new java.text.SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date())%>">
+			<span>~</span> 
+			<label>대여반납일</label> 
+			<input type="date" id="endDate" class="dateinput" placeholder="대여반납일" name="endDate">
 		</div>
 		<div class="container-prodstate">
 			<h4>상품상태</h4>
@@ -326,21 +333,27 @@
 		</div>
 
 		<div class="container-image">
-			  <h4>상품이미지 (최대 5장)</h4>
-			  <hr>
-			
-			  <div id="previewArea" style="display: flex; gap: 10px; flex-wrap: wrap;">
-			    <img alt="상품추가" src="<%=request.getContextPath()%>/img/plus.jpg"
-			      id="addImageButton"
-			      style="cursor: pointer; width: 100px; height: 100px; object-fit: cover;">
-		 </div>
+			<h4>상품이미지 (최대 5장)</h4>
+			<hr>
 
-  <input type="file" name="imgList0" id="ifile0" accept="image/*" style="display: none" onchange="readURL(this, 0)">
-  <input type="file" name="imgList1" id="ifile1" accept="image/*" style="display: none" onchange="readURL(this, 1)">
-  <input type="file" name="imgList2" id="ifile2" accept="image/*" style="display: none" onchange="readURL(this, 2)">
-  <input type="file" name="imgList3" id="ifile3" accept="image/*" style="display: none" onchange="readURL(this, 3)">
-  <input type="file" name="imgList4" id="ifile4" accept="image/*" style="display: none" onchange="readURL(this, 4)">
-</div>
+			<div id="previewArea"
+				style="display: flex; gap: 10px; flex-wrap: wrap;">
+				<img alt="상품추가" src="<%=request.getContextPath()%>/img/plus.jpg"
+					id="addImageButton"
+					style="cursor: pointer; width: 100px; height: 100px; object-fit: cover;">
+			</div>
+
+			<input type="file" name="imgList0" id="ifile0" accept="image/*"
+				style="display: none" onchange="readURL(this, 0)"> <input
+				type="file" name="imgList1" id="ifile1" accept="image/*"
+				style="display: none" onchange="readURL(this, 1)"> <input
+				type="file" name="imgList2" id="ifile2" accept="image/*"
+				style="display: none" onchange="readURL(this, 2)"> <input
+				type="file" name="imgList3" id="ifile3" accept="image/*"
+				style="display: none" onchange="readURL(this, 3)"> <input
+				type="file" name="imgList4" id="ifile4" accept="image/*"
+				style="display: none" onchange="readURL(this, 4)">
+		</div>
 
 		<div class="container-content">
 			<textarea name="content" id="content" placeholder="내용을 입력하세요"></textarea>

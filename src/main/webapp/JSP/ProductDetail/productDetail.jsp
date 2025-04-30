@@ -18,7 +18,7 @@
 	<div class="container">
 		<c:if test="${not empty product }">
 			<div class="section-title">📷 상세 정보</div>
-			<c:if test="${checkOrder}">이미 구매/대여된 상품입니다.</c:if>
+			<c:if test="${checkOrder && product.tradeType=='판매'}">이미 구매된 상품입니다.</c:if>
 			<div class="product-layout">
 				<div class="product-image">
 					<div class="slider">
@@ -70,8 +70,9 @@
 								<c:otherwise>♡</c:otherwise>
 							</c:choose>
 						</button>
-						<button type="button" class="btn-inquiry" onclick="openReportModal()">🚩</button>
-						<!-- singo.jsp --> 
+						<button type="button" class="btn-inquiry"
+							onclick="openReportModal()">🚩</button>
+						<!-- singo.jsp -->
 					</div>
 					<c:choose>
 						<c:when test="${product.categoryNo == 2}">
@@ -163,44 +164,46 @@
 						>쪽지보내기
 						</button>
 						</c:if>
-						<c:if test="${not checkOrder}">
 							<c:choose>
-								<c:when test="${product.tradeType=='판매' }">
-									<form
-										action="${pageContext.request.contextPath}/productSellOrder"
-										method="get">
-										<input type="hidden" name="productNo" value="${product.no}" />
-										<input type="hidden" name="tradeType" value="${product.tradeType}" />
-										<button class="btn btn-sell">구매하기</button>
-									</form>
+								<c:when test="${product.tradeType=='판매'}">
+									<c:if test="${not checkOrder}">
+										<form action="${pageContext.request.contextPath}/productSellOrder" method="get">
+											<input type="hidden" name="productNo" value="${product.no}" />
+											<input type="hidden" name="tradeType"
+												value="${product.tradeType}" />
+											<button class="btn btn-sell">구매하기</button>
+										</form>
+									</c:if>
 								</c:when>
-								<c:when test="${product.tradeType=='대여' }">
-									<form
-										action="${pageContext.request.contextPath}/productRentOrder"
-										method="get">
-										<input type="hidden" name="productNo" value="${product.no}" />
-										<input type="hidden" name="tradeType" value="${product.tradeType}" />
-										<button class="btn btn-sell">대여하기</button>
-									</form>
+								<c:when test="${product.tradeType=='대여'}">
+									<!-- 항상 표시 -->
+									<button class="btn btn-rent" onclick="openCalendar()">대여하기</button>
+
+									<jsp:include page="calendarModal.jsp">
+										<jsp:param name="productNo" value="${product.no}" />
+										<jsp:param name="productStart" value="${product.startDate}" />
+										<jsp:param name="productEnd" value="${product.endDate}" />
+									</jsp:include>
 								</c:when>
-								<c:when test="${product.tradeType=='판매/대여' }">
-									<form
-										action="${pageContext.request.contextPath}/productSellOrder"
-										method="get">
-										<input type="hidden" name="productNo" value="${product.no}" />
-										<input type="hidden" name="tradeType" value="${product.tradeType}" />
-										<button class="btn btn-sell">구매하기</button>
-									</form>
-									<form
-										action="${pageContext.request.contextPath}/productRentOrder"
-										method="get">
-										<input type="hidden" name="productNo" value="${product.no}" />
-										<input type="hidden" name="tradeType" value="${product.tradeType}" />
-										<button class="btn btn-rent">대여하기</button>
-									</form>
+								<c:when test="${product.tradeType=='판매/대여'}">
+									<c:if test="${not checkOrder}">
+										<form action="${pageContext.request.contextPath}/productSellOrder" method="get">
+											<input type="hidden" name="productNo" value="${product.no}" />
+											<input type="hidden" name="tradeType"
+												value="${product.tradeType}" />
+											<button class="btn btn-sell">구매하기</button>
+										</form>
+									</c:if>
+
+									<!-- 대여 버튼은 항상 표시 -->
+									<button class="btn btn-rent" onclick="openCalendar()">대여하기</button>
+									<jsp:include page="calendarModal.jsp">
+										<jsp:param name="productNo" value="${product.no}" />
+										<jsp:param name="productStart" value="${product.startDate}" />
+										<jsp:param name="productEnd" value="${product.endDate}" />
+									</jsp:include>
 								</c:when>
 							</c:choose>
-						</c:if>
 					</div>
 				</div>
 			</div>
@@ -223,6 +226,7 @@
 						${product.content }
 					</div>
 				</div>
+			</div>
 		</c:if>
 		<div class="tab-pane" id="review">
 			<div class="review-section">
@@ -265,10 +269,6 @@
 					<jsp:include page="reviewList.jsp" />
 				</div>
 
-				<!-- 달력 -->
-				<jsp:include page="calendarModal.jsp" />
-				<button onclick="openCalendar()">📅 대여 가능 날짜 보기</button>
-
 			</div>
 		</div>
 	</div>
@@ -286,10 +286,9 @@
 	<jsp:param value="${product.tradeType}" name="tradeType" />
 </jsp:include>
 <jsp:include page="report.jsp">
-	<jsp:param value="${product.no}" name="productNo"/>
-	<jsp:param value="${product.tradeType}" name="tradeType"/>
+	<jsp:param value="${product.no}" name="productNo" />
+	<jsp:param value="${product.tradeType}" name="tradeType" />
 </jsp:include>
-
 
 
 
@@ -463,5 +462,129 @@
     }
   });
 	}
+	 // 리뷰 작성/수정 폼 제출
+	 $('#review-form').on('submit', function (e) {
+	     e.preventDefault(); // 기본 제출 막기
+
+	     const formData = {
+	         content: $('textarea[name="content"]').val(),
+	         score: $('select[name="score"]').val(),
+	         productNo: '${product.no}'
+	     };
+
+	     // 수정 모드일 경우 no도 추가
+	     if (isUpdateMode && updateReviewNo) {
+	         formData.no = updateReviewNo;
+	     }
+
+	     $.ajax({
+	         type: 'POST',
+	         url: isUpdateMode ? '${pageContext.request.contextPath}/reviewUpdate' : '${pageContext.request.contextPath}/reviewWrite',
+	         data: formData,
+	         success: function () {
+	             alert(isUpdateMode ? '리뷰가 수정되었습니다!' : '리뷰가 등록되었습니다!');
+	             $('#review-form')[0].reset();
+	             $('#review-form').hide();
+	             isUpdateMode = false; // 수정모드 해제
+	             updateReviewNo = null; // 수정번호 해제
+	             $("#submitBtn").text("등록"); // 버튼 텍스트 다시 원래대로
+	             $('#review-list-container').load('${pageContext.request.contextPath}/reviewList?productNo=${product.no}');
+	         },
+	         error: function () {
+	             alert(isUpdateMode ? '리뷰 수정 실패' : '리뷰 등록 실패');
+	         }
+	     });
+	 });
+	 */
+	 
+	 $(document).ready(function () {
+		  $("#sendMessageBtn").click(function (e) {
+		    e.preventDefault();
+
+		    const formData = {
+		      receiverNo: $("input[name='receiverNo']").val(),
+		      productNo: $("input[name='productNo']").val(),
+		      noteContent: $("#noteContent").val()
+		    };
+
+		    $.ajax({
+		      type: "POST",
+		      url: contextPath + "/noteSend",
+		      data: formData,
+		      success: function (response) {
+		        alert("쪽지가 성공적으로 보내졌습니다!");
+		        closeMessageModal();
+		        $("#messageForm")[0].reset();
+		      },
+		      error: function (xhr, status, error) {
+		        alert("쪽지 보내기 실패ㅠㅠ 다시 시도해주세요!");
+		        console.error(xhr.responseText);
+		      }
+	 
+	// 모달 열기
+	 function openReportModal() {
+		 if ('${memberNo}' === '' || '${memberNo}' === 'null') {
+		        alert('로그인이 필요합니다.');
+		        return;
+		    }
+	   const modal = document.getElementById('reportModal');
+	   modal.style.display = 'flex';
+	   
+	   // 약간의 delay 후 활성화
+	   setTimeout(() => {
+	     modal.classList.add('active');
+	   }, 10); // 10ms 딜레이를 줘야 transition이 먹힘
+	 }
+
+	 // 모달 닫기
+	 function closeReportModal() {
+	   const modal = document.getElementById('reportModal');
+	   
+	   modal.classList.remove('active');
+	   
+	   // 애니메이션 끝나고 display:none 처리
+	   setTimeout(() => {
+	     modal.style.display = 'none';
+	   }, 400); // transition 시간과 동일 (0.4초)
+	 }
+
+		function submitReport() {
+		    const type = document.getElementById('reportReason').value;
+		    const contents = document.getElementById('reportDetail').value;
+		    const title = document.getElementById('reportTitle').value;
+
+		    if (!type || !contents || !title) {
+		        alert('⚠️ 신고 사유, 제목, 내용을 모두 입력해 주세요!');
+		        return;
+		    }
+
+		    // 실제 서버로 비동기 전송하는 부분
+		    $.ajax({
+		        type: 'POST',
+		        url: contextPath + '/report', // 너가 만들고 싶은 신고처리 url
+		        data: {
+		        	type: type,
+		        	contents: contents,
+		        	title:title,
+		            productNo: '${product.no}' // 상품 번호 함께 보내야겠지?
+		        },
+		        success: function(response) {
+		            alert('✅ 신고가 정상적으로 접수되었습니다!');
+		            closeReportModal(); // 모달 닫기
+		            resetReportForm(); // 폼 초기화
+		        },
+		        error: function(xhr, status, error) {
+		            alert('❌ 신고 처리 실패! 다시 시도해주세요.');
+		            console.error(xhr.responseText);
+		        }
+		    });
+		}
+
+		// 신고 폼 초기화 함수
+		function resetReportForm() {
+		    document.getElementById('reportReason').value = '';
+		    document.getElementById('reportDetail').value = '';
+		}
+		
 	 
 </script>
