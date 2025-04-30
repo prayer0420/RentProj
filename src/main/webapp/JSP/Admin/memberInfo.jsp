@@ -32,7 +32,7 @@ input[type="text"] {
   cursor: pointer;
 }
   
-  .pagination {
+ .pagination {
   margin-top: 20px;
   text-align: center;
 }
@@ -40,12 +40,10 @@ input[type="text"] {
   margin: 0 3px;
   padding: 6px 10px;
   border: 1px solid #ccc;
-  background-color: #f9f9f9;
+  background-color: #e2e2e2;
   cursor: pointer;
 }
-.pagination button:hover {
-  background-color: #e2e2e2;
-}
+
 .pagination button[style*="bold"] {
   background-color: #007bff;
   color: white;
@@ -70,24 +68,24 @@ input[type="text"] {
       
       <form action="memberInfo" method="post">
       <div class="search-box">
-        <label>검색어
+        <label>검색어&nbsp;&nbsp;
           <select name="type">
-            <option value="name">회원명</option>
-            <option value="id">아이디</option>
-            <option value="phone">핸드폰번호</option>
+		    <option value="id" ${param.type == 'id' ? 'selected' : ''}>아이디</option>
+		    <option value="name" ${param.type == 'name' ? 'selected' : ''}>이름</option>
+		    <option value="phone" ${param.type == 'phone' ? 'selected' : ''}>전화번호</option>
           </select>
         </label>
-        <input type="text" name="word">
-        <input type="submit" value="검색">
+          <input type="text" name="word" value="${param.word}" placeholder="검색어 입력">
+        <button type="submit">검색</button>
         <br><br>
-        회원등급:
-        <label><input type="radio" name="gradeId" value="all" checked> 전체</label>
-        <label><input type="radio" name="gradeId" value="bronze" > 브론즈</label>
-        <label><input type="radio" name="gradeId" value="silver"> 실버</label>
-        <label><input type="radio" name="gradeId" value="gold"> 골드</label>
-        <label><input type="radio" name="gradeId" value="platinum"> 플래티넘</label>
-        <label><input type="radio" name="gradeId" value="dia"> 다이아</label>
-        <label><input type="radio" name="gradeId" value="rent"> Re:NT</label>
+        회원등급:&nbsp;
+			<label><input type="radio" name="gradeId" value="all" ${param.gradeId == 'all' || empty param.gradeId ? 'checked' : ''}> 전체</label>
+			<label><input type="radio" name="gradeId" value="bronze" ${param.gradeId == 'bronze' ? 'checked' : ''}> 브론즈</label>
+			<label><input type="radio" name="gradeId" value="silver" ${param.gradeId == 'silver' ? 'checked' : ''}> 실버</label>
+			<label><input type="radio" name="gradeId" value="gold" ${param.gradeId == 'gold' ? 'checked' : ''}> 골드</label>
+			<label><input type="radio" name="gradeId" value="platinum" ${param.gradeId == 'platinum' ? 'checked' : ''}> 플래티넘</label>
+			<label><input type="radio" name="gradeId" value="dia" ${param.gradeId == 'dia' ? 'checked' : ''}> 다이아</label>
+			<label><input type="radio" name="gradeId" value="rent" ${param.gradeId == 'rent' ? 'checked' : ''}> Re:NT</label>
       </div>
       </form>
       
