@@ -1,9 +1,13 @@
 package dao.review;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import org.apache.ibatis.session.SqlSession;
+
 import dto.Review;
 import dto.ReviewQueryParams;
 import utils.MybatisSqlSessionFactory;
@@ -35,11 +39,6 @@ public class ReviewDAOImpl implements ReviewDAO {
         session.commit();
     }
 
-<<<<<<< HEAD
-=======
-   
->>>>>>> dev_lar
-
     @Override
     public int getReviewCount(ReviewQueryParams params) throws Exception {
         return session.selectOne("mapper.review.getReviewCount", params);
@@ -57,6 +56,11 @@ public class ReviewDAOImpl implements ReviewDAO {
 		map.put("productNo", productNo);
 		map.put("memberNo", memberNo);
 		return session.selectOne("mapper.review.checkMyReview",map);
+	}
+	
+	@Override
+	public void updateReview(Review review) throws Exception {
+	    session.update("mapper.review.updateReview", review);
 	}
 
 }

@@ -16,6 +16,7 @@ public interface ReviewService {
     List<Review> getReviewList(ReviewQueryParams params) throws Exception;
     PageInfo getReviewPageInfo(ReviewQueryParams params) throws Exception;
 
+    void updateReview(Review review) throws Exception;
 
 	boolean checkMyReview(Integer productNo,Integer memberNo)throws Exception;
 
