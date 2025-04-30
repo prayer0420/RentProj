@@ -17,12 +17,14 @@ public class NoteSend extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("utf-8");
+        response.setContentType("application/json; charset=UTF-8");  // JSON 응답 타입
 
         HttpSession session = request.getSession(false);
         Integer senderNo = (Integer) session.getAttribute("no");
 
         if (senderNo == null) {
-            response.sendRedirect(request.getContextPath() + "/login");
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED); // 401
+            response.getWriter().write("{\"error\":\"로그인 필요\"}");
             return;
         }
 
@@ -30,29 +32,24 @@ public class NoteSend extends HttpServlet {
             Integer receiverNo = Integer.parseInt(request.getParameter("receiverNo"));
             Integer productNo = Integer.parseInt(request.getParameter("productNo"));
             String noteContent = request.getParameter("noteContent");
-            String origin = request.getParameter("origin"); // 출처 파악
 
             Note note = new Note();
-            note.setMemberNo(senderNo);       // 보내는 사람
-            note.setReceiverNo(receiverNo);   // 받는 사람
+            note.setMemberNo(senderNo);
+            note.setReceiverNo(receiverNo);
             note.setProductNo(productNo);
             note.setNoteContent(noteContent);
             note.setCurdate(new Date());
 
             noteService.sendNote(note);
 
-            // 출처에 따라 리다이렉트
-            if ("productDetail".equals(origin)) {
-                response.sendRedirect(request.getContextPath() + "/productDetail?no=" + productNo);
-            } else if ("myNoteList".equals(origin)) {
-                response.sendRedirect(request.getContextPath() + "/myNoteList");
-            } else {
-                response.sendRedirect(request.getContextPath() + "/");
-            }
+            // ✅ JSON 응답으로 성공 전달
+            response.getWriter().write("{\"result\":\"success\"}");
 
         } catch (Exception e) {
             e.printStackTrace();
-            response.sendRedirect(request.getContextPath() + "/error.jsp");
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            response.getWriter().write("{\"error\":\"쪽지 전송 실패\"}");
         }
     }
+
 }

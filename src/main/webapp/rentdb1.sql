@@ -142,3 +142,16 @@ INSERT INTO category (name, sortOrder, isActive, imgfilename) VALUES
 
 
 
+CREATE TABLE note (
+  noteNo INT AUTO_INCREMENT PRIMARY KEY,         -- 쪽지 PK
+  productNo INT NOT NULL,                        -- 상품 번호
+  memberNo INT NOT NULL,                         -- 보낸 사람 (sender)
+  receiverNo INT NOT NULL,                       -- 받는 사람 (receiver)
+  noteContent VARCHAR(1000) NOT NULL,            -- 쪽지 내용
+  curdate DATETIME DEFAULT CURRENT_TIMESTAMP,    -- 전송 시각
+
+  -- 외래키 설정 (선택)
+  CONSTRAINT fk_note_product FOREIGN KEY (productNo) REFERENCES product(no),
+  CONSTRAINT fk_note_member FOREIGN KEY (memberNo) REFERENCES member(no),
+  CONSTRAINT fk_note_receiver FOREIGN KEY (receiverNo) REFERENCES member(no)
+);

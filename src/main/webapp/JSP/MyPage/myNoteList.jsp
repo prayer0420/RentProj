@@ -41,7 +41,17 @@
               <input type="checkbox" class="check-item" name="noteIds" value="${note.noteNo}" onclick="event.stopPropagation();">
               <span class="note-who">${note.senderNickname}</span>
               <span class="note-title">${note.productTitle}</span>
-              <span class="note-preview">${fn:length(note.noteContent) > 15 ? fn:substring(note.noteContent, 0, 15) + '...' : note.noteContent}</span>
+              <span class="note-preview">
+			  <c:choose>
+			    <c:when test="${fn:length(note.noteContent) > 15}">
+			      ${fn:substring(note.noteContent, 0, 15)}...
+			    </c:when>
+			    <c:otherwise>
+			      ${note.noteContent}
+			    </c:otherwise>
+			  </c:choose>
+			</span>
+
               <span class="note-time"><fmt:formatDate value="${note.curdate}" pattern="yyyy-MM-dd HH:mm"/></span>
               <div class="note-detail">
                 <div class="note-full">${note.noteContent}</div>
@@ -55,20 +65,35 @@
           </c:forEach>
         </div>
 
-        <div class="note-list" id="sentBox">
-          <c:forEach var="note" items="${sentNotes}">
-            <div class="note-row" onclick="toggleNoteDetail(this)">
-              <input type="checkbox" class="check-item" name="noteIds" value="${note.noteNo}" onclick="event.stopPropagation();">
-              <span class="note-who">${note.receiverNickname}</span>
-              <span class="note-title">${note.productTitle}</span>
-              <span class="note-preview">${fn:length(note.noteContent) > 15 ? fn:substring(note.noteContent, 0, 15) + '...' : note.noteContent}</span>
-              <span class="note-time"><fmt:formatDate value="${note.curdate}" pattern="yyyy-MM-dd HH:mm"/></span>
-              <div class="note-detail">
-                <div class="note-full">${note.noteContent}</div>
-              </div>
-            </div>
-          </c:forEach>
-        </div>
+		<div class="note-list" id="sentBox">
+		  <c:forEach var="note" items="${sentNotes}">
+		    <div class="note-row" onclick="toggleNoteDetail(this)">
+		      <input type="checkbox" class="check-item" name="noteIds" value="${note.noteNo}" onclick="event.stopPropagation();">
+		      <span class="note-who">${note.receiverNickname}</span>
+		      <span class="note-title">${note.productTitle}</span>
+		      <span class="note-preview">
+		        <c:choose>
+		          <c:when test="${fn:length(note.noteContent) > 15}">
+		            ${fn:substring(note.noteContent, 0, 15)}...
+		          </c:when>
+		          <c:otherwise>
+		            ${note.noteContent}
+		          </c:otherwise>
+		        </c:choose>
+		      </span>
+		      <span class="note-time"><fmt:formatDate value="${note.curdate}" pattern="yyyy-MM-dd HH:mm"/></span>
+		      <div class="note-detail">
+		        <div class="note-full">${note.noteContent}</div>
+		        <div class="note-actions">
+		          <a href="${contextPath}/productDetail?no=${note.productNo}" class="btn-detail">상품 보러가기</a>
+		          <button type="button" class="btn-reply"
+		            onclick="event.stopPropagation(); openNoteModal(${note.receiverNo}, '${note.receiverNickname}', ${note.productNo}, '${note.productTitle}')">답장</button>
+		        </div>
+		      </div>
+		    </div>
+		  </c:forEach>
+		</div>
+
       </form>
     </section>
   </div>

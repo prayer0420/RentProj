@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8" />
 <title>주문결제</title>
-<script>const contextPath = "${pageContext.request.contextPath}"</script>
+
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/CSS/productDetail/detail.css" />
 <link rel="stylesheet"
@@ -153,7 +153,15 @@
 					</div>
 					<div class="btn-box">
 						<c:if test="${memberNo != null}">
-							<button class="btn btn-message" onclick="openMessageModal()">쪽지보내기</button>
+						<button
+						  class="btn btn-message"
+						  onclick="openMessageModal(this)"
+						  data-receiver-no="${product.memberNo}"
+						  data-product-no="${product.no}"
+						  data-receiver-name="${product.nickname}"
+						  data-product-title="${product.title}"
+						>쪽지보내기
+						</button>
 						</c:if>
 						<c:if test="${not checkOrder}">
 							<c:choose>
@@ -287,6 +295,7 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
+
     const tabItems = document.querySelectorAll('.tab-item');
     const tabPanes = document.querySelectorAll('.tab-pane');
     
@@ -306,276 +315,153 @@
         reviewForm.style.display = reviewForm.style.display === 'none' ? 'block' : 'none';
       });
     }
-    //쪽지보내기 모달
-	function openMessageModal() {
-	  const modal = document.getElementById('messageModal');
-	  modal.style.display = 'flex';
-	  // 약간의 delay 후 활성화
-	   setTimeout(() => {
-	     modal.classList.add('active');
-	   }, 10); // 10ms 딜레이를 줘야 transition이 먹힘
-	}
-	
-	function closeMessageModal() {
-	  const modal = document.getElementById('messageModal');
-	  modal.style.display = 'none';
-	  modal.classList.remove('active');
-	   
-	   // 애니메이션 끝나고 display:none 처리
-	   setTimeout(() => {
-	     modal.style.display = 'none';
-	   }, 400); // transition 시간과 동일 (0.4초)
-	}
-	let isUpdateMode = false;     // 등록/수정 모드 플래그
-	let updateReviewNo = null;    // 수정할 리뷰 번호 저장
+ // 쪽지보내기 모달
+    function openMessageModal(btn) {
+      const modal = document.getElementById('messageModal');
+      
+      // 버튼에서 데이터 읽기
+      const receiverNo = btn.getAttribute('data-receiver-no');
+      const productNo = btn.getAttribute('data-product-no');
+      const receiverName = btn.getAttribute('data-receiver-name');
+      const productTitle = btn.getAttribute('data-product-title');
+      
+      // 모달에 값 설정
+      document.getElementById('modalReceiverNo').value = receiverNo;
+      document.getElementById('modalProductNo').value = productNo;
+      document.getElementById('modalReceiverName').textContent = receiverName;
+      document.getElementById('modalProductTitle').textContent = productTitle;
 
-	// 수정 버튼 클릭 시
-	function editReview(no, contents, score) {
-    console.log("editReview 호출: no = " + no);
+      // 모달을 보여줌
+      modal.style.display = 'flex';
 
-    $("#review-form").show();
-    $("textarea[name='content']").val(contents);
-    $("select[name='score']").val(score);
-
-    // 혹시 이전 hidden 있으면 지우고
-    $('#review-form').find('input[name="reviewNo"]').remove();
-
-    // 다시 숨겨진 input 추가
-    $('<input>', {
-        type: 'hidden',
-        name: 'reviewNo',
-        value: no
-    }).appendTo('#review-form');
-
-    $("#submitBtn").text("수정");
-}
-
-	// 리뷰 폼 제출
-	$('#review-form').on('submit', function (e) {
-    e.preventDefault();
-
-    const reviewNo = $('input[name="reviewNo"]').val(); 
-    console.log("submit 시 reviewNo:", reviewNo);   // ⭐⭐ 찍어
-
-    const isUpdate = !!reviewNo;
-    console.log("isUpdate = ", isUpdate);             // ⭐⭐ 찍어
-
-    const formData = {
-        content: $('textarea[name="content"]').val(),
-        score: $('select[name="score"]').val(),
-        productNo: '${product.no}'
-    };
-
-    if (isUpdate) {
-        formData.no = reviewNo;
+      setTimeout(() => {
+        modal.classList.add('active');
+      }, 10); // 모달의 애니메이션을 10ms 후에 추가
     }
 
-    console.log("보내는 formData = ", formData);       // ⭐⭐ 찍어
+    function closeMessageModal() {
+      const modal = document.getElementById('messageModal');
+      modal.classList.remove('active');
+      
+      // 애니메이션 후, display:none 처리
+      setTimeout(() => {
+        modal.style.display = 'none';
+      }, 400); // transition 시간에 맞춰서
+    }
 
-    $.ajax({
-        type: 'POST',
-        url: isUpdate ? '${pageContext.request.contextPath}/reviewUpdate' : '${pageContext.request.contextPath}/reviewWrite',
+    // 쪽지 보내기 처리
+    $('#sendMessageBtn').click(function (e) {
+      e.preventDefault();
+
+      const formData = {
+        receiverNo: $("input[name='receiverNo']").val(),
+        productNo: $("input[name='productNo']").val(),
+        noteContent: $("#noteContent").val()
+      };
+
+      $.ajax({
+        type: "POST",
+        url: contextPath + "/noteSend",  // 서버로 전송할 URL
         data: formData,
-        success: function () {
-            alert(isUpdate ? '리뷰가 수정되었습니다!' : '리뷰가 등록되었습니다!');
-            $('#review-form')[0].reset();
-            $('#review-form').hide();
-            $("#submitBtn").text("등록");
-            $('input[name="reviewNo"]').remove();
-            $('#review-list-container').load('${pageContext.request.contextPath}/reviewList?productNo=${product.no}');
+        success: function(response) {
+          alert("쪽지가 성공적으로 보내졌습니다!");
+          closeMessageModal();
+          $("#messageForm")[0].reset();  // 폼 초기화
         },
-        error: function () {
-            alert(isUpdate ? '리뷰 수정 실패' : '리뷰 등록 실패');
+        error: function(xhr, status, error) {
+          alert("쪽지 보내기 실패ㅠㅠ 다시 시도해주세요!");
+          console.error(xhr.responseText);
         }
+      });
     });
-    location.reload();
-});
 
+    // 신고하기 모달 열기
+    function openReportModal() {
+      if ('${memberNo}' === '' || '${memberNo}' === 'null') {
+        alert('로그인이 필요합니다.');
+        return;
+      }
+      const modal = document.getElementById('reportModal');
+      modal.style.display = 'flex';
+      
+      // 약간의 delay 후 활성화
+      setTimeout(() => {
+        modal.classList.add('active');
+      }, 10); // transition을 제대로 적용하기 위해 10ms 딜레이
+    }
+
+    // 신고하기 모달 닫기
+    function closeReportModal() {
+      const modal = document.getElementById('reportModal');
+      
+      modal.classList.remove('active');
+      
+      // 애니메이션 후, display:none 처리
+      setTimeout(() => {
+        modal.style.display = 'none';
+      }, 400); // transition 시간과 동일 (0.4초)
+    }
+
+    // 신고 처리
+    function submitReport() {
+      const type = document.getElementById('reportReason').value;
+      const contents = document.getElementById('reportDetail').value;
+      const title = document.getElementById('reportTitle').value;
+
+      if (!type || !contents || !title) {
+        alert('⚠️ 신고 사유, 제목, 내용을 모두 입력해 주세요!');
+        return;
+      }
+
+      $.ajax({
+        type: 'POST',
+        url: contextPath + '/report', // 신고 처리할 URL
+        data: {
+          type: type,
+          contents: contents,
+          title: title,
+          productNo: '${product.no}' // 상품 번호 추가
+        },
+        success: function(response) {
+          alert('✅ 신고가 정상적으로 접수되었습니다!');
+          closeReportModal();  // 모달 닫기
+          resetReportForm();   // 폼 초기화
+        },
+        error: function(xhr, status, error) {
+          alert('❌ 신고 처리 실패! 다시 시도해주세요.');
+          console.error(xhr.responseText);
+        }
+      });
+    }
+
+    // 신고 폼 초기화 함수
+    function resetReportForm() {
+      document.getElementById('reportReason').value = '';
+      document.getElementById('reportDetail').value = '';
+      document.getElementById('reportTitle').value = '';
+    }
 	
-	 $('#review-list-container').load(
-		'${pageContext.request.contextPath}/reviewList?productNo=${product.no}'		 
-	 )
-	 
-	 function toggleMark(btn,productNo){
-		 if ('${memberNo}' === '' || '${memberNo}' === 'null') {
-		        alert('로그인이 필요합니다.');
-		        return;
-		    }
-		 $.ajax({
-			url:contextPath + "/markProduct",
-			type:"post",
-			data:{productNo:productNo},
-			success:function(res){
-				btn.innerText = res.isMark ? "♥":"♡";
-			},
-			error:function(xhr){
-				alert("로그인이 필요합니다.");					
-			}
-		 });
-	 }
-	 
-	 function deleteReview(reviewNo){
-		 console.log(reviewNo+"실제로 삭제할 번호");
-		 if(!confirm('정말 삭제하시겠습니까?'))return;
-		 
-		 $.ajax({
-			url:"${pageContext.request.contextPath}/reviewDelete",
-			type:"Post",
-			data:{no:reviewNo},
-			success:function(){
-				alert("리뷰가 삭제되었습니다.");
-				
-				// 🔁 리뷰 리스트를 다시 불러오기
-		        $('#review-list-container').load('${pageContext.request.contextPath}/reviewList?productNo=${product.no}');
-			},
-		    error: function () {
-		        alert('삭제 실패');
-		      }
-		 });
-		 location.reload();
-	 }
-	 /*
-	// 리뷰 수정 버튼 클릭시
-	 function editReview(no, contents, score) {
-	    $("#review-form").show();
-	    $("textarea[name='content']").val(contents);
-	    $("select[name='score']").val(score);
-	
-	    // 기존에 reviewNo hidden 있으면 지우고 다시 추가
-	    $("#review-form").find("input[name='reviewNo']").remove();
-	
-	    // 수정할 리뷰 번호를 hidden input으로 추가
-	    $('<input>').attr({
-	        type: 'hidden',
-	        id: 'reviewNo',   // id 꼭 맞춰야함
-	        name: 'reviewNo', // name도 맞춰야함
-	        value: no
-	    }).appendTo('#review-form');
-	
-	    $("#submitBtn").text("수정");
+    
+    //찜하기
+    function toggleMark(btn, productNo) {
+  const memberNo = '${memberNo}';
+  if (!memberNo || memberNo === 'null') {
+    alert('로그인이 필요합니다.');
+    return;
+  }
+
+  $.ajax({
+    url: contextPath + "/markProduct",
+    type: "POST",
+    data: { productNo: productNo },
+    success: function(res) {
+      btn.innerText = res.isMark ? "♥" : "♡";
+    },
+    error: function(xhr) {
+      alert("찜 요청 실패");
+      console.error(xhr.responseText);
+    }
+  });
 	}
-	 // 리뷰 작성/수정 폼 제출
-	 $('#review-form').on('submit', function (e) {
-	     e.preventDefault(); // 기본 제출 막기
-
-	     const formData = {
-	         content: $('textarea[name="content"]').val(),
-	         score: $('select[name="score"]').val(),
-	         productNo: '${product.no}'
-	     };
-
-	     // 수정 모드일 경우 no도 추가
-	     if (isUpdateMode && updateReviewNo) {
-	         formData.no = updateReviewNo;
-	     }
-
-	     $.ajax({
-	         type: 'POST',
-	         url: isUpdateMode ? '${pageContext.request.contextPath}/reviewUpdate' : '${pageContext.request.contextPath}/reviewWrite',
-	         data: formData,
-	         success: function () {
-	             alert(isUpdateMode ? '리뷰가 수정되었습니다!' : '리뷰가 등록되었습니다!');
-	             $('#review-form')[0].reset();
-	             $('#review-form').hide();
-	             isUpdateMode = false; // 수정모드 해제
-	             updateReviewNo = null; // 수정번호 해제
-	             $("#submitBtn").text("등록"); // 버튼 텍스트 다시 원래대로
-	             $('#review-list-container').load('${pageContext.request.contextPath}/reviewList?productNo=${product.no}');
-	         },
-	         error: function () {
-	             alert(isUpdateMode ? '리뷰 수정 실패' : '리뷰 등록 실패');
-	         }
-	     });
-	 });
-	 */
-	 
-	 $(document).ready(function () {
-		  $("#sendMessageBtn").click(function (e) {
-		    e.preventDefault();
-
-		    const formData = {
-		      receiverNo: $("input[name='receiverNo']").val(),
-		      productNo: $("input[name='productNo']").val(),
-		      noteContent: $("#noteContent").val()
-		    };
-
-		    $.ajax({
-		      type: "POST",
-		      url: contextPath + "/noteSend",
-		      data: formData,
-		      success: function (response) {
-		        alert("쪽지가 성공적으로 보내졌습니다!");
-		        closeMessageModal();
-		        $("#messageForm")[0].reset();
-		      },
-		      error: function (xhr, status, error) {
-		        alert("쪽지 보내기 실패ㅠㅠ 다시 시도해주세요!");
-		        console.error(xhr.responseText);
-		      }
-	 
-	// 모달 열기
-	 function openReportModal() {
-		 if ('${memberNo}' === '' || '${memberNo}' === 'null') {
-		        alert('로그인이 필요합니다.');
-		        return;
-		    }
-	   const modal = document.getElementById('reportModal');
-	   modal.style.display = 'flex';
-	   
-	   // 약간의 delay 후 활성화
-	   setTimeout(() => {
-	     modal.classList.add('active');
-	   }, 10); // 10ms 딜레이를 줘야 transition이 먹힘
-	 }
-
-	 // 모달 닫기
-	 function closeReportModal() {
-	   const modal = document.getElementById('reportModal');
-	   
-	   modal.classList.remove('active');
-	   
-	   // 애니메이션 끝나고 display:none 처리
-	   setTimeout(() => {
-	     modal.style.display = 'none';
-	   }, 400); // transition 시간과 동일 (0.4초)
-	 }
-
-		function submitReport() {
-		    const type = document.getElementById('reportReason').value;
-		    const contents = document.getElementById('reportDetail').value;
-		    const title = document.getElementById('reportTitle').value;
-
-		    if (!type || !contents || !title) {
-		        alert('⚠️ 신고 사유, 제목, 내용을 모두 입력해 주세요!');
-		        return;
-		    }
-
-		    // 실제 서버로 비동기 전송하는 부분
-		    $.ajax({
-		        type: 'POST',
-		        url: contextPath + '/report', // 너가 만들고 싶은 신고처리 url
-		        data: {
-		        	type: type,
-		        	contents: contents,
-		        	title:title,
-		            productNo: '${product.no}' // 상품 번호 함께 보내야겠지?
-		        },
-		        success: function(response) {
-		            alert('✅ 신고가 정상적으로 접수되었습니다!');
-		            closeReportModal(); // 모달 닫기
-		            resetReportForm(); // 폼 초기화
-		        },
-		        error: function(xhr, status, error) {
-		            alert('❌ 신고 처리 실패! 다시 시도해주세요.');
-		            console.error(xhr.responseText);
-		        }
-		    });
-		}
-
-		// 신고 폼 초기화 함수
-		function resetReportForm() {
-		    document.getElementById('reportReason').value = '';
-		    document.getElementById('reportDetail').value = '';
-		}
 	 
 </script>
