@@ -31,19 +31,17 @@ public class FaqServiceImpl implements FaqService {
 	public Faq faqSelectOne(Integer no) throws Exception {
 		return faqDAO.selectOne(no);
 	}
-//	public boolean modifyFaq(Faq faq) {
-//        return faqDAO.updateFaq(faq) > 0;
-//    }
+
 
 	@Override
 	public boolean modifyFaq(Faq faq) {
-        try {
-            return faqDAO.updateFaq(faq) > 0;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
+	    try {
+	        return faqDAO.updateFaq(faq) > 0;  
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return false;
+	    }
+	}
 
 	@Override
 	public boolean deleteFaqList(List<Integer> faqNos) {
@@ -59,19 +57,12 @@ public class FaqServiceImpl implements FaqService {
 	@Override
 	public Faq getFaqByNo(int no) {
         return faqDAO.selectFaqByNo(no);
-        
-        
-        
 	}
+	
+	@Override	
 	public List<FaqCategory> getFaqCategoryList() {
-		// TODO Auto-generated method stub
-		return null;
+	    return faqDAO.selectFaqCategoryList();
 	}
 
-	@Override
-	public FaqCategory insertFaqCategory(String name) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 }

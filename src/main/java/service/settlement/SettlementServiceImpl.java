@@ -7,6 +7,7 @@ import java.util.Map;
 import dao.settlement.SettlementDAO;
 import dao.settlement.SettlementDAOImpl;
 import dto.Member;
+import dto.Order;
 import dto.Settlement;
 
 public class SettlementServiceImpl implements SettlementService {
@@ -50,6 +51,51 @@ public class SettlementServiceImpl implements SettlementService {
             settlementDAO.updateMemberGradeNo(memberNo, nextGradeNo);
         }
     }
-}
 
+	@Override
+	public void insertSettlementByOrderNo(int orderNo) throws Exception {
+		 // 1. 주문 정보 가져오기
+	    Order order = settlementDAO.selectOrderInfo(orderNo);
+	    if (order == null) {
+	        throw new Exception("주문 정보를 찾을 수 없습니다. orderNo = " + orderNo);
+	    }
+
+	    // 2. 회원 정보 가져오기
+	    Member member = settlementDAO.selectMemberInfo(order.getMemberNo());
+	    if (member == null) {
+	        throw new Exception("회원 정보를 찾을 수 없습니다. memberNo = " + order.getMemberNo());
+	    }
+
+	    // 3. gradeRate (수수료율) 가져오기
+	    double gradeRate = settlementDAO.selectGradeRate(member.getGradeId());
+
+	    // 4. 수수료(feeAmount) 계산
+	    int feeAmount = (int) (order.getPrice() * gradeRate);
+
+	    // 5. 최종 정산 금액(finalSettleAmount) 계산
+	    int finalSettleAmount = 0;
+	    if ("판매".equals(order.getRevenueType())) {
+	        finalSettleAmount = order.getPrice() + order.getDeliveryPrice() - feeAmount;
+	    } else if ("대여".equals(order.getRevenueType())) {
+	        finalSettleAmount = order.getSecPrice() + order.getPrice() + order.getDeliveryPrice() - feeAmount;
+	    }
+
+	    // 6. Settlement DTO 세팅
+	    Settlement settlement = new Settlement();
+	    settlement.setOrderNo(order.getOrderNo());
+	    settlement.setMemberNo(order.getMemberNo());
+	    settlement.setProductNo(order.getProductNo());
+	    settlement.setRevenueType(order.getRevenueType());
+	    settlement.setPrice(order.getPrice());
+	    settlement.setDeliveryPrice(order.getDeliveryPrice());
+	    settlement.setSecPrice(order.getSecPrice());
+	    settlement.setGradeRate(gradeRate);
+	    settlement.setFeeAmount(feeAmount);
+	    settlement.setFinalSettleAmount(finalSettleAmount);
+	    settlement.setFeeStatus("PENDING"); // 초기에는 대기 상태
+
+	    // 7. settlement insert
+	    settlementDAO.insertSettlement(settlement);
+	}
 	
+}

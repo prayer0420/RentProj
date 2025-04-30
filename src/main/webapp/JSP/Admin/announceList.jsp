@@ -111,19 +111,20 @@
             </td>
 				<tr>
 				    <th style="background-color: #e6f0f8;">이미지선택</th>
-				    <td>
-				        <!-- 파일 선택 input 필드 -->
-				        <input type="file" name="ifile" id="ifile" class="form-control form-control-sm">
-				        
-				        <!-- 기존 파일명이 있을 경우 -->
-				        <c:if test="${not empty announce.imgUrl}">
-				            <!-- 선택된 파일명을 보여주는 텍스트 필드 -->
-				            <div id="file-name-display" style="margin-top: 10px;">
-				                이미지 파일: <span id="selected-file-name">${announce.imgUrl}</span>
-				            </div>
-				        </c:if>
-				    </td>
-				</tr>
+					  <td>
+					    <!-- 커스텀 파일 선택 버튼 -->
+					    <label for="ifile" class="btn btn-secondary btn-sm">파일 선택</label>
+					
+					    <!-- 실제 파일 인풋은 숨김 -->
+					    <input type="file" name="ifile" id="ifile" style="display: none;">
+					
+					    <!-- 선택된 파일명 or 기존 파일명 표시 -->
+					    <span id="selected-file-name" style="margin-left: 10px;">첨부파일 없음</span>
+					
+					    <!-- 기존 파일명을 서버에 넘길 hidden 필드 -->
+					    <input type="hidden" name="existingImage" id="existingImage">
+					  </td>
+					</tr>
             <th style="background-color: #e6f0f8; vertical-align: top;">내용</th>
             <td style="background-color: #f0fafa;">
               <textarea id="announceContent" rows="4" class="form-control form-control-sm"></textarea>
@@ -166,11 +167,10 @@
         modalInstance.show();
       });
       
-      // [파일 선택 시 파일명 표시]
+  	 // 파일 선택 시 선택된 파일명 표시
       $("#ifile").change(function () {
-          // 파일이 선택된 경우
-          var fileName = $(this).val().split("\\").pop(); // 파일명만 추출
-          $("#selected-file-name").text(fileName); // 파일명을 표시할 span에 파일명 업데이트
+        const fileName = $(this).val().split("\\").pop();
+        $("#selected-file-name").text(fileName || "첨부파일 없음");
       });
     
       // [2] 제목 클릭 시 (수정 모드)
@@ -188,11 +188,13 @@
             $("#announceContent").val(data.content);
             
             // 기존 이미지 파일명이 있을 경우 표시
-            if (data.imgUrl) {
-                $("#selected-file-name").text(data.imgUrl); // 파일명이 있을 경우 텍스트로 표시
-            } else {
-                $("#selected-file-name").text(""); // 없으면 빈칸 처리
-            }
+			if (data.imgUrl) {
+			  $("#selected-file-name").text(data.imgUrl);
+			  $("#existingImage").val(data.imgUrl);  // ✅ 서버로 보낼 값
+			} else {
+			  $("#selected-file-name").text("첨부파일 없음");
+			  $("#existingImage").val("");
+			}
             
             modalInstance.show();
           }
