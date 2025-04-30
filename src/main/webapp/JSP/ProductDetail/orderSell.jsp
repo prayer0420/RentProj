@@ -14,6 +14,8 @@
 
 <body>
 <input type="hidden" name="orderType" value="${orderType}">
+<input type="hidden" name="startDate" value="${startDate}">
+<input type="hidden" name="endDate" value="${endDate}">
 		<!-- 주문/결제 페이지 -->
 		<div class="order-container">
 			<h2 class="order-title">주문/결제</h2>

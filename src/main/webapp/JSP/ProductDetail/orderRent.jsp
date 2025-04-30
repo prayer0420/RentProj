@@ -13,9 +13,9 @@
 </head>
 
 <body>
+<input type="hidden" name="orderType" value="${orderType}">
 	<input type="hidden" name="startDate" value="${startDate}">
 	<input type="hidden" name="endDate" value="${endDate}">
-	<input type="hidden" name="orderType" value="${orderType}">
 	<!-- 주문/결제 페이지 -->
 	<div class="order-container">
 		<h2 class="order-title">주문/결제</h2>
@@ -140,7 +140,7 @@
 	          orderId: orderId, // 고유 주문번호
 	          orderName: productTitle,
 	          successUrl: window.location.origin + "${pageContext.request.contextPath}/success" + "?deliveryAddr=" + 
-	        		  encodeURIComponent(document.getElementById('deliveryAddressInput').value)+ "&orderType="+  
+	        		  encodeURIComponent(document.getElementById('deliveryAddressInput').value)+ "&orderType=" +
 	        		  encodeURIComponent(document.querySelector('input[name="orderType"]').value)+
 	        		  "&startDate=" + encodeURIComponent(startDate) +
 	        		  "&endDate=" + encodeURIComponent(endDate),

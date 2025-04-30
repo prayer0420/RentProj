@@ -61,25 +61,39 @@ public class PaymentConfirm extends HttpServlet {
 		Integer price = Integer.parseInt(amount);
 		String deliveryAddr = (String) request.getAttribute("deliveryAddr");
 		String orderType = (String)request.getAttribute("orderType");
-//		String start = (String) request.getAttribute("startDate");
-//		String end = (String) request.getAttribute("endDate");
-//		
+		Date today = new Date(System.currentTimeMillis());
+		Date startDate = today;
+		Date endDate = today;
+
+		try {
+		    String start = (String) session.getAttribute("startDate");
+		    if (start != null && start.matches("\\d{4}-\\d{2}-\\d{2}")) {
+		        startDate = Date.valueOf(start);
+		    }
+		} catch (Exception e) {
+		    // 무시: 오늘 날짜 유지
+		}
+
+		try {
+		    String end = (String) session.getAttribute("endDate");
+		    if (end != null && end.matches("\\d{4}-\\d{2}-\\d{2}")) {
+		        endDate = Date.valueOf(end);
+		    }
+		} catch (Exception e) {
+		    // 무시: 오늘 날짜 유지
+		}
+		
+		
 //		System.out.println("결제 끝 startDate = " + start);
 //		System.out.println("결제 끝 endDate = " + end);
-		
-		String start = (String) session.getAttribute("startDate");
-		String end = (String) session.getAttribute("endDate");
-
-		System.out.println("결제 끝 startDate = " + start);
-		System.out.println("결제 끝 endDate = " + end);
-		if (start == null || !start.matches("\\d{4}-\\d{2}-\\d{2}")) {
-		    throw new IllegalArgumentException("startDate 값이 잘못되었습니다: " + start);
-		}
-		if (end == null || !end.matches("\\d{4}-\\d{2}-\\d{2}")) {
-		    throw new IllegalArgumentException("endDate 값이 잘못되었습니다: " + end);
-		}
-		Date startDate = Date.valueOf(start);
-		Date endDate = Date.valueOf(end);
+//		if (start == null || !start.matches("\\d{4}-\\d{2}-\\d{2}")) {
+//		    throw new IllegalArgumentException("startDate 값이 잘못되었습니다: " + start);
+//		}
+//		if (end == null || !end.matches("\\d{4}-\\d{2}-\\d{2}")) {
+//		    throw new IllegalArgumentException("endDate 값이 잘못되었습니다: " + end);
+//		}
+//		Date startDate = Date.valueOf(start);
+//		Date endDate = Date.valueOf(end);
 
 		// 여기서 orderId로부터 productNo 추출 (예: ORDER_123_1710000000)
 		String[] parts = orderId.split("_");

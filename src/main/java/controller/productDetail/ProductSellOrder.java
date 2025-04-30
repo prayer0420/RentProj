@@ -39,6 +39,13 @@ public class ProductSellOrder extends HttpServlet {
 		String nickname = (String)request.getSession().getAttribute("nickname");
 		String orderType = request.getParameter("tradeType");
 		System.out.println("orderType"+orderType);
+		String startDate = request.getParameter("startDate"); // 유저 선택 시작일
+		String endDate = request.getParameter("endDate"); // 유저 선택 종료일
+		String productStartDate = request.getParameter("productStartDate"); // 상품 예약 가능 시작일
+		String productEndDate = request.getParameter("productEndDate"); // 상품 예약 가능 종료일
+		System.out.println("💬 productStartDate: " + startDate);
+		System.out.println("💬 productEndDate: " + endDate);
+		
 		ProductService service = new ProductServiceImpl();
 		
 		try {
