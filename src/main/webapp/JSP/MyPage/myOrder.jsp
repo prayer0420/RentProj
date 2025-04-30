@@ -119,7 +119,7 @@
     </div>
 
 <!-- 모달 추가 -->
-  <jsp:include page="/JSP/MyPage/confirmOrderModal.jsp"/>
+  <%-- <jsp:include page="/JSP/MyPage/confirmOrderModal.jsp"/> --%>
 
 <!-- 푸터 -->
   <jsp:include page="/JSP/Header/footer.jsp" />
