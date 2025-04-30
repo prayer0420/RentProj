@@ -24,7 +24,6 @@
 			<h3 class="order-subtitle">주문 배송정보</h3>
 			<div class="address-title">
 				<span class="address-name"></span>
-				<button class="default-address"></button>
 			</div>
 			<div class="address-info">
 				<span class="phone"></span><br>

@@ -18,7 +18,7 @@
 	<div class="container">
 		<c:if test="${not empty product }">
 			<div class="section-title">📷 상세 정보</div>
-			<c:if test="${checkOrder}">이미 구매/대여된 상품입니다.</c:if>
+			<c:if test="${checkOrder && product.tradeType=='판매'}">이미 구매된 상품입니다.</c:if>
 			<div class="product-layout">
 				<div class="product-image">
 					<div class="slider">
@@ -156,44 +156,39 @@
 						<c:if test="${memberNo != null}">
 							<button class="btn btn-message" onclick="openMessageModal()">쪽지보내기</button>
 						</c:if>
-						<c:if test="${not checkOrder}">
 							<c:choose>
-								<c:when test="${product.tradeType=='판매' }">
-									<form
-										action="${pageContext.request.contextPath}/productSellOrder"
-										method="get">
-										<input type="hidden" name="productNo" value="${product.no}" />
-										<input type="hidden" name="tradeType"
-											value="${product.tradeType}" />
-										<button class="btn btn-sell">구매하기</button>
-									</form>
+								<c:when test="${product.tradeType=='판매'}">
+									<c:if test="${not checkOrder}">
+										<form action="${pageContext.request.contextPath}/productSellOrder" method="get">
+											<input type="hidden" name="productNo" value="${product.no}" />
+											<input type="hidden" name="tradeType"
+												value="${product.tradeType}" />
+											<button class="btn btn-sell">구매하기</button>
+										</form>
+									</c:if>
 								</c:when>
-								<c:when test="${product.tradeType=='대여' }">
-									<!-- 대여하기 버튼 클릭 시 calendarModal 열도록 수정 -->
+								<c:when test="${product.tradeType=='대여'}">
+									<!-- 항상 표시 -->
 									<button class="btn btn-rent" onclick="openCalendar()">대여하기</button>
 
-									<!-- calendarModal 포함 -->
 									<jsp:include page="calendarModal.jsp">
 										<jsp:param name="productNo" value="${product.no}" />
 										<jsp:param name="productStart" value="${product.startDate}" />
 										<jsp:param name="productEnd" value="${product.endDate}" />
 									</jsp:include>
 								</c:when>
-								<c:when test="${product.tradeType=='판매/대여' }">
-									<!-- 구매하기 폼 그대로 유지 -->
-									<form
-										action="${pageContext.request.contextPath}/productSellOrder"
-										method="get">
-										<input type="hidden" name="productNo" value="${product.no}" />
-										<input type="hidden" name="tradeType"
-											value="${product.tradeType}" />
-										<button class="btn btn-sell">구매하기</button>
-									</form>
+								<c:when test="${product.tradeType=='판매/대여'}">
+									<c:if test="${not checkOrder}">
+										<form action="${pageContext.request.contextPath}/productSellOrder" method="get">
+											<input type="hidden" name="productNo" value="${product.no}" />
+											<input type="hidden" name="tradeType"
+												value="${product.tradeType}" />
+											<button class="btn btn-sell">구매하기</button>
+										</form>
+									</c:if>
 
-									<!-- 대여 버튼은 calendarModal 호출용으로 변경 -->
+									<!-- 대여 버튼은 항상 표시 -->
 									<button class="btn btn-rent" onclick="openCalendar()">대여하기</button>
-
-									<!-- calendarModal 포함 -->
 									<jsp:include page="calendarModal.jsp">
 										<jsp:param name="productNo" value="${product.no}" />
 										<jsp:param name="productStart" value="${product.startDate}" />
@@ -201,7 +196,6 @@
 									</jsp:include>
 								</c:when>
 							</c:choose>
-						</c:if>
 					</div>
 				</div>
 			</div>
@@ -224,6 +218,7 @@
 						${product.content }
 					</div>
 				</div>
+			</div>
 		</c:if>
 		<div class="tab-pane" id="review">
 			<div class="review-section">

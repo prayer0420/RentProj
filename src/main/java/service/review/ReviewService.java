@@ -10,7 +10,6 @@ public interface ReviewService {
     List<Review> selectedByProductNo(int productNo) throws Exception;
     double selectAvgScore(int productNo) throws Exception;
     void deleteReview(Integer no) throws Exception;
-    void updateReview(Review review) throws Exception;
     
     // 페이징용 추가
     int getReviewCount(ReviewQueryParams params) throws Exception;

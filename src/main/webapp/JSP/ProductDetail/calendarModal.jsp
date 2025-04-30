@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+	<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
@@ -107,28 +107,51 @@
 	        initialDate: productStart,
 	        selectable: true,
 	        selectMirror: true,
+	        
+	     	// ✅ 다음 달 날짜도 드래그로 자연스럽게 선택 가능
+	        showNonCurrentDates: true,
+
+	        // ✅ 선택 범위 유효성 검사
+	        selectAllow: function(selectInfo) {
+	          const start = selectInfo.start;
+	          const end = selectInfo.end;
+
+	          const validStart = new Date(productStart);
+	          const validEnd = new Date(productEnd);
+	          validEnd.setDate(validEnd.getDate() + 1); // exclusive
+
+	          return start >= validStart && end <= validEnd;
+	        },
+	        
+	     // ✅ 선택 시 로직
 
 	        select: function(info) {
-	          const selectedRangeStart = new Date(info.startStr);
-	          const selectedRangeEnd = new Date(info.endStr);
-	          selectedRangeEnd.setDate(selectedRangeEnd.getDate() - 1);
-
-	          const isOverlapping = reservedRanges.some(r =>
-	            selectedRangeStart <= r.end && selectedRangeEnd >= r.start
-	          );
-	          if (isOverlapping) {
-	        	    alert('❌ 이미 예약된 날짜가 포함되어 있습니다.');
-	        	    selectedStart = null;
-	        	    selectedEnd = null;
-	        	    return;
-	        	  }
-
-	          // ✅ 단순히 날짜 저장만 (alert 띄우지 않음)
-	          selectedStart = info.startStr;
-	          selectedEnd = selectedRangeEnd.toISOString().split('T')[0];
-
-	          console.log("✅ 선택된 날짜:", selectedStart, "~", selectedEnd);
-	        },
+			  const start = new Date(info.startStr);
+			  const end = new Date(info.endStr); // exclusive
+			
+			  // end를 실제 포함 날짜로 바꾸기
+			  end.setDate(end.getDate() - 1);
+			  
+			  const startStr = start.toISOString().split('T')[0];
+			  const endStr = end.toISOString().split('T')[0];
+			
+			  // 겹치는 날짜 체크
+			  const isOverlapping = reservedRanges.some(r =>
+			    !(endStr < r.start || startStr > r.end)
+			  );
+			
+			  if (isOverlapping) {
+			    alert('❌ 이미 예약된 날짜가 포함되어 있습니다.');
+			    selectedStart = null;
+			    selectedEnd = null;
+			    return;
+			  }
+			
+			  selectedStart = startStr;
+			  selectedEnd = endStr;
+			
+			  console.log("✅ 선택된 날짜:", selectedStart, "~", selectedEnd);
+			},
 
 	        validRange: {
 	          start: productStart,
@@ -175,8 +198,13 @@
 		    alert("먼저 예약할 날짜를 선택해주세요.");
 		    return;
 		  }
+		  
+		  // ✅ 메시지를 예약건 유무에 따라 다르게
+		  const alertMessage = reservedRanges.length === 0
+		    ? `✅ 이 상품을 ${selectedStart} ~ ${selectedEnd} 기간 동안 대여하시겠습니까?`
+		    : `✅ ${selectedStart} ~ ${selectedEnd} 예약하시겠습니까?`;
 
-		  if (!confirm(`${selectedStart} ~ ${selectedEnd} 예약하시겠습니까?`)) {
+		  if (!confirm(alertMessage)) {
 		    return;
 		  }
 

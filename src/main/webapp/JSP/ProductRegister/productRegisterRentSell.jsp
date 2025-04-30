@@ -296,7 +296,7 @@
 		<div class="container-security">
 			<h4>보증금</h4>
 			<input type="text" id="secPrice" class="rent-security"
-				placeholder="보증금 가격" id="secPrice" name="secPrice">
+				placeholder="보증금 가격" name="secPrice">
 		</div>
 		<div class="container-delivery">
 			<input type="radio" id="hand" name="deliveryStatus"
@@ -309,11 +309,12 @@
 		</div>
 		<div class="container-date">
 			<h4>대여가능 날짜</h4>
-			<label>대여시작일</label> <input type="date" id="startDate"
-				class="dateinput" placeholder="대여시작일" name="startDate"
+			<label>대여시작일</label> 
+			<input type="date" id="startDate" class="dateinput" placeholder="대여시작일" name="startDate"
 				min="<%=new java.text.SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date())%>">
-			<span>~</span> <label>대여반납일</label> <input type="date" id="endDate"
-				class="dateinput" placeholder="대여반납일" name="endDate">
+			<span>~</span> 
+			<label>대여반납일</label> 
+			<input type="date" id="endDate" class="dateinput" placeholder="대여반납일" name="endDate">
 		</div>
 		<div class="container-prodstate">
 			<h4>상품상태</h4>
