@@ -67,6 +67,7 @@
 					<div class="product-details">
 						<div class="top-icons">
 							<button class="btn-share" onclick="copyToClipboard()">🔗</button>
+							<button onclick="shareKakao()">카카오톡 공유</button>
 							<button class="btn-wish" id="wishBtn" data-productno="${product.no}">
 								<c:choose>
 									<c:when test="${isMark}">♥</c:when>
@@ -297,7 +298,7 @@
 	
 	
 	
-	
+	<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script>
 	//뷰 카운트 가져오기
@@ -543,4 +544,21 @@
 		  document.body.removeChild(dummy);
 		  alert("링크가 복사되었습니다!");
 		}
+	Kakao.init('aebfadf8315b8625cd1f4c4607cf4a68');
+
+	function shareKakao() {
+	  Kakao.Link.sendDefault({
+	    objectType: 'feed',
+	    content: {
+	      title: 'RE:NT에서 상품을 공유했어요!',
+	      description: '이 상품 어때요?',
+	      imageUrl: 'https://yourdomain.com/path/image.jpg',
+	      link: {
+	        mobileWebUrl: window.location.href,
+	        webUrl: window.location.href,
+	      },
+	    }
+	  });
+	}
+	
 	</script>
