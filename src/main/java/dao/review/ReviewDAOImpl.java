@@ -37,6 +37,10 @@ public class ReviewDAOImpl implements ReviewDAO {
 
 
 
+
+
+
+
     @Override
     public int getReviewCount(ReviewQueryParams params) throws Exception {
         return session.selectOne("mapper.review.getReviewCount", params);
@@ -47,6 +51,13 @@ public class ReviewDAOImpl implements ReviewDAO {
         return session.selectList("mapper.review.getReviewList", params);
     }
 
+
+	@Override
+	public void updateReview(Review review) throws Exception {
+		session.update("mapper.review.updateReview",review);
+		session.commit();
+
+	}
 
 	@Override
 	public int checkMyReview(Integer productNo, Integer memberNo) throws Exception {
