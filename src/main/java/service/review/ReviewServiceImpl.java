@@ -34,11 +34,6 @@ public class ReviewServiceImpl implements ReviewService {
         reviewDAO.deleteReview(no);
     }
 
-    @Override
-    public void updateReview(Review review) throws Exception {
-        reviewDAO.updateReview(review);
-    }
-
     // 페이징용 추가
     @Override
     public int getReviewCount(ReviewQueryParams params) throws Exception {
