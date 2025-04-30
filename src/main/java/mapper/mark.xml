@@ -7,10 +7,10 @@
 		select count(*) > 0 from mark where memberNo=#{memberNo} and productNo=#{productNo}
 	</select>
 
-	<insert id="insertMark" parameterType="Mark" useGeneratedKeys="true" keyProperty="no">
-		insert into mark (no,productNo,memberNo) values
-		(#{no},#{productNo},#{memberNo})
-	</insert>
+	<!-- 찜 등록 -->
+    <insert id="insertMark" parameterType="Mark">
+        INSERT INTO mark (productNo, memberNo) VALUES (#{productNo}, #{memberNo})
+    </insert>
 	
 	<delete id="deleteMark" parameterType="Mark">
 		delete from mark where memberNo=#{memberNo} and productNo=#{productNo}
@@ -38,6 +38,8 @@
         SELECT COUNT(*) FROM mark WHERE memberNo = #{memberNo}
     </select>
 
-	
+	<select id="countMarkProduct" parameterType="int" resultType="int">
+		select count(*) from mark where productNo=#{productNo}
+	</select>
 
 </mapper>

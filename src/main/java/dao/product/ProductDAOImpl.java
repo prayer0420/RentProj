@@ -99,4 +99,13 @@ public class ProductDAOImpl implements ProductDAO {
 	    map.put("limit", limit);
 	    return sqlSession.selectList("mapper.product.selectNearbyProducts", map);
 	}
+	@Override
+	public void incrementViewCount(int no) {
+		sqlSession.update("mapper.product.incrementViewCount",no);
+		sqlSession.commit();
+	}
+	@Override
+	public int selectViewCount(int no) throws Exception {
+		return sqlSession.selectOne("mapper.product.selectViewCount", no);
+	}
 }

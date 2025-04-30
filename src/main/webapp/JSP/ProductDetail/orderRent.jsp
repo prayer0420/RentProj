@@ -16,6 +16,9 @@
 <input type="hidden" name="orderType" value="${orderType}">
 	<input type="hidden" name="startDate" value="${startDate}">
 	<input type="hidden" name="endDate" value="${endDate}">
+	<input type="hidden" name="mStartDate" value="${mStartDate}">
+	<input type="hidden" name="mEndDate" value="${mEndDate}">
+	
 	<!-- 주문/결제 페이지 -->
 	<div class="order-container">
 		<h2 class="order-title">주문/결제</h2>
@@ -143,7 +146,11 @@
 	        		  encodeURIComponent(document.getElementById('deliveryAddressInput').value)+ "&orderType=" +
 	        		  encodeURIComponent(document.querySelector('input[name="orderType"]').value)+
 	        		  "&startDate=" + encodeURIComponent(startDate) +
-	        		  "&endDate=" + encodeURIComponent(endDate),
+	        		  "&endDate=" + encodeURIComponent(endDate)
+	        		  + "&mStartDate=" +
+	        		  encodeURIComponent(document.querySelector('input[name="mStartDate"]').value)
+	        		  + "&mEndDate=" +
+	        		  encodeURIComponent(document.querySelector('input[name="mEndDate"]').value),
 	          failUrl: window.location.origin + "/fail", // 결제 요청이 실패하면 리다이렉트되는 URL
 	          customerEmail: "",
 	          customerName: memberName,

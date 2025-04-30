@@ -61,12 +61,13 @@ public class PaymentConfirm extends HttpServlet {
 		Integer price = Integer.parseInt(amount);
 		String deliveryAddr = (String) request.getAttribute("deliveryAddr");
 		String orderType = (String)request.getAttribute("orderType");
+	
 		Date today = new Date(System.currentTimeMillis());
 		Date startDate = today;
 		Date endDate = today;
 
 		try {
-		    String start = (String) session.getAttribute("startDate");
+		    String start = (String) request.getAttribute("mStartDate");
 		    if (start != null && start.matches("\\d{4}-\\d{2}-\\d{2}")) {
 		        startDate = Date.valueOf(start);
 		    }
@@ -75,7 +76,7 @@ public class PaymentConfirm extends HttpServlet {
 		}
 
 		try {
-		    String end = (String) session.getAttribute("endDate");
+		    String end = (String) request.getAttribute("mEndDate");
 		    if (end != null && end.matches("\\d{4}-\\d{2}-\\d{2}")) {
 		        endDate = Date.valueOf(end);
 		    }
@@ -83,6 +84,8 @@ public class PaymentConfirm extends HttpServlet {
 		    // 무시: 오늘 날짜 유지
 		}
 		
+		System.out.println(startDate);
+		System.out.println(endDate);
 		
 //		System.out.println("결제 끝 startDate = " + start);
 //		System.out.println("결제 끝 endDate = " + end);
