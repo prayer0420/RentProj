@@ -35,6 +35,10 @@ public class ReviewDAOImpl implements ReviewDAO {
         session.commit();
     }
 
+<<<<<<< HEAD
+=======
+   
+>>>>>>> dev_lar
 
     @Override
     public int getReviewCount(ReviewQueryParams params) throws Exception {

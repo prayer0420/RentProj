@@ -1,6 +1,6 @@
 @charset "UTF-8";
 
-	/* 송장입력 모달 전체 배경 */
+	/* 모달 전체 배경 */
 	.modal {
 	  display: none; /* 기본은 숨김 */
 	  position: fixed;
@@ -38,3 +38,8 @@
 	.close:hover {
 	  color: black;
 	}
+	
+	.confirmed-label {
+	  color: green;
+	  font-weight: bold;
+}
