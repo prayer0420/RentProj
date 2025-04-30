@@ -62,6 +62,8 @@ public class ProductRentOrder extends HttpServlet {
 			request.setAttribute("orderType", orderType);
 			request.setAttribute("startDate", productStartDate);
 			request.setAttribute("endDate", productEndDate);
+			request.setAttribute("mStartDate", startDate);
+			request.setAttribute("mEndDate", endDate);
 			request.getRequestDispatcher("/JSP/ProductDetail/orderRent.jsp").forward(request, response);
 		} catch (Exception e) {
 			e.printStackTrace();

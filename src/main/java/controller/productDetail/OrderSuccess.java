@@ -39,6 +39,8 @@ public class OrderSuccess extends HttpServlet {
 	    String orderType = (String)request.getParameter("orderType");
 	    String startDate = request.getParameter("startDate");
 	    String endDate = request.getParameter("endDate");
+	    String mStartDate = request.getParameter("mStartDate");
+	    String mEndDate = request.getParameter("mEndDate");
 
 	    System.out.println("✅ /success 서블릿에서 받은 startDate = " + startDate);
 	    System.out.println("✅ /success 서블릿에서 받은 endDate = " + endDate);
@@ -65,6 +67,8 @@ public class OrderSuccess extends HttpServlet {
 	    request.setAttribute("orderType",orderType);
 //	    request.setAttribute("startDate",startDate);
 //	    request.setAttribute("endDate",endDate);
+	    request.setAttribute("mStartDate", mStartDate);
+	    request.setAttribute("mEndDate", mEndDate);
 	    
 	    //confirm서블릿으로 넘기기
 		request.getRequestDispatcher("/confirm").forward(request, response);

@@ -153,21 +153,22 @@
 						<div>👁️</div>
 					</div>
 					<div class="btn-box">
-						<c:if test="${memberNo != null}">
-						<button
-						  class="btn btn-message"
-						  onclick="openMessageModal(this)"
-						  data-receiver-no="${product.memberNo}"
-						  data-product-no="${product.no}"
-						  data-receiver-name="${product.nickname}"
-						  data-product-title="${product.title}"
-						>쪽지보내기
-						</button>
-						</c:if>
-							<c:choose>
-								<c:when test="${product.tradeType=='판매'}">
+						<c:choose>
+							<c:when test="${product.memberNo != memberNo}">
+								<button class="btn btn-message" onclick="openMessageModal(this)"
+									data-receiver-no="${product.memberNo}"
+									data-product-no="${product.no}"
+									data-receiver-name="${product.nickname}"
+									data-product-title="${product.title}">쪽지보내기</button>
+							</c:when>
+							<c:otherwise></c:otherwise>
+						</c:choose>
+						<c:choose>
+							<c:when test="${product.memberNo != memberNo && product.tradeType=='판매'}">
 									<c:if test="${not checkOrder}">
-										<form action="${pageContext.request.contextPath}/productSellOrder" method="get">
+										<form
+											action="${pageContext.request.contextPath}/productSellOrder"
+											method="get">
 											<input type="hidden" name="productNo" value="${product.no}" />
 											<input type="hidden" name="tradeType"
 												value="${product.tradeType}" />
@@ -175,7 +176,7 @@
 										</form>
 									</c:if>
 								</c:when>
-								<c:when test="${product.tradeType=='대여'}">
+								<c:when test="${product.memberNo != memberNo && product.tradeType=='대여'}">
 									<!-- 항상 표시 -->
 									<button class="btn btn-rent" onclick="openCalendar()">대여하기</button>
 
@@ -185,16 +186,17 @@
 										<jsp:param name="productEnd" value="${product.endDate}" />
 									</jsp:include>
 								</c:when>
-								<c:when test="${product.tradeType=='판매/대여'}">
+								<c:when test="${product.memberNo != memberNo && product.tradeType=='판매/대여'}">
 									<c:if test="${not checkOrder}">
-										<form action="${pageContext.request.contextPath}/productSellOrder" method="get">
+										<form
+											action="${pageContext.request.contextPath}/productSellOrder"
+											method="get">
 											<input type="hidden" name="productNo" value="${product.no}" />
 											<input type="hidden" name="tradeType"
 												value="${product.tradeType}" />
 											<button class="btn btn-sell">구매하기</button>
 										</form>
 									</c:if>
-
 									<!-- 대여 버튼은 항상 표시 -->
 									<button class="btn btn-rent" onclick="openCalendar()">대여하기</button>
 									<jsp:include page="calendarModal.jsp">
@@ -203,7 +205,7 @@
 										<jsp:param name="productEnd" value="${product.endDate}" />
 									</jsp:include>
 								</c:when>
-							</c:choose>
+						</c:choose>
 					</div>
 				</div>
 			</div>
@@ -294,155 +296,70 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
+//페이지 탭 처리
+document.querySelectorAll('.tab-item').forEach(item => {
+  item.addEventListener('click', () => {
+    document.querySelectorAll('.tab-item').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.tab-pane').forEach(el => el.classList.remove('show'));
+    item.classList.add('active');
+    document.getElementById(item.dataset.tab).classList.add('show');
+  });
+});
 
-    const tabItems = document.querySelectorAll('.tab-item');
-    const tabPanes = document.querySelectorAll('.tab-pane');
-    
-    tabItems.forEach(item => {
-      item.addEventListener('click', () => {
-        tabItems.forEach(el => el.classList.remove('active'));
-        tabPanes.forEach(el => el.classList.remove('show'));
-        item.classList.add('active');
-        document.getElementById(item.dataset.tab).classList.add('show');
-      });
-    });
+// 리뷰 toggle 버튼
+const toggleBtn = document.getElementById('review-toggle-btn');
+const reviewForm = document.getElementById('review-form');
+if (toggleBtn) {
+  toggleBtn.addEventListener('click', () => {
+    reviewForm.style.display = (reviewForm.style.display === 'none') ? 'block' : 'none';
+  });
+}
 
-    const toggleBtn = document.getElementById('review-toggle-btn');
-    const reviewForm = document.getElementById('review-form');
-    if (toggleBtn) {
-      toggleBtn.addEventListener('click', () => {
-        reviewForm.style.display = reviewForm.style.display === 'none' ? 'block' : 'none';
-      });
+// 쪽지 보내기
+function openMessageModal(btn) {
+  const modal = document.getElementById('messageModal');
+  document.getElementById('modalReceiverNo').value = btn.dataset.receiverNo;
+  document.getElementById('modalProductNo').value = btn.dataset.productNo;
+  document.getElementById('modalReceiverName').textContent = btn.dataset.receiverName;
+  document.getElementById('modalProductTitle').textContent = btn.dataset.productTitle;
+
+  modal.style.display = 'flex';
+  setTimeout(() => modal.classList.add('active'), 10);
+}
+
+function closeMessageModal() {
+  const modal = document.getElementById('messageModal');
+  modal.classList.remove('active');
+  setTimeout(() => modal.style.display = 'none', 400);
+}
+
+// 쪽지 전송
+$('#sendMessageBtn').click(function (e) {
+  e.preventDefault();
+  const formData = {
+    receiverNo: $("input[name='receiverNo']").val(),
+    productNo: $("input[name='productNo']").val(),
+    noteContent: $("#noteContent").val()
+  };
+
+  $.ajax({
+    type: "POST",
+    url: contextPath + "/noteSend",
+    data: formData,
+    success: function () {
+      alert("쪽지가 성공적으로 보내졌습니다!");
+      closeMessageModal();
+      $("#messageForm")[0].reset();
+    },
+    error: function (xhr) {
+      alert("쪽지 보내기 실패ㅠㅠ 다시 시도해주세요!");
+      console.error(xhr.responseText);
     }
- // 쪽지보내기 모달
-    function openMessageModal(btn) {
-      const modal = document.getElementById('messageModal');
-      
-      // 버튼에서 데이터 읽기
-      const receiverNo = btn.getAttribute('data-receiver-no');
-      const productNo = btn.getAttribute('data-product-no');
-      const receiverName = btn.getAttribute('data-receiver-name');
-      const productTitle = btn.getAttribute('data-product-title');
-      
-      // 모달에 값 설정
-      document.getElementById('modalReceiverNo').value = receiverNo;
-      document.getElementById('modalProductNo').value = productNo;
-      document.getElementById('modalReceiverName').textContent = receiverName;
-      document.getElementById('modalProductTitle').textContent = productTitle;
+  });
+});
 
-      // 모달을 보여줌
-      modal.style.display = 'flex';
-
-      setTimeout(() => {
-        modal.classList.add('active');
-      }, 10); // 모달의 애니메이션을 10ms 후에 추가
-    }
-
-    function closeMessageModal() {
-      const modal = document.getElementById('messageModal');
-      modal.classList.remove('active');
-      
-      // 애니메이션 후, display:none 처리
-      setTimeout(() => {
-        modal.style.display = 'none';
-      }, 400); // transition 시간에 맞춰서
-    }
-
-    // 쪽지 보내기 처리
-    $('#sendMessageBtn').click(function (e) {
-      e.preventDefault();
-
-      const formData = {
-        receiverNo: $("input[name='receiverNo']").val(),
-        productNo: $("input[name='productNo']").val(),
-        noteContent: $("#noteContent").val()
-      };
-
-      $.ajax({
-        type: "POST",
-        url: contextPath + "/noteSend",  // 서버로 전송할 URL
-        data: formData,
-        success: function(response) {
-          alert("쪽지가 성공적으로 보내졌습니다!");
-          closeMessageModal();
-          $("#messageForm")[0].reset();  // 폼 초기화
-        },
-        error: function(xhr, status, error) {
-          alert("쪽지 보내기 실패ㅠㅠ 다시 시도해주세요!");
-          console.error(xhr.responseText);
-        }
-      });
-    });
-
-    // 신고하기 모달 열기
-    function openReportModal() {
-      if ('${memberNo}' === '' || '${memberNo}' === 'null') {
-        alert('로그인이 필요합니다.');
-        return;
-      }
-      const modal = document.getElementById('reportModal');
-      modal.style.display = 'flex';
-      
-      // 약간의 delay 후 활성화
-      setTimeout(() => {
-        modal.classList.add('active');
-      }, 10); // transition을 제대로 적용하기 위해 10ms 딜레이
-    }
-
-    // 신고하기 모달 닫기
-    function closeReportModal() {
-      const modal = document.getElementById('reportModal');
-      
-      modal.classList.remove('active');
-      
-      // 애니메이션 후, display:none 처리
-      setTimeout(() => {
-        modal.style.display = 'none';
-      }, 400); // transition 시간과 동일 (0.4초)
-    }
-
-    // 신고 처리
-    function submitReport() {
-      const type = document.getElementById('reportReason').value;
-      const contents = document.getElementById('reportDetail').value;
-      const title = document.getElementById('reportTitle').value;
-
-      if (!type || !contents || !title) {
-        alert('⚠️ 신고 사유, 제목, 내용을 모두 입력해 주세요!');
-        return;
-      }
-
-      $.ajax({
-        type: 'POST',
-        url: contextPath + '/report', // 신고 처리할 URL
-        data: {
-          type: type,
-          contents: contents,
-          title: title,
-          productNo: '${product.no}' // 상품 번호 추가
-        },
-        success: function(response) {
-          alert('✅ 신고가 정상적으로 접수되었습니다!');
-          closeReportModal();  // 모달 닫기
-          resetReportForm();   // 폼 초기화
-        },
-        error: function(xhr, status, error) {
-          alert('❌ 신고 처리 실패! 다시 시도해주세요.');
-          console.error(xhr.responseText);
-        }
-      });
-    }
-
-    // 신고 폼 초기화 함수
-    function resetReportForm() {
-      document.getElementById('reportReason').value = '';
-      document.getElementById('reportDetail').value = '';
-      document.getElementById('reportTitle').value = '';
-    }
-	
-    
-    //찜하기
-    function toggleMark(btn, productNo) {
+// 찜하기
+function toggleMark(btn, productNo) {
   const memberNo = '${memberNo}';
   if (!memberNo || memberNo === 'null') {
     alert('로그인이 필요합니다.');
@@ -461,130 +378,95 @@
       console.error(xhr.responseText);
     }
   });
-	}
-	 // 리뷰 작성/수정 폼 제출
-	 $('#review-form').on('submit', function (e) {
-	     e.preventDefault(); // 기본 제출 막기
+}
 
-	     const formData = {
-	         content: $('textarea[name="content"]').val(),
-	         score: $('select[name="score"]').val(),
-	         productNo: '${product.no}'
-	     };
+// 신고 모달
+function openReportModal() {
+  if ('${memberNo}' === '' || '${memberNo}' === 'null') {
+    alert('로그인이 필요합니다.');
+    return;
+  }
+  const modal = document.getElementById('reportModal');
+  modal.style.display = 'flex';
+  setTimeout(() => modal.classList.add('active'), 10);
+}
 
-	     // 수정 모드일 경우 no도 추가
-	     if (isUpdateMode && updateReviewNo) {
-	         formData.no = updateReviewNo;
-	     }
+function closeReportModal() {
+  const modal = document.getElementById('reportModal');
+  modal.classList.remove('active');
+  setTimeout(() => modal.style.display = 'none', 400);
+}
 
-	     $.ajax({
-	         type: 'POST',
-	         url: isUpdateMode ? '${pageContext.request.contextPath}/reviewUpdate' : '${pageContext.request.contextPath}/reviewWrite',
-	         data: formData,
-	         success: function () {
-	             alert(isUpdateMode ? '리뷰가 수정되었습니다!' : '리뷰가 등록되었습니다!');
-	             $('#review-form')[0].reset();
-	             $('#review-form').hide();
-	             isUpdateMode = false; // 수정모드 해제
-	             updateReviewNo = null; // 수정번호 해제
-	             $("#submitBtn").text("등록"); // 버튼 텍스트 다시 원래대로
-	             $('#review-list-container').load('${pageContext.request.contextPath}/reviewList?productNo=${product.no}');
-	         },
-	         error: function () {
-	             alert(isUpdateMode ? '리뷰 수정 실패' : '리뷰 등록 실패');
-	         }
-	     });
-	 });
-	 */
-	 
-	 $(document).ready(function () {
-		  $("#sendMessageBtn").click(function (e) {
-		    e.preventDefault();
+function submitReport() {
+  const type = document.getElementById('reportReason').value;
+  const contents = document.getElementById('reportDetail').value;
+  const title = document.getElementById('reportTitle').value;
 
-		    const formData = {
-		      receiverNo: $("input[name='receiverNo']").val(),
-		      productNo: $("input[name='productNo']").val(),
-		      noteContent: $("#noteContent").val()
-		    };
+  if (!type || !contents || !title) {
+    alert('⚠️ 신고 사유, 제목, 내용을 모두 입력해 주세요!');
+    return;
+  }
 
-		    $.ajax({
-		      type: "POST",
-		      url: contextPath + "/noteSend",
-		      data: formData,
-		      success: function (response) {
-		        alert("쪽지가 성공적으로 보내졌습니다!");
-		        closeMessageModal();
-		        $("#messageForm")[0].reset();
-		      },
-		      error: function (xhr, status, error) {
-		        alert("쪽지 보내기 실패ㅠㅠ 다시 시도해주세요!");
-		        console.error(xhr.responseText);
-		      }
-	 
-	// 모달 열기
-	 function openReportModal() {
-		 if ('${memberNo}' === '' || '${memberNo}' === 'null') {
-		        alert('로그인이 필요합니다.');
-		        return;
-		    }
-	   const modal = document.getElementById('reportModal');
-	   modal.style.display = 'flex';
-	   
-	   // 약간의 delay 후 활성화
-	   setTimeout(() => {
-	     modal.classList.add('active');
-	   }, 10); // 10ms 딜레이를 줘야 transition이 먹힘
-	 }
+  $.ajax({
+    type: 'POST',
+    url: contextPath + '/report',
+    data: {
+      type: type,
+      contents: contents,
+      title: title,
+      productNo: '${product.no}'
+    },
+    success: function () {
+      alert('✅ 신고가 정상적으로 접수되었습니다!');
+      closeReportModal();
+      resetReportForm();
+    },
+    error: function (xhr) {
+      alert('❌ 신고 처리 실패! 다시 시도해주세요.');
+      console.error(xhr.responseText);
+    }
+  });
+}
 
-	 // 모달 닫기
-	 function closeReportModal() {
-	   const modal = document.getElementById('reportModal');
-	   
-	   modal.classList.remove('active');
-	   
-	   // 애니메이션 끝나고 display:none 처리
-	   setTimeout(() => {
-	     modal.style.display = 'none';
-	   }, 400); // transition 시간과 동일 (0.4초)
-	 }
+function resetReportForm() {
+  document.getElementById('reportReason').value = '';
+  document.getElementById('reportDetail').value = '';
+  document.getElementById('reportTitle').value = '';
+}
 
-		function submitReport() {
-		    const type = document.getElementById('reportReason').value;
-		    const contents = document.getElementById('reportDetail').value;
-		    const title = document.getElementById('reportTitle').value;
+// 리뷰 등록/수정
+let isUpdateMode = false;
+let updateReviewNo = null;
 
-		    if (!type || !contents || !title) {
-		        alert('⚠️ 신고 사유, 제목, 내용을 모두 입력해 주세요!');
-		        return;
-		    }
+$('#review-form').on('submit', function (e) {
+  e.preventDefault();
+  const formData = {
+    content: $('textarea[name="content"]').val(),
+    score: $('select[name="score"]').val(),
+    productNo: '${product.no}'
+  };
 
-		    // 실제 서버로 비동기 전송하는 부분
-		    $.ajax({
-		        type: 'POST',
-		        url: contextPath + '/report', // 너가 만들고 싶은 신고처리 url
-		        data: {
-		        	type: type,
-		        	contents: contents,
-		        	title:title,
-		            productNo: '${product.no}' // 상품 번호 함께 보내야겠지?
-		        },
-		        success: function(response) {
-		            alert('✅ 신고가 정상적으로 접수되었습니다!');
-		            closeReportModal(); // 모달 닫기
-		            resetReportForm(); // 폼 초기화
-		        },
-		        error: function(xhr, status, error) {
-		            alert('❌ 신고 처리 실패! 다시 시도해주세요.');
-		            console.error(xhr.responseText);
-		        }
-		    });
-		}
+  if (isUpdateMode && updateReviewNo) {
+    formData.no = updateReviewNo;
+  }
 
-		// 신고 폼 초기화 함수
-		function resetReportForm() {
-		    document.getElementById('reportReason').value = '';
-		    document.getElementById('reportDetail').value = '';
-		}
-		
-	 
+  $.ajax({
+    type: 'POST',
+    url: isUpdateMode ? '${pageContext.request.contextPath}/reviewUpdate' : '${pageContext.request.contextPath}/reviewWrite',
+    data: formData,
+    success: function () {
+      alert(isUpdateMode ? '리뷰가 수정되었습니다!' : '리뷰가 등록되었습니다!');
+      $('#review-form')[0].reset();
+      $('#review-form').hide();
+      isUpdateMode = false;
+      updateReviewNo = null;
+      $("#submitBtn").text("등록");
+      $('#review-list-container').load('${pageContext.request.contextPath}/reviewList?productNo=${product.no}');
+    },
+    error: function () {
+      alert(isUpdateMode ? '리뷰 수정 실패' : '리뷰 등록 실패');
+    }
+  });
+});
+
 </script>

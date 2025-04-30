@@ -113,44 +113,34 @@
 
 	        // ✅ 선택 범위 유효성 검사
 	        selectAllow: function(selectInfo) {
-	          const start = selectInfo.start;
-	          const end = selectInfo.end;
-
-	          const validStart = new Date(productStart);
-	          const validEnd = new Date(productEnd);
-	          validEnd.setDate(validEnd.getDate() + 1); // exclusive
-
-	          return start >= validStart && end <= validEnd;
-	        },
+			  console.log("🔍 selectAllow called", selectInfo.startStr, selectInfo.endStr);
+			
+			  const start = selectInfo.start;
+			  const end = selectInfo.end;
+			
+			  const validStart = new Date('${param.productStart}');
+			  const validEnd = new Date('${param.productEnd}');
+			  validEnd.setDate(validEnd.getDate() + 1); // inclusive
+			
+			  const allow = start >= validStart && end <= validEnd;
+			  console.log("→ allow?", allow);
+			  return allow;
+			},
 	        
 	     // ✅ 선택 시 로직
 
-	        select: function(info) {
-			  const start = new Date(info.startStr);
-			  const end = new Date(info.endStr); // exclusive
-			
-			  // end를 실제 포함 날짜로 바꾸기
+				        select: function(info) {
+			  const start = info.startStr;
+			  const end = new Date(info.endStr);
 			  end.setDate(end.getDate() - 1);
-			  
-			  const startStr = start.toISOString().split('T')[0];
 			  const endStr = end.toISOString().split('T')[0];
 			
-			  // 겹치는 날짜 체크
-			  const isOverlapping = reservedRanges.some(r =>
-			    !(endStr < r.start || startStr > r.end)
-			  );
+			  console.log("선택됨:", start, "~", endStr);
 			
-			  if (isOverlapping) {
-			    alert('❌ 이미 예약된 날짜가 포함되어 있습니다.');
-			    selectedStart = null;
-			    selectedEnd = null;
-			    return;
-			  }
-			
-			  selectedStart = startStr;
+			  selectedStart = start;
 			  selectedEnd = endStr;
 			
-			  console.log("✅ 선택된 날짜:", selectedStart, "~", selectedEnd);
+			  alert(`✅ ${selectedStart} ~ ${selectedEnd} 예약하시겠습니까?`);
 			},
 
 	        validRange: {
