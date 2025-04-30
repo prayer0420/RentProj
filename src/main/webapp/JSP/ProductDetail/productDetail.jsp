@@ -66,7 +66,7 @@
 					</div>
 					<div class="product-details">
 						<div class="top-icons">
-							<button class="btn-share">🔗</button>
+							<button class="btn-share" onclick="copyToClipboard()">🔗</button>
 							<button class="btn-wish" id="wishBtn" data-productno="${product.no}">
 								<c:choose>
 									<c:when test="${isMark}">♥</c:when>
@@ -532,4 +532,15 @@
 	    }
 	  });
 	});
+	
+	function copyToClipboard() {
+		  const dummy = document.createElement("input");
+		  const text = window.location.href; // 현재 페이지 URL
+		  document.body.appendChild(dummy);
+		  dummy.value = text;
+		  dummy.select();
+		  document.execCommand("copy");
+		  document.body.removeChild(dummy);
+		  alert("링크가 복사되었습니다!");
+		}
 	</script>
