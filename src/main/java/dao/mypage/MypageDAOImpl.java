@@ -166,4 +166,13 @@ public class MypageDAOImpl implements MypageDAO {
             return false;
         }
     }
+
+	@Override
+	public Integer hideProduct(Integer productNo) {
+        try (SqlSession session = MybatisSqlSessionFactory.getSqlSessionFactory().openSession()) {
+            Integer result = session.update("mapper.mypage.hideMyProduct", productNo);
+            session.commit();
+            return result;
+        }
+	}
 } 

@@ -149,10 +149,16 @@
 		 Update Product set deleted='Y' WHERE no = #{no}
 	</update>
 	
-	
+	<!-- '구매확정' 버튼 누르면 '거래완료'로 상태 업데이트 -->
 	<update id="updateOrderStatusToCompleted" parameterType="Integer">
 		update `order` set orderStatus='거래완료' where orderNo=#{orderNo}
 	
+	</update>
+	
+	
+	<!-- 나의 판매상품 리스트(mySell)에서 상품 숨기기 -->
+	<update id="hideMyProduct" parameterType="Integer">
+		 Update Product set isHide=0 WHERE no = #{no}
 	</update>
 	
 </mapper>

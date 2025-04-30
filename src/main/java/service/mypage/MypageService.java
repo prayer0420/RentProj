@@ -39,4 +39,7 @@ public interface MypageService {
 	// 내가 구매한 상품의 '구매확정' 버튼 AJAX
 	boolean confirmOrder(Integer orderNo) throws Exception;
 
+	// 나의 판매상품 리스트(mySell)에서 게시중인 상품 숨기기
+	boolean hideProduct(int productNo) throws Exception;
+
 }

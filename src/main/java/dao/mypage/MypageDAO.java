@@ -47,11 +47,14 @@ public interface MypageDAO {
 	// MyLendDetail 페이지에서 대여이력 중 한 행 선택시 orderNo로 해당 행의 대여상세내역 불러오기(MyLendHistoryDetail)
 	Map<String, Object> selectLendDetailByOrderNo(String id, Integer orderNo) throws Exception;
 	
-	// 
+	// 상품삭제 버튼 누르면 삭제(삭제 상태로 업데이트)
 	Integer deleteProduct(Integer productNo);
 	
 	// 구매확정 버튼 누르면 orderStatus 업데이트
 	boolean updateOrderStatusToCompleted(Integer orderNo);
+	
+	// 상품 숨기기 버튼 누르면 숨기기
+	Integer hideProduct(Integer productNo);
 	
 	
 	

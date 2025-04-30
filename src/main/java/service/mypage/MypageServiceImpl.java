@@ -171,5 +171,11 @@ public class MypageServiceImpl implements MypageService {
 		return mypageDao.updateOrderStatusToCompleted(orderNo);
 	}
 
+	@Override
+	public boolean hideProduct(int productNo) throws Exception {
+		
+		return mypageDao.hideProduct(productNo) > 0;
+	}
+
 
 }

@@ -138,6 +138,9 @@
           <!-- 상품삭제 모달 -->
           <jsp:include page="/JSP/MyPage/deleteProductModal.jsp" />
           
+          <!-- 상품숨기기 모달 -->
+          <jsp:include page="/JSP/MyPage/hideProduct.jsp" />
+          
    <script>       
         $(document).ready(function() {
 	    let selectedProductNo = null;  // 선택한 상품번호 저장용
