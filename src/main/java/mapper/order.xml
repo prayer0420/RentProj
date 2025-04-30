@@ -4,8 +4,8 @@
   
   <mapper namespace="mapper.order">
   <insert id="insertOrder" parameterType="order" useGeneratedKeys="true" keyProperty="orderNo"> 
-	  insert into `order` (orderNo,memberNo,price,productNo,deliveryAddr,orderId,orderType)
-	  values(#{orderNo},#{memberNo},#{price},#{productNo},#{deliveryAddr},#{orderId},#{orderType})
+	  insert into `order` (orderNo,memberNo,price,productNo,deliveryAddr,orderId,orderType,orderStatus)
+	  values(#{orderNo},#{memberNo},#{price},#{productNo},#{deliveryAddr},#{orderId},#{orderType},'결제완료')
   </insert>
   
   
