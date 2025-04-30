@@ -10,8 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import dto.Mark;
-import dto.Member;
-import dto.Product;
 import service.mark.MarkService;
 import service.mark.MarkServiceImpl;
 
@@ -35,29 +33,35 @@ public class MarkProduct extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("utf-8");
-		
-		HttpSession session = request.getSession();
-		Product product = (Product)request.getAttribute("product");
-		Integer memberNo = (Integer)request.getSession().getAttribute("no");
-		
-		if(memberNo == null) {
-			response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-			return;
-		}
-		Integer productNo = Integer.parseInt(request.getParameter("productNo"));
-		
-		MarkService service = new MarkServiceImpl();
-		boolean isMark;
-		try {
-			isMark = service.existsMark(memberNo, productNo);
-			// 응답은 JSON으로 보내기
-			response.setContentType("application/json");
-			response.getWriter().write("{\"isMark\":" + isMark + "}");
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-		
-	}
+		  request.setCharacterEncoding("utf-8");
+		  response.setContentType("application/json; charset=UTF-8");
+	        
+	        HttpSession session = request.getSession();
+	        Integer memberNo = (Integer) session.getAttribute("no");
+	        int productNo = Integer.parseInt(request.getParameter("productNo"));
 
-}
+	        if (memberNo == null) {
+	            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+	            return;
+	        }
+
+	        MarkService service = new MarkServiceImpl();
+	        Mark mark = new Mark();
+	        mark.setMemberNo(memberNo);
+	        mark.setProductNo(productNo);
+
+	        try {
+	        	boolean isMark = service.existsMark(memberNo, productNo);
+	            if (isMark) {
+	                service.deleteMark(mark);
+	            } else {
+	                service.insertMark(mark);
+	            }
+	            int count = service.countMarkProduct(productNo);
+	            response.getWriter().write("{\"isMark\":" + !isMark + ", \"count\":" + count + "}");
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	            response.getWriter().write("{\"error\":\"서버 오류\"}");
+	        }
+	    }
+	}

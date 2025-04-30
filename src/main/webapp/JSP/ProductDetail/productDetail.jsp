@@ -6,7 +6,10 @@
 <head>
 <meta charset="UTF-8" />
 <title>주문결제</title>
-
+<script>
+  const contextPath = "${pageContext.request.contextPath}";
+  const memberNo = "${sessionScope.no}";
+</script>
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/CSS/productDetail/detail.css" />
 <link rel="stylesheet"
@@ -64,7 +67,7 @@
 				<div class="product-details">
 					<div class="top-icons">
 						<button class="btn-share">🔗</button>
-						<button class="btn-wish" onclick="toggleMark(this,${product.no})">
+						<button class="btn-wish" id="wishBtn" data-productno="${product.no}">
 							<c:choose>
 								<c:when test="${isMark}">♥</c:when>
 								<c:otherwise>♡</c:otherwise>
@@ -149,7 +152,7 @@
 					</div>
 
 					<div class="likes-views">
-						<div>❤️</div>
+						<div id="markCount">❤️ <span id="markCountNumber">${countMarkProduct}</span></div>
 						<div>👁️</div>
 					</div>
 					<div class="btn-box">
@@ -294,26 +297,65 @@
 
 
 
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-//페이지 탭 처리
-document.querySelectorAll('.tab-item').forEach(item => {
-  item.addEventListener('click', () => {
-    document.querySelectorAll('.tab-item').forEach(el => el.classList.remove('active'));
-    document.querySelectorAll('.tab-pane').forEach(el => el.classList.remove('show'));
-    item.classList.add('active');
-    document.getElementById(item.dataset.tab).classList.add('show');
-  });
-});
+function toggleMark(btn, productNo) {
+  if (!memberNo || memberNo === "null") {
+    alert("로그인이 필요합니다.");
+    return;
+  }
 
-// 리뷰 toggle 버튼
-const toggleBtn = document.getElementById('review-toggle-btn');
-const reviewForm = document.getElementById('review-form');
-if (toggleBtn) {
-  toggleBtn.addEventListener('click', () => {
-    reviewForm.style.display = (reviewForm.style.display === 'none') ? 'block' : 'none';
+  $.ajax({
+    url: contextPath + "/markProduct",
+    type: "POST",
+    data: { productNo: productNo },
+    dataType: "json", // ✅ 꼭 넣어줘
+    success: function (res) {
+    	  console.log("AJAX 응답 확인:", res); // 🔍 추가!
+    	  btn.innerText = res.isMark ? "♥" : "♡";
+
+    	  const markCountEl = document.getElementById("markCountNumber");
+    	  if (markCountEl && res.count !== undefined) {
+    	    markCountEl.textContent = res.count;
+    	  }
+    	},
+    error: function (xhr) {
+      alert("찜 처리 중 오류 발생");
+      console.error(xhr.responseText);
+    },
   });
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+  // 탭 처리
+  document.querySelectorAll('.tab-item').forEach(item => {
+    item.addEventListener('click', () => {
+      document.querySelectorAll('.tab-item').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.tab-pane').forEach(el => el.classList.remove('show'));
+      item.classList.add('active');
+      document.getElementById(item.dataset.tab).classList.add('show');
+    });
+  });
+
+  // 찜 버튼 바인딩
+  const btn = document.getElementById("wishBtn");
+  if (btn) {
+    btn.addEventListener("click", function () {
+      const productNo = btn.dataset.productno;
+      toggleMark(btn, productNo);
+    });
+  }
+
+  // 리뷰 toggle 버튼
+  const toggleBtn = document.getElementById('review-toggle-btn');
+  const reviewForm = document.getElementById('review-form');
+  if (toggleBtn) {
+    toggleBtn.addEventListener('click', () => {
+      reviewForm.style.display = (reviewForm.style.display === 'none') ? 'block' : 'none';
+    });
+  }
+});
 
 // 쪽지 보내기
 function openMessageModal(btn) {
@@ -333,7 +375,6 @@ function closeMessageModal() {
   setTimeout(() => modal.style.display = 'none', 400);
 }
 
-// 쪽지 전송
 $('#sendMessageBtn').click(function (e) {
   e.preventDefault();
   const formData = {
@@ -358,31 +399,9 @@ $('#sendMessageBtn').click(function (e) {
   });
 });
 
-// 찜하기
-function toggleMark(btn, productNo) {
-  const memberNo = '${memberNo}';
-  if (!memberNo || memberNo === 'null') {
-    alert('로그인이 필요합니다.');
-    return;
-  }
-
-  $.ajax({
-    url: contextPath + "/markProduct",
-    type: "POST",
-    data: { productNo: productNo },
-    success: function(res) {
-      btn.innerText = res.isMark ? "♥" : "♡";
-    },
-    error: function(xhr) {
-      alert("찜 요청 실패");
-      console.error(xhr.responseText);
-    }
-  });
-}
-
 // 신고 모달
 function openReportModal() {
-  if ('${memberNo}' === '' || '${memberNo}' === 'null') {
+  if (!memberNo || memberNo === "null") {
     alert('로그인이 필요합니다.');
     return;
   }
@@ -452,7 +471,7 @@ $('#review-form').on('submit', function (e) {
 
   $.ajax({
     type: 'POST',
-    url: isUpdateMode ? '${pageContext.request.contextPath}/reviewUpdate' : '${pageContext.request.contextPath}/reviewWrite',
+    url: isUpdateMode ? contextPath + "/reviewUpdate" : contextPath + "/reviewWrite",
     data: formData,
     success: function () {
       alert(isUpdateMode ? '리뷰가 수정되었습니다!' : '리뷰가 등록되었습니다!');
@@ -461,12 +480,11 @@ $('#review-form').on('submit', function (e) {
       isUpdateMode = false;
       updateReviewNo = null;
       $("#submitBtn").text("등록");
-      $('#review-list-container').load('${pageContext.request.contextPath}/reviewList?productNo=${product.no}');
+      $('#review-list-container').load(contextPath + "/reviewList?productNo=${product.no}");
     },
     error: function () {
       alert(isUpdateMode ? '리뷰 수정 실패' : '리뷰 등록 실패');
     }
   });
 });
-
 </script>

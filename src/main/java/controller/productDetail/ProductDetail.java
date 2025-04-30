@@ -1,15 +1,20 @@
 package controller.productDetail;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+
+import com.google.gson.Gson;
 
 import dto.Product;
+import service.mark.MarkService;
+import service.mark.MarkServiceImpl;
 import service.order.OrderService;
 import service.order.OrderServiceImpl;
 import service.product.ProductService;
@@ -37,12 +42,17 @@ public class ProductDetail extends HttpServlet {
 		ProductService service = new ProductServiceImpl();
 		ReviewService reviewService = new ReviewServiceImpl();
 		OrderService orderService = new OrderServiceImpl();
+		MarkService markService = new MarkServiceImpl();
 		try {
 			Product product = service.selectProductOne(no);
 			double avgScore = reviewService.selectAvgScore(no);
 			boolean hasOrder = orderService.hasMemberOrderProduct(memberNo, no);
 			boolean checkOrder = orderService.checkOrder(no);
 			boolean checkMyReview = reviewService.checkMyReview(no, memberNo);
+			int countMarkProduct = markService.countMarkProduct(no);
+			boolean isMark = markService.existsMark(memberNo, no);
+			
+			
 			
 			request.setAttribute("product", product);
 			request.setAttribute("productNo", no);
@@ -53,6 +63,8 @@ public class ProductDetail extends HttpServlet {
 			request.setAttribute("checkMyReview",checkMyReview);
 			request.setAttribute("startDate", product.getStartDate());
 			request.setAttribute("endDate", product.getEndDate());
+			request.setAttribute("countMarkProduct", countMarkProduct);
+			request.setAttribute("isMark", isMark);
 			System.out.println("product : "+product);	
 			System.out.println("no : "+no);	
 			System.out.println("startDate"+product.getStartDate());

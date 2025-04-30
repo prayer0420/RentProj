@@ -62,6 +62,7 @@ public class MyMarkList extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 
+		
 		try {
 			String[] marklistIds = request.getParameterValues("marklistIds");
 
@@ -73,7 +74,7 @@ public class MyMarkList extends HttpServlet {
 				for (String productNoStr : marklistIds) {
 					int productNo = Integer.parseInt(productNoStr);
 					//삭제 로직
-					markService.deleteMark(memberNo, productNo);
+//					markService.deleteMark(memberNo,productNo);
 				}
 			}
 

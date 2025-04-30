@@ -22,19 +22,13 @@ import utils.PageInfo;
 		}
 	
 		@Override
-		public void insertMark(Integer memberNo,Integer productNo) throws Exception {
-			Mark mark = new Mark();
-			mark.setMemberNo(memberNo);
-			mark.setProductNo(productNo);
+		public void insertMark(Mark mark) throws Exception {
 			session.insert("mapper.mark.insertMark",mark);
 			session.commit();
 		}
 	
 		@Override
-		public void deleteMark(Integer memberNo,Integer productNo) throws Exception {
-			Mark mark = new Mark();
-			mark.setMemberNo(memberNo);
-			mark.setProductNo(productNo);
+		public void deleteMark(Mark mark) throws Exception {
 			session.delete("mapper.mark.deleteMark",mark);
 			session.commit();
 		}
@@ -48,5 +42,10 @@ import utils.PageInfo;
 	    public int selectMarkCount(Integer memberNo) throws Exception {
 	        return session.selectOne("mapper.mark.selectMarkCount", memberNo);
 	    }
+
+		@Override
+		public int countMarkProduct(Integer productNo) throws Exception {
+			return session.selectOne("mapper.mark.countMarkProduct",productNo);
+		}
 	
 	}
