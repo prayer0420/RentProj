@@ -32,16 +32,18 @@ public class DoSettlement extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		SettlementService settlementService = new SettlementServiceImpl();
         
-		try {
-            int settlementNo = Integer.parseInt(request.getParameter("settlementNo"));
+	    try {
+	        String param = request.getParameter("settlementNo");
+	        System.out.println("🔥 [정산요청 수신] settlementNo = " + param);
 
-            boolean success = settlementService.processSettlement(settlementNo);
+	        int settlementNo = Integer.parseInt(param);
+	        boolean success = settlementService.processSettlement(settlementNo);
 
-            response.setContentType("text/plain;charset=UTF-8");
-            response.getWriter().write(String.valueOf(success));
-        } catch (Exception e) {
-            e.printStackTrace();
-            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-        }
-    }
+	        response.setContentType("application/json;charset=UTF-8");
+	        response.getWriter().write("{\"success\": true}");
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+	    }
+	}
 }
