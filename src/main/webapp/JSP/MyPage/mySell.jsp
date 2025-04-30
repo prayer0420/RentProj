@@ -130,7 +130,10 @@
     </div>
 
           <!-- 송장번호입력 모달 -->
-          <jsp:include page="/JSP/MyPage/mypageModal.jsp" />
+          <jsp:include page="/JSP/MyPage/mypageModal.jsp" >
+          	<jsp:param name="redirectUrl" value="/rent/mySellDetail"/>
+		</jsp:include>
+          	
           
           <!-- 상품삭제 모달 -->
           <jsp:include page="/JSP/MyPage/deleteProductModal.jsp" />

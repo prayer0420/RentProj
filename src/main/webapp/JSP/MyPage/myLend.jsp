@@ -129,7 +129,9 @@
 
    
    <!-- 송장번호입력 모달 -->
-   <jsp:include page="/JSP/MyPage/mypageModal.jsp" />
+   <jsp:include page="/JSP/MyPage/mypageModal.jsp" >
+      <jsp:param name="redirectUrl" value="/rent/myLendDetail"/>
+	</jsp:include>
    
    <!-- 상품삭제 모달 -->
    <jsp:include page="/JSP/MyPage/deleteProductModal.jsp" />
@@ -137,6 +139,7 @@
    <!-- 푸터 -->
 	<jsp:include page="/JSP/Header/footer.jsp" />
    
+   <!-- 상품삭제 AJAX -->
     <script>       
         $(document).ready(function() {
 	    let selectedProductNo = null;  // 선택한 상품번호 저장용
