@@ -25,36 +25,40 @@
   <main>
     <div class="breadcrumb">HOME > 정산관리 > 주문정산</div>
 
-<!-- 검색 폼 -->
-<form action="${pageContext.request.contextPath}/settlementList" method="post" class="search-box">
-  <div class="row g-3 align-items-center">
-      <label for="searchFeeStatus">정산 상태:</label>
-    <select name="searchFeeStatus" id="searchFeeStatus">
-      <option value="">전체</option>
-      <option value="PENDING" <c:if test="${param.searchFeeStatus == 'PENDING'}">selected</c:if>>대기</option>
-      <option value="COMPLETE" <c:if test="${param.searchFeeStatus == 'COMPLETE'}">selected</c:if>>완료</option>
-    </select>
-    <div class="col-auto">
-      <label>결제일 시작</label>
-      <input type="date" name="startDate" class="form-control" value="${param.startDate}">
-    </div>
-    <div class="col-auto">
-      <label>결제일 종료</label>
-      <input type="date" name="endDate" class="form-control" value="${param.endDate}">
-    </div>
-    <div class="col-auto">
-      <label>판매/대여 구분</label>
-      <select name="revenueType" class="form-select">
-        <option value="">전체</option>
-        <option value="판매" ${param.revenueType == '판매' ? 'selected' : ''}>판매</option>
-        <option value="대여" ${param.revenueType == '대여' ? 'selected' : ''}>대여</option>
-      </select>
-    </div>
-    <div class="col text-end">
-      <button type="submit" class="btn btn-primary">검색</button>
-    </div>
-  </div>
-</form>
+    <!-- 검색 폼 -->
+    <form action="${pageContext.request.contextPath}/settlementList" method="post" class="search-box">
+      <div class="row g-3 align-items-center">
+        <label for="searchFeeStatus">정산 상태:</label>
+        <select name="searchFeeStatus" id="searchFeeStatus">
+          <option value="">전체</option>
+          <option value="PENDING" <c:if test="${searchMap.searchFeeStatus == 'PENDING'}">selected</c:if>>대기</option>
+          <option value="COMPLETE" <c:if test="${searchMap.searchFeeStatus == 'COMPLETE'}">selected</c:if>>완료</option>
+        </select>
+
+        <div class="col-auto">
+          <label>판매/대여 구분</label>
+          <select name="searchRevenueType" class="form-select">
+            <option value="">전체</option>
+            <option value="판매" <c:if test="${searchMap.searchRevenueType == '판매'}">selected</c:if>>판매</option>
+            <option value="대여" <c:if test="${searchMap.searchRevenueType == '대여'}">selected</c:if>>대여</option>
+          </select>
+        </div>
+
+        <div class="col-auto">
+          <label>정산완료 시작</label>
+          <input type="datetime-local" name="completedStart" class="form-control" value="${searchMap.completedStart}" />
+        </div>
+
+        <div class="col-auto">
+          <label>정산완료 종료</label>
+          <input type="datetime-local" name="completedEnd" class="form-control" value="${searchMap.completedEnd}" />
+        </div>
+
+        <div class="col text-end">
+          <button type="submit" class="btn btn-primary">검색</button>
+        </div>
+      </div>
+    </form>
 
     <div class="section-title">
       <span id="count"></span>
@@ -77,16 +81,18 @@
     <tr>
       <th>정산번호</th>
       <th>주문번호</th>
+      <th>거래구분</th>
       <th>회원번호</th>
       <th>상품번호</th>
       <th>상품명</th>
+      <th>결제일</th>
       <th>물품가</th>
       <th>배송비</th>
       <th>보증금</th>
       <th>수수료율(%)</th>
       <th>수수료금액</th>
       <th>최종정산금액</th>
-      <th>결제일</th>
+      <th>정산완료시간</th>
       <th>정산처리</th>
     </tr>
   </thead>
@@ -97,16 +103,18 @@
           <tr>
             <td>${settle.settlementNo}</td>
             <td>${settle.orderNo}</td>
+            <td>${settle.revenueType}</td>
             <td>${settle.memberNo}</td>
             <td>${settle.productNo}</td>
             <td>${settle.productTitle}</td>
+            <td>${fn:substringBefore(settle.payTime, ' ')}</td>
             <td><fmt:formatNumber value="${settle.price}" type="number" /> 원</td>
             <td><fmt:formatNumber value="${settle.deliveryPrice}" type="number" /> 원</td>
             <td><fmt:formatNumber value="${settle.secPrice}" type="number" /> 원</td>
-            <td><fmt:formatNumber value="${settle.gradeRate * 100}" maxFractionDigits="2" /> %</td>
+            <td><fmt:formatNumber value="${settle.gradeRate}" maxFractionDigits="2" /> %</td>
             <td><fmt:formatNumber value="${settle.feeAmount}" type="number" /> 원</td>
             <td><fmt:formatNumber value="${settle.finalSettleAmount}" type="number" /> 원</td>
-            <td>${settle.payTime}</td>
+            <td><fmt:formatDate value="${settle.settlementCompletedAt}" pattern="yyyy-MM-dd HH:mm" /></td>
           
           <td>
             <c:choose>
@@ -131,7 +139,7 @@
       </c:when>
       <c:otherwise>
         <tr>
-          <td colspan="13" class="text-center">검색 결과가 없습니다.</td>
+          <td colspan="15" class="text-center">검색 결과가 없습니다.</td>
         </tr>
       </c:otherwise>
     </c:choose>

@@ -53,13 +53,6 @@ public class ReviewDAOImpl implements ReviewDAO {
 
 
 	@Override
-	public void updateReview(Review review) throws Exception {
-		session.update("mapper.review.updateReview",review);
-		session.commit();
-		
-	}
-
-	@Override
 	public int checkMyReview(Integer productNo, Integer memberNo) throws Exception {
 		Map<String,Object> map = new HashMap<>();
 		map.put("productNo", productNo);

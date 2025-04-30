@@ -23,9 +23,12 @@ public class SettlementServiceImpl implements SettlementService {
     // 정산번호에 해당하는 데이터 정산 완료로 업데이트
 	@Override
     public boolean processSettlement(int settlementNo) throws Exception {
-        int result = settlementDAO.updateSettlementStatus(settlementNo); // 1. 정산 완료 처리
+        int result = settlementDAO.updateSettlementStatus(settlementNo); // 1. 정산 완료 처리 : 정산 상태 'COMPLETE' 변경
 
         if (result > 0) {
+            // ✅ 정산 완료 시간 기록
+            settlementDAO.updateSettlementCompletedAt(settlementNo); 
+        	
             int memberNo = settlementDAO.selectMemberNoBySettlementNo(settlementNo); // 2. 회원번호 조회
             upgradeMemberGradeIfNeeded(memberNo); // 3. orderCount 기준 등급 승급 처리
         }

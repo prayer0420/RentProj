@@ -87,6 +87,8 @@
 	        g.gradeRate,
 	        s.feeAmount,
 	        s.finalSettleAmount,
+	        s.revenueType,
+       		s.settlementCompletedAt,
 	        s.payTime,
 	        s.feeStatus
 	    FROM settlement s
@@ -95,18 +97,19 @@
 	    LEFT JOIN member m ON s.memberNo = m.no
 	    LEFT JOIN grade g ON m.gradeId = g.gradeNo
 	    WHERE 1=1
-	    <if test="searchStartDate != null &amp;&amp; searchStartDate != ''">
-	        AND DATE(s.payTime) &gt;= #{searchStartDate}
-	    </if>
-	    <if test="searchEndDate != null &amp;&amp; searchEndDate != ''">
-	        AND DATE(s.payTime) &lt;= #{searchEndDate}
-	    </if>
+
 	    <if test="searchRevenueType != null &amp;&amp; searchRevenueType != ''">
 	        AND s.revenueType = #{searchRevenueType}
 	    </if>
 	    <if test="searchFeeStatus != null &amp;&amp; searchFeeStatus != ''">
 	        AND s.feeStatus = #{searchFeeStatus}
 	    </if>
+	    <if test="completedStart != null and completedStart != ''">
+		  AND s.settlementCompletedAt &gt;= #{completedStart}
+		</if>
+		<if test="completedEnd != null and completedEnd != ''">
+		  AND s.settlementCompletedAt &lt;= #{completedEnd}
+		</if>	
 	    ORDER BY s.payTime DESC
 	</select>
 
@@ -129,6 +132,13 @@
 	    SELECT gradeRate
 	    FROM grade
 	    WHERE gradeNo = #{gradeId}
-	</select>										
+	</select>		
+	
+	<!-- 정산완료시간 업데이트 -->
+	<update id="updateSettlementCompletedAt" parameterType="int">
+    UPDATE settlement
+    SET settlementCompletedAt = NOW()
+    WHERE settlementNo = #{settlementNo}
+	</update>								
 	
 	</mapper>
