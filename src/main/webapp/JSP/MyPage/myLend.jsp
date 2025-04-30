@@ -103,7 +103,7 @@
 		               	<c:when test="${item.orderStatus eq '결제완료'}">
 					        <button type="button" class="open-invoice-btn" data-orderno="${item.orderNo}">송장번호입력</button>
 		               	</c:when>
-		               	<c:when test="${item.orderStatus eq '배송완료'}">
+		               	<c:when test="${item.orderStatus eq '반납배송중'}">
 					        <button type="button" class="open-invoice-btn" data-orderno="${item.orderNo}">상품반납확인</button>
 		               	</c:when>
 		               </c:choose>
