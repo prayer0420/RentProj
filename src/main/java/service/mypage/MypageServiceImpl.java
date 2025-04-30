@@ -165,5 +165,11 @@ public class MypageServiceImpl implements MypageService {
 		return mypageDao.deleteProduct(productNo) > 0;
 	}
 
+	@Override
+	public boolean confirmOrder(Integer orderNo) throws Exception {
+		
+		return mypageDao.updateOrderStatusToCompleted(orderNo);
+	}
+
 
 }
