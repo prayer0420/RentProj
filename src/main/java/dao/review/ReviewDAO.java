@@ -10,10 +10,10 @@ public interface ReviewDAO {
     double selectAvgScore(int productNo) throws Exception;
     void deleteReview(Integer no) throws Exception;
 
+
     // 페이징용 추가
     int getReviewCount(ReviewQueryParams params) throws Exception;
     List<Review> getReviewList(ReviewQueryParams params) throws Exception;
-	int checkMyReview(Integer productNo,Integer memberNo) throws Exception;
-	
 	void updateReview(Review review) throws Exception;
+	int checkMyReview(Integer productNo,Integer memberNo) throws Exception;
 }

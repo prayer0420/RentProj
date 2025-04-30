@@ -97,7 +97,11 @@ textarea::placeholder {
   border: none;
   cursor: pointer;
   margin: 0 6px;
-  transition: 0.2s ease;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+ }
+ 
+ .modal-actions button:hover {
+  transform: translateY(-2px);
 }
 
 .btn-submit {

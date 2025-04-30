@@ -33,7 +33,6 @@ public class ReviewServiceImpl implements ReviewService {
     public void deleteReview(Integer no) throws Exception {
         reviewDAO.deleteReview(no);
     }
-
     // 페이징용 추가
     @Override
     public int getReviewCount(ReviewQueryParams params) throws Exception {
@@ -67,15 +66,15 @@ public class ReviewServiceImpl implements ReviewService {
         return pageInfo;
     }
 
+
+	@Override
+	public void updateReview(Review review) throws Exception {
+		reviewDAO.updateReview(review);
+	}
+
 	@Override
 	public boolean checkMyReview(Integer productNo, Integer memberNo) throws Exception {
 		return reviewDAO.checkMyReview(productNo, memberNo)>0;
 	}
-	
-	@Override
-	public void updateReview(Review review) throws Exception {
-	    reviewDAO.updateReview(review);
-	}
 
 }
-
