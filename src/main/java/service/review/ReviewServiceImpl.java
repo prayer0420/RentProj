@@ -71,11 +71,6 @@ public class ReviewServiceImpl implements ReviewService {
         return pageInfo;
     }
 
-    
-	@Override
-	public void updateReview(Review review) throws Exception {
-		reviewDAO.updateReview(review);
-	}
 
 	@Override
 	public boolean checkMyReview(Integer productNo, Integer memberNo) throws Exception {
