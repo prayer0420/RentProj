@@ -35,11 +35,6 @@ public class ReviewDAOImpl implements ReviewDAO {
         session.commit();
     }
 
-    @Override
-    public void updateReview(Review review) throws Exception {
-        session.update("mapper.review.updateReview", review);
-        session.commit();
-    }
 
     @Override
     public int getReviewCount(ReviewQueryParams params) throws Exception {
