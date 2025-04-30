@@ -92,7 +92,7 @@
 							   <c:when test="${item.orderStatus eq '배송중'}">
 							        <button type="button" class="confirm-btn" data-orderno="${item.orderNo}">구매확정</button>
 							   </c:when>
-							   <c:when test="${item.orderStatus eq '구매완료'}">
+							   <c:when test="${item.orderStatus eq '거래완료'}">
 							        <button type="button" class="open-review-btn" data-orderno="${item.orderNo}">
 							        <a href="${contextPath }/productDetail?no=${item.no }">리뷰쓰러가기</a></button>
 							   </c:when>  

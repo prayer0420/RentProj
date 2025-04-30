@@ -54,7 +54,7 @@ public interface MypageDAO {
 	boolean updateOrderStatusToCompleted(Integer orderNo);
 	
 	// 상품 숨기기 버튼 누르면 숨기기
-	Integer hideProduct(Integer productNo);
+	boolean hideProduct(Integer productNo);
 	
 	
 	

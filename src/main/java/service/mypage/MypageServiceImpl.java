@@ -174,7 +174,7 @@ public class MypageServiceImpl implements MypageService {
 	@Override
 	public boolean hideProduct(int productNo) throws Exception {
 		
-		return mypageDao.hideProduct(productNo) > 0;
+		return mypageDao.hideProduct(productNo);
 	}
 
 
