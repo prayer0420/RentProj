@@ -41,7 +41,7 @@
                     	<a href="${contextPath }/productDetail?no=${myOrderDetail.no}">${myOrderDetail.title }</a></div>
                     <div class="price">판매가격: <fmt:formatNumber value="${myOrderDetail.price}" type="number" groupingUsed="true" /> 원</div>
                 </div>
-                <span class="status-text">${myOrderDetail.deliveryStatus}</span>
+                <span class="status-text">${myOrderDetail.orderStatus}</span>
             </div>
 
             <div class="info-grid">
@@ -59,7 +59,7 @@
                     <p>연락처: ${myOrderDetail.phone }</p>
                     <p>&nbsp;&nbsp;</p>
                     
-                    <button class="btn">판매자의 다른 상품-></button>
+                    <!-- <button class="btn">판매자의 다른 상품-></button>  -->
                     
                 </div>
                 

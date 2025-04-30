@@ -55,7 +55,7 @@
 	                    <p>아이디: ${myRentDetail.memberId }</p>
 	                    <p>연락처: ${myRentDetail.phone }</p>
 	                    <p>반환배송지: ${myRentDetail.address1 }</p>
-	                    <button class="btn">판매자의 다른 상품-></button>
+	                    <!-- <button class="btn">판매자의 다른 상품-></button>	 -->
 	                    
 	                </div>
 	            </div>
