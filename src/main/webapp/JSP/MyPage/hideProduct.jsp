@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>  
+<c:set var="contextPath" value="${pageContext.request.contextPath }" />
 <link rel="stylesheet" href="${contextPath}/CSS/mypage/mypageModal.css">
 
 	<!-- 숨기기 확인 모달 -->
@@ -23,6 +25,7 @@
 	    	
 	        selectedProductNo = $(this).data('product-no'); // 버튼에 심어놓은 상품번호 읽어오기
 	        $('#hideModal').fadeIn(); // 모달 띄우기
+	        console.log("전송 중인 productNo:", selectedProductNo);
 	    });
 	
 	    // 모달에서 '취소' 클릭 시
