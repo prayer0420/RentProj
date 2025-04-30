@@ -3,9 +3,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-<script>
-  const contextPath = '${pageContext.request.contextPath}';
-</script>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet"
@@ -228,139 +225,182 @@
   </script>
 </head>
 <body>
-	<jsp:include page="../Header/header.jsp"></jsp:include>
-	<form id="registerForm" action="<%=request.getContextPath()%>/sell"
-		method="post" enctype="multipart/form-data" class="container">
-		<input type="hidden" name="tradeType" value="판매">
-		<div class="container-header">
-			<h2>판매등록</h2>
-		</div>
-		<hr>
-		<div class="container-admit">
-			<input type="checkbox" id="admitCheck">
-			<h3>상품등록 필수 동의</h3>
-			<div class="modal-admit">
-				<div class="modal-admit-body">
-					<hr>
-					<h5>Re:NT는 거래시스템을 제공해드리는 중개사업이며 빌리 중고거래 및 렌탈 거래시 발생하는 책임은 각
-						당사자에게 있음을 알려드립니다.</h5>
-					<h5>특히 렌탈시 발생할 수 있는 문제에 대하여 빌리는 판매자가 정해놓은 보증금으로 처리해드리며 필요한
-						서류들은 각 당사자들끼리 제공 받으셔야 합니다.</h5>
-					<h5>각 서류에 대해 빌리는 일체 관여하지 않음을 알려드립니다. 확인 부탁드립니다.</h5>
-					<hr>
-					<button class="cancle-admit" type="button">확인</button>
-				</div>
-			</div>
-			<button type="button" class="btn-open-modal-admit">자세히 보기</button>
-		</div>
-		<hr>
-		<div class="container-category">
-			<select name="categoryNo" id="categoryList" class="category-list">
-				<option selected="">카테고리 선택</option>
-				<option value="2">의류/패션/악세사리</option>
-				<option value="3">PC용품/디지털</option>
-				<option value="4">가전제품</option>
-				<option value="5">뷰티/미용</option>
-				<option value="6">캠핑/스포츠/레져</option>
-				<option value="7">생활/주방용품</option>
-				<option value="8">가구/인테리어</option>
-				<option value="9">유아
-				동/출산</option>
-				<option value="10">애완동물용품</option>
-				<option value="11">기타</option>
-			</select> <input type="text" id="title" name="title" placeholder="제목을 입력하세요">
-		</div>
-		<div class="container-charge">
-			<div class="wrap"
-				style="position: relative; display: inline-block; margin-top: 5px;">
-				<h6 id="tooltipTrigger"
-					style="cursor: pointer; margin-right: 740px;">수수료안내</h6>
-				<div class="tooltip" id="tooltipBox">
-					브론즈 : 5%<br> 실버 : 4.5%<br> 골드 : 4%<br> 플레 : 3.5%<br>
-					다이아 : 3%<br> Re:NT : 2.5%
-				</div>
-			</div>
-		</div>
-		<div class="container-sale">
-			<h4>판매가</h4>
-			<input type="text" placeholder="판매가" id="salePrice" name="salePrice">
-		</div>
-		<div class="container-delivery">
-			<h4>배송비</h4>
-			<input type="radio" id="hand" name="deliveryStatus"
-				class="delivery-radio" value="직거래"> <label for="hand"
-				class="delivery-label">결제 후 직접거래</label> <input type="radio"
-				name="deliveryStatus" class="delivery-radio" id="delvPrice"
-				value="택배거래"> <label for="delvPrice" class="delivery-label">택배거래</label>
-			<input type="text" class="rent-security" id="deliveryPrice"
-				name="deliveryPrice" placeholder="배송비" disabled>
-		</div>
-		<div class="container-prodstate">
-			<h4>상품상태</h4>
-			<div class="modal-prodState">
-				<div class="modal-prodState-body">
-					<h3>상품의 상태를 선택하세요</h3>
-					<hr>
-					<input type="radio" id="state1" name="state" class="state-radio"
-						value="새상품(미사용)"> <label for="state1" class="state-label">새상품(미사용)</label>
-					<input type="radio" id="state2" name="state" class="state-radio"
-						value="사용감적음"> <label for="state2" class="state-label">사용감
-						적음</label> <input type="radio" id="state3" name="state"
-						class="state-radio" value="사용감 많음"> <label for="state3"
-						class="state-label">사용감 많음</label> <input type="radio" id="state4"
-						name="state" class="state-radio" value="고장/파손"> <label
-						for="state4" class="state-label">고장/파손</label>
-					<button type="button" class="cancle-prod">확인</button>
-				</div>
-			</div>
-			<button type="button" class="btn-open-modal-prodState">상품상태선택</button>
-			<div class="stateDiv">상품상태 : 없음</div>
-		</div>
+  <jsp:include page="../Header/header.jsp" />
+  <main class="form-wrapper">
+    <h1 class="form-title">상품 판매 등록</h1>
+    <form id="registerForm" action="<%=request.getContextPath()%>/sell" method="post" enctype="multipart/form-data">
+      <input type="hidden" name="tradeType" value="판매" />
 
-		<div class="container-addr">
+      <section class="form-section">
+        <label for="title">제목</label>
+        <input type="text" id="title" name="title" placeholder="상품 제목을 입력하세요" />
+      </section>
 
-			<h4>거래지역</h4>
-			<button type="button" class="btn-open-modal-addr"
-				onclick="openAddressModal()">배송지 선택</button>
-			<div class="address-title">
-				<span class="address-name"></span>
-				<button class="default-address"></button>
-			</div>
-			<div class="address-info">
-				<span class="phone"></span><br> <span class="addressRegion"></span>
-				<input type="hidden" name="deliveryAddr" id="deliveryAddressInput">
-			</div>
-		</div>
+      <section class="form-section">
+        <label for="category">카테고리</label>
+        <select id="category" name="categoryNo">
+          <option value="">카테고리 선택</option>
+          <option value="2">의류/패션/악세사리</option>
+          <option value="3">PC용품/디지털</option>
+          <option value="4">가전제품</option>
+          <option value="5">뷰티/미용</option>
+          <option value="6">캠핑/스포츠/레져</option>
+          <option value="7">생활/주방용품</option>
+          <option value="8">가구/인테리어</option>
+          <option value="9">유아/출산</option>
+          <option value="10">애완동물용품</option>
+          <option value="11">기타</option>
+        </select>
+      </section>
 
-		<div class="container-image">
-			<h4>상품이미지 (최대 5장)</h4>
-			<hr>
+      <section class="form-section price-section">
+        <label for="salePrice">판매가
+          <span id="tooltipTrigger" class="info-icon">&#9432;</span>
+        </label>
+        <input type="text" id="salePrice" name="salePrice" placeholder="₩ 가격을 입력하세요" />
+        <div class="tooltip" id="tooltipBox">
+          브론즈 : 5%<br>실버 : 4.5%<br>골드 : 4%<br>플레티넘 : 3.5%<br>다이아 : 3%<br>Re:NT : 2.5%
+        </div>
+      </section>
 
-			<div id="previewArea"
-				style="display: flex; gap: 10px; flex-wrap: wrap;">
-				<img alt="상품추가" src="<%=request.getContextPath()%>/img/plus.jpg"
-					id="addImageButton"
-					style="cursor: pointer; width: 100px; height: 100px; object-fit: cover;">
-			</div>
+      <section class="form-section">
+        <label>거래방식</label>
+        <div class="radio-group">
+          <input type="radio" name="deliveryStatus" id="hand" value="직거래" />
+          <label for="hand">직거래</label>
+          <input type="radio" name="deliveryStatus" id="delvPrice" value="택배거래" />
+          <label for="delvPrice">택배</label>
+        </div>
+        <input type="text" id="deliveryPrice" name="deliveryPrice" placeholder="배송비 (₩)" disabled />
+      </section>
 
-			<input type="file" name="imgList0" id="ifile0" accept="image/*"
-				style="display: none" onchange="readURL(this, 0)"> <input
-				type="file" name="imgList1" id="ifile1" accept="image/*"
-				style="display: none" onchange="readURL(this, 1)"> <input
-				type="file" name="imgList2" id="ifile2" accept="image/*"
-				style="display: none" onchange="readURL(this, 2)"> <input
-				type="file" name="imgList3" id="ifile3" accept="image/*"
-				style="display: none" onchange="readURL(this, 3)"> <input
-				type="file" name="imgList4" id="ifile4" accept="image/*"
-				style="display: none" onchange="readURL(this, 4)">
-		</div>
-		<div class="container-content">
-			<textarea name="content" id="content" placeholder="내용을 입력하세요"></textarea>
-		</div>
-		<button type="submit">확인</button>
-	</form>
-	<jsp:include page="productAddressModal.jsp"></jsp:include>
+      <section class="form-section">
+        <label for="state">상품 상태</label>
+        <select id="state" name="state">
+          <option value="">선택하세요</option>
+          <option value="새상품(미사용)">새상품(미사용)</option>
+          <option value="사용감적음">사용감 적음</option>
+          <option value="사용감많음">사용감 많음</option>
+          <option value="고장/파손">고장/파손</option>
+        </select>
+      </section>
+
+      <section class="form-section">
+        <label for="content">상품 설명</label>
+        <textarea id="content" name="content" placeholder="상품 설명을 적어주세요"></textarea>
+      </section>
+
+      <section class="form-section">
+        <label>상품 이미지 (최대 5장)</label>
+        <div class="image-upload-container">
+          <div id="previewArea" class="image-preview"></div>
+          <div class="img-upload-box" id="addImageButton"></div>
+        </div>
+        <input type="file" name="imgList0" id="ifile0" accept="image/*" style="display: none;" onchange="readURL(this, 0)" />
+        <input type="file" name="imgList1" id="ifile1" accept="image/*" style="display: none;" onchange="readURL(this, 1)" />
+        <input type="file" name="imgList2" id="ifile2" accept="image/*" style="display: none;" onchange="readURL(this, 2)" />
+        <input type="file" name="imgList3" id="ifile3" accept="image/*" style="display: none;" onchange="readURL(this, 3)" />
+        <input type="file" name="imgList4" id="ifile4" accept="image/*" style="display: none;" onchange="readURL(this, 4)" />
+      </section>
+		 <div id="imageZoomModal" class="modal-zoom">
+   			<div class="modal-content">
+     			<img id="zoomedImage" src="" alt="확대 이미지" />
+     			<button onclick="closeImageModal()">닫기</button>
+   			</div>
+  		</div>	
+		
+      <section class="form-section checkbox-row">
+        <label>
+          <input type="checkbox" id="admitCheck" /> 필수 안내에 동의합니다
+        </label>
+        <button type="button" class="btn-open-modal-admit">자세히 보기</button>
+        <div class="modal-admit" style="display: none;">
+          <div class="modal-admit-body">
+            <h5>Re:NT는 거래시스템을 제공하는 중개 플랫폼입니다. 거래 책임은 당사자에게 있습니다.</h5>
+            <h5>렌탈 거래 시 보증금, 서류 확인 등은 사용자 책임입니다.</h5>
+            <button class="cancle-admit" type="button">확인</button>
+          </div>
+        </div>
+      </section>
+
+      <button type="submit" class="submit-btn">등록하기</button>
+    </form>
+  </main>
+  <jsp:include page="productAddressModal.jsp" />
 </body>
-<script>
-</script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const tooltipTrigger = document.getElementById("tooltipTrigger");
+      const tooltipBox = document.getElementById("tooltipBox");
+      const addBtn = document.getElementById("addImageButton");
+      const preview = document.getElementById("previewArea");
+      const fileInputs = ["ifile0", "ifile1", "ifile2", "ifile3", "ifile4"].map(id => document.getElementById(id));
+      let imageCount = 0;
+
+      tooltipTrigger.addEventListener("click", function (e) {
+        tooltipBox.style.display = tooltipBox.style.display === "block" ? "none" : "block";
+      });
+
+      addBtn.addEventListener("click", function () {
+        if (imageCount >= 5) return;
+        for (let i = 0; i < fileInputs.length; i++) {
+          if (!fileInputs[i].files.length) {
+            fileInputs[i].click();
+            break;
+          }
+        }
+      });
+
+      window.readURL = function(input, index) {
+        if (input.files && input.files[0]) {
+          const reader = new FileReader();
+          reader.onload = function (e) {
+            const wrapper = document.createElement("div");
+            
+            const img = document.createElement("img");
+            img.src = e.target.result;
+            img.setAttribute("onclick", "openImageModal(this.src)");
+            img.style.cursor = "pointer";
+
+            const del = document.createElement("button");
+            del.innerText = "×";
+            del.onclick = () => {
+              wrapper.remove();
+              input.value = "";
+              imageCount--;
+              if (imageCount < 5) addBtn.style.display = "flex";
+            };
+            wrapper.appendChild(img);
+            wrapper.appendChild(del);
+            preview.appendChild(wrapper);
+            imageCount++;
+            if (imageCount === 5) addBtn.style.display = "none";
+          }
+          reader.readAsDataURL(input.files[0]);
+        }
+      }
+
+      const admitBtn = document.querySelector(".btn-open-modal-admit");
+      const modal = document.querySelector(".modal-admit");
+      const closeModal = document.querySelector(".cancle-admit");
+
+      admitBtn.addEventListener("click", () => {
+        modal.style.display = "flex";
+      });
+      closeModal.addEventListener("click", () => {
+        modal.style.display = "none";
+      });
+    });
+    
+    
+    function openImageModal(src) {
+        document.getElementById("zoomedImage").src = src;
+        document.getElementById("imageZoomModal").style.display = "flex";
+      }
+
+      function closeImageModal() {
+        document.getElementById("imageZoomModal").style.display = "none";
+      }
+  </script>
+
 </html>
