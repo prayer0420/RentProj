@@ -102,7 +102,9 @@
       <th colspan="2">거래일자</th>
       <th colspan="3">결제금액</th>
       <th rowspan="2">결제수단</th>
-      <th rowspan="2">거래 상태</th>
+      <th rowspan="2">거래상태</th>
+      <th rowspan="2">알림</th>
+      
     </tr>
     <tr>
       <th>거래시작일</th>
@@ -129,6 +131,7 @@
 		      <td><fmt:formatNumber value="${order.secPrice}" pattern="#,##0" /></td>
 		      <td>${order.paymentType}</td>
 		      <td>${order.orderStatus}</td>
+		      <td><botton>알림전송</botton></td>
 		    </tr>
 		  </c:forEach>
 		</tbody>
