@@ -7,6 +7,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import dto.Rental;
 import service.rental.RentalService;
@@ -50,13 +51,13 @@ public class ReserveProduct extends HttpServlet {
 		RentalService service = new RentalServiceImpl();
 
 		try {
-			System.out.println(
-					"요청 데이터: productNo=" + productNo + ", memberNo=" + memberNo + ", start=" + start + ", end=" + end);
 			boolean isAvailable = service.isRentalDate(productNo, start, end);
 			if (isAvailable) {
-				Rental rental = new Rental(productNo, memberNo, java.sql.Date.valueOf(start),
-						java.sql.Date.valueOf(end));
-				service.insertRental(rental);
+				Rental rental = new Rental(productNo, memberNo, java.sql.Date.valueOf(start),java.sql.Date.valueOf(end));
+				HttpSession session = request.getSession();
+				session.setAttribute("rental",rental);
+				session.setAttribute("start",start);
+				session.setAttribute("end", end);
 				response.getWriter().print("success");
 			} else {
 				response.getWriter().print("fail");

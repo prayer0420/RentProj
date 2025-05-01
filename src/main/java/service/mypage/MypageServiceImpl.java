@@ -100,7 +100,6 @@ public class MypageServiceImpl implements MypageService {
 		pageInfo.setEndPage(endPage);
 		
 		Integer row = (pageInfo.getCurPage()-1)*5;
-		
 		Map<String,Object> paramMap = new HashMap<>();
 		paramMap.put("id", id);
 		paramMap.put("row", row);

@@ -18,8 +18,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import dto.Order;
+import dto.Rental;
 import service.order.OrderService;
 import service.order.OrderServiceImpl;
+import service.rental.RentalService;
+import service.rental.RentalServiceImpl;
 
 /**
  * Servlet implementation class PaymentConfirm
@@ -65,9 +68,10 @@ public class PaymentConfirm extends HttpServlet {
 		Date today = new Date(System.currentTimeMillis());
 		Date startDate = today;
 		Date endDate = today;
+		
 
 		try {
-		    String start = (String) request.getAttribute("mStartDate");
+		    String start = (String) session.getAttribute("start");
 		    if (start != null && start.matches("\\d{4}-\\d{2}-\\d{2}")) {
 		        startDate = Date.valueOf(start);
 		    }
@@ -76,7 +80,7 @@ public class PaymentConfirm extends HttpServlet {
 		}
 
 		try {
-		    String end = (String) request.getAttribute("mEndDate");
+		    String end = (String) session.getAttribute("end");
 		    if (end != null && end.matches("\\d{4}-\\d{2}-\\d{2}")) {
 		        endDate = Date.valueOf(end);
 		    }
@@ -131,15 +135,24 @@ public class PaymentConfirm extends HttpServlet {
 			responseText.append(line);
 		}
 		reader.close();
-
+		
+		Rental rental = (Rental) session.getAttribute("rental");
+		
 		Order order = new Order(memberNo, price,productNo, deliveryAddr,orderId,orderType,startDate,endDate);
 		OrderService service = new OrderServiceImpl();
+		RentalService rentalService = new RentalServiceImpl();
 		try {
 			if (status == 200) {
+				if(rental != null) {
+					rentalService.insertRental(rental);
+					session.removeAttribute("rental");
+				}
 				// 승인 성공 → DB 저장 가능
 				service.insertOrder(order);
 				request.setAttribute("order", order);
 				request.setAttribute("result", responseText.toString());
+				session.removeAttribute("start");
+				session.removeAttribute("end");
 				response.sendRedirect("productDetail?no=" + productNo + "&paid=true");
 			} else {
 				// 승인 실패

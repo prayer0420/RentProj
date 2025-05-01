@@ -52,7 +52,7 @@
 	          </div>
 	
 	          <!-- 상품 카드 -->
-	          <c:forEach var="item" items="${rentList }">
+	          <c:forEach var="item" items="${rentList}">
 		          <form action="">
 		          <div class="product-card">
 		            <!-- 주문 정보 상단 영역 -->
@@ -124,4 +124,45 @@
 	<!-- 푸터 -->
 	<jsp:include page="/JSP/Header/footer.jsp" />
 </body>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  document.querySelectorAll(".open-cancel-btn").forEach(btn => {
+    btn.addEventListener("click", function () {
+      const orderNo = this.dataset.orderno;
+      const paymentKey = prompt("📌 취소할 결제의 paymentKey를 입력하세요:");
+      const cancelReason = prompt("📝 취소 사유를 입력하세요:");
+
+      if (!paymentKey || !cancelReason) {
+        alert("paymentKey와 취소 사유는 필수입니다.");
+        return;
+      }
+
+      fetch("${contextPath}/refund", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: new URLSearchParams({
+          paymentKey,
+          cancelReason
+        })
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.status === "CANCELED") {
+            alert("✅ 결제가 성공적으로 취소되었습니다.");
+            // 선택: 이후 orderStatus도 DB에서 상태 변경하려면 추가 서블릿 호출 필요
+            location.reload(); // 새로고침으로 반영
+          } else {
+            alert("❌ 결제 취소 실패: " + data.message);
+          }
+        })
+        .catch(err => {
+          console.error("에러:", err);
+          alert("❌ 서버 오류로 결제 취소 실패");
+        });
+    });
+  });
+});
+</script>
 </html>
