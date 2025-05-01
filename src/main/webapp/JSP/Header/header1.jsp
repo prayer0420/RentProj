@@ -18,7 +18,8 @@
 			<div class="logo-area">
 				<a href="${pageContext.request.contextPath}/main" class="logo">RE:NT</a> 
 				<div class="product-add-wrapper">
-					<a href="javascript:void(0);" class="product-add" onclick="checkLoginAndRedirect()">상품 등록</a>
+					<c:set var="isLoggedIn" value="${not empty sessionScope.id}" />
+					<button id="productRegisterBtn" class="product-add" data-logged-in="${isLoggedIn}">상품 등록</button>
 				</div>
 			</div>
 
@@ -110,26 +111,24 @@
 </script>
 
 
+<!-- 알림 버튼 클릭 시 모달만 보여주기 -->
 <script>
-  // 알림 버튼 클릭 시 모달만 보여주기
   $("#btn-alarm").click(function () {
     $("#alarmModal").css("display", "flex"); // 보여주기만 함
   });
 </script>
+<!--상품등록 클릭 -->
 <script>
-    function checkLoginAndRedirect() {
-        // 세션에서 로그인 유저 확인 (세션에서 'member' 객체가 있으면 로그인 된 상태로 가정)
-        var isLoggedIn = <%= session.getAttribute("id") != null ? "true" : "false" %>;
+document.getElementById("productRegisterBtn").addEventListener("click", function () {
+    const isLoggedIn = this.dataset.loggedIn === "true";
 
-        if (isLoggedIn) {
-            // 로그인 상태라면 상품 등록 페이지로 이동
-            window.location.href = "<%= request.getContextPath() %>/JSP/ProductRegister/productRegister.jsp";
-        } else {
-            // 로그인되지 않았으면 로그인하라고 alert 띄우고 로그인 페이지로 이동
-            alert("로그인이 필요한 서비스입니다.");
-            window.location.href = "<%= request.getContextPath() %>/JSP/Login/login.jsp"; // 로그인 페이지 경로
-        }
+    if (isLoggedIn) {
+      window.location.href = "${pageContext.request.contextPath}/productRegister";
+    } else {
+      alert("로그인이 필요한 서비스입니다.");
+      window.location.href = "${pageContext.request.contextPath}/JSP/Login/login.jsp";
     }
+  });
 </script>
 
 </body>

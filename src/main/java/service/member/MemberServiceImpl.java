@@ -319,7 +319,7 @@ public class MemberServiceImpl implements MemberService {
 
 	}
 	
-    //네이버 위치 요청 및 위치 업데이트
+    //카카오 위치 요청 및 위치 업데이트
     public String updateLocationAndGetAddress(int memberNo, double lat, double lng) {
         try {
     	  String kakaoKey = "KakaoAK 26cbd2829d45a2e79ba779ab7d6c059c";

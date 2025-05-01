@@ -54,11 +54,13 @@ public class Product {
 		this.longitude = longitude;
 	}
 	public Product() {}
+	//대여버전
 	public Product(
 			Integer categoryNo,String title,
 			String content,String state,String img1,String img2,String img3,String img4,String img5,
 			String deliveryAddr,Integer deliveryPrice,String tradeType,Integer secPrice,Integer memberNo,
-			String startDate,String endDate,Integer rentPrice, String deliveryStatus) {
+			String startDate,String endDate,Integer rentPrice, String deliveryStatus,
+			double latitude, double lonitude) {
 		this.categoryNo = categoryNo;
 		this.title = title;
 		this.content = content;
@@ -77,11 +79,15 @@ public class Product {
 		this.endDate = endDate;
 		this.rentPrice = rentPrice;
 		this.deliveryStatus = deliveryStatus;
+		this.latitude = latitude;
+		this.longitude = longitude;
 	}
 	
+	//판매버전
 	public Product(Integer categoryNo,String title,String content,String state,String img1,
 			String img2,String img3,String img4,String img5, String deliveryAddr,Integer deliveryPrice,
-			String tradeType,Integer memberNo, Integer salePrice,String deliveryStatus) {
+			String tradeType,Integer memberNo, Integer salePrice,String deliveryStatus,
+			double latitude, double longitude) {
 		this.categoryNo = categoryNo;
 		this.title = title;
 		this.content = content;
@@ -97,13 +103,16 @@ public class Product {
 		this.memberNo = memberNo;
 		this.salePrice = salePrice;
 		this.deliveryStatus = deliveryStatus;
+		this.latitude = latitude;
+		this.longitude = longitude;
 	}
 	
+	//판매,대여버전
 	public Product(Integer categoryNo,String title,
 			String content,String state,String img1,String img2,String img3,String img4,String img5,
 			String deliveryAddr,Integer deliveryPrice,String tradeType,Integer secPrice,Integer memberNo,
 			String startDate,String endDate,Integer rentPrice,Integer salePrice,
-			String deliveryStatus) {
+			String deliveryStatus, double latitude, double longitude) {
 		this.categoryNo = categoryNo;
 		this.title = title;
 		this.content = content;
@@ -123,11 +132,14 @@ public class Product {
 		this.rentPrice = rentPrice;
 		this.salePrice = salePrice;
 		this.deliveryStatus = deliveryStatus;
+		this.latitude = latitude;
+		this.longitude = longitude;
 	}
 	
+	//나눔버전
 	public Product(Integer categoryNo,String title,String content, String img1,
 			String img2,String img3,String img4,String img5,
-			String deliveryAddr, String tradeType,Integer memberNo) {
+			String deliveryAddr, String tradeType,Integer memberNo,double latitude, double longitude) {
 		this.categoryNo = categoryNo;
 		this.title = title;
 		this.content = content;
@@ -139,6 +151,8 @@ public class Product {
 		this.deliveryAddr = deliveryAddr;
 		this.tradeType = tradeType;
 		this.memberNo = memberNo;
+		this.latitude = latitude;
+		this.longitude = longitude;
 	}
 	
 	

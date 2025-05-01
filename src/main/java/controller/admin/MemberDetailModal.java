@@ -49,9 +49,11 @@ public class MemberDetailModal extends HttpServlet {
                 out.println("<p><strong>주소1:</strong> " + member.getAddress1() + "</p>");
                 out.println("<p><strong>주소2:</strong> " + member.getAddress2() + "</p>");
                 out.println("<p><strong>주소3:</strong> " + member.getAddress3() + "</p>");
-                out.println("<p><strong>거래지역1:</strong> " + member.getRegion1() + "</p>");
-                out.println("<p><strong>거래지역2:</strong> " + member.getRegion2() + "</p>");
-                out.println("<p><strong>거래지역3:</strong> " + member.getRegion3() + "</p>");
+                out.println("<p><strong>거래지역:</strong> " + member.getLocation() + "</p>");
+				/*
+				 * out.println("<p><strong>거래지역2:</strong> " + member.getRegion2() + "</p>");
+				 * out.println("<p><strong>거래지역3:</strong> " + member.getRegion3() + "</p>");
+				 */
                 out.println("<p><strong>주문횟수:</strong> " + member.getOrderCount() + "</p>");
                 out.println("<p><strong>가입일:</strong> " + member.getRegDate() + "</p>");
             } else {

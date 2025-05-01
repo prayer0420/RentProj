@@ -11,38 +11,27 @@ import javax.servlet.http.HttpServletResponse;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
+import dto.Member;
 import dto.Product;
+import service.member.MemberService;
+import service.member.MemberServiceImpl;
 import service.product.ProductService;
 import service.product.ProductServiceImpl;
 
-/**
- * Servlet implementation class productRegisterRent
- */
 @WebServlet("/rent")
 public class ProductRegisterRent extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
 	public ProductRegisterRent() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.getRequestDispatcher("/JSP/ProductRegister/productRegisterRent.jsp").forward(request, response);
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
@@ -56,17 +45,13 @@ public class ProductRegisterRent extends HttpServlet {
 		String title = multi.getParameter("title");
 		String content = multi.getParameter("content");
 		String state = multi.getParameter("state");
-		String deliveryAddr = multi.getParameter("deliveryAddr");
 
 		Integer deliveryPrice = 0;
 		if ((multi.getParameter("deliveryPrice")) != null) {
 			deliveryPrice = Integer.parseInt(multi.getParameter("deliveryPrice"));
 		}
-//		deliveryPrice = Integer.parseInt(multi.getParameter("deliveryPrice"));
 		String tradeType = multi.getParameter("tradeType");
 		Integer secPrice = Integer.parseInt(multi.getParameter("secPrice"));
-//		Integer memberNo = Integer.parseInt(multi.getParameter("memberNo"));
-		Integer memberNo = 1;
 		String startDate = multi.getParameter("startDate");
 		String endDate = multi.getParameter("endDate");
 		Integer rentPrice = Integer.parseInt(multi.getParameter("rentPrice"));
@@ -86,9 +71,44 @@ public class ProductRegisterRent extends HttpServlet {
 			request.getRequestDispatcher("/JSP/ProductRegister/ProductRegisterSell.jsp").forward(request, response);
 			return;
 		}
+		
+	    // 세션에서 로그인된 사용자 ID 가져오기
+	    String loginId = (String) request.getSession().getAttribute("id");
+	    if (loginId == null) {
+	        response.sendRedirect(request.getContextPath() + "/JSP/Login/login.jsp");
+	        return;
+	    }
+
+	    // MemberService 통해 회원 정보 조회
+	    MemberService memberService = new MemberServiceImpl();
+	    Member member =null;
+		try {
+			member = memberService.getMemberById(loginId);
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+
+	    if (member == null) {
+	        request.setAttribute("errorMsg", "회원 정보를 불러올 수 없습니다.");
+	        request.getRequestDispatcher("/JSP/ProductRegister/ProductRegisterSell.jsp").forward(request, response);
+	        return;
+	    }
+	    
+	    // member에서 거래지역,위도경도 정보 가져오기
+	    Integer memberNo = member.getNo(); // 세션 또는 실제 로그인 유저 정보에서 가져올 것
+	    String deliveryAddr = member.getLocation();
+	    double latitude = member.getLatitude();
+	    double longitude = member.getLongitude();
+	    
+	    if (member.getLocation() == null || member.getLatitude() == null || member.getLongitude() == null) {
+	        request.setAttribute("locationError", true);
+	        request.getRequestDispatcher("/JSP/ProductRegister/ProductRegisterSell.jsp").forward(request, response);
+	        return;
+	    }
+
 
 		Product product = new Product(categoryNo, title, content, state, imgList[0], imgList[1], imgList[2], imgList[3], imgList[4], deliveryAddr,
-				deliveryPrice, tradeType, secPrice, memberNo, startDate, endDate, rentPrice, deliveryStatus);
+				deliveryPrice, tradeType, secPrice, memberNo, startDate, endDate, rentPrice, deliveryStatus,latitude,longitude);
 
 		ProductService service = new ProductServiceImpl();
 		try {

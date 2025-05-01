@@ -82,9 +82,6 @@ public class MyInfoModify extends HttpServlet {
 		String name = getOrDefault(multi, "name", member.getName());
 		String nickname = getOrDefault(multi, "nickname", member.getNickname());
 		String phone = getOrDefault(multi, "phone", member.getPhone());
-		String region1 = getOrDefault(multi, "region1", member.getRegion1());
-		String region2 = getOrDefault(multi, "region2", member.getRegion2());
-		String region3 = getOrDefault(multi, "region3", member.getRegion3());
 
 		// 비밀번호 확인 불일치 시 오류 처리
 		if (password != null && !password.equals(confirmPassword)) {
@@ -120,9 +117,6 @@ public class MyInfoModify extends HttpServlet {
 		updatedMember.setNickname(nickname);
 		updatedMember.setName(name);
 		updatedMember.setPhone(phone);
-		updatedMember.setRegion1(region1);
-		updatedMember.setRegion2(region2);
-		updatedMember.setRegion3(region3);
 		updatedMember.setProfileImage(profileImage);
 
 		// 기존 정보 유지 항목
