@@ -1,16 +1,13 @@
 package controller.productDetail;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.google.gson.Gson;
+import javax.servlet.http.HttpSession;
 
 import dto.Product;
 import service.mark.MarkService;
@@ -34,6 +31,7 @@ public class ProductDetail extends HttpServlet {
 			throws ServletException, IOException {
 		
 		request.setCharacterEncoding("utf-8");
+		HttpSession session = request.getSession();
 		Integer no = Integer.parseInt(request.getParameter("no"));
 		Integer memberNo = (Integer)request.getSession().getAttribute("no");
 		
@@ -65,6 +63,8 @@ public class ProductDetail extends HttpServlet {
 			request.setAttribute("countMarkProduct", countMarkProduct);
 			request.setAttribute("isMark", isMark);
 			request.setAttribute("viewCnt", product.getViewCnt());
+			session.setAttribute("secPrice", product.getSecPrice());
+			session.setAttribute("deliveryPrice",product.getDeliveryPrice());
 			System.out.println("product : "+product);	
 			System.out.println("no : "+no);	
 			System.out.println("startDate"+product.getStartDate());

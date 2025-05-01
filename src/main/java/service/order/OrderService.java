@@ -15,5 +15,6 @@ public interface OrderService {
     List<Order> getDelayedOrders(String type, String keyword);
     boolean hasMemberOrderProduct(Integer memberNo,Integer productNO) throws Exception;
     boolean checkOrder(Integer productNo) throws Exception;
+    void updateOrderStatus(int orderNo, String orderStatus) throws Exception;
 
 }

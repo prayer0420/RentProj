@@ -17,7 +17,8 @@ public interface OrderDAO {
     int hasMemberOrderProduct(Integer memberNo,Integer productNo) throws Exception;
     //상품에 주문이 존재하는지 조회
     int checkOrder(Integer productNo)throws Exception;
-    
+    //주문 status 수정
+    void updateOrderStatus(Integer orderNo,String orderStatus) throws Exception;
     
 
 }

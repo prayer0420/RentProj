@@ -48,4 +48,13 @@ public class OrderDAOImpl implements OrderDAO {
 		return session.selectOne("mapper.order.checkOrder",productNo);
 	}
 
+	@Override
+	public void updateOrderStatus(Integer orderNo,String orderStatus) throws Exception {
+		Map<String,Object> map = new HashMap<>();
+		map.put("orderNo", orderNo);
+		map.put("orderStatus",orderStatus);
+		session.update("mapper.order.updateOrderStatus",map);
+		session.commit();
+	}
+
 }

@@ -8,6 +8,31 @@
 <head>
 <meta charset="UTF-8">
 <title>My Rental Products</title>
+<style>
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  left: 0; top: 0;
+  width: 100%; height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  justify-content: center; align-items: center;
+}
+.modal-content {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  width: 300px;
+}
+.modal-actions {
+  margin-top: 10px;
+  text-align: right;
+}
+.modal textarea {
+  width: 100%;
+  resize: none;
+}
+</style>
 <link rel="stylesheet" href="${contextPath}/CSS/mypage/myRent.css">
 </head>
 <body>
@@ -87,7 +112,13 @@
 		              <div class="status-change-btns">
 		                <c:choose>
 				                <c:when test="${item.orderStatus eq '결제완료'}">
-							        <button type="button" class="open-cancel-btn" data-orderno="${item.orderNo}">주문취소</button>
+							        <button type="button" class="open-cancel-btn" data-paymentkey="${item.paymentKey}"
+  										data-orderno="${item.orderNo}">>
+									    <input type="hidden" name="orderId" value="${item.orderId}" />
+									    <input type="hidden" name="orderNo" value="${item.orderNo}"/>
+									    <input type="hidden" name="paymentKey" value="${item.paymentKey}" />
+									    <input type="hidden" name="cancelReason" value="사용자 직접 취소" />
+									    주문취소</button>
 							   </c:when> 
 							   <c:when test="${item.orderStatus eq '배송중'}">
 							        <button type="button" class="rent-start-btn" data-orderno="${item.orderNo}">빌리기시작</button>
@@ -128,49 +159,80 @@
         </section>
       </div>
     </div>
+    
+        <!-- 환불 사유 입력 모달 -->
+<div id="cancelModal" class="modal">
+  <div class="modal-content">
+    <h3>환불 사유를 입력하세요</h3>
+    <textarea id="cancelReason" rows="4" placeholder="예: 변심, 잘못 주문 등"></textarea>
+    <input type="hidden" id="cancelPaymentKey" />
+    <input type="hidden" id="cancelOrderNo" />
+    <div class="modal-actions">
+      <button id="cancelConfirmBtn">환불 요청</button>
+      <button onclick="closeCancelModal()">닫기</button>
+    </div>
+  </div>
+</div>
+    
 
 	<!-- 푸터 -->
 	<jsp:include page="/JSP/Header/footer.jsp" />
 </body>
 <script>
-document.addEventListener("DOMContentLoaded", function () {
-  document.querySelectorAll(".open-cancel-btn").forEach(btn => {
-    btn.addEventListener("click", function () {
-      const orderNo = this.dataset.orderno;
-      const paymentKey = prompt("📌 취소할 결제의 paymentKey를 입력하세요:");
-      const cancelReason = prompt("📝 취소 사유를 입력하세요:");
+document.addEventListener('DOMContentLoaded', function () {
+	  document.querySelectorAll('.open-cancel-btn').forEach(btn => {
+	    btn.addEventListener('click', () => {
+	      const paymentKey = btn.dataset.paymentkey;
+	      const orderNo = btn.dataset.orderno;
 
-      if (!paymentKey || !cancelReason) {
-        alert("paymentKey와 취소 사유는 필수입니다.");
-        return;
-      }
+	      document.getElementById('cancelPaymentKey').value = paymentKey;
+	      document.getElementById('cancelOrderNo').value = orderNo;
+	      document.getElementById('cancelReason').value = "";
 
-      fetch("${contextPath}/refund", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded"
-        },
-        body: new URLSearchParams({
-          paymentKey,
-          cancelReason
-        })
-      })
-        .then(res => res.json())
-        .then(data => {
-          if (data.status === "CANCELED") {
-            alert("✅ 결제가 성공적으로 취소되었습니다.");
-            // 선택: 이후 orderStatus도 DB에서 상태 변경하려면 추가 서블릿 호출 필요
-            location.reload(); // 새로고침으로 반영
-          } else {
-            alert("❌ 결제 취소 실패: " + data.message);
-          }
-        })
-        .catch(err => {
-          console.error("에러:", err);
-          alert("❌ 서버 오류로 결제 취소 실패");
-        });
-    });
-  });
-});
+	      openCancelModal();
+	    });
+	  });
+
+	  document.getElementById('cancelConfirmBtn').addEventListener('click', () => {
+	    const paymentKey = document.getElementById('cancelPaymentKey').value;
+	    const orderNo = document.getElementById('cancelOrderNo').value;
+	    const cancelReason = document.getElementById('cancelReason').value.trim();
+
+	    if (!cancelReason) {
+	      alert("사유를 입력해주세요.");
+	      return;
+	    }
+
+	    fetch('${contextPath}/refund', {
+	      method: 'POST',
+	      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+	      body: new URLSearchParams({
+	        paymentKey,
+	        cancelReason,
+	        orderNo
+	      })
+	    })
+	    .then(res => {
+	      if (!res.ok) throw new Error("환불 실패");
+	      return res.json();
+	    })
+	    .then(data => {
+	      alert("✅ 환불이 완료되었습니다!");
+	      window.location.href = '${contextPath}/myOrder';
+	    })
+	    .catch(err => {
+	      console.error("❌ 환불 오류:", err);
+	      alert("❌ 환불 실패. 관리자에게 문의하세요.");
+	    });
+	  });
+	});
+
+	function openCancelModal() {
+	  document.getElementById('cancelModal').style.display = 'flex';
+	}
+
+	function closeCancelModal() {
+	  document.getElementById('cancelModal').style.display = 'none';
+	}
 </script>
 </html>

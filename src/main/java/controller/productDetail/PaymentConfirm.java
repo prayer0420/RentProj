@@ -137,8 +137,13 @@ public class PaymentConfirm extends HttpServlet {
 		reader.close();
 		
 		Rental rental = (Rental) session.getAttribute("rental");
+		Integer deliveryPrice = (Integer) session.getAttribute("deliveryPrice");
+		Integer secPrice = (Integer) session.getAttribute("secPrice");
 		
-		Order order = new Order(memberNo, price,productNo, deliveryAddr,orderId,orderType,startDate,endDate);
+		
+		
+		Order order = new Order(memberNo, price,productNo, deliveryAddr,orderId,orderType,startDate,endDate,
+				paymentKey,deliveryPrice,secPrice);
 		OrderService service = new OrderServiceImpl();
 		RentalService rentalService = new RentalServiceImpl();
 		try {
@@ -153,6 +158,8 @@ public class PaymentConfirm extends HttpServlet {
 				request.setAttribute("result", responseText.toString());
 				session.removeAttribute("start");
 				session.removeAttribute("end");
+				session.removeAttribute("deliveryPrice");
+				session.removeAttribute("secPrice");
 				response.sendRedirect("productDetail?no=" + productNo + "&paid=true");
 			} else {
 				// 승인 실패

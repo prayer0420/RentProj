@@ -97,4 +97,9 @@ public class OrderServiceImpl implements OrderService {
 	public boolean checkOrder(Integer productNo) throws Exception {
 		return orderDAO.checkOrder(productNo) > 0;
 	}
+
+	@Override
+	public void updateOrderStatus(int orderNo, String orderStatus) throws Exception {
+		orderDAO.updateOrderStatus(orderNo,orderStatus);
+	}
 }
