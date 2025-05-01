@@ -13,36 +13,33 @@ import service.mypage.MypageService;
 import service.mypage.MypageServiceImpl;
 
 /**
- * Servlet implementation class InvoiceSetting
+ * Servlet implementation class ReInvoiceSetting
  */
-@WebServlet("/invoiceSetting")
-public class InvoiceSetting extends HttpServlet {
+@WebServlet("/reInvoiceSetting")
+public class ReInvoiceSetting extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public InvoiceSetting() {
+    public ReInvoiceSetting() {
         super();
         // TODO Auto-generated constructor stub
     }
 
-    
-    
-    
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("utf-8");
+request.setCharacterEncoding("utf-8");
 		
 		Integer orderNo = Integer.parseInt(request.getParameter("orderNo"));
-	    String deliveryComp = request.getParameter("deliveryComp");
-	    String invoiceNo = request.getParameter("invoiceNo");
+	    String reDeliveryComp = request.getParameter("reDeliveryComp");
+	    String reInvoiceNo = request.getParameter("reInvoiceNo");
 
 	    MypageService service = new MypageServiceImpl();
 	    try {
-			boolean result = service.updateInvoiceInfo(orderNo,deliveryComp,invoiceNo);
+			boolean result = service.returnSetInvoiceInfo(orderNo,reDeliveryComp,reInvoiceNo);
 			
 			response.setContentType("application/json");
 			request.setAttribute("orderNo", orderNo);
@@ -54,7 +51,6 @@ public class InvoiceSetting extends HttpServlet {
 			request.setAttribute("err", "송장번호 입력에 실패했습니다.");
 			request.getRequestDispatcher("/JSP/MyPage/error.jsp").forward(request, response);
 		}
-
 	}
 
 }

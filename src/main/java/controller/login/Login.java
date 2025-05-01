@@ -54,9 +54,12 @@ public class Login extends HttpServlet {
 		MemberService service = new MemberServiceImpl();
 
 		try {
+			HttpSession session = request.getSession();
+
+			/* Member member = new MemberServiceImpl().getMemberById(id); */
+			
 			Member member = service.login(id, password);
 
-			HttpSession session = request.getSession();
 			session.setAttribute("no", member.getNo());
 			session.setAttribute("id", member.getId());
 			session.setAttribute("nickname", member.getNickname());
@@ -68,6 +71,7 @@ public class Login extends HttpServlet {
 			session.setAttribute("nickname", password);
 			session.setAttribute("latitude", lat);  // null일 수도 있음
 			session.setAttribute("longitude", lng); // null일 수도 있음
+			session.setAttribute("adminNo",member.getAdminNo());
 			
 			//로그인시 알림리스트 세션에 저장
 			List<Alarm> alarmList = new FcmServiceImpl().getAlarmList(id);

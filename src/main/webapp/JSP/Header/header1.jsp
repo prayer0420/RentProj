@@ -17,7 +17,9 @@
 
 			<div class="logo-area">
 				<a href="${pageContext.request.contextPath}/main" class="logo">RE:NT</a> 
-				<a href="javascript:void(0);" class="product-add" onclick="checkLoginAndRedirect()">상품 등록</a>
+				<div class="product-add-wrapper">
+					<a href="javascript:void(0);" class="product-add" onclick="checkLoginAndRedirect()">상품 등록</a>
+				</div>
 			</div>
 
 			<form id="mainSearchForm"
@@ -39,10 +41,12 @@
  				<button id="btn-alarm">🔔 알림
 				  <span id="headerAlarmBadge" style="display:none; background:red; color:white; font-size:11px; border-radius:8px; padding:1px 6px; margin-left:4px;">0</span>
 				</button> 
+				
+				
 				<!-- 알림 모달 포함 (정적 include) -->
 				<jsp:include page="/JSP/Header/alarm.jsp" />
 				
-				<button><a href="myOrder">📄 마이페이지</a></button>
+				<a href="myOrder" class="my-page-btn">📄 마이페이지</a>
 				<c:choose>
 					<c:when test="${not empty sessionScope.id}">
 						<button id="btn-logout">🚪 로그아웃</button>
@@ -52,6 +56,12 @@
 							<button>🔑로그인</button></a>
 					</c:otherwise>
 				</c:choose>
+				
+				<c:if test="${sessionScope.adminNo == 1}">
+					<button title="관리자 페이지">
+						<a href="${pageContext.request.contextPath}/memberInfo" style="font-size: 18px;">⚙️</a>
+					</button>
+				</c:if>
 			</div>
 		</div>
 	</header>

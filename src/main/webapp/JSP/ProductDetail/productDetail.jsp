@@ -8,10 +8,10 @@
 <title>주문결제</title>
 <%-- JSP 상단에 디버그용 출력 --%>
 <%
-    Object userNo = session.getAttribute("no");
-    Object userId = session.getAttribute("id");
-    System.out.println("세션 userNo: " + userNo);
-    System.out.println("세션 userId: " + userId);
+Object userNo = session.getAttribute("no");
+Object userId = session.getAttribute("id");
+System.out.println("세션 userNo: " + userNo);
+System.out.println("세션 userId: " + userId);
 %>
 <c:set var="isLoggedIn" value="${not empty sessionScope.no}" />
 <script>
@@ -584,5 +584,4 @@ console.log("로그인 여부:", isLoggedIn);
 	    }
 	  });
 	}
-	
-	</script>
+</script>
