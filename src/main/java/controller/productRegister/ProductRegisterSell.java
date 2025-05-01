@@ -120,7 +120,17 @@ public class ProductRegisterSell extends HttpServlet {
 
 	    // member에서 거래지역,위도경도 정보 가져오기
 	    Integer memberNo = member.getNo(); // 세션 또는 실제 로그인 유저 정보에서 가져올 것
+	    // member에서 거래지역 정보 가져오기
 	    String deliveryAddr = member.getLocation();
+
+	 // "구"가 포함된 위치까지 자르기
+	    int indexOfGu = deliveryAddr.indexOf("구") + 1;  // "구" 위치 찾기 (구 포함)
+	    if (indexOfGu > 0) {
+	        // "구"를 포함한 위치까지 자르기
+	        deliveryAddr = deliveryAddr.substring(0, indexOfGu + 1);
+	    }
+
+
 	    double latitude = member.getLatitude();
 	    double longitude = member.getLongitude();
 	    

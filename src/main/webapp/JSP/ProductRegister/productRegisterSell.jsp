@@ -66,29 +66,7 @@
         }
       });
 
-      toggleDeliveryPrice();
     };
-
-    function toggleDeliveryPrice() {
-    	  const hand = document.getElementById("hand");
-    	  const delvPrice = document.getElementById("delvPrice");
-    	  const deliveryPrice = document.getElementById("deliveryPrice");
-
-    	  if (!hand.checked && !delvPrice.checked) {
-    	    deliveryPrice.disabled = true;
-    	    deliveryPrice.value = '';
-    	    deliveryPrice.placeholder = "거래방식을 선택하세요";
-    	  } else if (hand.checked) {
-    	    deliveryPrice.disabled = true;
-    	    deliveryPrice.value = 0;
-    	    deliveryPrice.placeholder = "배송비 없음";
-    	  } else if (delvPrice.checked) {
-    	    deliveryPrice.disabled = false;
-    	    deliveryPrice.placeholder = "배송비를 입력하세요";
-    	  }
-    	}
-
-    
   </script>
 </head>
 <body>
@@ -400,6 +378,110 @@ function closeImageModal() {
 }
 </script>
 
+<script>
+  document.getElementById("registerForm").addEventListener("submit", function (e) {
+    // 세션에 위치 정보가 없으면
+    const location = "${sessionScope.location}";
+
+    if (!location || location.trim() === "") {
+      // 위치 버튼 강조 (빨간 테두리 추가)
+      const locationButton = document.getElementById("btn-location");
+      locationButton.style.border = "2px solid red"; // 버튼 강조
+
+      // 페이지 맨 위로 스크롤
+      window.scrollTo(0, 0);
+
+      // 위치 갱신을 요청하는 알림창 띄우기
+      alert("위치 정보가 없으니 위치를 갱신해 주세요!");
+
+      // 제출을 막음
+      e.preventDefault(); 
+    }
+  });
+</script>
+
+<script>
+  // Function to check location and handle the alert
+  function checkLocation() {
+    const location = "${sessionScope.location}";
+
+    if (!location || location.trim() === "") {
+      // 위치 버튼 강조 (빨간 테두리 추가)
+      const locationButton = document.getElementById("btn-location");
+      locationButton.style.border = "2px solid red"; // 버튼 강조
+
+      // 페이지 맨 위로 스크롤
+      window.scrollTo(0, 0);
+
+      // 위치 갱신을 요청하는 알림창 띄우기
+      alert("위치 정보가 없으니 위치를 갱신해 주세요!");
+    }
+  }
+
+  // Event listener for the form submission
+  document.getElementById("registerForm").addEventListener("submit", function (e) {
+    // Check location when submitting the form
+    const location = "${sessionScope.location}";
+
+    if (!location || location.trim() === "") {
+      // 위치 버튼 강조 (빨간 테두리 추가)
+      const locationButton = document.getElementById("btn-location");
+      locationButton.style.border = "2px solid red"; // 버튼 강조
+
+      // 페이지 맨 위로 스크롤
+      window.scrollTo(0, 0);
+
+      // 위치 갱신을 요청하는 알림창 띄우기
+      alert("위치 정보가 없으니 위치를 갱신해 주세요!");
+
+      // 제출을 막음
+      e.preventDefault(); 
+    }
+  });
+
+  // Call checkLocation() on page load
+  window.onload = function() {
+    checkLocation();
+  };
+</script>
+
+<script>
+function toggleDeliveryPrice() {
+	  const hand = document.getElementById("hand");
+	  const delvPrice = document.getElementById("delvPrice");
+	  const deliveryPrice = document.getElementById("deliveryPrice");
+
+	  // 직거래를 선택했을 때
+	  if (hand.checked) {
+	    deliveryPrice.disabled = true;
+	    deliveryPrice.value = ''; // 배송비 초기화
+	    deliveryPrice.placeholder = "배송비 없음";
+	  }
+	  // 택배 거래를 선택했을 때
+	  else if (delvPrice.checked) {
+	    deliveryPrice.disabled = false;
+	    deliveryPrice.placeholder = "배송비를 입력하세요";
+	  }
+	  // 거래 방식을 선택하지 않았을 때
+	  else {
+	    deliveryPrice.disabled = true;
+	    deliveryPrice.value = ''; // 배송비 초기화
+	    deliveryPrice.placeholder = "거래방식을 선택하세요";
+	  }
+	}
+
+	window.onload = function () {
+	  const hand = document.getElementById("hand");
+	  const delvPrice = document.getElementById("delvPrice");
+
+	  // 페이지 로드 시 상태를 갱신
+	  toggleDeliveryPrice();
+
+	  // 거래방식 선택 변경 시 동작
+	  hand.addEventListener("change", toggleDeliveryPrice);
+	  delvPrice.addEventListener("change", toggleDeliveryPrice);
+	};
+</script>
   
 </body>
 </html>

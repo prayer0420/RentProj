@@ -34,10 +34,12 @@
 			<div class="header-actions">
 				<button id="btn-location">📍 위치</button>
 				<div class="location-display">
-					 <c:if test="${not empty sessionScope.location}">
-    					현재 위치:	${fn:substring(sessionScope.location, 0, fn:indexOf(sessionScope.location, "구") + 1)}
-  					</c:if>
+				    <c:if test="${not empty sessionScope.location}">
+				        <!-- '구' 뒤에 오는 공백까지 포함하여 출력하기 -->
+				        현재 위치: ${fn:substring(sessionScope.location, 0, fn:indexOf(sessionScope.location, "구") + 3)}
+				    </c:if>
 				</div>
+
 
  				<button id="btn-alarm">🔔 알림
 				  <span id="headerAlarmBadge" style="display:none; background:red; color:white; font-size:11px; border-radius:8px; padding:1px 6px; margin-left:4px;">0</span>

@@ -35,7 +35,7 @@
 		        <span class="sale">판매가 <fmt:formatNumber value="${p.salePrice}" type="number" />원</span><br/>
 		      </c:if>
 		      <c:if test="${p.rentPrice != null}">
-		        <span class="rent">대여 <fmt:formatNumber value="${p.rentPrice}" type="number" />원 / 1일</span><br/>
+		        <span class="rent">대여가 <fmt:formatNumber value="${p.rentPrice}" type="number" />원/1일</span><br/>
 		      </c:if>
 		      <c:if test="${p.tradeType == '대여' or p.tradeType == '판매대여'}">
 		        <c:if test="${p.secPrice != null}">

@@ -137,18 +137,20 @@ public class Product {
 	}
 	
 	//나눔버전
-	public Product(Integer categoryNo,String title,String content, String img1,
+	public Product(Integer categoryNo,String title,String content,String state, String img1,
 			String img2,String img3,String img4,String img5,
-			String deliveryAddr, String tradeType,Integer memberNo,double latitude, double longitude) {
+			String deliveryAddr, Integer deliveryPrice, String tradeType,Integer memberNo,double latitude, double longitude) {
 		this.categoryNo = categoryNo;
 		this.title = title;
 		this.content = content;
+		this.state = state;
 		this.img1 = img1;
 		this.img2 = img2;
 		this.img3 = img3;
 		this.img4 = img4;
 		this.img5 = img5;
 		this.deliveryAddr = deliveryAddr;
+		this.deliveryPrice = deliveryPrice;
 		this.tradeType = tradeType;
 		this.memberNo = memberNo;
 		this.latitude = latitude;
