@@ -161,9 +161,9 @@
 			
 			            <!-- 상품 정보 영역 -->
 			            <div class="card-content">
-			            <a href="${contextPath }/productDetail?no=${item.no }">
+			            <a href="${contextPath}/productDetail?no=${item.no }">
 			              <img
-			                src="${contextPath }/img/camera.jpg"
+			                src="${contextPath}/upload/${item.img1}"
 			                alt="상품 이미지"
 			                class="product-image"
 			              /></a>
