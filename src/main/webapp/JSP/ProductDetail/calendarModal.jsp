@@ -1,4 +1,5 @@
-	<%@ page language="java" contentType="text/html; charset=UTF-8"
+
+<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
@@ -13,51 +14,172 @@
 	rel="stylesheet">
 <script
 	src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
-
 <style>
 #calendarModal {
-	display: none;
-	position: fixed;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	background-color: rgba(0, 0, 0, 0.5);
-	justify-content: center;
-	align-items: center;
-	z-index: 9999;
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  font-family: 'Noto Sans KR', sans-serif;
 }
 
-#calendarWrapper {
-	background: white;
-	padding: 20px;
-	width: 800px;
-	height: 800px;
-	box-sizing: border-box;
-	overflow-y: auto;
+#calendarModal .modal-content {
+  background-color: #fffaf3;
+  width: 740px;               /* ✅ 가로 살짝 늘림 */
+  height: 680px;              /* ✅ 세로 줄임 */
+  padding: 32px;
+  border-radius: 20px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  overflow: hidden;           /* ✅ 스크롤 없애기 */
+  position: relative;
+  transform: scale(0.95);
+  opacity: 0;
+  transition: all 0.25s ease;
 }
 
-.fc {
-	font-size: 14px;
+#calendarModal .modal-content.active {
+  transform: scale(1);
+  opacity: 1;
 }
 
-#calendar {
-	max-width: 100%;
-	height: auto;
+#calendarModal .modal-title {
+  font-size: 22px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 16px;
+}
+
+#calendarModal .available-dates {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 14px;
+}
+
+#calendarModal .calendar-box {
+  height: 480px;              /* ✅ 캘린더 영역 축소 */
+  margin: 0 auto;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  overflow: hidden;
+}
+#calendarModal .calendar-box {
+  height: 480px;
+  overflow: hidden;
+  border: 1px solid #eee;
+  border-radius: 10px;
+}
+
+/* ✅ FullCalendar 내부 셀 줄이기 */
+.fc .fc-daygrid-day-frame {
+  min-height: 50px !important;  /* 기본은 90px 넘음 → 줄여줌 */
+  padding: 2px !important;
+}
+
+.fc .fc-daygrid-day-number {
+  font-size: 13px !important;   /* 날짜 숫자 크기 줄이기 */
+  padding: 2px !important;
+}
+
+.fc .fc-scrollgrid {
+  font-size: 13px;
+}
+.fc .fc-toolbar-title {
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  flex-grow: 0;
+  margin: 0 auto 0 50px;
+  
+}
+/* 날짜 숫자 (9일, 10일 등)를 가운데 정렬 */
+.fc .fc-daygrid-day-number {
+  text-align: center !important;
+  display: block;              /* ✅ inline -> block으로 바꿔야 가운데 정렬이 적용됨 */
+  width: 100%;
+}
+
+/* ◀ 이전/다음 버튼 스타일 */
+.fc .fc-button {
+  background-color: #fffaf3;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #333;
+  transition: background-color 0.2s ease;
+}
+
+.fc .fc-button:hover {
+  background-color: rgb(255,248,232);
+}
+
+.fc .fc-button:disabled {
+  background-color: rgb(255,253,249);
+  color: #999;
+}
+
+#calendarModal #calendar {
+  margin-top: 10px;
+}
+
+#calendarModal .modal-actions {
+  margin-top: 16px;           /* ✅ 버튼 여백 줄임 */
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+#calendarModal .btn-confirm,
+#calendarModal .btn-cancel {
+  padding: 10px 20px;
+  font-weight: bold;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+}
+
+#calendarModal .btn-confirm {
+  background-color: #4CAF50;
+  color: white;
+}
+
+#calendarModal .btn-cancel {
+  background-color: #e0e0e0;
+  color: #333;
+}
+
+#calendarModal .btn-confirm:hover {
+  background-color: #45a049;
+}
+
+#calendarModal .btn-cancel:hover {
+  background-color: #d0d0d0;
 }
 </style>
 </head>
 
 <body>
-	<div id="calendarModal">
-		<div id="calendarWrapper">
-			<button onclick="closeCalendar()">X</button>
-			<p style="margin-bottom: 10px;">
-				📅 대여 가능 시작일: <strong id="availableStart"></strong> <span>~</span>
-				대여 가능 종료일: <strong id="availableEnd"></strong>
+	<div id="calendarModal" class="modal">
+		<div class="modal-content">
+			<h3 class="modal-title">📅 대여하기</h3>
+
+			<p class="available-dates">
+				대여 가능 <strong id="availableStart"></strong> ~ <strong
+					id="availableEnd"></strong>
 			</p>
-			<button onclick="submitReservation()">✅ 예약하기</button>
-			<div id="calendar"></div>
+
+			<div id="calendar" class="calendar-box"></div>
+
+			<div class="modal-actions">
+				<button onclick="submitReservation()" class="btn-confirm">예약하기</button>
+				<button onclick="closeCalendar()" class="btn-cancel">닫기</button>
+			</div>
 
 			<!-- JSTL로 전달된 파라미터 저장 -->
 			<c:set var="productStart" value="${param.productStart}" />
@@ -66,7 +188,7 @@
 		</div>
 	</div>
 
-<script>
+	<script>
 console.log("로그인 여부:", isLoggedIn);
 
 let calendar = null;
@@ -75,113 +197,98 @@ let selectedEnd = null;
 let reservedRanges = [];
 
 function openCalendar() {
-  if (!isLoggedIn) {
-    alert("로그인이 필요합니다.");
-    location.href = contextPath + "/login";
-    return;
-  }
+	  if (!isLoggedIn) {
+	    alert("로그인이 필요합니다.");
+	    location.href = contextPath + "/login";
+	    return;
+	  }
 
-  document.getElementById('calendarModal').style.display = 'flex';
+	  const modal = document.getElementById('calendarModal');
+	  modal.style.display = 'flex';
 
-  const productNo = '${param.productNo}';
-  const productStart = '${param.productStart}';
-  const productEnd = '${param.productEnd}';
+	  setTimeout(() => {
+	    modal.querySelector('.modal-content').classList.add('active');
+	  }, 10);
 
-  document.getElementById('availableStart').textContent = productStart;
-  document.getElementById('availableEnd').textContent = productEnd;
+	  const productNo = '${param.productNo}';
+	  const productStart = '${param.productStart}';
+	  const productEnd = '${param.productEnd}';
 
-  fetch(contextPath + '/getReservedDates?productNo=' + productNo)
-    .then(res => res.json())
-    .then(data => {
-      reservedRanges = data.map(r => {
-        const start = new Date(r.startDate);
-        const end = new Date(r.endDate);
-        end.setDate(end.getDate()); // inclusive
-        return { start, end };
-      });
+	  document.getElementById('availableStart').textContent = productStart;
+	  document.getElementById('availableEnd').textContent = productEnd;
 
-      const calendarEl = document.getElementById('calendar');
-      if (calendar !== null) calendar.destroy();
+	  fetch(contextPath + '/getReservedDates?productNo=' + productNo)
+	    .then(res => res.json())
+	    .then(data => {
+	      reservedRanges = data.map(r => {
+	        const start = new Date(r.startDate);
+	        const end = new Date(r.endDate);
+	        return { start, end };
+	      });
 
-      const colors = ['#FFB3BA', '#BAE1FF', '#BAFFC9', '#FFFFBA', '#D9BAFF', '#FFCBA4'];
-      const memberColorMap = {};
-      let colorIndex = 0;
+	      const calendarEl = document.getElementById('calendar');
+	      if (calendar !== null) calendar.destroy();
 
-      calendar = new FullCalendar.Calendar(calendarEl, {
-        initialView: 'dayGridMonth',
-        locale: 'ko',
-        height: 'auto',
-        initialDate: productStart,
-        selectable: true,
-        unselectAuto: true,
-        selectOverlap: false,
-        showNonCurrentDates: true,
+	      const colors = ['#FFB3BA', '#BAE1FF', '#BAFFC9', '#FFFFBA', '#D9BAFF', '#FFCBA4'];
+	      const memberColorMap = {};
+	      let colorIndex = 0;
 
-        validRange: {
-          start: productStart,
-          end: productEnd
-        },
+	      calendar = new FullCalendar.Calendar(calendarEl, {
+	        initialView: 'dayGridMonth',
+	        locale: 'ko',
+	        height: 480,
+	        headerToolbar: {
+	        	 left: '',       // ← 버튼 제거
+	        	  center: 'title', // ✅ 타이틀만 가운데 정렬
+	        	  right: 'prev,next' // → 버튼 우측
+	          },
+	        initialDate: productStart,
+	        selectable: true,
+	        validRange: { start: productStart, end: productEnd },
+	        select: function (info) {
+	          const start = info.startStr;
+	          const end = new Date(info.endStr);
+	          end.setDate(end.getDate() - 1);
+	          selectedStart = start;
+	          selectedEnd = end.toISOString().split('T')[0];
+	        },
+	        dateClick: function (info) {
+	          selectedStart = selectedEnd = info.dateStr;
+	        },
+	        events: data.map(r => {
+	          const memberNo = r.memberNo;
+	          if (!memberColorMap[memberNo]) {
+	            memberColorMap[memberNo] = colors[colorIndex++ % colors.length];
+	          }
+	          const end = new Date(r.endDate);
+	          end.setDate(end.getDate() + 1);
+	          return {
+	            start: r.startDate,
+	            end: end.toISOString().split('T')[0],
+	            rendering: 'background',
+	            backgroundColor: memberColorMap[memberNo],
+	            title: `예약자: ${r.nickName || '알 수 없음'}`
+	          };
+	        }),
+	        eventDidMount: function (info) {
+	          if (info.event.title) {
+	            info.el.setAttribute('title', info.event.title);
+	          }
+	        }
+	      });
 
-        selectAllow: function (selectInfo) {
-          const start = selectInfo.start;
-          const end = selectInfo.end;
-
-          const validStart = new Date('${param.productStart}');
-          const validEnd = new Date('${param.productEnd}');
-          validEnd.setDate(validEnd.getDate() + 1);
-
-          return start >= validStart && end <= validEnd;
-        },
-
-        // ✅ 드래그로 날짜 선택
-        select: function (info) {
-          const start = info.startStr;
-          const end = new Date(info.endStr);
-          end.setDate(end.getDate() - 1);
-          const endStr = end.toISOString().split('T')[0];
-
-          selectedStart = start;
-          selectedEnd = endStr;
-        },
-
-        // ✅ 단일 날짜 클릭
-        dateClick: function (info) {
-          const clicked = info.dateStr;
-          selectedStart = clicked;
-          selectedEnd = clicked;
-        },
-
-        events: data.map(r => {
-          const memberNo = r.memberNo;
-          if (!memberColorMap[memberNo]) {
-            memberColorMap[memberNo] = colors[colorIndex % colors.length];
-            colorIndex++;
-          }
-          const endObj = new Date(r.endDate);
-          endObj.setDate(endObj.getDate() + 1);
-          return {
-            start: r.startDate,
-            end: endObj.toISOString().split('T')[0],
-            rendering: 'background',
-            backgroundColor: memberColorMap[memberNo],
-            title: `예약자: ${r.nickName || '알 수 없음'}`
-          };
-        }),
-
-        eventDidMount: function (info) {
-          if (info.event.title) {
-            info.el.setAttribute('title', info.event.title);
-          }
-        }
-      });
-
-      calendar.render();
-    });
-}
+	      calendar.render();
+	    });
+	}
 
 function closeCalendar() {
-  document.getElementById('calendarModal').style.display = 'none';
-}
+	  const modal = document.getElementById("calendarModal");
+	  const content = modal.querySelector(".modal-content");
+	  content.classList.remove("active");
+	  setTimeout(() => {
+	    modal.style.display = "none";
+	  }, 250);
+	}
 
 function submitReservation() {
 	  const memberNo = '${sessionScope.no}';
