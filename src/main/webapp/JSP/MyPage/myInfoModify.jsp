@@ -64,14 +64,14 @@
               <input type="tel" name="phone" value="${member.phone}" placeholder="010-1234-5678" />
             </div>
 
-            <div class="form-group">
+            <%-- <div class="form-group">
               <label>거래지역</label>
               <button type="button" id="postSearch">➕ 주소 검색</button>
               <div id="regionList"></div>
               <input type="hidden" name="region1" id="region1" value="${member.region1}" />
               <input type="hidden" name="region2" id="region2" value="${member.region2}" />
               <input type="hidden" name="region3" id="region3" value="${member.region3}" />
-            </div>
+            </div> --%>
 
             <div class="form-group">
               <label>프로필 이미지</label>
@@ -90,7 +90,7 @@
     </div>
   </div>
 
-  <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+  <!-- <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
   <script>
   // 1) 초기 세션 값을 JS 배열로
   const selectedRegions = [
@@ -103,7 +103,7 @@
   window.addEventListener('DOMContentLoaded', () => {
     updateRegionList(); // 초기 값이 있으면 표시
   });
-
+ 
   // 3) 주소 검색 버튼 클릭 시 새 주소 추가
   document.getElementById("postSearch").addEventListener("click", function() {
     new daum.Postcode({
@@ -120,7 +120,7 @@
         selectedRegions.push(region);
         updateRegionList();
       }
-    }).open();
+    }).open(); d
   });
 
   // 4) 지역 목록 렌더링 함수
@@ -152,7 +152,7 @@
     selectedRegions.splice(index, 1);
     updateRegionList();
   }
-</script>
+</script> -->
 
 
 </body>

@@ -13,20 +13,27 @@
 	<div class="container">
 		<h2>상품 등록 유형을 선택하세요</h2>
 		<div class="type-filter">
-
-			<a href="productRegisterSell.jsp" class="type-link type-sell"> <img
-				src="<%=request.getContextPath()%>/img/icons/sell.png" alt="판매"
-				class="type-icon"> <span>판매</span>
-			</a> <a href="productRegisterRent.jsp" class="type-link type-rent"> <img
-				src="<%=request.getContextPath()%>/img/icons/rent.png" alt="대여"
-				class="type-icon"> <span>대여</span>
-			</a> <a href="productRegisterRentSell.jsp" class="type-link type-both">
-				<img src="<%=request.getContextPath()%>/img/icons/both.png"
-				alt="판매/대여" class="type-icon"> <span>판매/대여</span>
-			</a> <a href="productRegisterFree.jsp" class="type-link type-free"> <img
-				src="<%=request.getContextPath()%>/img/icons/free.png" alt="무료나눔"
-				class="type-icon"> <span>무료나눔</span>
+		
+			<a href="${pageContext.request.contextPath}/sell" class="type-link type-sell">
+			  <img src="${pageContext.request.contextPath}/img/icons/sell.png" alt="판매" class="type-icon">
+			  <span>판매</span>
 			</a>
+			
+			<a href="${pageContext.request.contextPath}/rent" class="type-link type-rent">
+			  <img src="${pageContext.request.contextPath}/img/icons/rent.png" alt="대여" class="type-icon">
+			  <span>대여</span>
+			</a>
+			
+			<a href="${pageContext.request.contextPath}/rentSell" class="type-link type-both">
+			  <img src="${pageContext.request.contextPath}/img/icons/both.png" alt="판매/대여" class="type-icon">
+			  <span>판매/대여</span>
+			</a>
+			
+			<a href="${pageContext.request.contextPath}/free" class="type-link type-free">
+			  <img src="${pageContext.request.contextPath}/img/icons/free.png" alt="무료나눔" class="type-icon">
+			  <span>무료나눔</span>
+			</a>
+
 		</div>
 	</div>
 
