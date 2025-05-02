@@ -108,5 +108,8 @@ public class ReportedProduct {
         this.status = status;
     }
     
+    public boolean isActuallyHidden() {
+        return !this.hide;  // DB 1 → false (노출), DB 0 → true (숨김)
+    }
     
 }
