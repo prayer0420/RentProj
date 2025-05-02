@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+	<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>   
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -169,6 +169,12 @@
 		              /></a>
 		              <div class="product-info">
 		                <p><a href="${contextPath }/productDetail?no=${item.no }">${item.productNo }</a></p>
+		                <p>
+						  대여날짜:
+						  <fmt:formatDate value="${item.startDate}" pattern="yyyy-MM-dd" />
+						  <span> ~ </span>
+						  <fmt:formatDate value="${item.endDate}" pattern="yyyy-MM-dd" />
+						</p>
 		                <h3><a href="${contextPath }/productDetail?no=${item.no }">${item.title }</a></h3>
 		                <p>가격: <fmt:formatNumber value="${item.rentPrice }" type="number" groupingUsed="true"/>원</p>
 		                <p>배송비: <fmt:formatNumber value="${item.deliveryPrice }" type="number" groupingUsed="true"/></p>
