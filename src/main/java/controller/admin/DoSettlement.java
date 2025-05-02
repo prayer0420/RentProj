@@ -38,9 +38,10 @@ public class DoSettlement extends HttpServlet {
 
 	        int settlementNo = Integer.parseInt(param);
 	        boolean success = settlementService.processSettlement(settlementNo);
+	        String completedAt = settlementService.getCompletedAt(settlementNo);
 
 	        response.setContentType("application/json;charset=UTF-8");
-	        response.getWriter().write("{\"success\": true}");
+	        response.getWriter().write("{\"success\": true, \"completedAt\": \"" + completedAt + "\"}");
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	        response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);

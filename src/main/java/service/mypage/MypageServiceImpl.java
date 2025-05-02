@@ -174,8 +174,10 @@ public class MypageServiceImpl implements MypageService {
 	
 	@Override
 	public boolean confirmOrder(Integer orderNo) throws Exception {
+	    // Integer로 결과 받기
+	    Integer updateCount = mypageDao.updateOrderStatusToCompleted(orderNo);
 		// 구매확정 시, 거래완료로 상태 업데이트 
-	    boolean result = mypageDao.updateOrderStatusToCompleted(orderNo);
+	    boolean result = updateCount != null && updateCount > 0;
 	    // 상태 업데이트 성공 시, settlement insert
 	    if (result) {
 	        try {
