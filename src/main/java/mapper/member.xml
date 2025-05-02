@@ -110,4 +110,12 @@
 	  SET fcmToken = #{fcmToken}
 	  WHERE id = #{id}
 	</update>
+	
+	<!--정산 시, 주문수 +1처리 -->
+	<update id="updateOrderCountPlusOne" parameterType="int">
+    UPDATE member
+    SET orderCount = orderCount + 1
+    WHERE no = #{memberNo}
+</update>
+	
 </mapper>

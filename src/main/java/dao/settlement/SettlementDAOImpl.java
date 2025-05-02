@@ -117,4 +117,11 @@ public class SettlementDAOImpl implements SettlementDAO {
 	        return sqlSession.selectOne("mapper.settlement.selectCompletedAt", settlementNo);
 	    }
 	}
+
+	@Override
+	public int updateOrderCountPlusOne(int memberNo) throws Exception {
+	    try (SqlSession sqlSession = MybatisSqlSessionFactory.getSqlSessionFactory().openSession(true)) {
+	        return sqlSession.update("mapper.member.updateOrderCountPlusOne", memberNo);
+	    }
+	}
 }

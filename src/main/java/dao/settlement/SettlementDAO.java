@@ -40,4 +40,6 @@ public interface SettlementDAO {
     int updateSettlementCompletedAt(int settlementNo) throws Exception;
     // 정산완료 시간 조회
     String selectCompletedAt(int settlementNo) throws Exception;
+    // 정산완료 시, 주문카운트 업데이트
+    int updateOrderCountPlusOne(int memberNo) throws Exception;
 }
