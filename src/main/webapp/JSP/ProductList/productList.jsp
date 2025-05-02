@@ -31,20 +31,19 @@
 		      <span class="free">무료나눔</span><br/>
 		    </c:when>
 		    <c:otherwise>
-		      <c:if test="${p.salePrice != null}">
+		      <c:if test="${p.salePrice != null and p.tradeType != '대여' and p.tradeType != '나눔'}">
 		        <span class="sale">판매가 <fmt:formatNumber value="${p.salePrice}" type="number" />원</span><br/>
 		      </c:if>
 		      <c:if test="${p.rentPrice != null}">
 		        <span class="rent">대여가 <fmt:formatNumber value="${p.rentPrice}" type="number" />원/1일</span><br/>
 		      </c:if>
-		      <c:if test="${p.tradeType == '대여' or p.tradeType == '판매대여'}">
-		        <c:if test="${p.secPrice != null}">
-		          <span class="deposit">보증금 <fmt:formatNumber value="${p.secPrice}" type="number" />원</span>
-		        </c:if>
+		      <c:if test="${(p.tradeType == '대여' or p.tradeType == '판매대여') and p.secPrice != null}">
+		        <span class="deposit">보증금 <fmt:formatNumber value="${p.secPrice}" type="number" />원</span>
 		      </c:if>
 		    </c:otherwise>
 		  </c:choose>
 		</div>
+
 		<div class="product-type">${p.tradeType}</div>
 
 		

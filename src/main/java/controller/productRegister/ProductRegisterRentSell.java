@@ -19,31 +19,19 @@ import service.member.MemberServiceImpl;
 import service.product.ProductService;
 import service.product.ProductServiceImpl;
 
-/**
- * Servlet implementation class ProductRegisterRentSell
- */
 @WebServlet("/rentSell")
 public class ProductRegisterRentSell extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
     public ProductRegisterRentSell() {
         super();
         // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 			request.getRequestDispatcher("/JSP/ProductRegister/productRegisterRentSell.jsp").forward(request, response);
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 request.setCharacterEncoding("utf-8");
 		
@@ -68,7 +56,6 @@ request.setCharacterEncoding("utf-8");
 		String tradeType = multi.getParameter("tradeType");
 		Integer secPrice = Integer.parseInt(multi.getParameter("secPrice"));
 		
-//		Integer memberNo = Integer.parseInt(multi.getParameter("memberNo"));
 		String startDate = multi.getParameter("startDate");
 		String endDate = multi.getParameter("endDate");
 		Integer rentPrice = Integer.parseInt(multi.getParameter("rentPrice"));
