@@ -62,6 +62,9 @@ public interface MypageDAO {
 	// 반납송장번호 입력 업데이트
 	boolean updateReturnInvoiceInfo(Integer orderNo, String reDeliveryComp, String reInvoiceNo);
 	
+	// 상품반납완료 버튼 누르면 orderStatus 업데이트('거래완료')
+	Integer updateRentCompleted(Integer orderNo);
+	
 	
 	
 

@@ -195,4 +195,13 @@ public class MypageDAOImpl implements MypageDAO {
         }
 	}
 
+	@Override
+	public Integer updateRentCompleted(Integer orderNo) {
+		try (SqlSession session = MybatisSqlSessionFactory.getSqlSessionFactory().openSession()) {
+    		Integer result = session.update("mapper.mypage.updateRentCompleted", orderNo);
+    		session.commit();
+    		return result;
+    	}
+	}
+
 } 

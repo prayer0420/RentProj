@@ -49,4 +49,7 @@ public interface MypageService {
 	// 대여구매자 '반납 송장번호 입력' 버튼
 	boolean returnSetInvoiceInfo(Integer orderNo, String reDeliveryComp, String reInvoiceNo) throws Exception;
 
+	// 대여판매자 '상품반납확인' 버튼 누르면 상태 update
+	boolean confirmReturn(Integer orderNo) throws Exception;
+
 }
