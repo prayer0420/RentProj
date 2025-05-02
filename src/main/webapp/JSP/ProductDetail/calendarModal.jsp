@@ -246,14 +246,20 @@ function openCalendar() {
 	        selectable: true,
 	        validRange: { start: productStart, end: productEnd },
 	        select: function (info) {
-	          const start = info.startStr;
-	          const end = new Date(info.endStr);
-	          end.setDate(end.getDate() - 1);
-	          selectedStart = start;
-	          selectedEnd = end.toISOString().split('T')[0];
+	        	 const start = info.startStr;
+	        	  const end = new Date(info.endStr);
+	        	  end.setDate(end.getDate() - 1);
+	        	  const endStr = end.toISOString().split('T')[0];
+
+	        	  selectedStart = start;
+	        	  selectedEnd = endStr;
+
+	        	  console.log("✔ 드래그 선택됨:", selectedStart, "~", selectedEnd);
 	        },
 	        dateClick: function (info) {
-	          selectedStart = selectedEnd = info.dateStr;
+	        	selectedStart = info.dateStr;
+	        	  selectedEnd = info.dateStr;
+	        	  console.log("✔ 클릭 선택됨:", selectedStart);
 	        },
 	        events: data.map(r => {
 	          const memberNo = r.memberNo;
@@ -303,8 +309,7 @@ function submitReservation() {
 	    return;
 	  }
 
-	  const alertMessage = `✅ ${selectedStart} ~ ${selectedEnd} 예약하시겠습니까?`;
-
+	  const alertMessage = "✅"+selectedStart+"~"+selectedEnd+"예약하시겠습니까?";
 	  if (!confirm(alertMessage)) {
 	    return;
 	  }
