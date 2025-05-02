@@ -47,15 +47,24 @@
       <button id="btn-location">📍 위치</button>
       <div class="location-display">
         <c:if test="${not empty cookieLocation}">
+      <c:choose>
+        <c:when test="${fn:indexOf(cookieLocation, '구') >= 0}">
+          <c:set var="guIndex" value="${fn:indexOf(cookieLocation, '구')}" />
+          <c:set var="guLocation" value="${fn:substring(cookieLocation, 0, guIndex + 1)}" />
           <c:choose>
-            <c:when test="${fn:indexOf(cookieLocation, '구') >= 0}">
-              현재 위치: ${fn:substring(cookieLocation, 0, fn:indexOf(cookieLocation, '구') + 1)}
+            <c:when test="${fn:startsWith(guLocation, '서울')}">
+              현재 위치: 서울시 ${fn:substring(guLocation, 2, fn:length(guLocation))}
             </c:when>
             <c:otherwise>
-              현재 위치: ${cookieLocation}
+              현재 위치: ${guLocation}
             </c:otherwise>
           </c:choose>
-        </c:if>
+        </c:when>
+        <c:otherwise>
+          현재 위치: ${cookieLocation}
+        </c:otherwise>
+      </c:choose>
+    </c:if>
       </div>
 
       <button id="btn-alarm">🔔 알림
