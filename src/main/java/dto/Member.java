@@ -12,11 +12,8 @@ public class Member {
 	String nickname;
 	String phone;
 	String address1;
-	String region1;
 	String address2;
 	String address3;
-	String region2;
-	String region3;
 	String profileImage;
 	String location;
 	Integer orderCount;
@@ -59,8 +56,7 @@ public class Member {
 	}
 
 	public Member(Integer no, Integer gradeId, String id, String password, String name, String nickname, String phone,
-			String address1, String region1, String address2, String address3, String region2, String region3,
-			String profileImage, String location, Integer orderCount, Integer adminNo, Date regDate, String fcmToken) {
+			String address1,String address2, String address3, String profileImage, String location, Integer orderCount, Integer adminNo, Date regDate, String fcmToken) {
 		super();
 		this.no = no;
 		this.gradeId = gradeId;
@@ -70,11 +66,8 @@ public class Member {
 		this.nickname = nickname;
 		this.phone = phone;
 		this.address1 = address1;
-		this.region1 = region1;
 		this.address2 = address2;
 		this.address3 = address3;
-		this.region2 = region2;
-		this.region3 = region3;
 		this.profileImage = profileImage;
 		this.location = location;
 		this.orderCount = orderCount;
@@ -98,8 +91,7 @@ public class Member {
 		this.profileImage = profileImage;
 	}
 
-	public Member(String id, String password, String name, String nickname, String phone, String address1,
-			String region1) {
+	public Member(String id, String password, String name, String nickname, String phone, String address1) {
 		super();
 		this.id = id;
 		this.password = password;
@@ -107,7 +99,6 @@ public class Member {
 		this.nickname = nickname;
 		this.phone = phone;
 		this.address1 = address1;
-		this.region1 = region1;
 	}
 
 	public void setAddress2(String address2) {
@@ -120,22 +111,6 @@ public class Member {
 
 	public void setAddress3(String address3) {
 		this.address3 = address3;
-	}
-
-	public String getRegion2() {
-		return region2;
-	}
-
-	public void setRegion2(String region2) {
-		this.region2 = region2;
-	}
-
-	public String getRegion3() {
-		return region3;
-	}
-
-	public void setRegion3(String region3) {
-		this.region3 = region3;
 	}
 
 	public String getProfileImage() {
@@ -206,9 +181,6 @@ public class Member {
 		return address1;
 	}
 
-	public String getRegion1() {
-		return region1;
-	}
 	public void setPassword(String password) {
 		this.password = password;
 	}
@@ -224,10 +196,6 @@ public class Member {
 	public void setAddress1(String address1) {
 		this.address1 = address1;
 	}
-	public void setRegion1(String region1) {
-		this.region1 = region1;
-	}
-	
 	public Double getLatitude() {
 	    return latitude;
 	}

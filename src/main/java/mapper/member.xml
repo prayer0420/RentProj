@@ -8,8 +8,8 @@
 <!--null허용이 되는값이라면 모든 파라미터를 지정-->
 <!--넘어온 Member객체의 getter메서드를 자동 호출하여 값 가져옴-->
 	<insert id="insertMember" parameterType="member">
-		Insert Into member (id,password,name,nickname,phone,address1,address2,address3,region1,region2,region3,profileImage,adminNo,fcmToken) 
-		values(#{id},#{password},#{name},#{nickname},#{phone},#{address1},#{address2},#{address3},#{region1},#{region2},#{region3},#{profileImage},#{adminNo}, #{fcmToken})	
+		Insert Into member (id,password,name,nickname,phone,address1,address2,address3,location,profileImage,adminNo,fcmToken) 
+		values(#{id},#{password},#{name},#{nickname},#{phone},#{address1},#{address2},#{address3},#{location},#{profileImage},#{adminNo}, #{fcmToken})	
 	</insert>
 	
 	<select id="selectMember" parameterType="String" resultType="member">
@@ -19,10 +19,9 @@
 	<update id="updateMember" parameterType="member">
 		 UPDATE member
     SET 
-        gradeId = #{gradeId},password = #{password}, name=#{name},nickname = #{nickname},
+        gradeId = #{gradeId}, password = #{password}, name=#{name},nickname = #{nickname},
         phone = #{phone},address1 = #{address1},address2 = #{address2},
-        address3 = #{address3},region1 = #{region1},region2 = #{region2},
-        region3 = #{region3},profileImage = #{profileImage},location = #{location},
+        address3 = #{address3},location=#{location}, profileImage = #{profileImage},
         orderCount = #{orderCount},adminNo = #{adminNo}, fcmToken=#{fcmToken}
     WHERE id = #{id}
 	</update>
@@ -90,11 +89,12 @@
 
 	<!-- 회원 위치 업데이트 -->
 	<update id="updateLocation" parameterType="map">
-  		UPDATE member
-     		SET latitude = #{lat},
-         	longitude = #{lng},
-         	location = #{location}
-   		WHERE no = #{no}
+  		UPDATE	member
+   		SET 
+     			latitude = #{lat},
+       			longitude = #{lng},
+         		location = #{location}
+   		WHERE	no = #{no}
 	</update>
 
 	<!--배송지 정보 가져오기 -->
@@ -104,12 +104,10 @@
 		WHERE memberNo = #{memberNo}
 	</select>
 	
+	
 	<update id="updateFcmToken" parameterType="map">
 	  UPDATE member
 	  SET fcmToken = #{fcmToken}
 	  WHERE id = #{id}
 	</update>
-
-		
-		
 </mapper>
