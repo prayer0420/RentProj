@@ -65,46 +65,110 @@ public class SettlementServiceImpl implements SettlementService {
 	public void insertSettlementByOrderNo(int orderNo) throws Exception {
 		 // 1. 주문 정보 가져오기
 	    Order order = settlementDAO.selectOrderInfo(orderNo);
+	    System.out.println("=== order 조회 결과 === " + order);
 	    if (order == null) {
 	        throw new Exception("주문 정보를 찾을 수 없습니다. orderNo = " + orderNo);
 	    }
 
 	    // 2. 회원 정보 가져오기
 	    Member member = settlementDAO.selectMemberInfo(order.getMemberNo());
+	    System.out.println("=== member 조회 결과 === " + member);
 	    if (member == null) {
 	        throw new Exception("회원 정보를 찾을 수 없습니다. memberNo = " + order.getMemberNo());
 	    }
 
 	    // 3. gradeRate (수수료율) 가져오기
-	    double gradeRate = settlementDAO.selectGradeRate(member.getGradeId());
+	    Double gradeRateObj = settlementDAO.selectGradeRate(member.getGradeId());
+	    System.out.println("=== gradeRate 조회 결과 === " + gradeRateObj);
+	    if (gradeRateObj == null) {
+	        throw new Exception("등급 수수료율을 찾을 수 없습니다. gradeId = " + member.getGradeId());
+	    }
+	    double gradeRate = gradeRateObj;
 
+	    System.out.println("=== order 상세 값 ===");
+	    System.out.println("order.getOrderNo() = " + order.getOrderNo());
+	    System.out.println("order.getMemberNo() = " + order.getMemberNo());
+	    System.out.println("order.getProductNo() = " + order.getProductNo());
+	    System.out.println("order.getRevenueType() = " + order.getRevenueType());
+	    System.out.println("order.getPrice() = " + order.getPrice());
+	    System.out.println("order.getDeliveryPrice() = " + order.getDeliveryPrice());
+	    System.out.println("order.getSecPrice() = " + order.getSecPrice());
+
+	    System.out.println("=== member 상세 값 ===");
+	    System.out.println("member.getMemberNo() = " + member.getNo());
+	    System.out.println("member.getGradeId() = " + member.getGradeId());
+	    System.out.println("member.getOrderCount() = " + member.getOrderCount());
+
+	    System.out.println("=== gradeRate 최종 값 === " + gradeRate);
+	    
+	    
 	    // 4. 수수료(feeAmount) 계산
-	    int feeAmount = (int) (order.getPrice() * gradeRate);
+	    if (order.getPrice() == null) {
+	        throw new Exception("주문 금액(price)이 null입니다. orderNo = " + orderNo);
+	    }
+	    int feeAmount = (int) (order.getPrice() * (gradeRate / 100.0));
 
 	    // 5. 최종 정산 금액(finalSettleAmount) 계산
-	    int finalSettleAmount = 0;
-	    if ("판매".equals(order.getRevenueType())) {
-	        finalSettleAmount = order.getPrice() + order.getDeliveryPrice() - feeAmount;
-	    } else if ("대여".equals(order.getRevenueType())) {
-	        finalSettleAmount = order.getSecPrice() + order.getPrice() + order.getDeliveryPrice() - feeAmount;
+	    String revenueType = order.getRevenueType();
+	    if (revenueType == null) {
+	        throw new Exception("revenueType 값이 null입니다. orderNo = " + orderNo);
 	    }
+
+	    int finalSettleAmount = 0;
+	    if ("판매".equals(revenueType)) {
+	        finalSettleAmount = safeInt(order.getPrice()) + safeInt(order.getDeliveryPrice()) - feeAmount;
+	    } else if ("대여".equals(revenueType)) {
+	        finalSettleAmount = safeInt(order.getSecPrice()) + safeInt(order.getPrice()) + safeInt(order.getDeliveryPrice()) - feeAmount;
+	    } else {
+	        throw new Exception("알 수 없는 revenueType입니다: " + revenueType);
+	    }
+	    
+	    
 
 	    // 6. Settlement DTO 세팅
 	    Settlement settlement = new Settlement();
 	    settlement.setOrderNo(order.getOrderNo());
 	    settlement.setMemberNo(order.getMemberNo());
 	    settlement.setProductNo(order.getProductNo());
-	    settlement.setRevenueType(order.getRevenueType());
-	    settlement.setPrice(order.getPrice());
-	    settlement.setDeliveryPrice(order.getDeliveryPrice());
-	    settlement.setSecPrice(order.getSecPrice());
+	    settlement.setRevenueType(safeString(order.getRevenueType()));
+	    settlement.setPrice(safeInt(order.getPrice()));
+	    settlement.setDeliveryPrice(safeInt(order.getDeliveryPrice()));
+	    settlement.setSecPrice(safeInt(order.getSecPrice()));
 	    settlement.setGradeRate(gradeRate);
 	    settlement.setFeeAmount(feeAmount);
 	    settlement.setFinalSettleAmount(finalSettleAmount);
-	    settlement.setFeeStatus("PENDING"); // 초기에는 대기 상태
+	    settlement.setFeeStatus("PENDING");
+	    
+	 // 🔶 여기서 출력 추가
+	    System.out.println("=== Settlement DTO 값 점검 ===");
+	    System.out.println("orderNo = " + settlement.getOrderNo());
+	    System.out.println("memberNo = " + settlement.getMemberNo());
+	    System.out.println("productNo = " + settlement.getProductNo());
+	    System.out.println("revenueType = " + settlement.getRevenueType());
+	    System.out.println("price = " + settlement.getPrice());
+	    System.out.println("deliveryPrice = " + settlement.getDeliveryPrice());
+	    System.out.println("secPrice = " + settlement.getSecPrice());
+	    System.out.println("gradeRate = " + settlement.getGradeRate());
+	    System.out.println("feeAmount = " + settlement.getFeeAmount());
+	    System.out.println("finalSettleAmount = " + settlement.getFinalSettleAmount());
+	    System.out.println("feeStatus = " + settlement.getFeeStatus());
+
 
 	    // 7. settlement insert
 	    settlementDAO.insertSettlement(settlement);
 	}
-	
+
+    private int safeInt(Integer value) {
+        return value != null ? value : 0;
+    }
+
+    private String safeString(String value) {
+        return value != null ? value : "";
+    }
+
+	@Override
+	public String getCompletedAt(int settlementNo) throws Exception {
+	    return settlementDAO.selectCompletedAt(settlementNo);
+	}
 }
+

@@ -110,4 +110,11 @@ public class SettlementDAOImpl implements SettlementDAO {
 	        return sqlSession.update("mapper.settlement.updateSettlementCompletedAt", settlementNo);
 	    }
 	}
+
+	@Override
+	public String selectCompletedAt(int settlementNo) throws Exception {
+	    try (SqlSession sqlSession = MybatisSqlSessionFactory.getSqlSessionFactory().openSession(true)) {
+	        return sqlSession.selectOne("mapper.settlement.selectCompletedAt", settlementNo);
+	    }
+	}
 }

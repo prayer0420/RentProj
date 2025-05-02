@@ -38,4 +38,6 @@ public interface SettlementDAO {
     double selectGradeRate(int gradeId) throws Exception;
     // 정산완료 시간 업데이트
     int updateSettlementCompletedAt(int settlementNo) throws Exception;
+    // 정산완료 시간 조회
+    String selectCompletedAt(int settlementNo) throws Exception;
 }

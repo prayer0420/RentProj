@@ -37,27 +37,27 @@ System.out.println("세션 userId: " + userId);
 						<c:if test="${not empty product.img1}">
 							<img
 								src="${pageContext.request.contextPath}/upload/${product.img1}"
-								class="slide-image" style="display: none;">
+								class="slide-image" >
 						</c:if>
 						<c:if test="${not empty product.img2}">
 							<img
 								src="${pageContext.request.contextPath}/upload/${product.img2}"
-								class="slide-image" style="display: none;">
+								class="slide-image">
 						</c:if>
 						<c:if test="${not empty product.img3}">
 							<img
 								src="${pageContext.request.contextPath}/upload/${product.img3}"
-								class="slide-image" style="display: none;">
+								class="slide-image">
 						</c:if>
 						<c:if test="${not empty product.img4}">
 							<img
 								src="${pageContext.request.contextPath}/upload/${product.img4}"
-								class="slide-image" style="display: none;">
+								class="slide-image">
 						</c:if>
 						<c:if test="${not empty product.img5}">
 							<img
 								src="${pageContext.request.contextPath}/upload/${product.img5}"
-								class="slide-image" style="display: none;">
+								class="slide-image">
 						</c:if>
 
 						<!-- 이미지 하나도 없을 경우 기본이미지 -->
@@ -70,7 +70,7 @@ System.out.println("세션 userId: " + userId);
 
 						<button id="prevBtn" class="slide-btn">&lt;</button>
 						<button id="nextBtn" class="slide-btn">&gt;</button>
-						<div id="slideCounter" class="slide-counter">1 / 1</div>
+						<div id="slideCounter" class="slide-counter"></div>
 					</div>
 				</div>
 				<div class="product-details">
@@ -584,4 +584,46 @@ console.log("로그인 여부:", isLoggedIn);
 	    }
 	  });
 	}
+	/*슬라이더 관련*/
+	document.addEventListener("DOMContentLoaded", function () {
+  const images = document.querySelectorAll(".slide-image");
+  const prevBtn = document.getElementById("prevBtn");
+  const nextBtn = document.getElementById("nextBtn");
+  const counter = document.getElementById("slideCounter");
+
+  const totalImages = images.length;
+  let currentIndex = 0; // ❗초기 인덱스는 0부터 시작해야 함
+  
+  function showImage(index) {
+    images.forEach((img, i) => {
+    	img.classList.remove("active");
+    	if (i === index) {
+    	  img.classList.add("active");
+    	}
+    });
+    if (counter) {
+      counter.textContent = (index+1) +"/"+totalImages;
+    	if(index==totalImages) index=1;
+    }
+  }
+
+  if (totalImages === 0) {
+    prevBtn.style.display = "none";
+    nextBtn.style.display = "none";
+    if (counter) counter.style.display = "none";
+    return;
+  }
+
+  showImage(currentIndex); // ✅ 첫 이미지 보이게 하기
+
+  prevBtn.addEventListener("click", () => {
+    currentIndex = (currentIndex - 1 + totalImages) % totalImages;
+    showImage(currentIndex);
+  });
+
+  nextBtn.addEventListener("click", () => {
+    currentIndex = (currentIndex + 1) % totalImages;
+    showImage(currentIndex);
+  });
+});
 </script>

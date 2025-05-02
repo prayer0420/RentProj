@@ -114,7 +114,7 @@
             <td><fmt:formatNumber value="${settle.gradeRate}" maxFractionDigits="2" /> %</td>
             <td><fmt:formatNumber value="${settle.feeAmount}" type="number" /> 원</td>
             <td><fmt:formatNumber value="${settle.finalSettleAmount}" type="number" /> 원</td>
-            <td><fmt:formatDate value="${settle.settlementCompletedAt}" pattern="yyyy-MM-dd HH:mm" /></td>
+            <td id="completedAt-${settle.settlementNo}"><fmt:formatDate value="${settle.settlementCompletedAt}" pattern="yyyy-MM-dd HH:mm" /></td>
           
           <td>
             <c:choose>
@@ -161,13 +161,18 @@
         url: "${pageContext.request.contextPath}/doSettlement",
         method: "POST",
         data: { settlementNo: settlementNo },
-        complete: function () {
-          button.prop("disabled", true);
-          button.text("✔ 정산완료");
-          button.css({
-            "background": "#d3d3d3",
-            "cursor": "default"
-          });
+        success: function(data) {
+          if (data.success) {
+            button.prop("disabled", true);
+            button.text("✔ 정산완료");
+            button.css({
+              "background": "#d3d3d3",
+              "cursor": "default"
+            });
+
+            // 정산 완료 시간 즉시 화면에 표시
+            $("#completedAt-" + settlementNo).text(data.completedAt);
+          }
         }
       });
     });

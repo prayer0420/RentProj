@@ -63,12 +63,11 @@
 	<!-- settlement insert -->
 	<insert id="insertSettlement" parameterType="dto.Settlement">
 	    INSERT INTO settlement (
-	        orderNo, memberNo, productNo, revenueType, price, deliveryPrice, secPrice,
-	        gradeRate, feeAmount, finalSettleAmount, feeStatus, payTime
+	        orderNo, memberNo, productNo, revenueType, 
+	        feeAmount, finalSettleAmount, feeStatus, payTime
 	    ) VALUES (
 	        #{orderNo}, #{memberNo}, #{productNo}, #{revenueType},
-	        #{price}, #{deliveryPrice}, #{secPrice},
-	        #{gradeRate}, #{feeAmount}, #{finalSettleAmount},
+	        #{feeAmount}, #{finalSettleAmount},
 	        #{feeStatus}, NOW()
 	    )
 	</insert>
@@ -122,7 +121,7 @@
 	        price,
 	        deliveryPrice,
 	        secPrice,
-	        revenueType
+	        orderType AS revenueType
 	    FROM `order`
 	    WHERE orderNo = #{orderNo}
 	</select>	
@@ -146,5 +145,11 @@
 	  SET feeStatus = 'COMPLETE'
 	  WHERE settlementNo = #{settlementNo}
 	</update>			
+	
+	<select id="selectCompletedAt" parameterType="int" resultType="string">
+    SELECT DATE_FORMAT(settlementCompletedAt, '%Y-%m-%d %H:%i:%s')
+    FROM settlement
+    WHERE settlementNo = #{settlementNo}
+	</select>
 	
 	</mapper>
