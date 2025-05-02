@@ -16,63 +16,7 @@
 <!-- Flatpickr JS -->
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
-<script>
-    window.onload = function () {
-      const registerForm = document.getElementById("registerForm");
-      const admitCheck = document.getElementById("admitCheck");
-      const categoryList = document.getElementById("category");
-      const title = document.getElementById("title");
-      const hand = document.getElementById("hand");
-      const delvPrice = document.getElementById("delvPrice");
-      const state = document.getElementById("state");
-      const ifile0 = document.getElementById("ifile0");
-      const content = document.getElementById("content");
-      const deliveryPrice = document.getElementById("deliveryPrice");
 
-      hand.addEventListener("change", toggleDeliveryPrice);
-      delvPrice.addEventListener("change", toggleDeliveryPrice);
-      
-      if (tooltipTrigger && tooltipBox) {
-    	  tooltipTrigger.addEventListener("click", function (e) {
-    	    e.stopPropagation(); // 클릭 전파 방지
-    	    tooltipBox.classList.toggle("show"); // 간단하게 toggle 메서드 사용
-    	  });
-
-    	  document.addEventListener("click", function (e) {
-    	    // 툴팁 외의 영역 클릭 시 닫기
-    	    if (!tooltipBox.contains(e.target) && !tooltipTrigger.contains(e.target)) {
-    	      tooltipBox.classList.remove("show");
-    	    }
-    	  });
-    	}
-      
-
-      
-
-      registerForm.addEventListener("submit", function (e) {
-        if (!admitCheck.checked) {
-          e.preventDefault(); alert("필수 동의를 체크해주세요.");
-        } else if (categoryList.value === "") {
-          e.preventDefault(); alert("카테고리를 선택해야 합니다.");
-        } else if (title.value.trim() === "") {
-          e.preventDefault(); alert("제목을 입력해주세요.");
-        } else if (!hand.checked && !delvPrice.checked) {
-          e.preventDefault(); alert("거래 방식을 선택해주세요.");
-        } else if (delvPrice.checked && deliveryPrice.value.trim() === "") {
-          e.preventDefault(); alert("배송비를 입력해주세요.");
-        } else if (state.value === "") {
-          e.preventDefault(); alert("상품 상태를 선택해주세요.");
-        } else if (ifile0.files.length === 0) {
-          e.preventDefault(); alert("상품 이미지를 1개 이상 등록해주세요.");
-        } else if (content.value.trim() === "") {
-          e.preventDefault(); alert("상품 설명을 입력해주세요.");
-        }
-      });
-      
-    };
-
-    
-  </script>
 </head>
 <body>
 	<jsp:include page="../Header/header.jsp" />
@@ -241,7 +185,60 @@
 			<button type="submit" class="submit-btn">등록하기</button>
 		</form>
 	</main>
-</body>
+	
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+	  const registerForm = document.getElementById("registerForm");
+	  const admitCheck = document.getElementById("admitCheck");
+	  const categoryList = document.getElementById("category");
+	  const title = document.getElementById("title");
+	  const hand = document.getElementById("hand");
+	  const delvPrice = document.getElementById("delvPrice");
+	  const state = document.getElementById("state");
+	  const ifile0 = document.getElementById("ifile0");
+	  const content = document.getElementById("content");
+	  const deliveryPrice = document.getElementById("deliveryPrice");
+	  const tooltipTrigger = document.getElementById("tooltipTrigger");
+	  const tooltipBox = document.getElementById("tooltipBox");
+
+	  hand.addEventListener("change", toggleDeliveryPrice);
+	  delvPrice.addEventListener("change", toggleDeliveryPrice);
+
+	  if (tooltipTrigger && tooltipBox) {
+	    tooltipTrigger.addEventListener("click", function (e) {
+	      e.stopPropagation();
+	      tooltipBox.classList.toggle("show");
+	    });
+
+	    document.addEventListener("click", function (e) {
+	      if (!tooltipBox.contains(e.target) && !tooltipTrigger.contains(e.target)) {
+	        tooltipBox.classList.remove("show");
+	      }
+	    });
+	  }
+
+	  registerForm.addEventListener("submit", function (e) {
+	    if (!admitCheck.checked) {
+	      e.preventDefault(); alert("필수 동의를 체크해주세요.");
+	    } else if (categoryList.value === "") {
+	      e.preventDefault(); alert("카테고리를 선택해야 합니다.");
+	    } else if (title.value.trim() === "") {
+	      e.preventDefault(); alert("제목을 입력해주세요.");
+	    } else if (!hand.checked && !delvPrice.checked) {
+	      e.preventDefault(); alert("거래 방식을 선택해주세요.");
+	    } else if (delvPrice.checked && deliveryPrice.value.trim() === "") {
+	      e.preventDefault(); alert("배송비를 입력해주세요.");
+	    } else if (state.value === "") {
+	      e.preventDefault(); alert("상품 상태를 선택해주세요.");
+	    } else if (ifile0.files.length === 0) {
+	      e.preventDefault(); alert("상품 이미지를 1개 이상 등록해주세요.");
+	    } else if (content.value.trim() === "") {
+	      e.preventDefault(); alert("상품 설명을 입력해주세요.");
+	    }
+	  });
+	});
+</script>
+	
 <script>
   let imageCount = 0;
 
@@ -350,7 +347,36 @@
   });
 </script>
 
+
+
+
 <script>
+function closeImageModal() {
+  document.getElementById('imageZoomModal').style.display = 'none';
+  document.getElementById('zoomedImage').src = '';
+}
+</script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // flatpickr 초기화
+    flatpickr("#startDate", {
+      dateFormat: "Y-m-d",  // "yyyy-mm-dd" 형식으로 날짜 입력
+      minDate: "today",  // 오늘 날짜 이후로만 선택 가능
+      onChange: function(selectedDates, dateStr, instance) {
+        // 선택한 날짜가 변경되면 'endDate'의 최소 날짜를 갱신
+        document.getElementById('endDate')._flatpickr.set("minDate", selectedDates[0]);
+      }
+    });
+
+    flatpickr("#endDate", {
+      dateFormat: "Y-m-d",  // "yyyy-mm-dd" 형식으로 날짜 입력
+      minDate: "today",  // 오늘 날짜 이후로만 선택 가능
+    });
+  });
+</script>
+
+<!-- <script>
 function formatPriceInputWithCaret(input) {
 	  const selectionStart = input.selectionStart;
 	  const rawValue = input.value.replace(/[^\d]/g, ''); // 숫자만 추출
@@ -396,56 +422,7 @@ function formatPriceInputWithCaret(input) {
 	  });
 	});
 
-</script>
-
-
-<script>
-function closeImageModal() {
-  document.getElementById('imageZoomModal').style.display = 'none';
-  document.getElementById('zoomedImage').src = '';
-}
-</script>
-
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-    // flatpickr 초기화
-    flatpickr("#startDate", {
-      dateFormat: "Y-m-d",  // "yyyy-mm-dd" 형식으로 날짜 입력
-      minDate: "today",  // 오늘 날짜 이후로만 선택 가능
-      onChange: function(selectedDates, dateStr, instance) {
-        // 선택한 날짜가 변경되면 'endDate'의 최소 날짜를 갱신
-        document.getElementById('endDate')._flatpickr.set("minDate", selectedDates[0]);
-      }
-    });
-
-    flatpickr("#endDate", {
-      dateFormat: "Y-m-d",  // "yyyy-mm-dd" 형식으로 날짜 입력
-      minDate: "today",  // 오늘 날짜 이후로만 선택 가능
-    });
-  });
-</script>
-
-<script>
-  document.getElementById("registerForm").addEventListener("submit", function (e) {
-    // 세션에 위치 정보가 없으면
-    const location = "${sessionScope.location}";
-
-    if (!location || location.trim() === "") {
-      // 위치 버튼 강조 (빨간 테두리 추가)
-      const locationButton = document.getElementById("btn-location");
-      locationButton.style.border = "2px solid red"; // 버튼 강조
-
-      // 페이지 맨 위로 스크롤
-      window.scrollTo(0, 0);
-
-      // 위치 갱신을 요청하는 알림창 띄우기
-      alert("위치 정보가 없으니 위치를 갱신해 주세요!");
-
-      // 제출을 막음
-      e.preventDefault(); 
-    }
-  });
-</script>
+</script> -->
 
 <script>
 function formatPriceInputWithCaret(input) {
@@ -501,52 +478,6 @@ function formatPriceInputWithCaret(input) {
 </script>
 
 <script>
-  // Function to check location and handle the alert
-  function checkLocation() {
-    const location = "${sessionScope.location}";
-
-    if (!location || location.trim() === "") {
-      // 위치 버튼 강조 (빨간 테두리 추가)
-      const locationButton = document.getElementById("btn-location");
-      locationButton.style.border = "2px solid red"; // 버튼 강조
-
-      // 페이지 맨 위로 스크롤
-      window.scrollTo(0, 0);
-
-      // 위치 갱신을 요청하는 알림창 띄우기
-      alert("위치 정보가 없으니 위치를 갱신해 주세요!");
-    }
-  }
-
-  // Event listener for the form submission
-  document.getElementById("registerForm").addEventListener("submit", function (e) {
-    // Check location when submitting the form
-    const location = "${sessionScope.location}";
-
-    if (!location || location.trim() === "") {
-      // 위치 버튼 강조 (빨간 테두리 추가)
-      const locationButton = document.getElementById("btn-location");
-      locationButton.style.border = "2px solid red"; // 버튼 강조
-
-      // 페이지 맨 위로 스크롤
-      window.scrollTo(0, 0);
-
-      // 위치 갱신을 요청하는 알림창 띄우기
-      alert("위치 정보가 없으니 위치를 갱신해 주세요!");
-
-      // 제출을 막음
-      e.preventDefault(); 
-    }
-  });
-
-  // Call checkLocation() on page load
-  window.onload = function() {
-    checkLocation();
-  };
-</script>
-
-
-<script>
 function toggleDeliveryPrice() {
 	  const hand = document.getElementById("hand");
 	  const delvPrice = document.getElementById("delvPrice");
@@ -582,6 +513,38 @@ function toggleDeliveryPrice() {
 	  hand.addEventListener("change", toggleDeliveryPrice);
 	  delvPrice.addEventListener("change", toggleDeliveryPrice);
 	};
+</script>
+
+<script>
+  window.addEventListener('DOMContentLoaded', function () {
+    const locationFromCookie = "${cookieLocation}"; // JSP에서 전달된 쿠키 위치값
+
+    function checkLocationHighlight() {
+      if (!locationFromCookie || locationFromCookie.trim() === "") {
+        const locationButton = document.getElementById("btn-location");
+        if (locationButton) {
+          locationButton.style.border = "2px solid red"; // 빨간 테두리 강조
+          alert("위치 정보가 없으니 위치를 갱신해 주세요!");
+          window.scrollTo(0, 0);
+        }
+        return false;
+      }
+      return true;
+    }
+
+    // 진입 시 바로 검사
+    checkLocationHighlight();
+
+    // 등록 버튼 누를 때도 검사
+    const registerForm = document.getElementById("registerForm");
+    if (registerForm) {
+      registerForm.addEventListener("submit", function (e) {
+        if (!checkLocationHighlight()) {
+          e.preventDefault(); // 등록 막음
+        }
+      });
+    }
+  });
 </script>
 
 </body>

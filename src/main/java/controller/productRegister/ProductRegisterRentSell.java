@@ -77,8 +77,11 @@ request.setCharacterEncoding("utf-8");
 		Integer salePrice = 0;
 	    String salePriceParam = multi.getParameter("salePrice");
 	    if (salePriceParam != null && !salePriceParam.trim().isEmpty()) {
-	        salePrice = Integer.parseInt(salePriceParam);
-	    } else {
+	        String digitsOnly = salePriceParam.replaceAll("[^\\d]", ""); // 숫자만 남기기
+	        salePrice = Integer.parseInt(digitsOnly);
+	        System.out.println("salePriceParam: " + salePriceParam);
+	        System.out.println("Parsed salePrice: " + salePrice);
+	    }else {
 	        request.setAttribute("errorMsg", "판매 금액을 입력해주세요.");
 	        request.getRequestDispatcher("/JSP/ProductRegister/ProductRegisterSell.jsp").forward(request, response);
 	        return;

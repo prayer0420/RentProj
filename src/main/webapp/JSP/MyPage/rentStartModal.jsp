@@ -2,19 +2,13 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>  
 <c:set var="contextPath" value="${pageContext.request.contextPath }" />
-<link rel="stylesheet" href="${contextPath}/CSS/mypage/mypageModal.css">
 
 
-<!-- 모달 추가 -->
-<div id="rentStartModal" class="modal" >
-  <div class="modal-content">
-    <p>우리... 오늘부터 대여 1일!</p>
-    <button id="confirmRent">확인</button>
-  </div>
-</div>
 
 
-<!-- 대여시 AJAX -->
+
+
+
 	<script type="text/javascript">
 	$(document).ready(function() {
 	    let selectedOrderNo = null;  // 주문번호 저장용
