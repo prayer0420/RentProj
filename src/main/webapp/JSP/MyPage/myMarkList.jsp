@@ -45,7 +45,7 @@
             <div class="marklist-grid">
               <c:forEach var="item" items="${marklist}">
                 <div class="marklist-card" onclick="location.href='${contextPath}/productDetail?no=${item.productNo}'">
-                  <input type="checkbox" class="check-item" name="marklistIds" value="${item.productNo}">
+                  <input type="checkbox" class="check-item" name="marklistIds" value="${item.productNo}" onclick="event.stopPropagation();">
                   <a href="${contextPath}/productDetail?no=${item.productNo}" class="product-img">
                     <img src="${item.productImage}" alt="상품 이미지">
                   </a>
