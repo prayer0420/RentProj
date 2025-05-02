@@ -12,27 +12,91 @@
 <link rel="stylesheet" href="${contextPath}/CSS/mypage/confirmOrder.css">
 <style>
 .modal {
-  display: none;
+  display: none !important; /* 처음엔 안 보이게 */
   position: fixed;
   z-index: 9999;
-  left: 0; top: 0;
-  width: 100%; height: 100%;
-  background-color: rgba(0,0,0,0.5);
-  justify-content: center; align-items: center;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  justify-content: center;
+  align-items: center;
+  font-family: 'Noto Sans KR', sans-serif;
 }
+.modal.show {
+  display: flex !important;
+}
+
 .modal-content {
-  background: #fff;
-  padding: 20px;
-  border-radius: 8px;
-  width: 300px;
+  background: #fffefe;
+  padding: 24px;
+  border-radius: 16px;
+  width: 340px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transform: scale(0.9);
+  transition: transform 0.25s ease, opacity 0.25s ease;
+  opacity: 0;
 }
-.modal-actions {
-  margin-top: 10px;
-  text-align: right;
+.modal-content.active {
+  transform: scale(1);
+  opacity: 1;
 }
+
+.modal-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: #333;
+  text-align: center;
+}
+
 .modal textarea {
   width: 100%;
   resize: none;
+  border: 1px solid #f2cec3;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+  padding: 12px;
+  font-size: 14px;
+  color: #333;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+.modal textarea:focus {
+  border-color: #f7bfa5;
+}
+
+.modal-actions {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.btn-confirm {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.btn-confirm:hover {
+  background-color: #43a047;
+}
+
+.btn-cancel {
+  background-color: #ddd;
+  color: #333;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.btn-cancel:hover {
+  background-color: #ccc;
 }
 </style>
 </head>
@@ -153,13 +217,13 @@
     <!-- 환불 사유 입력 모달 -->
 <div id="cancelModal" class="modal">
   <div class="modal-content">
-    <h3>환불 사유를 입력하세요</h3>
+    <h3 class="modal-title">환불 사유를 입력하세요</h3>
     <textarea id="cancelReason" rows="4" placeholder="예: 변심, 잘못 주문 등"></textarea>
     <input type="hidden" id="cancelPaymentKey" />
     <input type="hidden" id="cancelOrderNo" />
     <div class="modal-actions">
-      <button id="cancelConfirmBtn">환불 요청</button>
-      <button onclick="closeCancelModal()">닫기</button>
+      <button id="cancelConfirmBtn" class="btn-confirm">환불 요청</button>
+      <button onclick="closeCancelModal()" class="btn-cancel">닫기</button>
     </div>
   </div>
 </div>
@@ -220,13 +284,20 @@ document.addEventListener('DOMContentLoaded', function () {
 	  });
 	});
 
-	function openCancelModal() {
-	  document.getElementById('cancelModal').style.display = 'flex';
-	}
-
-	function closeCancelModal() {
-	  document.getElementById('cancelModal').style.display = 'none';
-	}
+function openCancelModal() {
+  const modal = document.getElementById("cancelModal");
+  modal.classList.add("show");
+  setTimeout(() => {
+  modal.querySelector(".modal-content").classList.add("active");
+  }, 10);
+}
+function closeCancelModal() {
+  const modal = document.getElementById("cancelModal");
+  modal.querySelector(".modal-content").classList.remove("active");
+  setTimeout(() => {
+    modal.classList.remove("show");
+  }, 250);
+}
 
 </script>
 
