@@ -26,7 +26,7 @@
       <div class="badge badge_total ${empty param.tradeType ? 'active' : ''}" data-type="전체">전체</div>
       <div class="badge badge_sell ${param.tradeType=='판매' ? 'active' : ''}" data-type="판매">판매</div>
       <div class="badge badge_rent ${param.tradeType=='대여' ? 'active' : ''}" data-type="대여">대여</div>
-      <div class="badge badge_sell_rent ${param.tradeType=='판매대여' ? 'active' : ''}" data-type="판매대여">판매/대여</div>
+      <div class="badge badge_sell_rent ${param.tradeType=='판매/대여' ? 'active' : ''}" data-type="판매/대여">판매/대여</div>
       <div class="badge badge_free ${param.tradeType=='무료나눔' ? 'active' : ''}" data-type="무료나눔">나눔</div>
     </div>
 

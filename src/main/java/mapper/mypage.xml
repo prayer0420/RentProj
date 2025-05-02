@@ -18,7 +18,7 @@
 		from product p 
 		left join `order` o on (p.no = o.productNo)
 		join member m on (p.memberNo=m.no)
-        where m.id=#{id} and p.tradeType='판매' and p.deleted='N'
+        where m.id=#{id} and o.orderType='판매' and p.deleted='N'
         order by p.no desc limit #{row},5
 	</select>
 	
