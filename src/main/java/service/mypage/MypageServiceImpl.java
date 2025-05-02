@@ -7,7 +7,8 @@ import java.util.Map;
 import dao.mypage.MypageDAO;
 import dao.mypage.MypageDAOImpl;
 import dto.Order;
-import dto.Product;
+import service.settlement.SettlementService;
+import service.settlement.SettlementServiceImpl;
 import utils.PageInfo;
 
 public class MypageServiceImpl implements MypageService {
@@ -167,8 +168,20 @@ public class MypageServiceImpl implements MypageService {
 
 	@Override
 	public boolean confirmOrder(Integer orderNo) throws Exception {
-		
-		return mypageDao.updateOrderStatusToCompleted(orderNo);
+		// 구매확정 시, 거래완료로 상태 업데이트 
+	    boolean result = mypageDao.updateOrderStatusToCompleted(orderNo);
+	    // 상태 업데이트 성공 시, settlement insert
+	    if (result) {
+	        try {
+	            SettlementService settlementService = new SettlementServiceImpl();
+	            settlementService.insertSettlementByOrderNo(orderNo);
+	        } catch (Exception e) {
+	            System.err.println("[정산 데이터 생성 실패] orderNo=" + orderNo);
+	            e.printStackTrace();
+	        }
+	    }
+
+	    return result;
 	}
 
 	@Override
