@@ -7,7 +7,6 @@
 <html>
 <head>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<!-- 대여시 AJAX -->
 <link rel="stylesheet" href="${contextPath}/CSS/mypage/mypageModal.css">
 
 <meta charset="UTF-8">
