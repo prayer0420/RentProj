@@ -10,7 +10,7 @@
 
 <!-- 카테고리 UI 렌더링 -->
 <section class="categories">
-  <c:forEach var="i" begin="0" end="10">
+  <c:forEach var="i" begin="1" end="11">
     <a href="${pageContext.request.contextPath}/list?categoryNo=${i}"
        class="category-item ${param.categoryNo == i ? 'active' : ''}" data-categoryNo="${i}">
       <img src="${pageContext.request.contextPath}/${categoryIcons[i]}" alt="${categoryNames[i]} 아이콘" loading="lazy" />

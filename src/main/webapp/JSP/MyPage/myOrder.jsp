@@ -8,6 +8,7 @@
 <head>
 <meta charset="UTF-8">
 <title>My Order List</title>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <link rel="stylesheet" href="${contextPath}/CSS/mypage/myOrder.css">
 <link rel="stylesheet" href="${contextPath}/CSS/mypage/confirmOrder.css">
 <style>
@@ -214,6 +215,8 @@
       </div>
     </div>
     
+    
+    
     <!-- 환불 사유 입력 모달 -->
 <div id="cancelModal" class="modal">
   <div class="modal-content">
@@ -229,7 +232,12 @@
 </div>
 
 <!-- 구매확정 모달 추가 -->
-  <jsp:include page="/JSP/MyPage/confirmOrderModal.jsp"/>
+<div id="confirmModal" class="modal" >
+  <div class="modal-content">
+    <p>구매를 확정하시겠습니까?</p>
+    <button id="confirmYesBtn">확인</button>
+  </div>
+</div>
 
 <!-- 푸터 -->
   <jsp:include page="/JSP/Header/footer.jsp" />
@@ -300,5 +308,73 @@ function closeCancelModal() {
 }
 
 </script>
+
+<!-- 구매확정 버튼 -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  let selectedOrderNo = null;
+
+  document.querySelectorAll('.confirm-btn').forEach(btn => {
+    btn.addEventListener('click', function () {
+      selectedOrderNo = this.dataset.orderno;
+      console.log("구매확정 버튼 클릭: ", selectedOrderNo);
+
+      const modal = document.getElementById("confirmModal");
+      modal.classList.add("show");
+
+      setTimeout(() => {
+        modal.querySelector(".modal-content").classList.add("active");
+      }, 10);
+    });
+  });
+
+  //'확인' 버튼 누르면
+  document.getElementById("confirmYesBtn").addEventListener("click", function () {
+    if (!selectedOrderNo) return;
+
+    const button = document.querySelector('.confirm-btn[data-orderno="' + selectedOrderNo + '"]');
+    button.disabled = true;
+    button.textContent = "처리중...";
+
+    fetch('${contextPath}/confirmOrder', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({ orderNo: selectedOrderNo })
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.success) {
+        alert("구매를 확정했어요!");
+        button.parentElement.innerHTML = '<span class="confirmed-label">구매 완료!</span>';
+      } else {
+        alert("구매 확정 실패");
+        button.disabled = false;
+        button.textContent = "구매확정";
+      }
+
+      closeConfirmOrderModal();
+    })
+    .catch(err => {
+      console.error("서버 오류", err);
+      alert("서버 오류가 발생했습니다");
+      button.disabled = false;
+      button.textContent = "구매확정";
+      closeConfirmOrderModal();
+    });
+  });
+
+ 
+  function closeConfirmOrderModal() {
+    const modal = document.getElementById("confirmModal");
+    modal.querySelector(".modal-content").classList.remove("active");
+    setTimeout(() => {
+      modal.classList.remove("show");
+    }, 250);
+  }
+});
+
+</script>
+
+
 
 </html>

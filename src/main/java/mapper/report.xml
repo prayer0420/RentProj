@@ -71,14 +71,14 @@
   <!-- 상품 활성화 쿼리 :상품번호 -->
   <update id="activateProduct" parameterType="int">
     UPDATE product
-    SET isHide = false
+    SET isHide = true  <!-- 1 = 노출 -->
     WHERE no = #{no}
   </update>
 
   <!-- 상품 숨김 처리 : 상품번호 -->
   <update id="hideProduct" parameterType="int">
     UPDATE product
-    SET isHide = true
+    SET isHide = false <!-- 0 = 숨김 -->
     WHERE no = #{no}
   </update>
   

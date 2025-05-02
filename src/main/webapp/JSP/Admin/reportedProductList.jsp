@@ -115,8 +115,8 @@
 			<!-- ReportedProduct 객체의 boolean hide 필드를 기반으로 상태 출력 -->
               <td>${item.date}</td>
               <td>
-				<c:choose>
-				  <c:when test="${item.hide}">
+					<c:choose>
+				  <c:when test="${item.actuallyHidden}">
 				    숨김
 				  </c:when>
 				  <c:otherwise>
