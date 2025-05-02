@@ -188,6 +188,12 @@ public class MypageServiceImpl implements MypageService {
 		return mypageDao.updateReturnInvoiceInfo(orderNo, reDeliveryComp, reInvoiceNo);
 	}
 
+	@Override
+	public boolean confirmReturn(Integer orderNo) throws Exception {
+		
+		return mypageDao.updateRentCompleted(orderNo) >0;
+	}
+
 
 
 }

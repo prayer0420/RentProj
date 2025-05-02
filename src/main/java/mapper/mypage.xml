@@ -173,4 +173,9 @@
 		 WHERE orderNo=#{orderNo}
 	</update>
 	
+	
+	<update id="updateRentCompleted" parameterType="Integer">
+		update `order` set orderStatus='거래완료' where orderNo=#{orderNo}
+	</update>
+	
 </mapper>

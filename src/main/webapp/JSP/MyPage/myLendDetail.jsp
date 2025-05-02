@@ -69,8 +69,8 @@
 	                    <p>대여 시작일:<span id="detailStartDate"> <fmt:formatDate value="${myLendDetail.startDate }" pattern="yyyy년 MM월 dd일"/></span></p>
 	                    <p><strong>대여 종료일: <span id="detailEndDate"><fmt:formatDate value="${myLendDetail.endDate }" pattern="yyyy년 MM월 dd일"/></span> </strong></p>
 	                    <p>&nbsp;</p>
-	                    <p><strong>반납송장번호:&nbsp; ${myRentDetail.reInvoiceNo }</strong></p>
-	                    <p><strong>반납택배사:&nbsp; ${myRentDetail.reDeliveryComp }</strong></p>
+	                    <p><strong>반납송장번호:&nbsp; ${myLendDetail.reInvoiceNo }</strong></p>
+	                    <p><strong>반납택배사:&nbsp; ${myLendDetail.reDeliveryComp }</strong></p>
 	                    
 	                </div>
 	                <div class="info-box">

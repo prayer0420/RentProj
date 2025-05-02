@@ -6,10 +6,11 @@
 
 
 <!-- 모달 추가 -->
-<div id="rentStartModal" class="modal" >
+<div id="confirmReturnModal" class="modal" >
   <div class="modal-content">
-    <p>우리... 오늘부터 대여 1일!</p>
-    <button id="confirmRent">확인</button>
+    <p>상품을 잘 돌려받으셨나요? <br>'확인' 버튼을 누르시면 대여거래가 완료돼요.</p>
+    <button id="confirmReturn">확인</button>
+    <button id="cancelReturn">취소</button>
   </div>
 </div>
 
@@ -19,41 +20,47 @@
 	$(document).ready(function() {
 	    let selectedOrderNo = null;  // 주문번호 저장용
 	
-	    // 구매확정 버튼 클릭 시 (이벤트 위임)
-	    $(document).on('click','.rent-start-btn',function(){
+	    // 상품반납확인 버튼 클릭 시 (이벤트 위임)
+	    $(document).on('click','.confirmReturn-btn',function(){
 	    	console.log("버튼 클릭됨!"); // 확인용
 	    	
 	        selectedOrderNo = $(this).data('orderno'); // 버튼에 심어놓은 주문번호 읽어오기
 	        console.log(selectedOrderNo);
-	        $('#rentStartModal').fadeIn(); // 모달 띄우기
+	        $('#confirmReturnModal').fadeIn(); // 모달 띄우기
+	    });
+	    
+	 // 모달에서 '취소' 클릭 시
+	    $('#cancelReturn').click(function() {
+	        $('#confirmReturnModal').fadeOut(); // 모달 닫기
+	        selectedOrderNo = null; // 초기화
 	    });
 	
 	    // 모달에서 '확인' 클릭 시 
-	    $('#confirmRent').click(function() {
+	    $('#confirmReturn').click(function() {
 	        if (selectedOrderNo) {
-	        	const $button = $('.rent-start-btn[data-orderno="' + selectedOrderNo + '"]');
+	        	const $button = $('.confirmReturn-btn[data-orderno="' + selectedOrderNo + '"]');
 	            $button.prop('disabled', true).text('처리중...'); // ✅ 중복 클릭 방지
 	            
 	            $.ajax({
-	                url: '${contextPath}/rentStart',
+	                url: '${contextPath}/confirmReturn',
 	                method: 'POST',
 	                data: { orderNo: selectedOrderNo },
 	                dataType: 'json',
 	                success: function(response) {
 	                    if (response.success) {
-	                        alert('대여가 시작됩니다!');
-	                        $button.replaceWith('<span class="confirmed-label">대여 시작!</span>');
+	                        alert('대여 거래가 완료됐어요!');
+	                        $button.replaceWith('<span class="confirmed-label">거래완료</span>');
 	                    } else {
-	                        alert('아직 대여를 시작하지 못했어요. 확인해주세요');
-	                        $button.prop('disabled', false).text('빌리기시작');
+	                        alert('예외가 발생했어요. 다시 확인해주세요');
+	                        $button.prop('disabled', false).text('대여거래완료');
 	                    }
-	                    $('#rentStartModal').fadeOut();
+	                    $('#confirmReturnModal').fadeOut();
 	                },
 	                error: function(xhr, status, error) {
 	                    alert('서버 오류예요. 다시 확인해주세요');
 	                    console.error(error);
-	                    $button.prop('disabled', false).text('빌리기시작');
-	                    $('#rentStartModal').fadeOut();
+	                    $button.prop('disabled', false).text('대여거래완료');
+	                    $('#confirmReturnModal').fadeOut();
 	                }
 	            });
 	        }
