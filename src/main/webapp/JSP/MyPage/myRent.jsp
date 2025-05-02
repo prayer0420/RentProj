@@ -6,6 +6,10 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- 대여시 AJAX -->
+<link rel="stylesheet" href="${contextPath}/CSS/mypage/mypageModal.css">
+
 <meta charset="UTF-8">
 <title>My Rental Products</title>
 <style>
@@ -96,6 +100,47 @@
 .btn-cancel:hover {
   background-color: #ccc;
 }
+
+/*반납송장버튼 입력 모달*/
+.rmodal {
+	  display: none; /* 기본은 숨김 */
+	  position: fixed;
+	  z-index: 999;
+	  left: 0;
+	  top: 0;
+	  width: 100%;
+	  height: 300px;
+	  overflow: auto; /* 스크롤 가능 */
+	  background-color: rgba(0, 0, 0, 0.5); /* 반투명 배경 */
+	}
+	
+	/* 모달 내부 박스 */
+	.rmodal-content {
+	  background-color: #fff;
+	  margin: 10% auto;
+	  padding: 20px;
+	  border: 2px solid #aaa;
+	  width: 400px;
+	  border-radius: 10px;
+	  position: relative;
+	  text-align: center;
+	}
+
+	
+	/* 닫기 버튼 (X) */
+	.rclose {
+	  color: #aaa;
+	  float: right;
+	  font-size: 24px;
+	  font-weight: bold;
+	  cursor: pointer;
+	}
+	
+	.rclose:hover {
+	  color: black;
+	}
+	
+
 </style>
 <link rel="stylesheet" href="${contextPath}/CSS/mypage/myRent.css">
 </head>
@@ -195,6 +240,7 @@
 							   </c:when>
 							   <c:when test="${item.orderStatus eq '대여중'}">
 							        <button type="button" class="open-invoice-btn" data-orderno="${item.orderNo}">반납송장번호입력</button>
+							        
 							   </c:when>
 							   <c:when test="${item.orderStatus eq '거래완료'}">
 							        <button type="button" class="open-review-btn" data-orderno="${item.orderNo}">리뷰쓰러가기</button>
@@ -215,20 +261,37 @@
 					<jsp:param name="baseUrl" value="${contextPath }/myRent" />
 				</jsp:include>
 				
-				<!-- 빌리기(대여)시작 모달 --> 
-				<jsp:include page="/JSP/MyPage/rentStartModal.jsp" /> 
-				
-				<!-- 반납송장번호 입력 모달 --> 
-				<jsp:include page="/JSP/MyPage/returnInvoiceInfo.jsp" >
-          			<jsp:param name="redirectUrl" value="/rent/myRentDetail"/>
-				</jsp:include>
-				
 			</c:otherwise>
 			</c:choose>
 			
         </section>
       </div>
     </div>
+    
+    <!-- 대여시작 모달 추가 -->
+<div id="rentStartModal" class="modal" >
+  <div class="modal-content">
+    <p>우리... 오늘부터 대여 1일!</p>
+    <button id="confirmRent">확인</button>
+  </div>
+</div>
+
+<!--반납송장번호 입력 모달 -->
+<div id="invoiceModal" class="rmodal invoice-modal">
+  <div class="rmodal-content">
+    <span class="rclose">&times;</span>
+    <form>
+      <input type="hidden" id="orderNo" />
+      <input type="hidden" id="redirectUrl" />
+      <label for="reDeliveryComp">택배사</label>
+      <input type="text" id="reDeliveryComp" required />
+      <label for="reInvoiceNo">송장번호</label>
+      <input type="text" id="reInvoiceNo" required />
+      <button type="button" id="submitInvoiceBtn">등록</button>
+    </form>
+  </div>
+</div>
+
     
    <!-- 환불 사유 입력 모달 -->
 <div id="cancelModal" class="modal">
@@ -243,11 +306,12 @@
     </div>
   </div>
 </div>
-    
 
 	<!-- 푸터 -->
 	<jsp:include page="/JSP/Header/footer.jsp" />
 </body>
+
+
 <script>
 document.addEventListener('DOMContentLoaded', function () {
 	  document.querySelectorAll('.open-cancel-btn').forEach(btn => {
@@ -313,4 +377,155 @@ function closeCancelModal() {
 }
 
 </script>
+
+<!-- 빌리기시작 버튼 -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  let selectedOrderNo = null;
+
+  document.querySelectorAll('.rent-start-btn').forEach(btn => {
+    btn.addEventListener('click', function () {
+      selectedOrderNo = this.dataset.orderno;
+      console.log("빌리기 버튼 클릭됨:", selectedOrderNo);
+
+      const modal = document.getElementById("rentStartModal");
+      modal.classList.add("show");
+
+      setTimeout(() => {
+        modal.querySelector(".modal-content").classList.add("active");
+      }, 10);
+    });
+  });
+
+  document.getElementById("confirmRent").addEventListener("click", function () {
+    if (!selectedOrderNo) return;
+
+    const button = document.querySelector('.rent-start-btn[data-orderno="' + selectedOrderNo + '"]');
+    button.disabled = true;
+    button.textContent = "처리중...";
+
+    fetch('${contextPath}/rentStart', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({ orderNo: selectedOrderNo })
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.success) {
+        alert("대여가 시작되었습니다!");
+        button.parentElement.innerHTML = '<span class="confirmed-label">대여 시작!</span>';
+      } else {
+        alert("대여 시작 실패");
+        button.disabled = false;
+        button.textContent = "빌리기시작";
+      }
+
+      closeRentModal();
+    })
+    .catch(err => {
+      console.error("서버 오류", err);
+      alert("서버 오류가 발생했습니다");
+      button.disabled = false;
+      button.textContent = "빌리기시작";
+      closeRentModal();
+    });
+  });
+
+  function closeRentModal() {
+    const modal = document.getElementById("rentStartModal");
+    modal.querySelector(".modal-content").classList.remove("active");
+    setTimeout(() => {
+      modal.classList.remove("show");
+    }, 250);
+  }
+});
+
+</script>
+
+<!-- 반납송장번호 입력 -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+	  const modal = document.getElementById("invoiceModal");
+	  const orderNoInput = document.getElementById("orderNo");
+	  const reDeliveryComp = document.getElementById("reDeliveryComp");
+	  const reInvoiceNo = document.getElementById("reInvoiceNo");
+	  const redirectUrlInput = document.getElementById("redirectUrl");
+	  const submitBtn = document.getElementById("submitInvoiceBtn");
+
+	  document.querySelectorAll(".open-invoice-btn").forEach(function (btn) {
+	    btn.addEventListener("click", function () {
+	      const orderNo = btn.dataset.orderno;
+	      console.log("반납송장 버튼 클릭됨:", orderNo);
+
+	      orderNoInput.value = orderNo;
+	      redirectUrlInput.value = "/rent/myRentDetail?orderNo=" + orderNo;
+
+	      showModal(modal);
+	    });
+	  });
+
+	  submitBtn.addEventListener("click", function () {
+	    const orderNo = orderNoInput.value;
+	    const company = reDeliveryComp.value.trim();
+	    const invoiceNo = reInvoiceNo.value.trim();
+	    const redirectUrl = redirectUrlInput.value;
+
+	    if (!company || !invoiceNo) {
+	      alert("택배사와 송장번호를 모두 입력해주세요.");
+	      return;
+	    }
+
+	    fetch("/rent/reInvoiceSetting", {
+	      method: "POST",
+	      headers: {
+	        "Content-Type": "application/x-www-form-urlencoded",
+	      },
+	      body: new URLSearchParams({
+	        orderNo,
+	        reDeliveryComp: company,
+	        reInvoiceNo: invoiceNo,
+	      }),
+	    })
+	      .then((res) => {
+	        if (!res.ok) throw new Error("송장 등록 실패");
+	        window.location.href = redirectUrl;
+	      })
+	      .catch((err) => {
+	        console.error(err);
+	        alert("송장 등록에 실패했습니다. 다시 시도해주세요.");
+	      });
+	  });
+
+	  document.querySelectorAll(".rclose").forEach(function (btn) {
+		  btn.addEventListener("click", function () {
+		    hideModal(modal);
+		  });
+		});
+
+	  window.addEventListener("click", function (e) {
+	    if (e.target === modal) {
+	      hideModal(modal);
+	    }
+	  });
+
+	  function showModal(modal) {
+	    modal.style.display = "flex";
+	    modal.style.opacity = "0";
+	    setTimeout(() => {
+	      modal.style.opacity = "1";
+	      modal.style.transition = "opacity 0.3s ease";
+	    }, 10);
+	  }
+
+	  function hideModal(modal) {
+	    modal.style.opacity = "0";
+	    setTimeout(() => {
+	      modal.style.display = "none";
+	    }, 250);
+	  }
+	});
+
+</script>
+
+
 </html>
