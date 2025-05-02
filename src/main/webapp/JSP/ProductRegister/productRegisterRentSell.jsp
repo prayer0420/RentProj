@@ -1,385 +1,563 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>상품 판매대여 등록</title>
+
+<!-- Flatpickr CSS -->
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/CSS/productRegister/productRegisterRentSell.css">
+
+<!-- Flatpickr JS -->
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
 <script>
-        window.onload = function () {
-            const prod = document.querySelector('.modal-prodState');
-            const admit = document.querySelector('.modal-admit');
-            const addr = document.querySelector('.modal-addr');
-            const addrPlus = document.querySelector('.modal-addrPlus')
-            const tooltipTrigger = document.getElementById("tooltipTrigger");
-            const tooltipBox = document.getElementById("tooltipBox");
+    window.onload = function () {
+      const registerForm = document.getElementById("registerForm");
+      const admitCheck = document.getElementById("admitCheck");
+      const categoryList = document.getElementById("category");
+      const title = document.getElementById("title");
+      const hand = document.getElementById("hand");
+      const delvPrice = document.getElementById("delvPrice");
+      const state = document.getElementById("state");
+      const ifile0 = document.getElementById("ifile0");
+      const content = document.getElementById("content");
+      const deliveryPrice = document.getElementById("deliveryPrice");
 
-            const btnOpenProd = document.querySelector('.btn-open-modal-prodState');
-            const btnCancleProd = document.querySelector('.cancle-prod');
-            const btnOpenAdmit = document.querySelector('.btn-open-modal-admit');
-            const btnCancleAdmit = document.querySelector('.cancle-admit');
-            const btnOpenAddr = document.querySelector('.btn-open-modal-addr');
-            const btnCancleAddr = document.querySelector('.cancle-addr');
-            //const btnOpenAddrPlus = document.querySelector('.btn-open-modal-addrPlus');
-            //const cancleBtn = document.querySelector('.cancle-btn');
+      hand.addEventListener("change", toggleDeliveryPrice);
+      delvPrice.addEventListener("change", toggleDeliveryPrice);
+      
+      if (tooltipTrigger && tooltipBox) {
+    	  tooltipTrigger.addEventListener("click", function (e) {
+    	    e.stopPropagation(); // 클릭 전파 방지
+    	    tooltipBox.classList.toggle("show"); // 간단하게 toggle 메서드 사용
+    	  });
 
-            
-            const registerForm = document.getElementById("registerForm");
-			const admitCheck = document.getElementById("admitCheck");
-			const categoryList = document.getElementById("categoryList");
-			  const salePrice = document.getElementById("salePrice");
-			const startDate = document.getElementById("startDate");
-			const endDate = document.getElementById("endDate");
-			const rentPrice = document.getElementById("rentPrice");
-			const secPrice = document.getElementById("secPrice");
-			const title = document.getElementById("title");
-			const hand = document.getElementById("hand");
-			const delvPrice = document.getElementById("delvPrice");
-			const state1 = document.getElementById("state1");
-			const state2 = document.getElementById("state2");
-			const state3 = document.getElementById("state3");
-			const state4 = document.getElementById("state4");
-			const ifile = document.getElementById("ifile");
-			const content = document.getElementById("content");
-			const deliveryPrice = document.getElementById("deliveryPrice");
-			
-			hand.addEventListener("change", toggleDeliveryPrice);
-	        delvPrice.addEventListener("change", toggleDeliveryPrice);
+    	  document.addEventListener("click", function (e) {
+    	    // 툴팁 외의 영역 클릭 시 닫기
+    	    if (!tooltipBox.contains(e.target) && !tooltipTrigger.contains(e.target)) {
+    	      tooltipBox.classList.remove("show");
+    	    }
+    	  });
+    	}
+      
 
-            btnOpenProd.addEventListener("click", () => {
-                prod.style.display = "flex";
-            });
-            btnCancleProd.addEventListener("click", () => {
-                prod.style.display = "none";
-            });
-            btnOpenAdmit.addEventListener("click", () => {
-                admit.style.display = "flex";
-            });
-            btnCancleAdmit.addEventListener("click", () => {
-                admit.style.display = "none";
-            });
-           // btnOpenAddrPlus.addEventListener("click", () => {
-           //     addrPlus.style.display = "flex"
-           // });
-           // cancleBtn.addEventListener("click", () => {
-           //     addr.style.display = "flex";
-           //    addrPlus.style.display = "none";
-           // });
-
-                tooltipTrigger.addEventListener("click", () => {
-                    tooltipBox.style.display = tooltipBox.style.display === "block" ? "none" : "block";
-                });
-
-                document.addEventListener("click", function (event) {
-                    if (!tooltipTrigger.contains(event.target) && !tooltipBox.contains(event.target)) {
-                        tooltipBox.style.display = "none";
-                    }
-                });
-                
-                //시작 날짜보다 이르게 선택x
-                document.getElementById("startDate").addEventListener("change", function () {
-                    const startDate = this.value;
-                    document.getElementById("endDate").min = startDate;
-                });
-                
-                //필수등록 여부
-                registerForm.addEventListener("submit", function (e) {
-                	console.log(categoryList);
-                    if (!admitCheck.checked) {
-                        e.preventDefault(); // 폼 제출 막기
-                        alert("상품등록을 위해 필수 동의를 체크해야 합니다.");
-                    }else if(categoryList.value==="카테고리 선택"){
-                    	e.preventDefault();
-                    	alert("카테고리를 선택해야 합니다.");
-                    }else if(title.value===""){
-                    	e.preventDefault();
-                    	alert("제목을 입력해주세요");
-                    }else if(salePrice.value === ""){
-                      	e.preventDefault();
-                      	alert("판매금액을 설정하셔야 합니다.");
-                    }else if(rentPrice.value === ""){
-                    	e.preventDefault();
-                    	alert("하루치 대여금액을 설정하셔야 합니다.");
-                    }else if(secPrice.value === ""){
-                    	e.preventDefault();
-                    	alert("보증금을 설정하셔야 합니다.");
-                    }else if(!hand.checked && !delvPrice.checked) {
-                        e.preventDefault();
-                        alert("거래방식을 선택해야 합니다.");
-                    }else if(delvPrice.checked && deliveryPrice.value.trim() === ""){
-                    	e.preventDefault();
-                    	alert("배송비를 설정하셔야 합니다.");
-                    }else if(startDate.value === ""){
-                    	e.preventDefault();
-                    	alert("대여시작일을 선택해야 합니다.");
-                    }else if(endDate.value === ""){
-                    	e.preventDefault();
-                    	alert("대여반납일을 선택해야 합니다.");
-                    }else if(!state1.checked && !state2.checked && !state3.checked && !state4.checked){
-                    	e.preventDefault();
-                    	alert("상품상태를 선택하셔야 합니다.");
-                    }else if(ifile.files.length === 0){
-                    	e.preventDefault();
-                    	alert("상품 이미지를 선택하셔야 합니다.");
-                    }else if(content.value.trim() === ""){
-                    	e.preventDefault();
-                    	alert("상품에 대한 내용을 입력하셔야 합니다.");
-                    }
-                });
-                toggleDeliveryPrice();
-            };
-            
-            let currentInputIndex = 0;
-
-            document.addEventListener('DOMContentLoaded', function() {
-              const addButton = document.getElementById('addImageButton');
-
-              addButton.addEventListener('click', function() {
-                if (currentInputIndex >= 5) {
-                  alert('최대 5장까지만 등록할 수 있습니다.');
-                  return;
-                }
-                document.getElementById('ifile' + currentInputIndex).click();
-              });
-            });
-
-            // 하나의 파일 읽어서 미리보기 + 삭제버튼 추가
-            function readURL(input, index) {
-              if (input.files && input.files[0]) {
-                const previewArea = document.getElementById('previewArea');
-
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                  // 미리보기 이미지 div 생성
-                  const wrapper = document.createElement('div');
-                  wrapper.style.position = 'relative';
-                  wrapper.style.width = '100px';
-                  wrapper.style.height = '100px';
-                  wrapper.style.marginRight = '5px';
-                  wrapper.style.marginBottom = '5px';
-
-                  const img = document.createElement('img');
-                  img.src = e.target.result;
-                  img.style.width = '100%';
-                  img.style.height = '100%';
-                  img.style.objectFit = 'cover';
-                  wrapper.appendChild(img);
-
-                  // 삭제 버튼 생성
-                  const deleteBtn = document.createElement('button');
-                  deleteBtn.innerText = 'X';
-                  deleteBtn.style.position = 'absolute';
-                  deleteBtn.style.top = '0';
-                  deleteBtn.style.right = '0';
-                  deleteBtn.style.backgroundColor = 'red';
-                  deleteBtn.style.color = 'white';
-                  deleteBtn.style.border = 'none';
-                  deleteBtn.style.borderRadius = '50%';
-                  deleteBtn.style.width = '20px';
-                  deleteBtn.style.height = '20px';
-                  deleteBtn.style.cursor = 'pointer';
-                  deleteBtn.style.fontSize = '12px';
-                  
-                  deleteBtn.onclick = function() {
-                    wrapper.remove(); // 미리보기 삭제
-                    input.value = ""; // 해당 input 비워주기
-
-                    // 삭제하고나면 input index 다시 써야 하니까 currentInputIndex 하나 줄인다
-                    currentInputIndex--;
-                  };
-
-                  wrapper.appendChild(deleteBtn);
-
-                  previewArea.appendChild(wrapper);
-
-                  currentInputIndex++;
-                }
-                reader.readAsDataURL(input.files[0]);
-              }
-            }
-
-
-            // plus.jpg 클릭하면 input 파일창 열기
-            document.addEventListener('DOMContentLoaded', function() {
-            	const addButton = document.getElementById('addImageButton');
-            	const fileInput = document.getElementById('ifile');
-
-            	addButton.addEventListener('click', function() {
-            		fileInput.click();
-            	});
-            });
-            
-            function toggleDeliveryPrice() {
-                if (hand.checked) {
-                    deliveryPrice.disabled = true;
-                    deliveryPrice.value = 0;
-                    
-                } else if (delvPrice.checked) {
-                    deliveryPrice.disabled = false;
-                }
-            }
-            
-            function openAddressModal() {
-        		document.getElementById('addressModal').style.display = 'flex';
-        	}
-
-        	function closeAddressModal() {
-        		document.getElementById('addressModal').style.display = 'none';
-        	}
-        
-    </script>
+      registerForm.addEventListener("submit", function (e) {
+        if (!admitCheck.checked) {
+          e.preventDefault(); alert("필수 동의를 체크해주세요.");
+        } else if (categoryList.value === "") {
+          e.preventDefault(); alert("카테고리를 선택해야 합니다.");
+        } else if (title.value.trim() === "") {
+          e.preventDefault(); alert("제목을 입력해주세요.");
+        } else if (!hand.checked && !delvPrice.checked) {
+          e.preventDefault(); alert("거래 방식을 선택해주세요.");
+        } else if (delvPrice.checked && deliveryPrice.value.trim() === "") {
+          e.preventDefault(); alert("배송비를 입력해주세요.");
+        } else if (state.value === "") {
+          e.preventDefault(); alert("상품 상태를 선택해주세요.");
+        } else if (ifile0.files.length === 0) {
+          e.preventDefault(); alert("상품 이미지를 1개 이상 등록해주세요.");
+        } else if (content.value.trim() === "") {
+          e.preventDefault(); alert("상품 설명을 입력해주세요.");
+        }
+      });
+    };
+    
+    
+  </script>
 </head>
 <body>
-	<jsp:include page="../Header/header.jsp"></jsp:include>
-	<form id="registerForm" action="<%=request.getContextPath()%>/rentSell"
-		method="post" enctype="multipart/form-data" class="container">
-		<input type="hidden" name="tradeType" value="대여/판매">
-		<div class="container-header">
-			<h2>판매/대여 등록</h2>
-		</div>
-		<hr>
-		<div class="container-admit">
-			<input type="checkbox" id="admitCheck">
-			<h3>상품등록 필수 동의</h3>
-			<div class="modal-admit">
+	<jsp:include page="../Header/header.jsp" />
+	<main class="form-wrapper">
+		<h1 class="form-title">판매/대여 등록</h1>
+		<form id="registerForm" action="<%=request.getContextPath()%>/rent"
+			method="post" enctype="multipart/form-data">
+			<input type="hidden" name="tradeType" value="판매대여" />
+
+			<!-- 제목 -->
+			<section class="form-section">
+				<label for="title">제목</label> <input type="text" id="title"
+					name="title" placeholder="상품 제목을 입력하세요" />
+			</section>
+
+			<!-- 카테고리 -->
+			<section class="form-section">
+				<label for="category">카테고리</label> <select id="category"
+					name="categoryNo">
+					<option value="">카테고리 선택</option>
+					<option value="2">의류/팩션/악세사리</option>
+					<option value="3">PC/디지털</option>
+					<option value="4">가전제품</option>
+					<option value="5">비트미/미용</option>
+					<option value="6">칼피는/스포츠</option>
+					<option value="7">생활/주방</option>
+					<option value="8">가구/인터리어</option>
+					<option value="9">유아/출산</option>
+					<option value="10">애와도움</option>
+					<option value="11">기타</option>
+				</select>
+			</section>
+
+		      <!-- 판매가 -->
+			<section class="form-section price-section">
+			  <div class="label-with-tooltip">
+			    <label for="salePrice">판매가</label>
+			    <div class="tooltip-container">
+			      <span id="tooltipTrigger" class="info-icon">&#9432;</span>
+			      <div class="tooltip" id="tooltipBox">
+			        브론즈 : 5%<br>실버 : 4.5%<br>골드 : 4%<br>플레티넘 : 3.5%<br>다이아 : 3%<br>Re:NT : 2.5%
+			        <div class="tooltip-arrow"></div>
+			      </div>
+			    </div>
+			  </div>
+			  <input type="text" id="salePrice" name="salePrice" placeholder="가격을 입력하세요" />
+			</section>
+
+			<!-- 대여 일정 -->
+			<section class="form-section container-date">
+				<h4>대여 가능 날짜</h4>
+				<div class="date-range">
+					<label for="startDate" class="start-date-label">대여 시작일</label> <input
+						type="text" id="startDate" name="startDate" placeholder="연도-월-일" />
+				</div>
+				<div class="date-range">
+					<label for="endDate" class="end-date-label">대여 반납일</label> <input
+						type="text" id="endDate" name="endDate" placeholder="연도-월-일" />
+				</div>
+			</section>
+
+			<!-- 대여가 -->
+			<section class="form-section price-section">
+				<label for="rentPrice">대여가(1일당)</label> <input type="text"
+					id="rentPrice" name="rentPrice" placeholder="대여 가격을 입력하세요" />
+			</section>
+
+			<!-- 보증금 -->
+			<section class="form-section secPrice-section">
+				<label for="secPrice">보증금</label> <input type="text" id="secPrice"
+					name="secPrice" placeholder="보증금을 입력하세요" />
+			</section>
+
+			<!-- 거래방식 -->
+			<section class="form-section">
+				<label>거래방식</label>
+				<div class="radio-group">
+					<input type="radio" name="deliveryStatus" id="hand" value="직거래" />
+					<label for="hand">직거래</label> <input type="radio"
+						name="deliveryStatus" id="delvPrice" value="택배거래" /> <label
+						for="delvPrice">택배</label>
+				</div>
+				<label for="deliveryPrice">배송비</label> <input type="text"
+					id="deliveryPrice" name="deliveryPrice" placeholder="배송비를 입력하세요"
+					disabled />
+			</section>
+
+			<!-- 상품 상태 -->
+			<section class="form-section">
+				<label for="state">상품 상태</label> <select id="state" name="state">
+					<option value="">선택하세요</option>
+					<option value="새상품(미사용)">새상품(미사용)</option>
+					<option value="사용감적음">사용감 적음</option>
+					<option value="사용감많음">사용감 많음</option>
+					<option value="고장/파손">고장/파손</option>
+				</select>
+			</section>
+
+			<!-- 상품 설명 -->
+			<section class="form-section">
+				<label for="content">상품 설명</label>
+				<textarea id="content" name="content" placeholder="상품 설명"></textarea>
+			</section>
+
+			<!-- 이미지 업로드 -->
+			<section class="form-section">
+				<label>상품 이미지 (최대 5장)</label>
+				<div class="image-upload-container">
+					<div id="previewArea" class="image-preview"></div>
+					<div class="img-upload-box" id="addImageButton">
+						<img src="${pageContext.request.contextPath}/img/plus.png"
+							alt="상품추가" style="width: 40px; height: 40px;" />
+					</div>
+				</div>
+				<input type="file" name="imgList0" id="ifile0" accept="image/*"
+					style="display: none;" onchange="readURL(this, 0)" /> <input
+					type="file" name="imgList1" id="ifile1" accept="image/*"
+					style="display: none;" onchange="readURL(this, 1)" /> <input
+					type="file" name="imgList2" id="ifile2" accept="image/*"
+					style="display: none;" onchange="readURL(this, 2)" /> <input
+					type="file" name="imgList3" id="ifile3" accept="image/*"
+					style="display: none;" onchange="readURL(this, 3)" /> <input
+					type="file" name="imgList4" id="ifile4" accept="image/*"
+					style="display: none;" onchange="readURL(this, 4)" />
+			</section>
+
+			<!-- 이미지 확대 모달 -->
+			<div id="imageZoomModal" class="modal-zoom">
+				<div class="modal-content">
+					<img id="zoomedImage" src="" alt="확대 이미지" />
+					<button type="button" onclick="closeImageModal()">닫기</button>
+				</div>
+			</div>
+
+			<!-- 필수 안내 -->
+			<section class="form-section align-inline">
+				<div class="agreement-row">
+					<label class="inline-left"> <input type="checkbox"
+						id="admitCheck" /> 필수 안내에 동의합니다
+					</label>
+					<button type="button" id="btnOpenAdmit" class="inline-right">자세히
+						보기</button>
+				</div>
+			</section>
+
+
+			<div class="modal-admit" id="admitModal">
 				<div class="modal-admit-body">
-					<hr>
-					<h5>Re:NT는 거래시스템을 제공해드리는 중개사업이며 빌리 중고거래 및 렌탈 거래시 발생하는 책임은 각
-						당사자에게 있음을 알려드립니다.</h5>
-					<h5>특히 렌탈시 발생할 수 있는 문제에 대하여 빌리는 판매자가 정해놓은 보증금으로 처리해드리며 필요한
-						서류들은 각 당사자들끼리 제공 받으셔야 합니다.</h5>
-					<h5>각 서류에 대해 빌리는 일체 관여하지 않음을 알려드립니다. 확인 부탁드립니다.</h5>
-					<hr>
-					<button class="cancle-admit" type="button">확인</button>
+					<h3>거래 중개 서비스 이용 약관</h3>
+
+					<h4>1. 서비스 성격</h4>
+					<p>RE:NT는 판매자와 구매자 간의 거래 및 대여 서비스를 중개하는 플랫폼을 제공합니다. 당사는 거래 당사자가 아닌
+						중개 서비스 제공자로서, 거래의 성립과 이행에 관여하지 않습니다.</p>
+
+					<h4>2. 책임 한계</h4>
+					<p>거래 과정에서 발생하는 모든 책임(상품 상태, 배송, 환불, 분쟁 등)은 거래 당사자(판매자와 구매자)에게
+						있으며, 빌리는 이에 대한 직접적인 책임을 지지 않습니다.</p>
+
+					<h4>3. 서류 및 정보 교환</h4>
+					<p>대여 진행 시 필요한 서류 및 정보는 거래 당사자 간에 직접 교환해야 합니다. 빌리는 거래 당사자 간
+						교환되는 서류 및 정보에 관여하지 않으며, 이와 관련된 책임을 지지 않습니다.</p>
+
+					<p style="margin-top: 20px;">본 약관에 동의함으로써 이용자는 위의 내용을 모두 이해하고
+						동의함을 확인합니다.</p>
+
+					<button type="button" id="btnCloseAdmit">확인</button>
 				</div>
 			</div>
-			<button type="button" class="btn-open-modal-admit">자세히 보기</button>
-		</div>
-		<hr>
-		<div class="container-category">
-			<select name="categoryNo" id="categoryList" class="category-list">
-				<option selected="">카테고리 선택</option>
-				<option value="2">의류/패션/악세사리</option>
-				<option value="3">PC용품/디지털</option>
-				<option value="4">가전제품</option>
-				<option value="5">뷰티/미용</option>
-				<option value="6">캠핑/스포츠/레져</option>
-				<option value="7">생활/주방용품</option>
-				<option value="8">가구/인테리어</option>
-				<option value="9">유아동/출산</option>
-				<option value="10">애완동물용품</option>
-				<option value="11">기타</option>
-			</select> <input type="text" id="title" name="title" placeholder="제목을 입력하세요">
-		</div>
-		<div class="container-charge">
-			<div class="wrap"
-				style="position: relative; display: inline-block; margin-top: 5px;">
-				<h6 id="tooltipTrigger"
-					style="cursor: pointer; margin-right: 740px;">수수료안내</h6>
-				<div class="tooltip" id="tooltipBox">
-					브론즈 : 5%<br> 실버 : 4.5%<br> 골드 : 4%<br> 플레 : 3.5%<br>
-					다이아 : 3%<br> Re:NT : 2.5%
-				</div>
-			</div>
-		</div>
-		<div class="container-sale">
-			<h4>판매가</h4>
-			<input type="text" placeholder="판매가" id="salePrice" name="salePrice">
-		</div>
-		<div class="container-rent">
-			<h4>대여1일 기준 금액</h4>
-			<input type="text" id="rentPrice" class="rent-price"
-				placeholder="빌리기 가격" name="rentPrice">
-		</div>
-		<div class="container-security">
-			<h4>보증금</h4>
-			<input type="text" id="secPrice" class="rent-security"
-				placeholder="보증금 가격" name="secPrice">
-		</div>
-		<div class="container-delivery">
-			<input type="radio" id="hand" name="deliveryStatus"
-				class="delivery-radio" value="직거래"> <label for="hand"
-				class="delivery-label">결제 후 직접거래</label> <input type="radio"
-				name="deliveryStatus" class="delivery-radio" id="delvPrice"
-				value="택배거래"> <label for="delvPrice" class="delivery-label">택배거래</label>
-			<input type="text" class="rent-security" id="deliveryPrice"
-				name="deliveryPrice" placeholder="배송비" disabled>
-		</div>
-		<div class="container-date">
-			<h4>대여가능 날짜</h4>
-			<label>대여시작일</label> 
-			<input type="date" id="startDate" class="dateinput" placeholder="대여시작일" name="startDate"
-				min="<%=new java.text.SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date())%>">
-			<span>~</span> 
-			<label>대여반납일</label> 
-			<input type="date" id="endDate" class="dateinput" placeholder="대여반납일" name="endDate">
-		</div>
-		<div class="container-prodstate">
-			<h4>상품상태</h4>
-			<div class="modal-prodState">
-				<div class="modal-prodState-body">
-					<h3>상품의 상태를 선택하세요</h3>
-					<hr>
-					<input type="radio" id="state1" name="state" class="state-radio"
-						value="새상품"> <label for="state1" class="state-label">새상품(미사용)</label>
-					<input type="radio" id="state2" name="state" class="state-radio"
-						value="사용감적음"> <label for="state2" class="state-label">사용감
-						적음</label> <input type="radio" id="state3" name="state"
-						class="state-radio" value="사용감많음"> <label for="state3"
-						class="state-label">사용감 많음</label> <input type="radio" id="state4"
-						name="state" class="state-radio" value="파손"> <label
-						for="state4" class="state-label">고장/파손</label>
-					<button type="button" class="cancle-prod">확인</button>
-				</div>
-			</div>
-			<button type="button" class="btn-open-modal-prodState">상품상태선택</button>
-		</div>
 
-		<div class="container-addr">
-			<div class="address-title">
-				<span class="address-name"></span>
-				<button class="default-address"></button>
-			</div>
-			<div class="address-info">
-				<span class="phone"></span><br> <span class="addressRegion"></span>
-				<input type="hidden" name="deliveryAddr" id="deliveryAddressInput">
-			</div>
-			<h4>거래지역</h4>
-			<button type="button" class="btn-open-modal-addr"
-				onclick="openAddressModal()">배송지 선택</button>
-		</div>
+			<!-- 등록 버튼 -->
+			<button type="submit" class="submit-btn">등록하기</button>
+		</form>
+	</main>
+</body>
+<script>
+  let imageCount = 0;
 
-		<div class="container-image">
-			<h4>상품이미지 (최대 5장)</h4>
-			<hr>
+  document.addEventListener('DOMContentLoaded', function () {
+    const addButton = document.getElementById('addImageButton');
+    const fileInputs = [
+      document.getElementById('ifile0'),
+      document.getElementById('ifile1'),
+      document.getElementById('ifile2'),
+      document.getElementById('ifile3'),
+      document.getElementById('ifile4')
+    ];
 
-			<div id="previewArea"
-				style="display: flex; gap: 10px; flex-wrap: wrap;">
-				<img alt="상품추가" src="<%=request.getContextPath()%>/img/plus.jpg"
-					id="addImageButton"
-					style="cursor: pointer; width: 100px; height: 100px; object-fit: cover;">
-			</div>
+    addButton.addEventListener('click', function () {
+      if (imageCount >= 5) {
+        alert('최대 5장까지만 등록할 수 있습니다.');
+        return;
+      }
+      for (let i = 0; i < fileInputs.length; i++) {
+        if (!fileInputs[i].files.length) {
+          fileInputs[i].click();
+          break;
+        }
+      }
+    });
+  });
 
-			<input type="file" name="imgList0" id="ifile0" accept="image/*"
-				style="display: none" onchange="readURL(this, 0)"> <input
-				type="file" name="imgList1" id="ifile1" accept="image/*"
-				style="display: none" onchange="readURL(this, 1)"> <input
-				type="file" name="imgList2" id="ifile2" accept="image/*"
-				style="display: none" onchange="readURL(this, 2)"> <input
-				type="file" name="imgList3" id="ifile3" accept="image/*"
-				style="display: none" onchange="readURL(this, 3)"> <input
-				type="file" name="imgList4" id="ifile4" accept="image/*"
-				style="display: none" onchange="readURL(this, 4)">
-		</div>
+  function readURL(input, index) {
+    if (input.files && input.files[0]) {
+      const previewArea = document.getElementById('previewArea');
+      const addBtn = document.getElementById('addImageButton');
 
-		<div class="container-content">
-			<textarea name="content" id="content" placeholder="내용을 입력하세요"></textarea>
-		</div>
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'img-wrapper';
+        wrapper.style.position = 'relative';
+        wrapper.style.width = '100px';
+        wrapper.style.height = '100px';
+        wrapper.style.marginRight = '5px';
+        wrapper.style.marginBottom = '5px';
 
-		<button type="submit">확인</button>
-	</form>
-	<jsp:include page="productAddressModal.jsp"></jsp:include>
+        const img = document.createElement('img');
+        img.src = e.target.result;
+        img.style.width = '100%';
+        img.style.height = '100%';
+        img.style.objectFit = 'cover';
+        img.style.borderRadius = '6px';
+        img.addEventListener('click', function () {
+        	  const zoomedImage = document.getElementById('zoomedImage');
+        	  zoomedImage.src = e.target.result;
+        	  document.getElementById('imageZoomModal').style.display = 'flex';
+        	});
+        wrapper.appendChild(img);
+
+        const deleteBtn = document.createElement('button');
+        deleteBtn.innerText = '×';
+        deleteBtn.style.position = 'absolute';
+        deleteBtn.style.top = '-10px';
+        deleteBtn.style.right = '-10px';
+        deleteBtn.style.backgroundColor = '#ff5c5c';
+        deleteBtn.style.color = '#fff';
+        deleteBtn.style.border = 'none';
+        deleteBtn.style.borderRadius = '50%';
+        deleteBtn.style.width = '22px';
+        deleteBtn.style.height = '22px';
+        deleteBtn.style.fontSize = '14px';
+        deleteBtn.style.cursor = 'pointer';
+        deleteBtn.style.zIndex = '10';
+
+        deleteBtn.onclick = function () {
+          wrapper.remove();
+          input.value = '';
+          imageCount--;
+          if (imageCount < 5) {
+            addBtn.style.display = 'inline-block';
+          }
+        };
+
+        wrapper.appendChild(deleteBtn);
+        previewArea.appendChild(wrapper);
+
+        imageCount++;
+        if (imageCount >= 5) {
+          addBtn.style.display = 'none';
+        }
+      };
+      reader.readAsDataURL(input.files[0]);
+    }
+  }
+  </script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const btnOpenAdmit = document.getElementById('btnOpenAdmit');
+    const btnCloseAdmit = document.getElementById('btnCloseAdmit');
+    const admitModal = document.getElementById('admitModal');
+
+    btnOpenAdmit?.addEventListener('click', () => {
+      admitModal.style.display = 'flex';
+    });
+
+    btnCloseAdmit?.addEventListener('click', () => {
+      admitModal.style.display = 'none';
+    });
+  });
+</script>
+
+<script>
+function formatPriceInputWithCaret(input) {
+    const selectionStart = input.selectionStart;
+    const rawValue = input.value.replace(/[^\d]/g, ''); // 숫자만 남기기
+
+    if (rawValue === '') {
+        input.value = '';
+        return;
+    }
+
+    // 1,000 단위로 포맷팅
+    const formatted = parseInt(rawValue, 10).toLocaleString();
+
+    // '원'과 '일'을 붙이기 위해 대여가 부분을 처리
+    let formattedValue = formatted + '원';
+    if (input.id === 'rentPrice') {
+        formattedValue = formatted + '원/일';
+    }
+
+    input.value = formattedValue;
+
+    window.requestAnimationFrame(() => {
+        // 커서를 숫자 뒤로 이동시킴
+        let caretPos = selectionStart;
+        // '원/일'의 길이를 고려하여 커서를 설정
+        if (input.id === 'rentPrice') {
+            caretPos = caretPos + (formattedValue.length - rawValue.length) - 5; // '원/일'의 길이만큼 빼기
+        } else {
+            caretPos = caretPos + (formattedValue.length - rawValue.length) - 1; // '원'의 길이만큼 빼기
+        }
+
+        input.setSelectionRange(caretPos, caretPos);
+    });
+}
+
+// 숫자만 추출하여 반환하는 함수
+function stripPriceFormat(value) {
+    return value.replace(/[^\d]/g, ''); // 숫자만 추출
+}
+
+// 실시간 포맷팅
+document.addEventListener('DOMContentLoaded', function () {
+    const salePriceInput = document.getElementById('salePrice');
+    const rentPriceInput = document.getElementById('rentPrice');
+    const deliveryPriceInput = document.getElementById('deliveryPrice');
+    const secPriceInput = document.getElementById('secPrice'); // 보증금 필드 추가
+
+    // 실시간 포맷팅 (판매가, 대여가, 보증금)
+    salePriceInput.addEventListener('input', function () {
+        formatPriceInputWithCaret(this);
+    });
+
+    rentPriceInput.addEventListener('input', function () {
+        formatPriceInputWithCaret(this);
+    });
+
+    deliveryPriceInput.addEventListener('input', function () {
+        formatPriceInputWithCaret(this);
+    });
+
+    secPriceInput.addEventListener('input', function () { // 보증금도 포맷팅
+        formatPriceInputWithCaret(this);
+    });
+
+    // 제출 전 숫자만 추출
+    const registerForm = document.getElementById('registerForm');
+    registerForm.addEventListener('submit', function () {
+        salePriceInput.value = stripPriceFormat(salePriceInput.value);
+        rentPriceInput.value = stripPriceFormat(rentPriceInput.value);
+        deliveryPriceInput.value = stripPriceFormat(deliveryPriceInput.value);
+        secPriceInput.value = stripPriceFormat(secPriceInput.value); // 보증금 숫자만 추출
+    });
+});
+
+</script>
+
+
+<script>
+function closeImageModal() {
+  document.getElementById('imageZoomModal').style.display = 'none';
+  document.getElementById('zoomedImage').src = '';
+}
+</script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // flatpickr 초기화
+    flatpickr("#startDate", {
+      dateFormat: "Y-m-d",  // "yyyy-mm-dd" 형식으로 날짜 입력
+      minDate: "today",  // 오늘 날짜 이후로만 선택 가능
+      onChange: function(selectedDates, dateStr, instance) {
+        // 선택한 날짜가 변경되면 'endDate'의 최소 날짜를 갱신
+        document.getElementById('endDate')._flatpickr.set("minDate", selectedDates[0]);
+      }
+    });
+
+    flatpickr("#endDate", {
+      dateFormat: "Y-m-d",  // "yyyy-mm-dd" 형식으로 날짜 입력
+      minDate: "today",  // 오늘 날짜 이후로만 선택 가능
+    });
+  });
+</script>
+
+<script>
+  document.getElementById("registerForm").addEventListener("submit", function (e) {
+    // 세션에 위치 정보가 없으면
+    const location = "${sessionScope.location}";
+
+    if (!location || location.trim() === "") {
+      // 위치 버튼 강조 (빨간 테두리 추가)
+      const locationButton = document.getElementById("btn-location");
+      locationButton.style.border = "2px solid red"; // 버튼 강조
+
+      // 페이지 맨 위로 스크롤
+      window.scrollTo(0, 0);
+
+      // 위치 갱신을 요청하는 알림창 띄우기
+      alert("위치 정보가 없으니 위치를 갱신해 주세요!");
+
+      // 제출을 막음
+      e.preventDefault(); 
+    }
+  });
+</script>
+<script>
+  // Function to check location and handle the alert
+  function checkLocation() {
+    const location = "${sessionScope.location}";
+
+    if (!location || location.trim() === "") {
+      // 위치 버튼 강조 (빨간 테두리 추가)
+      const locationButton = document.getElementById("btn-location");
+      locationButton.style.border = "2px solid red"; // 버튼 강조
+
+      // 페이지 맨 위로 스크롤
+      window.scrollTo(0, 0);
+
+      // 위치 갱신을 요청하는 알림창 띄우기
+      alert("위치 정보가 없으니 위치를 갱신해 주세요!");
+    }
+  }
+
+  // Event listener for the form submission
+  document.getElementById("registerForm").addEventListener("submit", function (e) {
+    // Check location when submitting the form
+    const location = "${sessionScope.location}";
+
+    if (!location || location.trim() === "") {
+      // 위치 버튼 강조 (빨간 테두리 추가)
+      const locationButton = document.getElementById("btn-location");
+      locationButton.style.border = "2px solid red"; // 버튼 강조
+
+      // 페이지 맨 위로 스크롤
+      window.scrollTo(0, 0);
+
+      // 위치 갱신을 요청하는 알림창 띄우기
+      alert("위치 정보가 없으니 위치를 갱신해 주세요!");
+
+      // 제출을 막음
+      e.preventDefault(); 
+    }
+  });
+
+  // Call checkLocation() on page load
+  window.onload = function() {
+    checkLocation();
+  };
+</script>
+
+<script>
+function toggleDeliveryPrice() {
+	  const hand = document.getElementById("hand");
+	  const delvPrice = document.getElementById("delvPrice");
+	  const deliveryPrice = document.getElementById("deliveryPrice");
+
+	  // 직거래를 선택했을 때
+	  if (hand.checked) {
+	    deliveryPrice.disabled = true;
+	    deliveryPrice.value = ''; // 배송비 초기화
+	    deliveryPrice.placeholder = "배송비 없음";
+	  }
+	  // 택배 거래를 선택했을 때
+	  else if (delvPrice.checked) {
+	    deliveryPrice.disabled = false;
+	    deliveryPrice.placeholder = "배송비를 입력하세요";
+	  }
+	  // 거래 방식을 선택하지 않았을 때
+	  else {
+	    deliveryPrice.disabled = true;
+	    deliveryPrice.value = ''; // 배송비 초기화
+	    deliveryPrice.placeholder = "거래방식을 선택하세요";
+	  }
+	}
+
+	window.onload = function () {
+	  const hand = document.getElementById("hand");
+	  const delvPrice = document.getElementById("delvPrice");
+
+	  // 페이지 로드 시 상태를 갱신
+	  toggleDeliveryPrice();
+
+	  // 거래방식 선택 변경 시 동작
+	  hand.addEventListener("change", toggleDeliveryPrice);
+	  delvPrice.addEventListener("change", toggleDeliveryPrice);
+	};
+</script>
 </body>
 </html>

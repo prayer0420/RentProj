@@ -10,6 +10,95 @@
 <title>My Order List</title>
 <link rel="stylesheet" href="${contextPath}/CSS/mypage/myOrder.css">
 <link rel="stylesheet" href="${contextPath}/CSS/mypage/confirmOrder.css">
+<style>
+.modal {
+  display: none !important; /* 처음엔 안 보이게 */
+  position: fixed;
+  z-index: 9999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  justify-content: center;
+  align-items: center;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+.modal.show {
+  display: flex !important;
+}
+
+.modal-content {
+  background: #fffefe;
+  padding: 24px;
+  border-radius: 16px;
+  width: 340px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transform: scale(0.9);
+  transition: transform 0.25s ease, opacity 0.25s ease;
+  opacity: 0;
+}
+.modal-content.active {
+  transform: scale(1);
+  opacity: 1;
+}
+
+.modal-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: #333;
+  text-align: center;
+}
+
+.modal textarea {
+  width: 100%;
+  resize: none;
+  border: 1px solid #f2cec3;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+  padding: 12px;
+  font-size: 14px;
+  color: #333;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+.modal textarea:focus {
+  border-color: #f7bfa5;
+}
+
+.modal-actions {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.btn-confirm {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.btn-confirm:hover {
+  background-color: #43a047;
+}
+
+.btn-cancel {
+  background-color: #ddd;
+  color: #333;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.btn-cancel:hover {
+  background-color: #ccc;
+}
+</style>
 </head>
 <body>
 <!-- 헤더 (로고 + 검색창 + 카테고리) -->
@@ -87,7 +176,13 @@
 			              <div class="status-change-btns">
 			              <c:choose>
 				                <c:when test="${item.orderStatus eq '결제완료'}">
-							        <button type="button" class="open-cancel-btn" data-orderno="${item.orderNo}">주문취소</button>
+									    <button type="button" class="open-cancel-btn" data-paymentkey="${item.paymentKey}"
+  										data-orderno="${item.orderNo}">>
+									    <input type="hidden" name="orderId" value="${item.orderId}" />
+									    <input type="hidden" name="orderNo" value="${item.orderNo}"/>
+									    <input type="hidden" name="paymentKey" value="${item.paymentKey}" />
+									    <input type="hidden" name="cancelReason" value="사용자 직접 취소" />
+									    주문취소</button>
 							   </c:when> 
 							   <c:when test="${item.orderStatus eq '배송중'}">
 							        <button type="button" class="confirm-btn" data-orderno="${item.orderNo}">구매확정</button>
@@ -118,6 +213,20 @@
         </section>
       </div>
     </div>
+    
+    <!-- 환불 사유 입력 모달 -->
+<div id="cancelModal" class="modal">
+  <div class="modal-content">
+    <h3 class="modal-title">환불 사유를 입력하세요</h3>
+    <textarea id="cancelReason" rows="4" placeholder="예: 변심, 잘못 주문 등"></textarea>
+    <input type="hidden" id="cancelPaymentKey" />
+    <input type="hidden" id="cancelOrderNo" />
+    <div class="modal-actions">
+      <button id="cancelConfirmBtn" class="btn-confirm">환불 요청</button>
+      <button onclick="closeCancelModal()" class="btn-cancel">닫기</button>
+    </div>
+  </div>
+</div>
 
 <!-- 구매확정 모달 추가 -->
   <jsp:include page="/JSP/MyPage/confirmOrderModal.jsp"/>
@@ -126,4 +235,70 @@
   <jsp:include page="/JSP/Header/footer.jsp" />
   
 </body>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+	  document.querySelectorAll('.open-cancel-btn').forEach(btn => {
+	    btn.addEventListener('click', () => {
+	      const paymentKey = btn.dataset.paymentkey;
+	      const orderNo = btn.dataset.orderno;
+
+	      document.getElementById('cancelPaymentKey').value = paymentKey;
+	      document.getElementById('cancelOrderNo').value = orderNo;
+	      document.getElementById('cancelReason').value = "";
+
+	      openCancelModal();
+	    });
+	  });
+
+	  document.getElementById('cancelConfirmBtn').addEventListener('click', () => {
+	    const paymentKey = document.getElementById('cancelPaymentKey').value;
+	    const orderNo = document.getElementById('cancelOrderNo').value;
+	    const cancelReason = document.getElementById('cancelReason').value.trim();
+
+	    if (!cancelReason) {
+	      alert("사유를 입력해주세요.");
+	      return;
+	    }
+
+	    fetch('${contextPath}/refund', {
+	      method: 'POST',
+	      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+	      body: new URLSearchParams({
+	        paymentKey,
+	        cancelReason,
+	        orderNo
+	      })
+	    })
+	    .then(res => {
+	      if (!res.ok) throw new Error("환불 실패");
+	      return res.json();
+	    })
+	    .then(data => {
+	      alert("✅ 환불이 완료되었습니다!");
+	      window.location.href = '${contextPath}/myOrder';
+	    })
+	    .catch(err => {
+	      console.error("❌ 환불 오류:", err);
+	      alert("❌ 환불 실패. 관리자에게 문의하세요.");
+	    });
+	  });
+	});
+
+function openCancelModal() {
+  const modal = document.getElementById("cancelModal");
+  modal.classList.add("show");
+  setTimeout(() => {
+  modal.querySelector(".modal-content").classList.add("active");
+  }, 10);
+}
+function closeCancelModal() {
+  const modal = document.getElementById("cancelModal");
+  modal.querySelector(".modal-content").classList.remove("active");
+  setTimeout(() => {
+    modal.classList.remove("show");
+  }, 250);
+}
+
+</script>
+
 </html>

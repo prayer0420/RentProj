@@ -19,6 +19,7 @@ public class Order {
 	private String invoiceNo;
 	private String deliveryComp;
 	private String orderId;
+	private String paymentKey;
 	
 	//reviewList조회용
     private String title;
@@ -73,7 +74,8 @@ public class Order {
 	
 
 	// 일반 구매(보증금, 대여기간 없음)
-	public Order(Integer memberNo, Integer price, Integer productNo, String deliveryAddr,String orderId,String orderType,Date startDate,Date endDate) {
+	public Order(Integer memberNo, Integer price, Integer productNo, String deliveryAddr,String orderId,
+			String orderType,Date startDate,Date endDate,String paymentKey,Integer deliveryPrice,Integer secPrice ) {
 		this.memberNo = memberNo;
 		this.price = price;
 		this.productNo = productNo;
@@ -82,6 +84,9 @@ public class Order {
 		this.orderType=orderType;
 		this.startDate=startDate;
 		this.endDate=endDate;
+		this.paymentKey=paymentKey;
+		this.deliveryPrice = deliveryPrice;
+		this.secPrice = secPrice;
 	}
 	
 	// 나눔(택배 경우)
@@ -112,9 +117,24 @@ public class Order {
 		this.orderType = orderType;
 		this.orderStatus = orderStatus;
 		this.productNo = productNo;
+		
 	}
 	
 	
+	
+	
+	public String getPaymentKey() {
+		return paymentKey;
+	}
+	public void setPaymentKey(String paymentKey) {
+		this.paymentKey = paymentKey;
+	}
+	public String getImg1() {
+		return img1;
+	}
+	public void setImg1(String img1) {
+		this.img1 = img1;
+	}
 	public Integer getOrderNo() {
 		return orderNo;
 	}

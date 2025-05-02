@@ -122,9 +122,9 @@ input[type="text"] {
 		               data-address1="${member.address1}"
 		               data-address2="${member.address2}"
 		               data-address3="${member.address3}"
-		               data-region1="${member.region1}"
-		               data-region2="${member.region2}"
-		               data-region3="${member.region3}"
+ 		               data-region1="${member.location}"
+		               <%-- data-region2="${member.region2}"
+		               data-region3="${member.region3}"  --%>
 		               data-ordercount="${member.orderCount}"
 		               data-regdate="${member.regDate}"
 		               data-bs-toggle="modal" data-bs-target="#myModal">
@@ -142,9 +142,9 @@ input[type="text"] {
 		               data-address1="${member.address1}"
 		               data-address2="${member.address2}"
 		               data-address3="${member.address3}"
-		               data-region1="${member.region1}"
-		               data-region2="${member.region2}"
-		               data-region3="${member.region3}"
+		               data-region1="${member.location}"
+		               <%-- data-region2="${member.region2}"
+		               data-region3="${member.region3}" --%>
 		               data-ordercount="${member.orderCount}"
 		               data-regdate="${member.regDate}"
 		               data-bs-toggle="modal" data-bs-target="#myModal">
@@ -153,7 +153,7 @@ input[type="text"] {
 		          </td>
 		          <td>${member.nickname}</td>
 		          <td>${member.phone}</td>
-		          <td>${member.region1}</td>
+		          <td>${member.location}</td>
 		          <td>${member.address1}</td>
 		        </tr>
 		      </c:forEach>
@@ -221,9 +221,9 @@ input[type="text"] {
           <div><strong>주소1:</strong> <span id="modalAddr1"></span></div>
           <div><strong>주소2:</strong> <span id="modalAddr2"></span></div>
           <div><strong>주소3:</strong> <span id="modalAddr3"></span></div>
-          <div><strong>거래지역1:</strong> <span id="modalRegion1"></span></div>
-          <div><strong>거래지역2:</strong> <span id="modalRegion2"></span></div>
-          <div><strong>거래지역3:</strong> <span id="modalRegion3"></span></div>
+           <div><strong>거래지역:</strong> <span id="modalRegion1"></span></div>
+          <!-- <div><strong>거래지역2:</strong> <span id="modalRegion2"></span></div>
+          <div><strong>거래지역3:</strong> <span id="modalRegion3"></span></div>  -->
           <div><strong>주문횟수:</strong> <span id="modalOrder"></span></div>
           <div><strong>가입일:</strong> <span id="modalRegDate"></span></div>
         </div>
@@ -248,8 +248,8 @@ input[type="text"] {
           document.getElementById("modalAddr2").innerText =  this.dataset.address2;
           document.getElementById("modalAddr3").innerText =  this.dataset.address3;
           document.getElementById("modalRegion1").innerText = this.dataset.region1;
-          document.getElementById("modalRegion2").innerText = this.dataset.region2;
-          document.getElementById("modalRegion3").innerText = this.dataset.region3;
+          /* document.getElementById("modalRegion2").innerText = this.dataset.region2;
+          document.getElementById("modalRegion3").innerText = this.dataset.region3; */
           document.getElementById("modalOrder").innerText = this.dataset.ordercount;
           document.getElementById("modalRegDate").innerText = this.dataset.regdate;
         });

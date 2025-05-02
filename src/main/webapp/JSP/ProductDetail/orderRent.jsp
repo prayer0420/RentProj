@@ -13,7 +13,7 @@
 </head>
 
 <body>
-<input type="hidden" name="orderType" value="${orderType}">
+<input type="hidden" name="orderType" value="대여">
 	<input type="hidden" name="startDate" value="${startDate}">
 	<input type="hidden" name="endDate" value="${endDate}">
 	<input type="hidden" name="mStartDate" value="${mStartDate}">

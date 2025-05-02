@@ -4,8 +4,8 @@
   
   <mapper namespace="mapper.order">
   <insert id="insertOrder" parameterType="order" useGeneratedKeys="true" keyProperty="orderNo"> 
-	  insert into `order` (orderNo,memberNo,price,productNo,deliveryAddr,orderId,orderType,startDate,endDate,orderStatus)
-	  values(#{orderNo},#{memberNo},#{price},#{productNo},#{deliveryAddr},#{orderId},#{orderType},#{startDate},#{endDate},'결제완료')
+	  insert into `order` (orderNo,memberNo,price,productNo,deliveryAddr,orderId,orderType,startDate,endDate,orderStatus,paymentKey,secPrice,deliveryPrice)
+	  values(#{orderNo},#{memberNo},#{price},#{productNo},#{deliveryAddr},#{orderId},#{orderType},#{startDate},#{endDate},'결제완료',#{paymentKey},#{secPrice},#{deliveryPrice})
   </insert>
   
   
@@ -140,6 +140,10 @@
 		<select id="checkOrder" resultType="int">
 			select count(*) from `order` where productNo=#{productNo}
 		</select>
+		
+		<update id="updateOrderStatus" parameterType="map">
+			update `order` set orderStatus=#{orderStatus} where orderNo=#{orderNo}
+		</update>
   
   </mapper>
   
