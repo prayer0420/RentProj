@@ -6,6 +6,7 @@ import java.util.Map;
 
 import dao.mark.MarkDAO;
 import dao.mark.MarkDAOImpl;
+import dto.Mark;
 import utils.PageInfo;
 
 public class MarkServiceImpl implements MarkService {
@@ -17,23 +18,17 @@ public class MarkServiceImpl implements MarkService {
 
 	@Override
 	public boolean existsMark(Integer memberNo, Integer productNo) throws Exception {
-		if(markDAO.existsMark(memberNo, productNo)) {
-			deleteMark(memberNo, productNo);
-			return false;
-		}else {
-			insertMark(memberNo, productNo);
-			return true;
-		}
+		return markDAO.existsMark(memberNo, productNo);
 	}
 
 	@Override
-	public void insertMark(Integer memberNo, Integer productNo) throws Exception {
-		markDAO.insertMark(memberNo, productNo);
+	public void insertMark(Mark mark) throws Exception {
+		markDAO.insertMark(mark);
 	}
 
 	@Override
-	public void deleteMark(Integer memberNo, Integer productNo) throws Exception {
-		markDAO.deleteMark(memberNo, productNo);
+	public void deleteMark(Mark mark) throws Exception {
+		markDAO.deleteMark(mark);
 		
 	}
 	
@@ -66,4 +61,10 @@ public class MarkServiceImpl implements MarkService {
 
         return pageInfo;
     }
+
+	@Override
+	public int countMarkProduct(Integer productNo) throws Exception {
+		return markDAO.countMarkProduct(productNo);
+		
+	}
 }

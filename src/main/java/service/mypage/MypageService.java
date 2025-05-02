@@ -36,10 +36,20 @@ public interface MypageService {
 	// 나의 판매상품 리스트(mySell)에서 게시중인 상품 삭제
 	boolean deleteProduct(Integer productNo) throws Exception;
 
-	// 내가 구매한 상품의 '구매확정' 버튼 AJAX
+	// 나의 판매상품 리스트(mySell)에서 게시중인 상품 숨기기
+	boolean hideProduct(Integer productNo) throws Exception;
+	
+	// 내가 구매한 상품의 '구매확정' 버튼 누르면 상태 update
 	boolean confirmOrder(Integer orderNo) throws Exception;
 
-	// 나의 판매상품 리스트(mySell)에서 게시중인 상품 숨기기
-	boolean hideProduct(int productNo) throws Exception;
+
+	// 대여구매자 '빌리기 시작' 버튼 누르면 상태 update
+	boolean rentStart(Integer orderNo) throws Exception;
+
+	// 대여구매자 '반납 송장번호 입력' 버튼
+	boolean returnSetInvoiceInfo(Integer orderNo, String reDeliveryComp, String reInvoiceNo) throws Exception;
+
+	// 대여판매자 '상품반납확인' 버튼 누르면 상태 update
+	boolean confirmReturn(Integer orderNo) throws Exception;
 
 }

@@ -54,7 +54,7 @@
 	                    <h4>판매자 정보</h4>
 	                    <p>아이디: ${myRentDetail.memberId }</p>
 	                    <p>연락처: ${myRentDetail.phone }</p>
-	                    <p>반환배송지: ${myRentDetail.address1 }</p>
+	                    <p><strong>반환배송지: ${myRentDetail.address1 }</strong></p>
 	                    <!-- <button class="btn">판매자의 다른 상품-></button>	 -->
 	                    
 	                </div>
@@ -62,14 +62,16 @@
 	
 	            <div class="info-grid" style="margin-top: 20px;">
 	                <div class="info-box">
-	                    <h4>대여 기간</h4>
+	                    <h4>대여 & 반납 정보</h4>
 	                    <fmt:parseDate value='${myRentDetail.orderDate}' pattern="yyyy-MM-dd" var='orderDate'/>
-	                    <p>대여 신청일 <fmt:formatDate value="${orderDate }" pattern="yyyy년 MM월 dd일"/> </p>
+	                    <p>대여 신청일: <fmt:formatDate value="${orderDate }" pattern="yyyy년 MM월 dd일"/> </p>
 	                    <fmt:parseDate value='${myRentDetail.startDate}' pattern="yyyy-MM-dd" var='startDate'/>
-	                    <p>대여 시작일 <fmt:formatDate value="${startDate }" pattern="yyyy년 MM월 dd일"/> </p>
+	                    <p>대여 시작일: <fmt:formatDate value="${startDate }" pattern="yyyy년 MM월 dd일"/> </p>
 	                    <fmt:parseDate value='${myRentDetail.endDate}' pattern="yyyy-MM-dd" var='endDate'/>
-	                    <p><strong>대여 종료일 <fmt:formatDate value="${endDate }" pattern="yyyy년 MM월 dd일"/></strong></p>
-	                    <p><strong>상품 회수일 </strong></p> 
+	                    <p><strong>대여 종료일: <fmt:formatDate value="${endDate }" pattern="yyyy년 MM월 dd일"/></strong></p>
+	                    <p>&nbsp;</p>
+	                    <p><strong>반납송장번호: ${myRentDetail.reInvoiceNo }</strong></p>
+	                    <p><strong>반납택배사: ${myRentDetail.reDeliveryComp }</strong></p>  
 	                    
 	                </div>
 	                <div class="info-box">

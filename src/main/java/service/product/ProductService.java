@@ -24,4 +24,8 @@ public interface ProductService {
     List<Category> getAllCategories();
     //메인페이지
 	List<Product> getPopularProducts(int limit);
+	
+	void incrementViewCount(int no)throws Exception;
+	
+	int selectViewCount(int no) throws Exception;
 }

@@ -167,6 +167,12 @@ public class MypageServiceImpl implements MypageService {
 	}
 
 	@Override
+	public boolean hideProduct(Integer productNo) throws Exception {
+		
+		return mypageDao.hideProduct(productNo) > 0;
+	}
+	
+	@Override
 	public boolean confirmOrder(Integer orderNo) throws Exception {
 		// 구매확정 시, 거래완료로 상태 업데이트 
 	    boolean result = mypageDao.updateOrderStatusToCompleted(orderNo);
@@ -185,10 +191,23 @@ public class MypageServiceImpl implements MypageService {
 	}
 
 	@Override
-	public boolean hideProduct(int productNo) throws Exception {
+	public boolean rentStart(Integer orderNo) throws Exception {
 		
-		return mypageDao.hideProduct(productNo);
+		return mypageDao.updateRentStart(orderNo) >0;
 	}
+
+	@Override
+	public boolean returnSetInvoiceInfo(Integer orderNo, String reDeliveryComp, String reInvoiceNo) throws Exception {
+		
+		return mypageDao.updateReturnInvoiceInfo(orderNo, reDeliveryComp, reInvoiceNo);
+	}
+
+	@Override
+	public boolean confirmReturn(Integer orderNo) throws Exception {
+		
+		return mypageDao.updateRentCompleted(orderNo) >0;
+	}
+
 
 
 }

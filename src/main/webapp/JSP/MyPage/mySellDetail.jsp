@@ -44,15 +44,15 @@
                 </div>
                 <div class="info-box">
                     <h4>구매 회원</h4>
-                    <p>${mySellDetail.id}</p>
-                    <p>${mySellDetail.phone }</p>
-                    <p>${mySellDetail.deliveryAddr }</p>
+                    <p>아이디:&nbsp; ${mySellDetail.id}</p>
+                    <p>연락처:&nbsp; ${mySellDetail.phone }</p>
+                    <p>기본배송지: ${mySellDetail.deliveryAddr }</p>
                 </div>
             </div>
 
             <div class="info-grid" style="margin-top: 20px;">
                 <div class="info-box">
-                    <h4>구매 정보</h4>
+                    <h4>주문 정보</h4>
                     <p>주문번호: ${mySellDetail.orderId }</p>
                     <p>주문일: <fmt:formatDate value="${mySellDetail.orderDate}" pattern="yyyy년 MM월 dd일" /> </p>
                     <p>상품출고일: </p>

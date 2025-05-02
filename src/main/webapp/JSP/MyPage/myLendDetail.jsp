@@ -55,20 +55,22 @@
 	                </div>
 	                <div class="info-box">
 	                    <h4>대여회원 정보</h4>
-	                    <p><span id="detailMemId">${myLendDetail.id }</span></p>
-	                    <p><span id="detailMemPhone">${myLendDetail.phone }</span></p>
-	                    <p></p>
+	                    <p>아이디:&nbsp;<span id="detailMemId">${myLendDetail.id }</span></p>
+	                    <p>연락처:&nbsp;<span id="detailMemPhone">${myLendDetail.phone }</span></p>
+	                    <p>기본배송지:&nbsp;<span id="detailDeliverAddr">${myLendDetail.deliveryAddr }</span></p>
 	                    
 	                </div>
 	            </div>
 	
 	            <div class="info-grid" style="margin-top: 20px;">
 	                <div class="info-box">
-	                    <h4>대여 기간</h4>
+	                    <h4>대여일정 & 반납 정보</h4>
 	                    <p>대여 신청일:<span id="detailOrderDate"><fmt:formatDate value="${myLendDetail.orderDate }" pattern="yyyy년 MM월 dd일" /> </span></p>
 	                    <p>대여 시작일:<span id="detailStartDate"> <fmt:formatDate value="${myLendDetail.startDate }" pattern="yyyy년 MM월 dd일"/></span></p>
 	                    <p><strong>대여 종료일: <span id="detailEndDate"><fmt:formatDate value="${myLendDetail.endDate }" pattern="yyyy년 MM월 dd일"/></span> </strong></p>
-	                    <p><strong>상품 회수일:</strong></p>
+	                    <p>&nbsp;</p>
+	                    <p><strong>반납송장번호:&nbsp; ${myLendDetail.reInvoiceNo }</strong></p>
+	                    <p><strong>반납택배사:&nbsp; ${myLendDetail.reDeliveryComp }</strong></p>
 	                    
 	                </div>
 	                <div class="info-box">

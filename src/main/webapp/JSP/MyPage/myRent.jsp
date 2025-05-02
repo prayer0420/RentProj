@@ -90,10 +90,10 @@
 							        <button type="button" class="open-cancel-btn" data-orderno="${item.orderNo}">주문취소</button>
 							   </c:when> 
 							   <c:when test="${item.orderStatus eq '배송중'}">
-							        <button type="button" class="open-delivery-btn" data-orderno="${item.orderNo}">빌려쓰기 시작</button>
+							        <button type="button" class="rent-start-btn" data-orderno="${item.orderNo}">빌리기시작</button>
 							   </c:when>
 							   <c:when test="${item.orderStatus eq '대여중'}">
-							        <button type="button" class="open-rent-btn" data-orderno="${item.orderNo}">반납송장번호입력</button>
+							        <button type="button" class="open-invoice-btn" data-orderno="${item.orderNo}">반납송장번호입력</button>
 							   </c:when>
 							   <c:when test="${item.orderStatus eq '거래완료'}">
 							        <button type="button" class="open-review-btn" data-orderno="${item.orderNo}">리뷰쓰러가기</button>
@@ -112,6 +112,14 @@
 		      <br>
 				<jsp:include page="/JSP/MyPage/mypagePaging.jsp" > 
 					<jsp:param name="baseUrl" value="${contextPath }/myRent" />
+				</jsp:include>
+				
+				<!-- 빌리기(대여)시작 모달 --> 
+				<jsp:include page="/JSP/MyPage/rentStartModal.jsp" /> 
+				
+				<!-- 반납송장번호 입력 모달 --> 
+				<jsp:include page="/JSP/MyPage/returnInvoiceInfo.jsp" >
+          			<jsp:param name="redirectUrl" value="/rent/myRentDetail"/>
 				</jsp:include>
 				
 			</c:otherwise>

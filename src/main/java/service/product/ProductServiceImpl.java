@@ -148,4 +148,15 @@ public class ProductServiceImpl implements ProductService {
 		double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 		return R * c;
 	}
+
+	@Override
+	public void incrementViewCount(int no) throws Exception {
+		productDAO.incrementViewCount(no);
+		
+	}
+
+	@Override
+	public int selectViewCount(int no) throws Exception {
+		return productDAO.selectViewCount(no);
+	}
 }
