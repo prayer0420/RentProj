@@ -12,5 +12,7 @@ public interface SettlementService {
     boolean processSettlement(int settlementNo) throws Exception;
     // 수수료율 가져와 수수료 및 정산 금액 계산
     void insertSettlementByOrderNo(int orderNo) throws Exception;
+    // /정산 완료 시간 조회
+    String getCompletedAt(int settlementNo) throws Exception;
     
 }
