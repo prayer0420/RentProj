@@ -32,7 +32,10 @@ public class SettlementServiceImpl implements SettlementService {
 
 	        // 3. 회원번호 조회 및 등급 승급 시도
 	        int memberNo = settlementDAO.selectMemberNoBySettlementNo(settlementNo);
-	        upgradeMemberGradeIfNeeded(memberNo); // 등급 조건 충족 시 승급
+	        // orderCount +1 처리
+	        settlementDAO.updateOrderCountPlusOne(memberNo);
+	        // 등급 승급 처리
+	        upgradeMemberGradeIfNeeded(memberNo);
 	    } catch (Exception e) {
 	        // 실패해도 무조건 성공으로 처리
 	        System.err.println("[정산 처리 실패] settlementNo=" + settlementNo);

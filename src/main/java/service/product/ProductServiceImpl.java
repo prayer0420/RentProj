@@ -61,6 +61,8 @@ public class ProductServiceImpl implements ProductService {
 		params.put("tradeType", safeTrade);
 		params.put("offset", offset);
 		params.put("limit", limit);
+		params.put("isHide", 1);
+		params.put("deleted", "N");
 
 		long t1 = System.currentTimeMillis();
 

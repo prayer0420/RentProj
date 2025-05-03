@@ -25,7 +25,7 @@
 		<h1 class="form-title">판매/대여 등록</h1>
 		<form id="registerForm" action="<%=request.getContextPath()%>/rentSell"
 			method="post" enctype="multipart/form-data">
-			<input type="hidden" name="tradeType" value="판매대여" />
+			<input type="hidden" name="tradeType" value="판매/대여" />
 
 			<!-- 제목 -->
 			<section class="form-section">
