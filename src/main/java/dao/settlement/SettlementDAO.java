@@ -6,6 +6,7 @@ import java.util.Map;
 
 import dto.Member;
 import dto.Order;
+import dto.Product;
 import dto.Settlement;
 
 public interface SettlementDAO {
@@ -13,13 +14,11 @@ public interface SettlementDAO {
     List<Settlement> selectSettlementList(Map<String, Object> searchMap) throws Exception;
     // 정산 상태를 'COMPLETE'로 업데이트
     int updateSettlementStatus(int settlementNo) throws Exception;
-    // 회원번호 조회 (정산번호로)
-    int selectMemberNoBySettlementNo(int settlementNo) throws Exception;
- 
+
     
     // 회원 정보 조회
     Member selectMemberInfo(int memberNo) throws Exception;
-    // 등급 기준 settlementCount 조회
+    // 등급 기준 조회
     int selectGradeCount(int gradeNo) throws Exception;
     // 회원 등급 승급
     int updateMemberGradeNo(int memberNo, int gradeNo) throws Exception;
@@ -42,4 +41,6 @@ public interface SettlementDAO {
     String selectCompletedAt(int settlementNo) throws Exception;
     // 정산완료 시, 주문카운트 업데이트
     int updateOrderCountPlusOne(int memberNo) throws Exception;
+    
+    Product selectProductInfo(int productNo) throws Exception;
 }

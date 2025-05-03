@@ -37,12 +37,15 @@ public class ReviewList extends HttpServlet {
 		int productNo = Integer.parseInt(request.getParameter("productNo"));
 		String memberNickname = (String) request.getSession().getAttribute("nickname");
 		Integer memberNo = (Integer) request.getSession().getAttribute("no");
+		System.out.println("리뷰"+memberNo);
+		
 		ReviewService service = new ReviewServiceImpl();
 		
 		
 		try {
 			List<Review> reviewList = service.selectedByProductNo(productNo);
 			Double avgScore = service.selectAvgScore(productNo);
+			System.out.println("리뷰 목록 확인: " + reviewList);
 			request.setAttribute("reviewList", reviewList);
 			request.setAttribute("avgScore", avgScore);
 			request.setAttribute("memberNickname",memberNickname);

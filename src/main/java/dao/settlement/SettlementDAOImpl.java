@@ -9,6 +9,7 @@ import org.apache.ibatis.session.SqlSession;
 
 import dto.Member;
 import dto.Order;
+import dto.Product;
 import dto.Settlement;
 import utils.MybatisSqlSessionFactory;
 
@@ -31,14 +32,6 @@ public class SettlementDAOImpl implements SettlementDAO {
         }
     }
 	
-	@Override
-	public int selectMemberNoBySettlementNo(int settlementNo) throws Exception {
-		// 회원번호 조회 (정산번호로)
-		try (SqlSession sqlSession = MybatisSqlSessionFactory.getSqlSessionFactory().openSession()) {
-	        return sqlSession.selectOne("mapper.settlement.selectMemberNoBySettlementNo", settlementNo);
-	    }
-	}
-
 
 	@Override
 	public Member selectMemberInfo(int memberNo) throws Exception {
@@ -122,6 +115,13 @@ public class SettlementDAOImpl implements SettlementDAO {
 	public int updateOrderCountPlusOne(int memberNo) throws Exception {
 	    try (SqlSession sqlSession = MybatisSqlSessionFactory.getSqlSessionFactory().openSession(true)) {
 	        return sqlSession.update("mapper.member.updateOrderCountPlusOne", memberNo);
+	    }
+	}
+
+	@Override
+	public Product selectProductInfo(int productNo) throws Exception {
+	    try (SqlSession sqlSession = MybatisSqlSessionFactory.getSqlSessionFactory().openSession()) {
+	        return sqlSession.selectOne("mapper.settlement.selectProductInfo", productNo);
 	    }
 	}
 }

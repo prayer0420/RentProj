@@ -105,9 +105,9 @@
 	      <td>${order.deliveryComp}</td>
 	      <td><fmt:formatDate value="${order.startDate}" pattern="yyyy-MM-dd" /></td>
 	      <td><fmt:formatDate value="${order.endDate}" pattern="yyyy-MM-dd" /></td>
-	      <td><fmt:formatNumber value="${order.price}" pattern="#,##0" /></td>
-	      <td><fmt:formatNumber value="${order.deliveryPrice}" pattern="#,##0" /></td>
-	      <td><fmt:formatNumber value="${order.secPrice}" pattern="#,##0" /></td>
+	      <td><fmt:formatNumber value="${order.price != null ? order.price : 0}" pattern="#,##0" /></td>
+	      <td><fmt:formatNumber value="${order.deliveryPrice != null ? order.deliveryPrice : 0}" pattern="#,##0" /></td>
+	      <td><fmt:formatNumber value="${order.secPrice != null ? order.secPrice : 0}" pattern="#,##0" /></td>
 	      <td>${order.paymentType}</td>
 	      <td>${order.orderStatus}</td>
 	    </tr>

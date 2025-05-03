@@ -6,15 +6,6 @@
 <mapper namespace="mapper.settlement">
 
 	
-	<!-- 정산번호로 회원번호 조회 -->
-	<select id="selectMemberNoBySettlementNo" parameterType="int" resultType="int">
-	    SELECT memberNo
-	    FROM settlement
-	    WHERE settlementNo = #{settlementNo}
-	</select>	
-
-	
-	
 	<!-- 회원 정보 조회 -->
 	<select id="selectMemberInfo" parameterType="int" resultType="dto.Member">
 	    SELECT
@@ -42,6 +33,7 @@
 	<!-- 정산 상세 조회 (판매가, 보증금, 배송비, 수수료) -->
 	<select id="selectSettlementInfo" resultType="dto.Settlement">
 	    SELECT 
+	        s.orderNo,  
 	        o.price,
 	        o.secPrice,
 	        o.orderType,
@@ -64,11 +56,11 @@
 	<insert id="insertSettlement" parameterType="dto.Settlement">
 	    INSERT INTO settlement (
 	        orderNo, memberNo, productNo, revenueType, 
-	        feeAmount, finalSettleAmount, feeStatus, payTime
+	        feeAmount, finalSettleAmount, feeStatus
 	    ) VALUES (
 	        #{orderNo}, #{memberNo}, #{productNo}, #{revenueType},
 	        #{feeAmount}, #{finalSettleAmount},
-	        #{feeStatus}, NOW()
+	        #{feeStatus}
 	    )
 	</insert>
 	
@@ -77,7 +69,8 @@
 	    SELECT 
 	        s.settlementNo,
 	        s.orderNo,
-	        s.memberNo,
+	        p.memberNo AS sellerMemberNo, 
+	        o.memberNo AS buyerMemberNo,
 	        s.productNo,
 	        p.title as productTitle,
 	        o.price,
@@ -88,12 +81,12 @@
 	        s.finalSettleAmount,
 	        s.revenueType,
        		s.settlementCompletedAt,
-	        s.payTime,
+	        o.orderDate AS payTime,
 	        s.feeStatus
 	    FROM settlement s
 	    LEFT JOIN `order` o ON s.orderNo = o.orderNo
 	    LEFT JOIN `product` p ON o.productNo = p.no
-	    LEFT JOIN member m ON s.memberNo = m.no
+	    LEFT JOIN member m ON p.memberNo = m.no
 	    LEFT JOIN grade g ON m.gradeId = g.gradeNo
 	    WHERE 1=1
 
@@ -109,7 +102,7 @@
 		<if test="completedEnd != null and completedEnd != ''">
 		  AND s.settlementCompletedAt &lt;= #{completedEnd}
 		</if>	
-	    ORDER BY s.payTime DESC
+	    ORDER BY o.orderDate DESC
 	</select>
 
 	<!-- 주문 정보 조회 -->	
@@ -150,6 +143,10 @@
     SELECT DATE_FORMAT(settlementCompletedAt, '%Y-%m-%d %H:%i:%s')
     FROM settlement
     WHERE settlementNo = #{settlementNo}
+	</select>
+	
+	<select id="selectProductInfo" parameterType="int" resultType="Product">
+    SELECT * FROM product WHERE no = #{productNo}
 	</select>
 	
 	</mapper>
