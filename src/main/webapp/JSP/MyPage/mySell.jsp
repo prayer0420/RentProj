@@ -91,10 +91,10 @@
 		                class="product-image"
 		              /></a>
 		              <div class="product-info">
-		                <p><a href="${contextPath }/productDetail?no=${item.no}&tradeType=판매">${item.no }</a></p>
+		                <p><a href="${contextPath }/productDetail?no=${item.no}&tradeType=판매">상품번호: ${item.no }</a></p>
 		                <h3><a href="${contextPath }/productDetail?no=${item.no}&tradeType=판매">${item.title }</a></h3>
-		                <p>가격:&nbsp;<fmt:formatNumber value="${item.salePrice }" type="number" groupingUsed="true"/>원</p>
-		                <p>배송비:&nbsp;<fmt:formatNumber value="${item.deliveryPrice}" type="number" groupingUsed="true"/>원</p>
+		                <p>판매가격:&nbsp;<fmt:formatNumber value="${item.salePrice }" type="number" groupingUsed="true"/>원</p>
+		                <p>배송비:&nbsp;<fmt:formatNumber value="${item.deliveryprice}" type="number" groupingUsed="true"/>원</p>
 		              </div>
 		              <div class="status-change-btns">
 		               <c:choose>

@@ -57,7 +57,7 @@
 	
 	<!-- 나의 구매상품 리스트(MyOrder) 불러오기 -->
 	<select id="selectOrderListByPage" parameterType="map" resultType="map">
-		select o.*, p.*
+		select o.*, p.img1,p.title,p.no, p.salePrice, p.deliveryprice
 		from `order` o 
 		left join product p on (p.no = o.productNo)
 		join member m on (o.memberNo=m.no)
@@ -67,7 +67,7 @@
 	
 	<!-- 나의 구매내역 상세(MyOrderDetail) 불러오기  -->
 	<select id="selectMyOrderDetail" parameterType="map" resultType="map">
-		select p.*, o.*, m1.name, m2.id, m2.phone
+		select o.*, p.img1, p.no, p.title, p.salePrice, p.deliveryprice, m1.name, m2.id, m2.phone
         from Product p 
         join `Order` o On (o.productNo = p.no)
         join member m1 On (o.memberNo = m1.no)
