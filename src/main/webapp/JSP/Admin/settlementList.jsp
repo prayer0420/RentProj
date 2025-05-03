@@ -104,7 +104,7 @@
             <td>${settle.settlementNo}</td>
             <td>${settle.orderNo}</td>
             <td>${settle.revenueType}</td>
-            <td>${settle.memberNo}</td>
+            <td>${settle.sellerMemberNo}</td>
             <td>${settle.productNo}</td>
             <td>${settle.productTitle}</td>
             <td>${fn:substringBefore(settle.payTime, ' ')}</td>
@@ -114,7 +114,7 @@
             <td><fmt:formatNumber value="${settle.gradeRate}" maxFractionDigits="2" /> %</td>
             <td><fmt:formatNumber value="${settle.feeAmount}" type="number" /> 원</td>
             <td><fmt:formatNumber value="${settle.finalSettleAmount}" type="number" /> 원</td>
-            <td id="completedAt-${settle.settlementNo}"><fmt:formatDate value="${settle.settlementCompletedAt}" pattern="yyyy-MM-dd HH:mm" /></td>
+            <td id="completedAt-${settle.settlementNo}"><fmt:formatDate value="${settle.settlementCompletedAt}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
           
           <td>
             <c:choose>

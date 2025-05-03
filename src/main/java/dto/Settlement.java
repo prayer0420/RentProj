@@ -32,8 +32,10 @@ public class Settlement {
     private String searchEndDate;   // 검색 끝 날짜
     private String searchRevenueType; // 판매/대여 타입
     private String searchFeeStatus; // 검색 정산 상태 
-    
     private String orderType;
+    
+    private int sellerMemberNo; // 판매자 번호
+    private int buyerMemberNo; // 구매자 번호
 	
     public int getSettlementNo() {
 		return settlementNo;
@@ -165,6 +167,19 @@ public class Settlement {
 	public void setRevenueType(String revenueType) {
 	    this.revenueType = revenueType;
 	}
+	public int getSellerMemberNo() {
+		return sellerMemberNo;
+	}
+	public void setSellerMemberNo(int sellerMemberNo) {
+		this.sellerMemberNo = sellerMemberNo;
+	}
+	public int getBuyerMemberNo() {
+		return buyerMemberNo;
+	}
+	public void setBuyerMemberNo(int buyerMemberNo) {
+		this.buyerMemberNo = buyerMemberNo;
+	}
     
+	
 
 }
