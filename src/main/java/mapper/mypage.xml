@@ -94,7 +94,8 @@
 	
 	<!-- 나의 빌리기 내역 상세(MyRentDetail) 불러오기  -->
 	<select id="selectMyRentDetail" parameterType="map" resultType="map">
-		select p.*, o.*, m1.name, m2.id, m2.phone, m2.address1
+		select o.*, p.img1, p.no, p.title, p.rentPrice,
+		m1.name, m2.id, m2.phone, m2.address1
         from Product p 
         join `Order` o On (o.productNo = p.no)
         join member m1 On (o.memberNo = m1.no)
@@ -127,7 +128,7 @@
 	<!-- 나의 대여(빌려주는)상품 리스트(MyLend) 불러오기 -->
 	<select id="selectLendListByPage" parameterType="map" resultType="map">
 		select 
-			p.no, p.createDate, p.title, p.img1, p.deliveryStatus, o.*
+			o.*, p.no, p.createDate, p.title, p.img1, p.rentPrice, p.secPrice, p.deliveryprice
 		from product p 
 		left join `order` o on (p.no = o.productNo)
 		join member m on (p.memberNo = m.no)
