@@ -36,10 +36,10 @@
                 <img src="https://via.placeholder.com/120x100?text=🚲" alt="자전거"></a>
                 <div class="product-info">
                     <div style="font-size: 13px; color: gray;">
-                    	<a href="${contextPath }/productDetail?no=${myOrderDetail.no}">상품번호 ${myOrderDetail.productNo }</a></div>
+                    	<a href="${contextPath }/productDetail?no=${myOrderDetail.no}">상품번호: ${myOrderDetail.productNo }</a></div>
                     <div class="product-title">
                     	<a href="${contextPath }/productDetail?no=${myOrderDetail.no}">${myOrderDetail.title }</a></div>
-                    <div class="price">판매가격: <fmt:formatNumber value="${myOrderDetail.price}" type="number" groupingUsed="true" /> 원</div>
+                    <div class="price">판매가격: <fmt:formatNumber value="${myOrderDetail.salePrice}" type="number" groupingUsed="true" /> 원</div>
                 </div>
                 <span class="status-text">${myOrderDetail.orderStatus}</span>
             </div>
@@ -76,9 +76,9 @@
                 
                 <div class="info-box">
                     <h4>결제정보</h4>
-                    <p><strong>총 결제금액: <fmt:formatNumber value="${myOrderDetail.price + myOrderDetail.deliveryPrice}" type="number" groupingUsed="true"/>원</strong> </p>
-                    <p>구매가격: <fmt:formatNumber value="${myOrderDetail.price}" type="number" groupingUsed="true" />원</p>
-                    <p>배송비: <fmt:formatNumber value="${myOrderDetail.deliveryPrice}" type="number" groupingUsed="true" /> 원</p>
+                    <p><strong>총 결제금액: <fmt:formatNumber value="${myOrderDetail.salePrice + myOrderDetail.deliveryprice}" type="number" groupingUsed="true"/>원</strong> </p>
+                    <p>구매가격: <fmt:formatNumber value="${myOrderDetail.salePrice}" type="number" groupingUsed="true" />원</p>
+                    <p>배송비: <fmt:formatNumber value="${myOrderDetail.deliveryprice}" type="number" groupingUsed="true" /> 원</p>
                     <p>결제방법: ${myOrderDetail.paymentType}</p>
                 </div>
             </div>
