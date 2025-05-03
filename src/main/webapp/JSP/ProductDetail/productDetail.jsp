@@ -37,7 +37,7 @@ System.out.println("세션 userId: " + userId);
 						<c:if test="${not empty product.img1}">
 							<img
 								src="${pageContext.request.contextPath}/upload/${product.img1}"
-								class="slide-image" >
+								class="slide-image">
 						</c:if>
 						<c:if test="${not empty product.img2}">
 							<img
@@ -145,7 +145,7 @@ System.out.println("세션 userId: " + userId);
 								src="https://cdn-icons-png.flaticon.com/512/1144/1144760.png"
 								alt="프로필아이콘" />
 						</div>
-						<div class="profile-info">
+						<div class="profile-info" id="avgScoreBox">
 							<div class="seller-name">${product.nickname}</div>
 							<div class="seller-rating">
 								<span class="score">${avgScore}</span> <span class="stars">
@@ -253,7 +253,7 @@ System.out.println("세션 userId: " + userId);
 		</c:if>
 		<div class="tab-pane" id="review">
 			<div class="review-section">
-				<div class="review-top">
+				<div class="review-top" id="reviewAvgScoreBox">
 					<h3>판매자 만족도</h3>
 					<div class="rating-display">
 						<span class="score">${avgScore}/5.0</span>
@@ -268,7 +268,7 @@ System.out.println("세션 userId: " + userId);
 					</div>
 				</div>
 				<c:if test="${memberNo != null and not checkMyReview}">
-					<button id="review-toggle-btn" class="btn btn-review-write">리뷰쓰기</button>
+						<button id="review-toggle-btn" class="btn btn-review-write">리뷰쓰기</button>
 				</c:if>
 				<!--리뷰 작성-->
 				<form id="review-form" class="review-form" style="display: none;">
@@ -526,19 +526,20 @@ console.log("로그인 여부:", isLoggedIn);
 	// 리뷰 등록/수정
 	let isUpdateMode = false;
 	let updateReviewNo = null;
-	
+	const productNo = '${product.no}';
 	$('#review-form').on('submit', function (e) {
 	  e.preventDefault();
+
 	  const formData = {
 	    content: $('textarea[name="content"]').val(),
 	    score: $('select[name="score"]').val(),
 	    productNo: '${product.no}'
 	  };
-	
+
 	  if (isUpdateMode && updateReviewNo) {
 	    formData.no = updateReviewNo;
 	  }
-	
+
 	  $.ajax({
 	    type: 'POST',
 	    url: isUpdateMode ? contextPath + "/reviewUpdate" : contextPath + "/reviewWrite",
@@ -550,13 +551,69 @@ console.log("로그인 여부:", isLoggedIn);
 	      isUpdateMode = false;
 	      updateReviewNo = null;
 	      $("#submitBtn").text("등록");
-	      $('#review-list-container').load(contextPath + "/reviewList?productNo=${product.no}");
+
+	   // ✅ 리뷰 리스트 & 별점 모두 갱신
+	      $('#review-list-container').load(contextPath + '/productDetail?no=' + productNo + ' #review-list-container > *');
+	      
+	   	  $('#avgScoreBox').load(contextPath + '/productDetail?no=' + productNo + ' #avgScoreBox > *');
+	      $('#reviewAvgScoreBox').load(contextPath + '/productDetail?no=' + productNo + ' #reviewAvgScoreBox > *'); // ✅ 이거 추가
+	    
+	      // ✅ 리뷰쓰기 버튼 숨기기
+	      $('#review-toggle-btn').hide();
 	    },
 	    error: function () {
 	      alert(isUpdateMode ? '리뷰 수정 실패' : '리뷰 등록 실패');
 	    }
 	  });
 	});
+
+	// 수정 버튼 눌렀을 때 실행될 함수 (HTML에서 onclick으로 호출됨)
+	function editReview(reviewNo, content, score) {
+	  const reviewForm = document.getElementById('review-form');
+	  const contentInput = document.querySelector('textarea[name="content"]');
+	  const scoreSelect = document.querySelector('select[name="score"]');
+	  const submitBtn = document.getElementById('submitBtn');
+
+	  isUpdateMode = true;
+	  updateReviewNo = reviewNo;
+
+	  reviewForm.style.display = 'block';
+	  contentInput.value = content;
+	  scoreSelect.value = score;
+	  submitBtn.textContent = '수정';
+	}
+
+	// 삭제 버튼 눌렀을 때 실행될 함수 (HTML에서 onclick으로 호출됨)
+	function deleteReview(reviewNo) {
+	  if (!confirm('정말 삭제하시겠습니까?')) return;
+
+	  $.ajax({
+	    type: 'POST',
+	    url: contextPath + '/reviewDelete',
+	    data: { no: reviewNo },
+	    success: function () {
+	      alert('리뷰가 삭제되었습니다!');
+	      // ✅ 삭제 후 리스트 다시 로딩
+	      $('#review-list-container').load(contextPath + '/productDetail?no=' + productNo + ' #review-list-container > *');
+	      $('#avgScoreBox').load(contextPath + '/productDetail?no=' + productNo + ' #avgScoreBox > *');
+	      $('#reviewAvgScoreBox').load(contextPath + '/productDetail?no=' + productNo + ' #reviewAvgScoreBox > *'); // ✅ 이거 추가
+	      // ✅ 리뷰쓰기 버튼 다시 보이기
+	      $('#review-toggle-btn').show();
+	    },
+	    error: function () {
+	      alert('리뷰 삭제 실패');
+	    }
+	  });
+	}
+	
+	function toggleReviewWriteButton() {
+		  const hasReview = $('#hasReviewCheck').text().trim() === 'true';
+		  if (hasReview) {
+		    $('#review-toggle-btn').hide();
+		  } else {
+		    $('#review-toggle-btn').show();
+		  }
+		}
 	
 	function copyToClipboard() {
 		  const dummy = document.createElement("input");
@@ -626,4 +683,7 @@ console.log("로그인 여부:", isLoggedIn);
     showImage(currentIndex);
   });
 });
+	
+	
+	
 </script>
