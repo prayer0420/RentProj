@@ -128,7 +128,8 @@
 	<!-- 나의 대여(빌려주는)상품 리스트(MyLend) 불러오기 -->
 	<select id="selectLendListByPage" parameterType="map" resultType="map">
 		select 
-			o.*, p.no, p.createDate, p.title, p.img1, p.rentPrice, p.secPrice, p.deliveryprice
+			o.orderNo, o.orderStatus, o.orderType, o.orderId,
+			p.no, p.createDate, p.title, p.img1, p.rentPrice, p.secPrice, p.deliveryprice
 		from product p 
 		left join `order` o on (p.no = o.productNo)
 		join member m on (p.memberNo = m.no)
