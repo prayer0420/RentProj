@@ -8,6 +8,8 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.Base64;
 
 import javax.servlet.ServletException;
@@ -69,7 +71,6 @@ public class PaymentConfirm extends HttpServlet {
 		Date startDate = today;
 		Date endDate = today;
 		
-
 		try {
 		    String start = (String) session.getAttribute("start");
 		    if (start != null && start.matches("\\d{4}-\\d{2}-\\d{2}")) {
@@ -88,8 +89,6 @@ public class PaymentConfirm extends HttpServlet {
 		    // 무시: 오늘 날짜 유지
 		}
 		
-		System.out.println(startDate);
-		System.out.println(endDate);
 		
 //		System.out.println("결제 끝 startDate = " + start);
 //		System.out.println("결제 끝 endDate = " + end);

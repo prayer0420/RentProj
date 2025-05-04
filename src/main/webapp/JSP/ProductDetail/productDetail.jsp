@@ -267,7 +267,7 @@ System.out.println("세션 userId: " + userId);
 						</c:choose>
 					</div>
 				</div>
-				<c:if test="${memberNo != null and not checkMyReview}">
+				<c:if test="${memberNo != null and not checkMyReview and memberNo != product.memberNo}">
 						<button id="review-toggle-btn" class="btn btn-review-write">리뷰쓰기</button>
 				</c:if>
 				<!--리뷰 작성-->

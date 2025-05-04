@@ -13,12 +13,12 @@
 </head>
 
 <body>
-<input type="hidden" name="orderType" value="대여">
+	<input type="hidden" name="orderType" value="대여">
 	<input type="hidden" name="startDate" value="${startDate}">
 	<input type="hidden" name="endDate" value="${endDate}">
 	<input type="hidden" name="mStartDate" value="${mStartDate}">
 	<input type="hidden" name="mEndDate" value="${mEndDate}">
-	
+
 	<!-- 주문/결제 페이지 -->
 	<div class="order-container">
 		<h2 class="order-title">주문/결제</h2>
@@ -29,9 +29,8 @@
 				<span class="address-name"></span>
 			</div>
 			<div class="address-info">
-				<span class="phone"></span><br>
-				<span class="addressRegion"></span> <input type="hidden"
-					name="deliveryAddr" id="deliveryAddressInput">
+				<span class="phone"></span><br> <span class="addressRegion"></span>
+				<input type="hidden" name="deliveryAddr" id="deliveryAddressInput">
 			</div>
 			<button class="address-list" onclick="openAddressModal()">배송지
 				목록</button>
@@ -40,17 +39,17 @@
 		<div class="order-box">
 			<h3 class="order-subtitle"></h3>
 			<div class="payment-row">
-				<span>상품 금액</span> <strong>${product.rentPrice}원</strong>
+				<span>상품 대여 금액</span> <strong id="rentDisplay">계산 중...</strong>
 			</div>
 			<div class="payment-row">
-				<span>보증금</span> <strong>${product.secPrice}원</strong>
+				<span>보증금</span> <strong id="secDisplay">계산 중...</strong>
 			</div>
 			<div class="payment-row">
-				<span>배송비</span> <strong>${product.deliveryPrice}원</strong>
+				<span>배송비</span> <strong id="delvDisplay">계산 중...</strong>
 			</div>
 			<hr>
 			<div class="payment-total">
-				<span>총 결제 금액</span> <span>${product.rentPrice + product.secPrice + product.deliveryPrice}원</span>
+				<span>총 결제 금액</span> <span id="calculatedPrice">계산 중...</span>
 			</div>
 		</div>
 
@@ -60,8 +59,7 @@
 				개인정보 수집 이용 동의</label><br> <label><input type="checkbox"
 				class="pCheck"> [필수] 상품정보 안내</label>
 		</div>
-		<button class="pay-button" onclick="requestPayment()">${product.rentPrice + product.secPrice + product.deliveryPrice}원
-			결제하기</button>
+		<button class="pay-button" onclick="requestPayment()" id="payBtn">결제하기</button>
 	</div>
 
 	<jsp:include page="addressModal.jsp"></jsp:include>
@@ -96,7 +94,21 @@
 	      const memberPhone = "${phone}".replace(/-/g, "");
 	      const memberName = "${nickname}";
 	      const orderType="${orderType}";
-	      const price = parseInt("${product.rentPrice + product.secPrice + product.deliveryPrice}");
+	      
+	      const rentStart = "${sessionScope.start}";
+	      const rentEnd = "${sessionScope.end}";
+	      const rentStartDay = new Date(rentStart);
+	      const rentEndDay = new Date(rentEnd);
+	      
+	      var diffDay = Math.floor((rentEndDay - rentStartDay)/(1000*60*60*24))+1;
+	      
+	      
+		  const rentPrice = parseInt("${product.rentPrice}");	      
+		  const secPrice = parseInt("${product.secPrice}");	      
+		  const deliveryPrice = parseInt("${product.deliveryPrice}");	      
+	      
+	      const price = rentPrice*diffDay+secPrice+deliveryPrice;
+	      console.log("가격:"+price);
 	      
 	      const orderId = "ORDER_"+productNo+"_"+Date.now();//예 ORDER_1_2025-01-01
 	      // 회원 결제
@@ -164,7 +176,25 @@
 	          },
 	        });
 	      }
-	    
+	      document.addEventListener("DOMContentLoaded", function () {
+	    	  // 계산된 가격
+	    	  const rentTotal = rentPrice * diffDay;
+	    	  const totalPrice = rentTotal + secPrice + deliveryPrice;
+
+	    	  // 각 요소 가져오기
+	    	  const rentDisplay = document.getElementById("rentDisplay");
+	    	  const secDisplay = document.getElementById("secDisplay");
+	    	  const delvDisplay = document.getElementById("delvDisplay");
+	    	  const priceEl = document.getElementById("calculatedPrice");
+	    	  const payBtn = document.getElementById("payBtn");
+
+	    	  // 가격 표시 포맷 적용
+	    	  if (rentDisplay) rentDisplay.innerText = rentTotal.toLocaleString() + "원";
+	    	  if (secDisplay) secDisplay.innerText = secPrice.toLocaleString() + "원";
+	    	  if (delvDisplay) delvDisplay.innerText = deliveryPrice.toLocaleString() + "원";
+	    	  if (priceEl) priceEl.innerText = totalPrice.toLocaleString() + "원";
+	    	  if (payBtn) payBtn.innerText = totalPrice.toLocaleString() + "원 결제하기";
+	    	});
 	</script>
 
 </body>
