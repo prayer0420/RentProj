@@ -29,7 +29,7 @@ System.out.println("세션 userId: " + userId);
 	<jsp:include page="../Header/header.jsp"></jsp:include>
 	<div class="container">
 		<c:if test="${not empty product }">
-			<div class="section-title">📷 상세 정보</div>
+			<!-- <div class="section-title">📷 상세 정보</div> -->
 			<c:if test="${checkOrder && product.tradeType=='판매'}">이미 구매된 상품입니다.</c:if>
 			<div class="product-layout">
 				<div class="product-image">
@@ -76,13 +76,17 @@ System.out.println("세션 userId: " + userId);
 				<div class="product-details">
 					<div class="top-icons">
 						<button class="btn-share" onclick="copyToClipboard()">🔗</button>
-						<button onclick="shareKakao()">카카오톡 공유</button>
-						<button class="btn-wish" id="wishBtn"
-							data-productno="${product.no}">
-							<c:choose>
-								<c:when test="${isMark}">♥</c:when>
-								<c:otherwise>♡</c:otherwise>
-							</c:choose>
+							<button class="btn-kakao" onclick="shareKakao()" title="카카오톡 공유">
+							  <img src="${pageContext.request.contextPath}/img/kakao-share.png"
+							       alt="카카오톡 공유"
+							       style="width: 32px; height: 32px;" />
+							</button>
+							<button class="btn-wish" id="wishBtn" data-productno="${product.no}">
+							  <img id="wishIcon"
+							       src="<c:out value='${isMark ? "https://cdn-icons-png.flaticon.com/512/833/833472.png" : "https://cdn-icons-png.flaticon.com/512/1077/1077035.png"}'/>"
+							       alt="찜"
+							       style="width: 28px; height: 28px;" />
+							</button>
 						</button>
 						<button type="button" class="btn-inquiry"
 							onclick="openReportModal()">🚩</button>
@@ -377,8 +381,13 @@ console.log("로그인 여부:", isLoggedIn);
 	    data: { productNo: productNo },
 	    dataType: "json", // ✅ 꼭 넣어줘
 	    success: function (res) {
-	    	  console.log("AJAX 응답 확인:", res); // 🔍 추가!
-	    	  btn.innerText = res.isMark ? "♥" : "♡";
+	    	  const heartIcon = document.getElementById("wishIcon");
+	    	  if (heartIcon) {
+	    	    heartIcon.src = res.isMark
+	    	      ? "https://cdn-icons-png.flaticon.com/512/833/833472.png"   // 빨간 하트
+	    	      : "https://cdn-icons-png.flaticon.com/512/1077/1077035.png"; // 빈 하트
+	    	  }
+
 	    	  const markCountEl = document.getElementById("markCountNumber");
 	    	  if (markCountEl && res.count !== undefined) {
 	    	    markCountEl.textContent = res.count;
