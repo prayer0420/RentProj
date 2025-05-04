@@ -36,5 +36,6 @@ public interface ProductDAO {
     
     int selectViewCount(int no) throws Exception;
 
-    
+    String selectSellerIdByProductNo(int productNo);
+
 }
