@@ -108,4 +108,12 @@ public class ProductDAOImpl implements ProductDAO {
 	public int selectViewCount(int no) throws Exception {
 		return sqlSession.selectOne("mapper.product.selectViewCount", no);
 	}
+	
+	@Override
+	public String selectSellerIdByProductNo(int productNo) {
+	    try (SqlSession session = MybatisSqlSessionFactory.getSqlSessionFactory().openSession()) {
+	        return session.selectOne("mapper.product.selectSellerIdByProductNo", productNo);
+	    }
+	}
+
 }

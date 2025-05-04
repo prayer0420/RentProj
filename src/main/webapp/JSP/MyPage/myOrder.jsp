@@ -171,8 +171,8 @@
 			              <div class="product-info">
 			                <p><a href="${contextPath }/productDetail?no=${item.no }">상품번호: ${item.productNo}</a></p>
 			                <h3><a href="${contextPath }/productDetail?no=${item.no }">${item.title }</a></h3>
-			                <p>가격: <fmt:formatNumber value="${item.price}" type="number" groupingUsed="true" />원</p>
-			                <p>배송비: <fmt:formatNumber value="${item.deliveryPrice}" type="number" groupingUsed="true" />원</p>
+			                <p>판매가격: <fmt:formatNumber value="${item.salePrice}" type="number" groupingUsed="true" />원</p>
+			                <p>배송비: <fmt:formatNumber value="${item.deliveryprice}" type="number" groupingUsed="true" />원</p>
 			              </div>
 			              <div class="status-change-btns">
 			              <c:choose>

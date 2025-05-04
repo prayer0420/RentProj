@@ -19,10 +19,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import dao.alarmList.AlarmMessageDAO;
+import dao.alarmList.AlarmMessageDAOImpl;
+import dto.Alarm;
+import dto.AlarmMessage;
 import dto.Order;
 import dto.Rental;
+import service.alarm.FcmService;
+import service.alarm.FcmServiceImpl;
 import service.order.OrderService;
 import service.order.OrderServiceImpl;
+import service.product.ProductService;
+import service.product.ProductServiceImpl;
 import service.rental.RentalService;
 import service.rental.RentalServiceImpl;
 
@@ -159,6 +167,27 @@ public class PaymentConfirm extends HttpServlet {
 				session.removeAttribute("end");
 				session.removeAttribute("deliveryPrice");
 				session.removeAttribute("secPrice");
+				
+				
+				// 알림 전송
+				ProductService productService = new ProductServiceImpl();
+				String sellerId = productService.getSellerIdByProductNo(productNo);
+
+				AlarmMessageDAO messageDao = new AlarmMessageDAOImpl();
+				AlarmMessage template = messageDao.selectByType("Purchase");
+
+				if (template != null) {
+					String buyerNickname = (String) session.getAttribute("nickname");
+
+					String filledTitle = template.getTitle().replace("${id}", buyerNickname);
+					String filledContent = template.getContent().replace("${id}", buyerNickname);
+
+					Alarm alarm = new Alarm(template.getType(), sellerId, filledTitle, filledContent, true);
+
+					FcmService fcmService = new FcmServiceImpl();
+					fcmService.sendAlarm(alarm);
+				}
+				
 				response.sendRedirect("productDetail?no=" + productNo + "&paid=true");
 			} else {
 				// 승인 실패

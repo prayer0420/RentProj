@@ -212,16 +212,18 @@
 		                class="product-image"
 		              /></a>
 		              <div class="product-info">
-		                <p><a href="${contextPath }/productDetail?no=${item.no }">${item.productNo }</a></p>
 		                <p>
-						  대여날짜:
+						  대여기간:
 						  <fmt:formatDate value="${item.startDate}" pattern="yyyy-MM-dd" />
 						  <span> ~ </span>
 						  <fmt:formatDate value="${item.endDate}" pattern="yyyy-MM-dd" />
 						</p>
 		                <h3><a href="${contextPath }/productDetail?no=${item.no }">${item.title }</a></h3>
-		                <p>가격: <fmt:formatNumber value="${item.rentPrice }" type="number" groupingUsed="true"/>원</p>
-		                <p>배송비: <fmt:formatNumber value="${item.deliveryPrice }" type="number" groupingUsed="true"/></p>
+		                <p>
+		                <span>대여료: 1일 &nbsp;<fmt:formatNumber value="${item.rentPrice }" type="number" groupingUsed="true"/>원</span><br>
+		                <span>보증금:&nbsp;<fmt:formatNumber value="${item.secPrice }" type="number" groupingUsed="true"/>원</span><br>
+		                <span>배송비:&nbsp;<fmt:formatNumber value="${item.deliveryprice }" type="number" groupingUsed="true"/>원</span>
+		                </p>
 		              </div>
 		              <div class="status-change-btns">
 		                <c:choose>
@@ -242,7 +244,8 @@
 							        
 							   </c:when>
 							   <c:when test="${item.orderStatus eq '거래완료'}">
-							        <button type="button" class="open-review-btn" data-orderno="${item.orderNo}">리뷰쓰러가기</button>
+							        <button type="button" class="open-review-btn" data-orderno="${item.orderNo}">
+							        <a href="${contextPath }/productDetail?no=${item.no }">리뷰쓰러가기</a></button>
 							   </c:when>  
 							   <c:otherwise>
 								    <span>&nbsp;</span>

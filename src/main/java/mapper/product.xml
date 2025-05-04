@@ -179,5 +179,13 @@
   <select id="selectViewCount" parameterType="int" resultType="int">
     SELECT view_cnt FROM product WHERE no = #{no}
   </select>
+  
+  <select id="selectSellerIdByProductNo" parameterType="int" resultType="string">
+    SELECT m.id
+    FROM product p
+    JOIN member m ON p.memberNo = m.no
+    WHERE p.no = #{productNo}
+  </select>
+  
 
 </mapper>

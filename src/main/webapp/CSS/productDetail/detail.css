@@ -1,26 +1,40 @@
 @charset "UTF-8";
 
-/* 전체 기본 세팅 */
+:root {
+  --bg: #fffdfd;
+  --card: #fffefe;
+  --peach: #fcdcd2;
+  --accent: #f7bfa5;
+  --border: #f2cec3;
+  --text: #5c443d;
+  --gray: #998782;
+}
+
+/* 기본 세팅 */
 body {
   font-family: 'Noto Sans KR', 'Segoe UI', sans-serif;
   margin: 0;
-  background-color: #fafafa;
-  color: #333;
+  background-color: var(--bg);
+  color: var(--text);
 }
 
+/* 메인 컨테이너 */
 .container {
   max-width: 1000px;
   margin: 40px auto;
-  background: #fff;
+  background: var(--card);
   border-radius: 16px;
   padding: 30px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  border: 1px solid var(--border);
 }
 
 /* 상품 전체 레이아웃 */
 .product-layout {
   display: flex;
   flex-wrap: wrap;
+  align-items: center; /* ✅ 이거 추가! 수직 가운데 정렬 */
+  
   gap: 24px;
 }
 
@@ -28,6 +42,7 @@ body {
 .product-image {
   flex: 1 1 40%;
   min-width: 300px;
+  
 }
 
 .product-image img {
@@ -36,7 +51,7 @@ body {
   object-fit: cover;
 }
 
-/* 상품 디테일 */
+/* 디테일 정보 */
 .product-details {
   flex: 1 1 55%;
   position: relative;
@@ -47,39 +62,52 @@ body {
 /* 상단 아이콘 버튼 */
 .top-icons {
   position: absolute;
+    margin-right: 8px;  /* 모든 아이콘 간 동일한 간격으로 */
   top: 0;
   right: 0;
   display: flex;
-  gap: 16px;
+  gap: 14px;
+}
+
+.top-icons button:last-child {
+  margin-right: 0; /* 마지막 아이콘은 여백 없음 */
+}
+
+.top-icons img {
+  width: 28px;
+  height: 28px;
+  vertical-align: middle;
 }
 
 .top-icons button {
   background: none;
   border: none;
   cursor: pointer;
-  font-size: 26px;
+  font-size: 24px;
   transition: transform 0.2s;
+  color: var(--gray);
 }
 
 .top-icons button:hover {
   transform: scale(1.1);
+  color: var(--accent);
 }
 
-/* 카테고리 & 고유번호 */
+/* 카테고리/고유번호 */
 .category, .product-id {
   font-size: 13px;
-  color: #888;
+  color: var(--gray);
   margin-top: 10px;
 }
 
-/* 상품 제목 */
+/* 제목 */
 .title {
-  font-size: 32px;
+  font-size: 30px;
   font-weight: bold;
   margin-top: 20px;
 }
 
-/* 가격 */
+/* 가격 표시 */
 .rent-price, .sale-price, .sec-price {
   margin-top: 10px;
   font-weight: bold;
@@ -87,7 +115,7 @@ body {
 }
 
 .rent-price, .sale-price {
-  color: #e64a19;
+  color: #e86e58;
 }
 
 .sec-price {
@@ -106,7 +134,7 @@ body {
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  border: 2px solid #ccc;
+  /* border: 2px solid var(--border); */
 }
 
 .profile-info {
@@ -118,24 +146,22 @@ body {
 .seller-rating .score {
   font-size: 18px;
   font-weight: bold;
-  color: #333;
 }
 
 .stars {
   color: gold;
 }
 
-/* 좋아요 & 조회수 */
+/* 좋아요/조회수 */
 .likes-views {
   display: flex;
-  align-items: center;
-  gap: 16px;
+  gap: 18px;
   font-size: 16px;
   margin-top: 16px;
-  color: #666;
+  color: var(--gray);
 }
 
-/* 버튼박스 */
+/* 버튼 박스 */
 .btn-box {
   display: flex;
   gap: 14px;
@@ -149,40 +175,60 @@ body {
   cursor: pointer;
   font-weight: bold;
   font-size: 16px;
-  transition: background 0.3s;
+  background: var(--accent);
+  color: white;
+  transition: background 0.3s ease;
+}
+
+.btn:hover {
+  background: #f49b79;
 }
 
 .btn-message {
   background: #f0f0f0;
+  color: var(--text);
 }
 
-.btn-sell, .btn-rent {
-  background: #4caf50;
-  color: white;
+.btn-message:hover {
+  background: #e0e0e0;
 }
 
-.btn-sell:hover, .btn-rent:hover {
-  background: #43a047;
+/* 찜 버튼 */
+.btn-wish {
+  font-size: 30px;
+  background: none;
+  border: none;
+  color: #ff6b6b;
+  transition: color 0.3s;
+}
+
+.btn-wish:hover {
+  color: #ff3b3b;
+}
+
+.btn-wish:focus {
+  outline: none;
 }
 
 /* 탭 메뉴 */
 .tab-menu {
   display: flex;
   margin-top: 30px;
-  border-bottom: 2px solid #eee;
+  border-bottom: 2px solid var(--border);
 }
 
-.tab-menu div {
+.tab-menu .tab-item {
   flex: 1;
   text-align: center;
   padding: 12px 0;
   font-weight: bold;
   cursor: pointer;
+  color: var(--gray);
 }
 
 .tab-menu .active {
-  border-bottom: 4px solid #4caf50;
-  color: #4caf50;
+  border-bottom: 4px solid var(--accent);
+  color: var(--accent);
 }
 
 /* 탭 내용 */
@@ -194,7 +240,7 @@ body {
   display: block;
 }
 
-/* 상품 설명 */
+/* 설명 */
 .description {
   background: #fcfcfc;
   padding: 24px;
@@ -203,14 +249,15 @@ body {
   border-radius: 10px;
   margin-top: 16px;
   white-space: pre-wrap;
+  border: 1px solid var(--border);
 }
 
 /* 슬라이더 */
 .slider {
   position: relative;
   width: 100%;
-  aspect-ratio: 1 / 1; /* ✅ 정사각형 비율로 지정 */
-  background: #f4f4f4;
+  aspect-ratio: 1 / 1;
+  background: var(--peach);
   border-radius: 16px;
   overflow: hidden;
 }
@@ -220,7 +267,7 @@ body {
   top: 0; left: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;  /* ✅ 박스 꽉 채우기 */
+  object-fit: cover;
   opacity: 0;
   transition: opacity 0.3s ease-in-out;
 }
@@ -236,22 +283,22 @@ body {
   top: 50%;
   transform: translateY(-50%);
   background: transparent;
-  color: #333;
+  color: #4d4b4b;
   border: none;
   font-size: 28px;
   cursor: pointer;
   z-index: 10;
   padding: 0;
-  opacity: 0;                           /* ✅ 기본은 숨김 */
+  opacity: 0;
   transition: opacity 0.3s ease;
 }
 
 .slider:hover .slide-btn {
-  opacity: 1;                          /* ✅ 마우스 올렸을 때 나타남 */
+  opacity: 1;
 }
 
 .slide-btn:hover {
-  color: #000;
+  color: var(--accent);
 }
 
 #prevBtn {
@@ -274,28 +321,13 @@ body {
   border-radius: 20px;
 }
 
-/* 찜 버튼 (하트) */
-.btn-wish {
-  font-size: 30px;
-  background: none;
-  border: none;
-  color: #ff6b6b;
-  transition: color 0.3s;
-}
-
-.btn-wish:hover {
-  color: #ff3b3b;
-}
-
-.btn-wish:focus {
-  outline: none;
-}
+/* 리뷰 */
 .review-section {
   padding: 30px;
   margin-top: 40px;
-  background: #fafafa;
+  background: white;
   border-radius: 16px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  border: 1px solid var(--border);
 }
 
 /* 리뷰 상단 */
@@ -310,41 +342,41 @@ body {
   margin: 0;
   font-size: 22px;
   font-weight: bold;
+  color: var(--accent);
 }
 
-/* 리뷰 별점 표시 */
+/* 별점 표시 */
 .rating-display {
   display: flex;
   align-items: center;
   gap: 8px;
   font-size: 18px;
-  color: gold; /* ★★★ 별 색 gold로 수정! */
+  color: gold;
 }
 
-/* 리뷰 쓰기 버튼 */
+/* 리뷰쓰기 버튼 */
 .btn-review-write {
-  background-color: #4caf50;
+  background-color: var(--accent);
   color: white;
-  border: none;
   border-radius: 8px;
   padding: 10px 16px;
   font-size: 16px;
   cursor: pointer;
-  margin-bottom: 10px; /* 🔥 margin-bottom 추가! */
+  margin-bottom: 10px;
   transition: background 0.3s;
 }
 
 .btn-review-write:hover {
-  background-color: #43a047;
+  background-color: #f49b79;
 }
 
-/* 리뷰 작성 폼 */
+/* 리뷰 폼 */
 .review-form {
   background: white;
   padding: 20px;
   border-radius: 12px;
   margin-top: 20px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  border: 1px solid var(--border);
 }
 
 .review-input-row {
@@ -358,7 +390,7 @@ body {
   min-height: 100px;
   padding: 12px;
   font-size: 15px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--border);
   border-radius: 8px;
 }
 
@@ -374,7 +406,7 @@ body {
   border-radius: 6px;
 }
 
-/* 리뷰 제출 버튼 */
+/* 제출 버튼 */
 .btn-review-submit {
   align-self: flex-end;
   background-color: #3498db;
@@ -391,14 +423,13 @@ body {
   background-color: #2980b9;
 }
 
-/* 리뷰 리스트 */
+/* 리뷰 항목 */
 .review-list .review-item {
   background: white;
-  border: 1px solid #ddd;
+  border: 1px solid var(--border);
   border-radius: 12px;
   padding: 20px;
   margin-bottom: 16px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
 }
 
 /* 리뷰 내용 */
@@ -409,24 +440,33 @@ body {
   color: #555;
 }
 
-/* 리뷰 작성자 + 별점 */
+/* 작성자 + 별점 */
 .review-item-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-
-/* 리뷰 수정/삭제 버튼 */
+/* 수정/삭제 */
 .review-edit, .review-del {
   background: none;
   border: none;
   font-size: 14px;
   cursor: pointer;
-  color: #888;
+  color: var(--gray);
   margin-left: 8px;
 }
 
 .review-edit:hover, .review-del:hover {
-  color: #333;
+  color: var(--accent);
   text-decoration: underline;
+}
+
+
+/* 구매 버튼 강조 색상 (초록) */
+.btn-sell {
+  background: #4caf50;
+  color: white;
+}
+.btn-sell:hover {
+  background: #43a047;
 }

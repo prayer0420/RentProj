@@ -57,7 +57,8 @@
 	
 	<!-- 나의 구매상품 리스트(MyOrder) 불러오기 -->
 	<select id="selectOrderListByPage" parameterType="map" resultType="map">
-		select o.*, p.*
+		select o.*,
+		p.img1,p.title,p.no, p.salePrice, p.deliveryprice
 		from `order` o 
 		left join product p on (p.no = o.productNo)
 		join member m on (o.memberNo=m.no)
@@ -67,7 +68,7 @@
 	
 	<!-- 나의 구매내역 상세(MyOrderDetail) 불러오기  -->
 	<select id="selectMyOrderDetail" parameterType="map" resultType="map">
-		select p.*, o.*, m1.name, m2.id, m2.phone
+		select o.*, p.img1, p.no, p.title, p.salePrice, p.deliveryprice, m1.name, m2.id, m2.phone
         from Product p 
         join `Order` o On (o.productNo = p.no)
         join member m1 On (o.memberNo = m1.no)
@@ -84,7 +85,8 @@
 	
 	<!-- 나의 빌린상품 리스트(MyRent) 불러오기 -->
 	<select id="selectRentListByPage" parameterType="map" resultType="map">
-		select o.*, p.title, p.img1, p.no 
+		select o.*,
+		p.img1,p.title,p.no, p.rentPrice, p.secPrice, p.deliveryprice 
 		from `order` o 
 		left join product p on (p.no = o.productNo)
 		join member m on (o.memberNo=m.no)
@@ -94,11 +96,12 @@
 	
 	<!-- 나의 빌리기 내역 상세(MyRentDetail) 불러오기  -->
 	<select id="selectMyRentDetail" parameterType="map" resultType="map">
-		select p.*, o.*, m1.name, m2.id, m2.phone, m2.address1
+		select o.*, p.img1, p.no, p.title, p.rentPrice,
+		m1.name, m2.id, m2.phone, m2.address1
         from Product p 
         join `Order` o On (o.productNo = p.no)
         join member m1 On (o.memberNo = m1.no)
-		  JOIN member m2 ON p.memberNo = m2.no
+		  JOIN member m2 ON (p.memberNo = m2.no)
 		  where o.orderNo=#{orderNo} and m1.id=#{id} and o.orderType='대여'
 	</select>
 	
@@ -127,7 +130,8 @@
 	<!-- 나의 대여(빌려주는)상품 리스트(MyLend) 불러오기 -->
 	<select id="selectLendListByPage" parameterType="map" resultType="map">
 		select 
-			p.no, p.createDate, p.title, p.img1, p.deliveryStatus, o.*
+			o.orderNo, o.orderStatus, o.orderType, o.orderId,
+			p.no, p.createDate, p.title, p.img1, p.rentPrice, p.secPrice, p.deliveryprice
 		from product p 
 		left join `order` o on (p.no = o.productNo)
 		join member m on (p.memberNo = m.no)

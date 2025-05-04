@@ -22,6 +22,7 @@ public class Logout extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		//세션 삭제
+        session.removeAttribute("adminNo");  // 관리자 정보 제거
 		session.removeAttribute("id");
 		session.removeAttribute("location");
 		session.removeAttribute("latitude");

@@ -161,4 +161,10 @@ public class ProductServiceImpl implements ProductService {
 	public int selectViewCount(int no) throws Exception {
 		return productDAO.selectViewCount(no);
 	}
+	
+	//판매자 아이디 가져오기
+	@Override
+	public String getSellerIdByProductNo(int productNo) {
+	    return productDAO.selectSellerIdByProductNo(productNo);
+	}
 }

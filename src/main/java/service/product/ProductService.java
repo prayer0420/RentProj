@@ -28,4 +28,7 @@ public interface ProductService {
 	void incrementViewCount(int no)throws Exception;
 	
 	int selectViewCount(int no) throws Exception;
+	
+	public String getSellerIdByProductNo(int productNo);
+
 }
