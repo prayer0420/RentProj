@@ -206,7 +206,7 @@
 			</c:when>
 			<c:otherwise>
 			
-	          <!-- 드롭다운 메뉴 영역 -->
+	          <!-- 드롭다운 메뉴 영역 
 	          <div class="filter-section">
 	            <select class="filter-dropdown" name="period">
 	              <option value="">조회 기간 선택</option>
@@ -226,6 +226,7 @@
 	              <option value="cancelled">주문취소</option>
 	            </select>
 	          </div>
+	          -->
 	
 	          <!-- 상품 카드 -->
 	          <c:forEach var="item" items="${rentList}">

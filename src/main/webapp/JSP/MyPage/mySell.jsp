@@ -35,7 +35,7 @@
 			
 			<c:otherwise>
 
-	          <!-- 드롭다운 메뉴 영역 -->
+	          <!-- 드롭다운 메뉴 영역 
 	          <div class="filter-section">
 	            <select class="filter-dropdown" name="period">
 	              <option value="">조회 기간 선택</option>
@@ -54,7 +54,7 @@
 	              <option value="">배송완료</option>
 	              <option value="">거래완료</option>
 	            </select>
-	          </div>
+	          </div> -->
 	
 	          <!-- 상품 카드 1 -->
 	          <c:forEach var="item" items="${productList }">
