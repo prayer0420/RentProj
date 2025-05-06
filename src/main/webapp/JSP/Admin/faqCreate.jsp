@@ -11,53 +11,11 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <link rel="stylesheet" href="${pageContext.request.contextPath}/CSS/Admin/common.css">
   <style>
-    .action-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 10px;
-      margin-bottom: 10px;
-    }
-
-    .action-buttons button {
-      background-color: #26c6da;
-      color: white;
-      padding: 4px 12px;
-      border: none;
-      border-radius: 3px;
-      font-size: 13px;
-      cursor: pointer;
-      margin-right: 4px;
-    }
-
-    .action-buttons button:last-child {
-      margin-right: 0;
-    }
-
-    .total-count-wrap {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid #ccc;
-      padding-bottom: 6px;
-      margin-bottom: 10px;
-    }
-
-    .total-count {
-      font-weight: bold;
-    }
 
      .modal-overlay {
       display: block;
     }
 
-/*     .modal {
-      background-color: white;
-      padding: 20px;
-      border-radius: 5px;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-    }
- */
     .modal-body table {
       width: 100%;
       border-spacing: 0;

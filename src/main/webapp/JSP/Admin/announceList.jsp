@@ -9,33 +9,7 @@
   <title>공지사항 등록</title>
  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/CSS/Admin/common.css"> 
-  <style>
-    .total-count-wrap {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid #ccc;
-      padding-bottom: 6px;
-      margin-bottom: 10px;
-    }
 
-    .action-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 10px;
-    }
-
-    .action-buttons button,
-    .action-top > button {
-      margin-right: 4px;
-    }
-
-    .action-buttons button:last-child,
-    .action-top > button:last-child {
-      margin-right: 0;
-    }
-  </style>
 </head>
 <body>
 	<%@ include file="header.jsp" %>

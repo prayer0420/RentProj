@@ -17,7 +17,6 @@
   color: inherit !important; /* 링크 텍스트 색을 부모와 동일하게 */
 }
 
-
   </style>
 </head>
 

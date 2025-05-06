@@ -8,113 +8,7 @@
   <meta charset="UTF-8">
   <title>카테고리등록</title>
   <link rel="stylesheet" href="CSS/Admin/common.css">
-  <style>
-    .category-section {
-      border: 1px solid #ccc;
-      padding: 10px;
-      margin-bottom: 20px;
-    }
 
-    .category-row {
-      margin-bottom: 10px;
-    }
-
-    .category-row.inline {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .category-row label {
-      font-size: 14px;
-    }
-
-    .search-input {
-      width: 180px;
-      padding: 4px;
-      font-size: 13px;
-    }
-
-    .category-table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-
-    .category-table th, .category-table td {
-      border: 1px solid #ccc;
-      padding: 6px;
-      font-size: 13px;
-      text-align: center;
-    }
-
-    .category-table th {
-      background: #e0e6ed;
-    }
-
-    .category-table input[type="text"],
-    .category-table select {
-      width: 90%;
-      padding: 4px;
-    }
-
-    .category-table input[type="checkbox"] {
-      transform: scale(1.2);
-    }
-
-    .btn-save, .btn-file, .btn-up, .btn-down {
-      background-color: #26c6da;
-      color: white;
-      padding: 5px 12px;
-      border: none;
-      border-radius: 3px;
-      font-size: 13px;
-      cursor: pointer;
-    }
-
-    .sort-buttons {
-      display: flex;
-      justify-content: center;
-      gap: 4px;
-    }
-
-    .file-label {
-      margin-left: 10px;
-      font-size: 13px;
-      color: #333;
-    }
-
-    .category-count {
-      margin-bottom: 5px;
-      font-size: 13px;
-    }
-    
-    .btn-file {
-	  background-color: #ddd;
-	  padding: 5px 10px;
-	  border: 1px solid #aaa;
-	  border-radius: 3px;
-	  cursor: pointer;
-	  position: relative;
-	  overflow: hidden;
-	  font-size: 13px;
-	}
-	
-	.btn-file input[type="file"] {
-	  position: absolute;
-	  left: 0;
-	  top: 0;
-	  opacity: 0;
-	  cursor: pointer;
-	  height: 100%;
-	  width: 100%;
-	}	
-	
-	.category-section {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-  </style>
 </head>
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script> 
 <script>
@@ -159,14 +53,14 @@
 		<form action="categoryCreate" id="regCategoryForm" enctype="multipart/form-data" method="post">			
 		  <!-- 카테고리명 입력 -->
 		  <div class="category-row inline">
-		    <label for="categoryName">카테고리명</label>
+		    <label for="categoryName"><b>카테고리명</b></label>
 		    <input type="text" class="search-input" id="categoryName" name="name" required="required">
 		    <button class="btn-save" id="regCategory">✔ 추가</button>
 		  </div>
 		
 		  <!-- 이미지 선택 -->
 		  <div class="category-row inline">
-		    <label>이미지선택</label>
+		    <label><b>이미지선택</b></label>
 		    <label class="btn-file">
 		      + 파일선택
 		      <input type="file" name="img" id="imgFile" style="display: none;">

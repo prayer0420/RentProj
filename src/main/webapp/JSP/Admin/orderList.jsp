@@ -14,11 +14,6 @@
       margin-bottom: 0;
     }
     
-    b {
-      font-size: 13px;
- 	  font-family: 'Pretendard', 'Noto Sans KR', sans-serif;
-	}
-
   </style>
 </head>
 <body>
