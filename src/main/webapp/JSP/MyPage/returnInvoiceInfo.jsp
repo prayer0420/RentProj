@@ -4,7 +4,7 @@
 <c:set var="contextPath" value="${pageContext.request.contextPath }" />
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<link rel="stylesheet" href="${contextPath}/CSS/mypage/mypageModal.css">
+<link rel="stylesheet" href="${contextPath}/CSS/mypage/invoiceModal.css">
 
 <script type="text/javascript">
 	
@@ -70,10 +70,12 @@
 				<form id="invoiceForm">
 					<input type="hidden" id="orderNo" value="${item.orderNo}" />
 					<input type="hidden" id="redirectUrl" value="${redirectUrl}" /> <!-- 리다이렉트 URL 세팅 -->
+					<div class="input-row">
 					<label for="reDeliveryComp">택배사</label>
-					<input type="text" id="reDeliveryComp" required /><br>
+					<input type="text" id="reDeliveryComp" required /></div><br>
+					<div class="input-row">
 					<label for="reInvoiceNo">송장번호</label>
-					<input type="text" id="reInvoiceNo" required /><br>
+					<input type="text" id="reInvoiceNo" required /></div><br>
 					<button type="button" id="submitInvoiceBtn">등록</button>
 				 </form>
 			</div>

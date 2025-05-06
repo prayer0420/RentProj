@@ -148,7 +148,6 @@
 	    // 삭제 버튼 클릭 시 (이벤트 위임)
 	    $(document).on('click','.delete-btn',function(){
 	    	console.log("버튼 클릭됨!"); // 확인용
-	    	console.log("deleteModal 요소 찾기 시도:", $('#deleteModal').length); // 추가
 	    	
 	        selectedProductNo = $(this).data('product-no'); // 버튼에 심어놓은 상품번호 읽어오기
 	        $('#deleteModal').fadeIn(); // 모달 띄우기
