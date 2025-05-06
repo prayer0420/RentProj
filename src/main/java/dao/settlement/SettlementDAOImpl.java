@@ -124,4 +124,18 @@ public class SettlementDAOImpl implements SettlementDAO {
 	        return sqlSession.selectOne("mapper.settlement.selectProductInfo", productNo);
 	    }
 	}
+
+	@Override
+	public int selectSettlementCount(Map<String, Object> searchMap) throws Exception {
+	    try (SqlSession sqlSession = MybatisSqlSessionFactory.getSqlSessionFactory().openSession()) {
+	        return sqlSession.selectOne("mapper.settlement.selectSettlementCount", searchMap);
+	    }
+	}
+
+	@Override
+	public int selectTotalFeeAmount(Map<String, Object> searchMap) throws Exception {
+	    try (SqlSession sqlSession = MybatisSqlSessionFactory.getSqlSessionFactory().openSession()) {
+	        return sqlSession.selectOne("mapper.settlement.selectTotalFeeAmount", searchMap);
+	    }
+	}
 }

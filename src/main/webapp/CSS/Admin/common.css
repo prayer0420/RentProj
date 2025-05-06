@@ -209,10 +209,10 @@ select {
 /* 버튼 덮어쓰기 */
 button, .btn-action {
   background-color: #26c6da;
-  color: white !important;
+  color: white;
   border: none; 
-  font-size: 13px !important;
-  padding: 6px 12px !important;
+  font-size: 13px;
+  padding: 6px 12px;
 }
 
 /* 라디오 버튼 및 폰트 사이즈 */
@@ -318,7 +318,36 @@ table th, table td {
       margin-right: 0;
     }
     
-    
+      .pagination {
+	  margin-top: 20px;
+	  text-align: center;
+	  display: flex;
+      justify-content: center;
+	}
+	.pagination button {
+	  margin: 0 3px;
+	  padding: 6px 10px;
+	  border: 1px solid #ccc;
+	  background-color: #e2e2e2;
+	  cursor: pointer;
+	}
+	
+	.pagination button[style*="bold"] {
+	  background-color: #007bff;
+	  color: white;
+	  font-weight: bold;
+	  border-color: #007bff;
+	}
+	
+	.modal-footer button {
+ 	 background-color: #26c6da;
+	  color: white;
+	  border: none;
+	  padding: 8px 20px;
+	  border-radius: 4px;
+	  font-size: 14px;
+	  cursor: pointer;
+	}
     
     /* ---------------- categoryCreate / style.css --------------*/
     

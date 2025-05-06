@@ -63,7 +63,7 @@
       <span id="count"></span>
       <div class="summary-box">
 		<div style="margin-bottom:10px; font-weight:bold;">
-		    🔍 검색된 총 정산 건수: <span style="color:#007bff;">${not empty settlementList ? fn:length(settlementList) : 0}</span>건
+		    🔍 검색된 총 정산 건수: <span style="color:#007bff;">${pageInfo.totalCount != null ? pageInfo.totalCount : 0}</span>건
 		</div>
 		
 		<!-- 총 수수료 금액 표시 -->
@@ -115,8 +115,10 @@
             <td><fmt:formatNumber value="${settle.gradeRate}" maxFractionDigits="2" /> %</td>
             <td><fmt:formatNumber value="${settle.feeAmount}" type="number" /> 원</td>
             <td><fmt:formatNumber value="${settle.finalSettleAmount}" type="number" /> 원</td>
-            <td id="completedAt-${settle.settlementNo}"><fmt:formatDate value="${settle.settlementCompletedAt}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
-          
+            <td id="completedAt-${settle.settlementNo}" 
+			    title="<fmt:formatDate value='${settle.settlementCompletedAt}' pattern='yyyy-MM-dd HH:mm:ss' />"> <!-- 툴팁 추가 -->
+			    <fmt:formatDate value="${settle.settlementCompletedAt}" pattern="yyyy-MM-dd HH:mm:ss" />
+			</td>
           <td>
             <c:choose>
               <c:when test="${settle.feeStatus == 'PENDING'}">
@@ -179,6 +181,44 @@
     });
   });
 </script>
+
+<c:if test="${not empty pageInfo}">
+    <div class="pagination" style="margin: 20px 0; text-align: center;">
+        <c:if test="${pageInfo.startPage > 1}">
+            <form method="post" style="display:inline;">
+                <input type="hidden" name="page" value="${pageInfo.startPage - 1}" />
+                <c:forEach var="entry" items="${searchMap}">
+                    <input type="hidden" name="${entry.key}" value="${entry.value}" />
+                </c:forEach>
+                <button type="submit">이전</button>
+            </form>
+        </c:if>
+
+        <!-- 페이지 번호들 -->
+        <c:forEach var="i" begin="${pageInfo.startPage}" end="${pageInfo.endPage}">
+            <form method="post" style="display:inline;">
+                <input type="hidden" name="page" value="${i}" />
+                <c:forEach var="entry" items="${searchMap}">
+                    <input type="hidden" name="${entry.key}" value="${entry.value}" />
+                </c:forEach>
+                <button type="submit"
+                    <c:if test="${pageInfo.curPage == i}">style="font-weight:bold; background-color:#007bff; color:white;"</c:if>
+                >${i}</button>
+            </form>
+        </c:forEach>
+
+        <!-- 다음 블록 -->
+        <c:if test="${pageInfo.endPage < pageInfo.allPage}">
+            <form method="post" style="display:inline;">
+                <input type="hidden" name="page" value="${pageInfo.endPage + 1}" />
+                <c:forEach var="entry" items="${searchMap}">
+                    <input type="hidden" name="${entry.key}" value="${entry.value}" />
+                </c:forEach>
+                <button type="submit">다음</button>
+            </form>
+        </c:if>
+    </div>
+</c:if>
 
 </main>
 </div>

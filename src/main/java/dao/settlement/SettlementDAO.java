@@ -43,4 +43,9 @@ public interface SettlementDAO {
     int updateOrderCountPlusOne(int memberNo) throws Exception;
     
     Product selectProductInfo(int productNo) throws Exception;
+    // 총 개수 조회 추가(페이징)
+    int selectSettlementCount(Map<String, Object> searchMap) throws Exception;
+    // 검색 조건에 맞는 모든 정산건의 총 수수료 금액
+    int selectTotalFeeAmount(Map<String, Object> searchMap) throws Exception;
+
 }

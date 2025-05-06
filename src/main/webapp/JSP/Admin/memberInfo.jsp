@@ -11,44 +11,6 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"> 
   <link rel="stylesheet" href="${pageContext.request.contextPath}/CSS/Admin/common.css">
   
-  <style>
-  /* Inputs */
-input[type="text"] {
-  width: 140px;
-  padding: 4px;
-  font-size: 13px;
-  text-align: left;
-}
-
-.modal-footer button {
-  background-color: #26c6da;
-  color: white;
-  border: none;
-  padding: 8px 20px;
-  border-radius: 4px;
-  font-size: 14px;
-  cursor: pointer;
-}
-  
- .pagination {
-  margin-top: 20px;
-  text-align: center;
-}
-.pagination button {
-  margin: 0 3px;
-  padding: 6px 10px;
-  border: 1px solid #ccc;
-  background-color: #e2e2e2;
-  cursor: pointer;
-}
-
-.pagination button[style*="bold"] {
-  background-color: #007bff;
-  color: white;
-  font-weight: bold;
-  border-color: #007bff;
-}
-  </style>
 
 </head>
 <body>

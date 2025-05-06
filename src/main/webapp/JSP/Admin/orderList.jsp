@@ -13,7 +13,7 @@
     .search-box .row:last-child {
       margin-bottom: 0;
     }
-    
+
   </style>
 </head>
 <body>

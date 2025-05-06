@@ -103,6 +103,7 @@
 		  AND s.settlementCompletedAt &lt;= #{completedEnd}
 		</if>	
 	    ORDER BY o.orderDate DESC
+	    LIMIT #{row}, #{size}
 	</select>
 
 	<!-- 주문 정보 조회 -->	
@@ -147,6 +148,46 @@
 	
 	<select id="selectProductInfo" parameterType="int" resultType="Product">
     SELECT * FROM product WHERE no = #{productNo}
+	</select>
+	
+	<select id="selectSettlementCount" parameterType="map" resultType="int">
+    SELECT COUNT(*)
+    FROM settlement s
+    LEFT JOIN `order` o ON s.orderNo = o.orderNo
+    LEFT JOIN product p ON o.productNo = p.no
+    WHERE 1=1
+    <if test="searchRevenueType != null and searchRevenueType != ''">
+        AND s.revenueType = #{searchRevenueType}
+    </if>
+    <if test="searchFeeStatus != null and searchFeeStatus != ''">
+        AND s.feeStatus = #{searchFeeStatus}
+    </if>
+    <if test="completedStart != null and completedStart != ''">
+        AND s.settlementCompletedAt &gt;= #{completedStart}
+    </if>
+    <if test="completedEnd != null and completedEnd != ''">
+        AND s.settlementCompletedAt &lt;= #{completedEnd}
+    </if>
+	</select>
+	
+	<select id="selectTotalFeeAmount" parameterType="map" resultType="int">
+    SELECT IFNULL(SUM(s.feeAmount), 0)
+    FROM settlement s
+    LEFT JOIN `order` o ON s.orderNo = o.orderNo
+    LEFT JOIN product p ON o.productNo = p.no
+    WHERE 1=1
+    <if test="searchRevenueType != null and searchRevenueType != ''">
+        AND s.revenueType = #{searchRevenueType}
+    </if>
+    <if test="searchFeeStatus != null and searchFeeStatus != ''">
+        AND s.feeStatus = #{searchFeeStatus}
+    </if>
+    <if test="completedStart != null and completedStart != ''">
+        AND s.settlementCompletedAt &gt;= #{completedStart}
+    </if>
+    <if test="completedEnd != null and completedEnd != ''">
+        AND s.settlementCompletedAt &lt;= #{completedEnd}
+    </if>
 	</select>
 	
 	</mapper>
