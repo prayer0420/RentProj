@@ -94,7 +94,6 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-  // 위치 설정
   $("#btn-location").click(function () {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(success, error);
@@ -103,25 +102,25 @@
     }
 
     function success(pos) {
+      const lat = pos.coords.latitude;
+      const lng = pos.coords.longitude;
+      const userId = "${sessionScope.id}"; // 유저 ID
+
       $.ajax({
         type: "POST",
         url: "${pageContext.request.contextPath}/updateLocation",
-        data: {
-          lat: pos.coords.latitude,
-          lng: pos.coords.longitude
-        },
+        data: { lat: lat, lng: lng },
         dataType: "json",
         success: function (res) {
           const address = res.address;
-          const userId = "${sessionScope.id}";
-          const cookieKey = "location_" + userId;
-          if (address) {
-            document.cookie = cookieKey + "=" + encodeURIComponent(address) + "; path=/; max-age=604800"; // 7일
-            alert("위치가 갱신되었어요! 😊");
-            location.reload();
-          } else {
-            alert("주소가 비어 있습니다.");
-          }
+
+          // 유저별 키로 쿠키 저장
+          document.cookie = "latitude_" + userId + "=" + lat + "; path=/; max-age=604800";
+          document.cookie = "longitude_" + userId + "=" + lng + "; path=/; max-age=604800";
+          document.cookie = "location_" + userId + "=" + encodeURIComponent(address) + "; path=/; max-age=604800";
+
+          alert("위치가 갱신되었어요! 😊");
+          location.reload();
         },
         error: function () {
           alert("위치 저장에 실패했어요 😥");
