@@ -36,7 +36,7 @@
 	        id = #{word}
 	      </when>
 	      <when test="type != null and type == 'name' and word != null and word != ''">
-	        nickname = #{word}
+	        name = #{word}
 	      </when>
 	      <when test="type != null and type == 'phone' and word != null and word != ''">
 	        phone = #{word}
@@ -59,7 +59,7 @@
 	        id = #{word}
 	      </when>
 	      <when test="type != null and type == 'name' and word != null and word != ''">
-	        nickname = #{word}
+	        name = #{word}
 	      </when>
 	      <when test="type != null and type == 'phone' and word != null and word != ''">
 	        phone = #{word}

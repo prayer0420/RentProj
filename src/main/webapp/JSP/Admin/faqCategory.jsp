@@ -115,7 +115,7 @@
     .then(res => res.json())
     .then(data => {
       if (data.success) {
-        alert("카테고리가 추가되었습니다.");
+        // alert("카테고리가 추가되었습니다.");
         document.getElementById("categoryName").value = "";
         refreshCategoryList(); // 새로 불러옴
       } else {

@@ -92,6 +92,11 @@ main {
   padding: 4px 10px !important;
 }
 
+    b {
+      font-size: 13px; 
+ 	  font-family: 'Pretendard', 'Noto Sans KR', sans-serif; 
+	} 
+
 /* Table */
 table {
   width: 100%;

@@ -61,7 +61,9 @@
     </div>
 	</form>
 	
-    <div class="total-count">총 <span id="reportCount"></span>건</div>
+    <div style="margin-bottom:10px; font-weight:bold;">
+		 🔍 검색된 신고: <span style="color:#007bff;">${not empty list ? fn:length(list) : 0}</span>건
+	</div>
 
     <c:if test="${not empty list}">
       <!-- 🚀 액션 버튼 -->
@@ -163,13 +165,6 @@
 			  </div>
 			</div>    
 		<!-- 💡 스크립트 영역 -->
-		<script>
-		  document.addEventListener('DOMContentLoaded', function () {
-		    const rowCount = document.querySelectorAll('.report-table tbody tr').length;
-		    document.getElementById('reportCount').textContent = rowCount;
-		  });
-		</script>
-		
 		
 		<script>
 		  // 전체 선택

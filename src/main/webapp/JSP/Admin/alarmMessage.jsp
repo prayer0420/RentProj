@@ -49,7 +49,7 @@
 	<%@ include file="header.jsp" %>
   <div class="container">
     <aside>
-      <h3>알림관리</h3>
+      <h3 style='font-size: 19px;font-weight: bold;'>알림관리</h3>
       <div class="menu active"><a href="alarmMessage" style="color: inherit; text-decoration: none;">알림등록</a></div>
     </aside>
 	<script src="https://code.jquery.com/jquery-3.7.1.js"></script> 
@@ -211,7 +211,7 @@
 	      },
 	      success: function (result) {
 	        if (result === "true") {
-	          alert("저장 완료");
+	          //alert("저장 완료");
 	          location.reload();
 	        } else {
 	          alert("저장 실패");
@@ -245,7 +245,7 @@
 		    data: { no: noList }, // 서버는 "no" 파라미터로 받음
 		    success: function (result) {
 		      if (result === "true") {
-		        alert("삭제 완료");
+		        //alert("삭제 완료");
 		        location.reload();
 		      } else {
 		        alert("삭제 실패");
