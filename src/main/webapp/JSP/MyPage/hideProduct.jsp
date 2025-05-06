@@ -7,7 +7,7 @@
 	<!-- 숨기기 확인 모달 -->
 	<div id="hideModal" class="modal">
 	  <div class="modal-content">
-	    <p>상품을 정말 숨기기 하시겠습니까?</p>
+	    <p>상품을 숨기기 하시겠습니까?</p>
 	    <button id="confirmHide">확인</button>
 	    <button id="cancelHide">취소</button>
 	  </div>
