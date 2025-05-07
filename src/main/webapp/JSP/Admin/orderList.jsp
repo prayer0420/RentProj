@@ -93,7 +93,7 @@
 	      <td><fmt:formatNumber value="${order.price != null ? order.price : 0}" pattern="#,##0" /></td>
 	      <td><fmt:formatNumber value="${order.deliveryPrice != null ? order.deliveryPrice : 0}" pattern="#,##0" /></td>
 	      <td><fmt:formatNumber value="${order.secPrice != null ? order.secPrice : 0}" pattern="#,##0" /></td>
-	      <td>${order.paymentType}</td>
+	      <td>${order.paymentType != null ? order.paymentType : '카드결제'}</td>
 	      <td>${order.orderStatus}</td>
 	    </tr>
 	  </c:forEach>
