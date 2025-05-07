@@ -67,8 +67,7 @@ public class Login extends HttpServlet {
 			session.setAttribute("address2", member.getAddress2());//null일 수 있음
 			session.setAttribute("address3", member.getAddress3());//null일 수 있음
 			session.setAttribute("phone",member.getPhone());
-			session.setAttribute("id", id);
-			session.setAttribute("nickname", password);
+			session.setAttribute("nickname",member.getNickname());
 			session.setAttribute("latitude", lat);  // null일 수도 있음
 			session.setAttribute("longitude", lng); // null일 수도 있음
 			session.setAttribute("adminNo",member.getAdminNo());
