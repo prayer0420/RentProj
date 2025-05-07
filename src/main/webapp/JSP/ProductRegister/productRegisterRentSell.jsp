@@ -23,8 +23,9 @@
 	<jsp:include page="../Header/header.jsp" />
 	<main class="form-wrapper">
 		<h1 class="form-title">판매/대여 등록</h1>
-		<form id="registerForm" action="<%=request.getContextPath()%>/rentSell"
-			method="post" enctype="multipart/form-data">
+		<form id="registerForm"
+			action="<%=request.getContextPath()%>/rentSell" method="post"
+			enctype="multipart/form-data">
 			<input type="hidden" name="tradeType" value="판매/대여" />
 
 			<!-- 제목 -->
@@ -37,33 +38,34 @@
 			<section class="form-section">
 				<label for="category">카테고리</label> <select id="category"
 					name="categoryNo">
-					<option value="">카테고리 선택</option>
 					<option value="2">의류/팩션/악세사리</option>
 					<option value="3">PC/디지털</option>
 					<option value="4">가전제품</option>
-					<option value="5">비트미/미용</option>
-					<option value="6">칼피는/스포츠</option>
+					<option value="5">뷰티/미용</option>
+					<option value="6">캠핑/스포츠</option>
 					<option value="7">생활/주방</option>
 					<option value="8">가구/인터리어</option>
 					<option value="9">유아/출산</option>
-					<option value="10">애와도움</option>
+					<option value="10">애완동물용품</option>
 					<option value="11">기타</option>
 				</select>
 			</section>
 
-		      <!-- 판매가 -->
+			<!-- 판매가 -->
 			<section class="form-section price-section">
-			  <div class="label-with-tooltip">
-			    <label for="salePrice">판매가</label>
-			    <div class="tooltip-container">
-			      <span id="tooltipTrigger" class="info-icon">&#9432;</span>
-			      <div class="tooltip" id="tooltipBox">
-			        브론즈 : 5%<br>실버 : 4.5%<br>골드 : 4%<br>플레티넘 : 3.5%<br>다이아 : 3%<br>Re:NT : 2.5%
-			        <div class="tooltip-arrow"></div>
-			      </div>
-			    </div>
-			  </div>
-			  <input type="text" id="salePrice" name="salePrice" placeholder="가격을 입력하세요" />
+				<div class="label-with-tooltip">
+					<label for="salePrice">판매가</label>
+					<div class="tooltip-container">
+						<span id="tooltipTrigger" class="info-icon">&#9432;</span>
+						<div class="tooltip" id="tooltipBox">
+							브론즈 : 5%<br>실버 : 4.5%<br>골드 : 4%<br>플레티넘 : 3.5%<br>다이아
+							: 3%<br>Re:NT : 2.5%
+							<div class="tooltip-arrow"></div>
+						</div>
+					</div>
+				</div>
+				<input type="text" id="salePrice" name="salePrice"
+					placeholder="가격을 입력하세요" />
 			</section>
 
 			<!-- 대여 일정 -->
@@ -169,8 +171,8 @@
 					<h3>거래 중개 서비스 이용 약관</h3>
 
 					<h4>1. 서비스 성격</h4>
-					<p>RE:NT는 판매자와 구매자 간의 거래 및 대여 서비스를 중개하는 플랫폼을 제공합니다. 당사는 거래 당사자가 아닌
-						중개 서비스 제공자로서, 거래의 성립과 이행에 관여하지 않습니다.</p>
+					<p>RE:NT는 판매자와 구매자 간의 거래 및 대여 서비스를 중개하는 플랫폼을 제공합니다. 당사는 거래 당사자가
+						아닌 중개 서비스 제공자로서, 거래의 성립과 이행에 관여하지 않습니다.</p>
 
 					<h4>2. 책임 한계</h4>
 					<p>거래 과정에서 발생하는 모든 책임(상품 상태, 배송, 환불, 분쟁 등)은 거래 당사자(판매자와 구매자)에게

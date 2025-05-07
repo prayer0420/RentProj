@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -129,19 +130,33 @@ System.out.println("세션 userId: " + userId);
 					<div class="title">${product.title}</div>
 
 					<c:choose>
-						<c:when test="${product.tradeType == '나눔' }"></c:when>
-						<c:when test="${product.tradeType == '대여' }">
-							<div class="rent-price">${product.rentPrice}원/1일</div>
-							<div class="sec-price">보증금 ${product.secPrice}</div>
-						</c:when>
-						<c:when test="${product.tradeType == '판매' }">
-							<div class="sale-price">${product.salePrice}원</div>
-						</c:when>
-						<c:when test="${product.tradeType == '판매/대여' }">
-							<div class="rent-price">${product.rentPrice}원/1일</div>
-							<div class="sec-price">보증금 ${product.secPrice}원</div>
-							<div class="sale-price">판매가 ${product.salePrice}원</div>
-						</c:when>
+					  <c:when test="${product.tradeType == '나눔' }">
+					    <!-- 아무 표시 없음 -->
+					  </c:when>
+					  <c:when test="${product.tradeType == '대여' }">
+					    <div class="rent-price">
+					      <fmt:formatNumber value="${product.rentPrice}" type="number" />원/1일
+					    </div>
+					    <div class="sec-price">
+					      보증금 <fmt:formatNumber value="${product.secPrice}" type="number" />원
+					    </div>
+					  </c:when>
+					  <c:when test="${product.tradeType == '판매' }">
+					    <div class="sale-price">
+					      <fmt:formatNumber value="${product.salePrice}" type="number" />원
+					    </div>
+					  </c:when>
+					  <c:when test="${product.tradeType == '판매/대여' }">
+					    <div class="rent-price">
+					      <fmt:formatNumber value="${product.rentPrice}" type="number" />원/1일
+					    </div>
+					    <div class="sec-price">
+					      보증금 <fmt:formatNumber value="${product.secPrice}" type="number" />원
+					    </div>
+					    <div class="sale-price">
+					      판매가 <fmt:formatNumber value="${product.salePrice}" type="number" />원
+					    </div>
+					  </c:when>
 					</c:choose>
 					<div class="seller-profile">
 						<div class="avatar">

@@ -40,12 +40,12 @@
 					<option value="2">의류/팩션/악세사리</option>
 					<option value="3">PC/디지털</option>
 					<option value="4">가전제품</option>
-					<option value="5">비트미/미용</option>
-					<option value="6">칼피는/스포츠</option>
+					<option value="5">뷰티/미용</option>
+					<option value="6">캠핑/스포츠</option>
 					<option value="7">생활/주방</option>
 					<option value="8">가구/인터리어</option>
 					<option value="9">유아/출산</option>
-					<option value="10">애와도움</option>
+					<option value="10">애완동물용품</option>
 					<option value="11">기타</option>
 				</select>
 			</section>
@@ -65,17 +65,19 @@
 
 			<!-- 대여가 -->
 			<section class="form-section price-section">
-			  <div class="label-with-tooltip">
-			    <label for="rentPrice">대여가(1일당)</label>
-			    <div class="tooltip-container">
-			      <span id="tooltipTrigger" class="info-icon">&#9432;</span>
-			      <div class="tooltip" id="tooltipBox">
-			        브론즈 : 5%<br>실버 : 4.5%<br>골드 : 4%<br>플레티넘 : 3.5%<br>다이아 : 3%<br>Re:NT : 2.5%
-			        <div class="tooltip-arrow"></div>
-			      </div>
-			    </div>
-			  </div>
-			  <input type="text" id="rentPrice" name="rentPrice" placeholder="대여 가격을 입력하세요" />
+				<div class="label-with-tooltip">
+					<label for="rentPrice">대여가(1일당)</label>
+					<div class="tooltip-container">
+						<span id="tooltipTrigger" class="info-icon">&#9432;</span>
+						<div class="tooltip" id="tooltipBox">
+							브론즈 : 5%<br>실버 : 4.5%<br>골드 : 4%<br>플레티넘 : 3.5%<br>다이아
+							: 3%<br>Re:NT : 2.5%
+							<div class="tooltip-arrow"></div>
+						</div>
+					</div>
+				</div>
+				<input type="text" id="rentPrice" name="rentPrice"
+					placeholder="대여 가격을 입력하세요" />
 			</section>
 
 
@@ -163,8 +165,8 @@
 					<h3>거래 중개 서비스 이용 약관</h3>
 
 					<h4>1. 서비스 성격</h4>
-					<p>RE:NT는 판매자와 구매자 간의 거래 및 대여 서비스를 중개하는 플랫폼을 제공합니다. 당사는 거래 당사자가 아닌
-						중개 서비스 제공자로서, 거래의 성립과 이행에 관여하지 않습니다.</p>
+					<p>RE:NT는 판매자와 구매자 간의 거래 및 대여 서비스를 중개하는 플랫폼을 제공합니다. 당사는 거래 당사자가
+						아닌 중개 서비스 제공자로서, 거래의 성립과 이행에 관여하지 않습니다.</p>
 
 					<h4>2. 책임 한계</h4>
 					<p>거래 과정에서 발생하는 모든 책임(상품 상태, 배송, 환불, 분쟁 등)은 거래 당사자(판매자와 구매자)에게
@@ -185,8 +187,8 @@
 			<button type="submit" class="submit-btn">등록하기</button>
 		</form>
 	</main>
-	
-<script>
+
+	<script>
 document.addEventListener('DOMContentLoaded', function () {
 	  const registerForm = document.getElementById("registerForm");
 	  const admitCheck = document.getElementById("admitCheck");
@@ -238,8 +240,8 @@ document.addEventListener('DOMContentLoaded', function () {
 	  });
 	});
 </script>
-	
-<script>
+
+	<script>
   let imageCount = 0;
 
   document.addEventListener('DOMContentLoaded', function () {
@@ -331,7 +333,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
   </script>
 
-<script>
+	<script>
   document.addEventListener('DOMContentLoaded', function () {
     const btnOpenAdmit = document.getElementById('btnOpenAdmit');
     const btnCloseAdmit = document.getElementById('btnCloseAdmit');
@@ -350,14 +352,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-<script>
+	<script>
 function closeImageModal() {
   document.getElementById('imageZoomModal').style.display = 'none';
   document.getElementById('zoomedImage').src = '';
 }
 </script>
 
-<script>
+	<script>
   document.addEventListener('DOMContentLoaded', function () {
     // flatpickr 초기화
     flatpickr("#startDate", {
@@ -376,7 +378,7 @@ function closeImageModal() {
   });
 </script>
 
-<!-- <script>
+	<!-- <script>
 function formatPriceInputWithCaret(input) {
 	  const selectionStart = input.selectionStart;
 	  const rawValue = input.value.replace(/[^\d]/g, ''); // 숫자만 추출
@@ -424,7 +426,7 @@ function formatPriceInputWithCaret(input) {
 
 </script> -->
 
-<script>
+	<script>
 function formatPriceInputWithCaret(input) {
 	  const selectionStart = input.selectionStart; // 커서 위치
 	  const rawValue = input.value.replace(/[^\d]/g, ''); // 숫자만 추출
@@ -477,7 +479,7 @@ function formatPriceInputWithCaret(input) {
 	});
 </script>
 
-<script>
+	<script>
 function toggleDeliveryPrice() {
 	  const hand = document.getElementById("hand");
 	  const delvPrice = document.getElementById("delvPrice");
@@ -515,7 +517,7 @@ function toggleDeliveryPrice() {
 	};
 </script>
 
-<script>
+	<script>
   window.addEventListener('DOMContentLoaded', function () {
     const locationFromCookie = "${cookieLocation}"; // JSP에서 전달된 쿠키 위치값
 
