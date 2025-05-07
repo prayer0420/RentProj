@@ -23,6 +23,7 @@ public class Logout extends HttpServlet {
 		HttpSession session = request.getSession();
 		//세션 삭제
         session.removeAttribute("adminNo");  // 관리자 정보 제거
+		session.removeAttribute("no");
 		session.removeAttribute("id");
 		session.removeAttribute("location");
 		session.removeAttribute("latitude");
