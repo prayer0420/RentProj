@@ -33,7 +33,9 @@ public class ProductList extends HttpServlet {
 
 		Double lat = (Double) req.getSession().getAttribute("latitude");
 		Double lng = (Double) req.getSession().getAttribute("longitude");
-
+		System.out.println("lat:"+ lat);
+		System.out.println("lng:"+ lng);
+		
 		if (tradeType != null && tradeType.trim().isEmpty()) {
 			tradeType = null;
 		}

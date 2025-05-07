@@ -125,7 +125,7 @@
 
     // 7. 페이지 최초 로딩 시 실행
     document.addEventListener("DOMContentLoaded", () => {
-      loadProducts();
+      /* loadProducts(); */
       attachFilterEvents();
       attachSortEvents();
       attachPaging();  

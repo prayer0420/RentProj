@@ -4,6 +4,13 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 
+<%
+  java.util.List<dto.Product> pl = (java.util.List<dto.Product>) request.getAttribute("productList");
+  for (dto.Product p : pl) {
+    System.out.println("JSP 확인용 상품번호: " + p.getNo() + " 거리 = " + p.getDistance());
+  }
+%>
+
 <link rel="stylesheet" href="${contextPath}/CSS/ProductList/productList.css" />
 <div class="products-container">
   <div class="products">

@@ -32,7 +32,7 @@ public class UpdateLocation extends HttpServlet {
 
             String latStr = request.getParameter("lat");
             String lngStr = request.getParameter("lng");
-
+            	
             if (latStr == null || lngStr == null) {
                 response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
                 return;
@@ -40,7 +40,7 @@ public class UpdateLocation extends HttpServlet {
 
             Double lat = Double.parseDouble(latStr);
             Double lng = Double.parseDouble(lngStr);
-
+            
             MemberService service = new MemberServiceImpl();
             Member member = service.getMemberById(id);
 
