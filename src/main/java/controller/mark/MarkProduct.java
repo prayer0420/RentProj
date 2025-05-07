@@ -54,7 +54,7 @@ public class MarkProduct extends HttpServlet {
 	        	boolean isMark = service.existsMark(memberNo, productNo);
 	            if (isMark) {
 	                service.deleteMark(mark);
-	            } else {
+	            } else { 
 	                service.insertMark(mark);
 	            }
 	            int count = service.countMarkProduct(productNo);

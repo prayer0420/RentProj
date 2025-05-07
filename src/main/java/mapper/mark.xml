@@ -16,7 +16,7 @@
 		delete from mark where memberNo=#{memberNo} and productNo=#{productNo}
 	</delete>
 	
-	<select id="selectMyMarkList" parameterType="map" resultType="map">
+	<select id="selectMyMarkList" parameterType="map" resultType="map" flushCache="true">
 		SELECT 
 			m.no,
 			m.productNo,
@@ -30,7 +30,7 @@
 		JOIN product p ON m.productNo = p.no
 		WHERE m.memberNo = #{memberNo}
 		ORDER BY m.no DESC
-		LIMIT #{startRow}, #{pageSize}
+		LIMIT #{offset}, #{limit}
 	</select>
 
 
