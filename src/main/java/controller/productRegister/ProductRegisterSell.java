@@ -2,6 +2,7 @@ package controller.productRegister;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URLEncoder;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -150,7 +151,9 @@ public class ProductRegisterSell extends HttpServlet {
 
 	    try {
 	        service.registSell(product);
-	        response.sendRedirect(request.getContextPath() + "/main");
+	        int productNo = product.getNo();
+			tradeType = URLEncoder.encode(tradeType, "UTF-8");
+			response.sendRedirect(request.getContextPath()+"/productDetail?no="+productNo+"&tradeType="+tradeType);
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	        request.setAttribute("errorMsg", "상품 등록 중 오류가 발생했습니다.");

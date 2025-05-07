@@ -2,6 +2,7 @@ package controller.productRegister;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URLEncoder;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -142,7 +143,9 @@ request.setCharacterEncoding("utf-8");
 		try {
 			service.registRentSell(product);
 			request.setAttribute("product", product);
-			response.sendRedirect(request.getContextPath()+"/main");
+			int productNo = product.getNo();
+			tradeType = URLEncoder.encode(tradeType, "UTF-8");
+			response.sendRedirect(request.getContextPath()+"/productDetail?no="+productNo+"&tradeType="+tradeType);
 			
 		}catch(Exception e) {
 			e.printStackTrace();
