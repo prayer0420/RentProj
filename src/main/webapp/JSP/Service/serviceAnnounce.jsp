@@ -19,6 +19,9 @@
         <div class="title">[공지] ${announce.title}</div>
         <div class="meta">조회수 ${announce.viewCount} | 등록일 ${announce.regDate}</div>
     </div>
+    <div class="notice-image">
+    	<img alt="이벤트 이미지" src="${contextPath}/upload/${announce.imgUrl}">
+    </div>
         <div>${announce.content}</div>
 
     <div class="btn-wrap">
