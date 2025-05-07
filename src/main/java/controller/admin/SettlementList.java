@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import dto.Settlement;
 import service.settlement.SettlementService;
 import service.settlement.SettlementServiceImpl;
+import utils.PageInfo;
 
 /**
  * Servlet implementation class SettlementList
@@ -44,15 +45,21 @@ public class SettlementList extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // [1] 검색 조건 받기
-		request.setCharacterEncoding("UTF-8");
-        String revenueType = request.getParameter("searchRevenueType"); // 판매/대여 타입
-        String searchFeeStatus = request.getParameter("searchFeeStatus"); //정산 대기/완료 타입
+	    // [1] 검색 조건 받기
+        String revenueType = request.getParameter("searchRevenueType");
+        String searchFeeStatus = request.getParameter("searchFeeStatus");
         String completedStart = trimOrNull(request.getParameter("completedStart"));
         String completedEnd = trimOrNull(request.getParameter("completedEnd"));
-        
 
-        // [2] 검색 조건을 Map에 담기
+        // [2] 페이징 관련
+        int curPage = 1;
+        int size = 12;
+        if (request.getParameter("page") != null) {
+            curPage = Integer.parseInt(request.getParameter("page"));
+        }
+        int row = (curPage - 1) * size;
+
+        // [3] 검색 조건 + 페이징 정보 Map에 담기
         Map<String, Object> searchMap = new HashMap<>();
         searchMap.put("searchRevenueType", revenueType);
         if (searchFeeStatus != null && !searchFeeStatus.isEmpty()) {
@@ -60,34 +67,53 @@ public class SettlementList extends HttpServlet {
         }
         searchMap.put("completedStart", completedStart);
         searchMap.put("completedEnd", completedEnd);
+        searchMap.put("row", row);
+        searchMap.put("size", size);
         
-        System.out.println("searchMap = " + searchMap); // 디버깅
-        try {
-        // [3] Service 호출 (리스트 가져오기)
-        List<Settlement> settlementList = settlementService.getSettlementList(searchMap);
-        
-        // [4] 총 수수료 합계 구하기 (feeAmount만)
-        int totalFeeAmount = 0;
-        for (Settlement s : settlementList) {
-            totalFeeAmount += s.getFeeAmount();
-        }
+        System.out.println("searchMap = " + searchMap); // 디버깅용
 
-        // [5] 결과를 JSP에 전달
-        request.setAttribute("settlementList", settlementList);
-        request.setAttribute("totalFeeAmount", totalFeeAmount);
-        request.setAttribute("searchMap", searchMap); // 검색 조건도 넘기면 JSP에서 쓸 수 있음
-        request.getRequestDispatcher("/JSP/Admin/settlementList.jsp").forward(request, response);
-        
+        try {
+            // [4] 전체 개수 구하기
+            int totalCount = settlementService.getSettlementCount(searchMap);
+            int allPage = (int) Math.ceil((double) totalCount / size);
+            if (allPage == 0) {
+                allPage = 1;  // 최소 1페이지 보정
+            }
+            int startPage = ((curPage - 1) / 10) * 10 + 1;
+            int endPage = Math.min(startPage + 9, allPage);
+
+            // [5] PageInfo 객체에 값 채우기
+            PageInfo pageInfo = new PageInfo();
+            pageInfo.setCurPage(curPage);
+            pageInfo.setAllPage(allPage);
+            pageInfo.setStartPage(startPage);
+            pageInfo.setEndPage(endPage);
+            pageInfo.setPageSize(size);
+            pageInfo.setTotalCount(totalCount);
+
+            // [6] Service 호출 (리스트 가져오기)
+            List<Settlement> settlementList = settlementService.getSettlementList(searchMap);
+
+            // [7] 총 수수료 합계 구하기 (전체 기준)
+            int totalFeeAmount = settlementService.getTotalFeeAmount(searchMap);
+
+            // [8] 결과를 JSP로 전달
+            request.setAttribute("settlementList", settlementList);
+            request.setAttribute("totalFeeAmount", totalFeeAmount);
+            request.setAttribute("searchMap", searchMap);
+            request.setAttribute("pageInfo", pageInfo);
+
+            request.getRequestDispatcher("/JSP/Admin/settlementList.jsp").forward(request, response);
+
         } catch (Exception e) {
             e.printStackTrace();
-            // 예외 발생 시 에러 페이지로 이동하거나 에러 메시지 전달
             request.setAttribute("error", "정산 리스트 조회 중 오류가 발생했습니다.");
-            request.setAttribute("returnUrl", "/settlementList"); // 돌아갈 경로
+            request.setAttribute("returnUrl", "/settlementList");
             request.getRequestDispatcher("/JSP/Admin/error.jsp").forward(request, response);
         }
     }
-	
-		private String trimOrNull(String param) {
+
+    private String trimOrNull(String param) {
         return (param != null && !param.trim().isEmpty()) ? param.trim() : null;
     }
 }

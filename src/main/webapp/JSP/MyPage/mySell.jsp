@@ -35,7 +35,7 @@
 			
 			<c:otherwise>
 
-	          <!-- 드롭다운 메뉴 영역 -->
+	          <!-- 드롭다운 메뉴 영역 
 	          <div class="filter-section">
 	            <select class="filter-dropdown" name="period">
 	              <option value="">조회 기간 선택</option>
@@ -54,7 +54,7 @@
 	              <option value="">배송완료</option>
 	              <option value="">거래완료</option>
 	            </select>
-	          </div>
+	          </div> -->
 	
 	          <!-- 상품 카드 1 -->
 	          <c:forEach var="item" items="${productList }">
@@ -148,7 +148,6 @@
 	    // 삭제 버튼 클릭 시 (이벤트 위임)
 	    $(document).on('click','.delete-btn',function(){
 	    	console.log("버튼 클릭됨!"); // 확인용
-	    	console.log("deleteModal 요소 찾기 시도:", $('#deleteModal').length); // 추가
 	    	
 	        selectedProductNo = $(this).data('product-no'); // 버튼에 심어놓은 상품번호 읽어오기
 	        $('#deleteModal').fadeIn(); // 모달 띄우기

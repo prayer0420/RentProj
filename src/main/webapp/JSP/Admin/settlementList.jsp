@@ -26,50 +26,51 @@
     <div class="breadcrumb">HOME > 정산관리 > 주문정산</div>
 
     <!-- 검색 폼 -->
-    <form action="${pageContext.request.contextPath}/settlementList" method="post" class="search-box">
-      <div class="row g-3 align-items-center">
-        <label for="searchFeeStatus">정산 상태:</label>
-        <select name="searchFeeStatus" id="searchFeeStatus">
-          <option value="">전체</option>
-          <option value="PENDING" <c:if test="${searchMap.searchFeeStatus == 'PENDING'}">selected</c:if>>대기</option>
-          <option value="COMPLETE" <c:if test="${searchMap.searchFeeStatus == 'COMPLETE'}">selected</c:if>>완료</option>
-        </select>
+    <form action="${pageContext.request.contextPath}/settlementList" method="post" class="search-box" style="display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 20px;">
+	  <label>
+	    <b>정산 상태:</b>
+	    <select name="searchFeeStatus">
+	      <option value="">전체</option>
+	      <option value="PENDING" <c:if test="${searchMap.searchFeeStatus == 'PENDING'}">selected</c:if>>대기</option>
+	      <option value="COMPLETE" <c:if test="${searchMap.searchFeeStatus == 'COMPLETE'}">selected</c:if>>완료</option>
+	    </select>
+	  </label>
+	
+	  <label>
+	    <b>판매/대여 구분:</b>
+	    <select name="searchRevenueType">
+	      <option value="">전체</option>
+	      <option value="판매" <c:if test="${searchMap.searchRevenueType == '판매'}">selected</c:if>>판매</option>
+	      <option value="대여" <c:if test="${searchMap.searchRevenueType == '대여'}">selected</c:if>>대여</option>
+	    </select>
+	  </label>
+		
+	  <label>
+	    <b>정산완료 시작:</b>
+	    <input type="datetime-local" name="completedStart" value="${searchMap.completedStart}" />
+	  </label>
+	
+	  <label>
+	    <b>정산완료 종료:</b>
+	    <input type="datetime-local" name="completedEnd" value="${searchMap.completedEnd}" />
+	  </label>
+	
+	  <button type="submit">검색</button>
+	</form>
 
-        <div class="col-auto">
-          <label>판매/대여 구분</label>
-          <select name="searchRevenueType" class="form-select">
-            <option value="">전체</option>
-            <option value="판매" <c:if test="${searchMap.searchRevenueType == '판매'}">selected</c:if>>판매</option>
-            <option value="대여" <c:if test="${searchMap.searchRevenueType == '대여'}">selected</c:if>>대여</option>
-          </select>
-        </div>
-
-        <div class="col-auto">
-          <label>정산완료 시작</label>
-          <input type="datetime-local" name="completedStart" class="form-control" value="${searchMap.completedStart}" />
-        </div>
-
-        <div class="col-auto">
-          <label>정산완료 종료</label>
-          <input type="datetime-local" name="completedEnd" class="form-control" value="${searchMap.completedEnd}" />
-        </div>
-
-        <div class="col text-end">
-          <button type="submit" class="btn btn-primary">검색</button>
-        </div>
-      </div>
-    </form>
 
     <div class="section-title">
       <span id="count"></span>
       <div class="summary-box">
 		<div style="margin-bottom:10px; font-weight:bold;">
-		    🔍 검색된 총 정산 건수: <span style="color:#007bff;">${not empty settlementList ? fn:length(settlementList) : 0}</span>건
+		    🔍 검색된 총 정산 건수: <span style="color:#007bff;">${pageInfo.totalCount != null ? pageInfo.totalCount : 0}</span>건
 		</div>
 		
 		<!-- 총 수수료 금액 표시 -->
-		<div class="d-flex justify-content-end align-items-center" style="margin: 10px 0; font-weight: bold;">
-		  총 수수료 금액 : <fmt:formatNumber value="${totalFeeAmount}" type="number" /> 원
+		<div style="display: flex; justify-content: flex-end; margin: 10px 0;">
+		    <div style="padding: 10px 20px; background: #f8f9fa; border: 1px solid #ddd; border-radius: 6px; font-weight: bold;">
+		    총 수수료 금액: <span style="color: #007bff;"><fmt:formatNumber value="${totalFeeAmount}" type="number" /></span> 원
+		  	</div>
 		</div>
       </div>
     </div>
@@ -114,8 +115,10 @@
             <td><fmt:formatNumber value="${settle.gradeRate}" maxFractionDigits="2" /> %</td>
             <td><fmt:formatNumber value="${settle.feeAmount}" type="number" /> 원</td>
             <td><fmt:formatNumber value="${settle.finalSettleAmount}" type="number" /> 원</td>
-            <td id="completedAt-${settle.settlementNo}"><fmt:formatDate value="${settle.settlementCompletedAt}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
-          
+            <td id="completedAt-${settle.settlementNo}" 
+			    title="<fmt:formatDate value='${settle.settlementCompletedAt}' pattern='yyyy-MM-dd HH:mm:ss' />"> <!-- 툴팁 추가 -->
+			    <fmt:formatDate value="${settle.settlementCompletedAt}" pattern="yyyy-MM-dd HH:mm:ss" />
+			</td>
           <td>
             <c:choose>
               <c:when test="${settle.feeStatus == 'PENDING'}">
@@ -139,7 +142,7 @@
       </c:when>
       <c:otherwise>
         <tr>
-          <td colspan="15" class="text-center">검색 결과가 없습니다.</td>
+          <td colspan="15" class="text-center">데이터가 없습니다.</td>
         </tr>
       </c:otherwise>
     </c:choose>
@@ -178,6 +181,47 @@
     });
   });
 </script>
+
+<c:if test="${not empty pageInfo}">
+    <div class="pagination" style="margin: 20px 0; text-align: center;">
+        <c:if test="${pageInfo.startPage > 1}">
+            <form method="post" style="display:inline;">
+                <input type="hidden" name="page" value="${pageInfo.startPage - 1}" />
+                <c:forEach var="entry" items="${searchMap}">
+                    <input type="hidden" name="${entry.key}" value="${entry.value}" />
+                </c:forEach>
+                <button type="submit">이전</button>
+            </form>
+        </c:if>
+
+        <!-- 페이지 번호들 -->
+        <c:forEach var="i" begin="${pageInfo.startPage}" end="${pageInfo.endPage}">
+            <form method="post" style="display:inline;">
+                <input type="hidden" name="page" value="${i}" />
+                <c:forEach var="entry" items="${searchMap}">
+                    <input type="hidden" name="${entry.key}" value="${entry.value}" />
+                </c:forEach>
+                <button type="submit"
+                    <c:if test="${pageInfo.curPage == i}">style="font-weight:bold; background-color:#007bff; color:white;"</c:if>
+                >${i}</button>
+            </form>
+        </c:forEach>
+
+        <!-- 다음 블록 -->
+        <c:if test="${pageInfo.endPage < pageInfo.allPage}">
+            <form method="post" style="display:inline;">
+                <input type="hidden" name="page" value="${pageInfo.endPage + 1}" />
+                <c:forEach var="entry" items="${searchMap}">
+                    <input type="hidden" name="${entry.key}" value="${entry.value}" />
+                </c:forEach>
+                <button type="submit">다음</button>
+            </form>
+        </c:if>
+    </div>
+</c:if>
+
+</main>
+</div>
 
 </body>
 </html>

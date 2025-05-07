@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 <%@ page isELIgnored="false" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,48 +10,7 @@
   <title>회원정보</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"> 
   <link rel="stylesheet" href="${pageContext.request.contextPath}/CSS/Admin/common.css">
-<%-- 	<link rel="stylesheet" href="${pageContext.request.contextPath}/CSS/Admin/modal.css"> --%>
-
   
-  
-  <style>
-  /* Inputs */
-input[type="text"] {
-  width: 140px;
-  padding: 4px;
-  font-size: 13px;
-  text-align: left;
-}
-
-.modal-footer button {
-  background-color: #26c6da;
-  color: white;
-  border: none;
-  padding: 8px 20px;
-  border-radius: 4px;
-  font-size: 14px;
-  cursor: pointer;
-}
-  
- .pagination {
-  margin-top: 20px;
-  text-align: center;
-}
-.pagination button {
-  margin: 0 3px;
-  padding: 6px 10px;
-  border: 1px solid #ccc;
-  background-color: #e2e2e2;
-  cursor: pointer;
-}
-
-.pagination button[style*="bold"] {
-  background-color: #007bff;
-  color: white;
-  font-weight: bold;
-  border-color: #007bff;
-}
-  </style>
 
 </head>
 <body>
@@ -58,7 +18,7 @@ input[type="text"] {
 	
   <div class="container">
     <aside>
-      <h3>회원관리</h3>
+      <h3 style='font-size: 19px;font-weight: bold;'>회원관리</h3>
       <div class="menu active"><a href="memberInfo" style="color: inherit; text-decoration: none;">회원정보</a></div>
       <div class="menu inactive"><a href="memberGrade" style="color: inherit; text-decoration: none;">회원등급</a></div>
     </aside>
@@ -68,7 +28,7 @@ input[type="text"] {
       
       <form action="memberInfo" method="post">
       <div class="search-box">
-        <label>검색어&nbsp;&nbsp;
+        <label><b>검색어:</b>&nbsp;&nbsp;
           <select name="type">
 		    <option value="id" ${param.type == 'id' ? 'selected' : ''}>아이디</option>
 		    <option value="name" ${param.type == 'name' ? 'selected' : ''}>이름</option>
@@ -78,7 +38,7 @@ input[type="text"] {
           <input type="text" name="word" value="${param.word}" placeholder="검색어 입력">
         <button type="submit">검색</button>
         <br><br>
-        회원등급:&nbsp;
+        <b style="font-size: 13px;">회원등급:</b>&nbsp;
 			<label><input type="radio" name="gradeId" value="all" ${param.gradeId == 'all' || empty param.gradeId ? 'checked' : ''}> 전체</label>
 			<label><input type="radio" name="gradeId" value="bronze" ${param.gradeId == 'bronze' ? 'checked' : ''}> 브론즈</label>
 			<label><input type="radio" name="gradeId" value="silver" ${param.gradeId == 'silver' ? 'checked' : ''}> 실버</label>
@@ -89,9 +49,8 @@ input[type="text"] {
       </div>
       </form>
       
-		<c:if test="${not empty memberList}">
 		<div style="margin-bottom:10px; font-weight:bold;">
-		    🔍 검색된 총 회원 수: <span style="color:#007bff;">${pageInfo.totalCount}</span>명
+		    🔍 검색된 총 회원 수: <span style="color:#007bff;">${pageInfo.totalCount != null ? pageInfo.totalCount : 0}</span>명
 		</div>
 		  <table id="adminListTable" border="1">
 		    <thead>
@@ -107,30 +66,12 @@ input[type="text"] {
 		      </tr>
 		    </thead>
 		    <tbody id="adminListBody">
+			<c:if test="${not empty memberList}">
 		      <c:forEach var="member" items="${memberList}">
 		        <tr>
 		          <td>${member.no}</td>
 		          <td>${member.gradeId}</td>
-		          <td>
-		            <a href="#" class="open-modal"
-		               data-no="${member.no}"
-		               data-gradeid="${member.gradeId}"
-		               data-name="${member.name}"
-		               data-id="${member.id}"
-		               data-nickname="${member.nickname}"
-		               data-phone="${member.phone}"
-		               data-address1="${member.address1}"
-		               data-address2="${member.address2}"
-		               data-address3="${member.address3}"
- 		               data-region1="${member.location}"
-		               <%-- data-region2="${member.region2}"
-		               data-region3="${member.region3}"  --%>
-		               data-ordercount="${member.orderCount}"
-		               data-regdate="${member.regDate}"
-		               data-bs-toggle="modal" data-bs-target="#myModal">
-		              ${member.name}
-		            </a>
-		          </td>
+		          <td>${member.name}</td>
 		          <td>
 		            <a href="#" class="open-modal"
 		               data-no="${member.no}"
@@ -154,12 +95,17 @@ input[type="text"] {
 		          <td>${member.nickname}</td>
 		          <td>${member.phone}</td>
 		          <td>${member.location}</td>
-		          <td>${member.address1}</td>
+		          <td>${fn:split(member.address1, '@@')[0]}</td>
 		        </tr>
 		      </c:forEach>
+		      </c:if>
+				 <c:if test="${empty memberList}">
+			      <tr>
+			        <td colspan="8" style="text-align:center;">데이터가 없습니다.</td>
+			      </tr>
+			    </c:if>
     		</tbody>
  		 </table>
- </c:if>
 	 <br>
 <c:if test="${not empty pageInfo and not empty memberList}">
   <div class="pagination">
@@ -259,6 +205,9 @@ input[type="text"] {
 
 
    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</main>
+</div>
 
 </body>
 </html>

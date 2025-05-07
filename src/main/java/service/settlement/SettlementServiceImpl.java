@@ -133,5 +133,15 @@ public class SettlementServiceImpl implements SettlementService {
 	public String getCompletedAt(int settlementNo) throws Exception {
 	    return settlementDAO.selectCompletedAt(settlementNo);
 	}
+
+	@Override
+	public int getSettlementCount(Map<String, Object> searchMap) throws Exception {
+		return settlementDAO.selectSettlementCount(searchMap);
+	}
+
+	@Override
+	public int getTotalFeeAmount(Map<String, Object> searchMap) throws Exception {
+		return settlementDAO.selectTotalFeeAmount(searchMap);
+	}
 }
 

@@ -92,6 +92,11 @@ main {
   padding: 4px 10px !important;
 }
 
+    b {
+      font-size: 13px; 
+ 	  font-family: 'Pretendard', 'Noto Sans KR', sans-serif; 
+	} 
+
 /* Table */
 table {
   width: 100%;
@@ -124,8 +129,29 @@ td a {
   text-overflow: ellipsis;
 }
 
+    .admin-info-table {
+      width: auto;  
+   	  max-width: 600px; 
+      width: 40%;  
+      margin-bottom: 30px;
+      border-collapse: collapse;
+    }
+
+    .admin-info-table th, .admin-info-table td {
+      padding: 10px;
+      border: 1px solid #ccc;
+      text-align: left;
+    }
+
+    .admin-info-table th {
+      background-color: #f0f0f0;
+      font-weight: bold;
+    }
+
+
 /* Inputs */
-input[type="text"] {
+input[type="text"],
+input[type="password"] {
   width: 140px !important;
   padding: 4px;
   font-size: 13px;
@@ -148,6 +174,11 @@ select {
   display: flex;
   justify-content: center;
   margin-top: 20px;
+}
+
+/* adminInfo.jsp 전용 저장 버튼 왼쪽 정렬 */
+.admin-info-save {
+    justify-content: flex-start;
 }
 
 .save-button button {
@@ -178,10 +209,10 @@ select {
 /* 버튼 덮어쓰기 */
 button, .btn-action {
   background-color: #26c6da;
-  color: white !important;
+  color: white;
   border: none; 
-  font-size: 13px !important;
-  padding: 6px 12px !important;
+  font-size: 13px;
+  padding: 6px 12px;
 }
 
 /* 라디오 버튼 및 폰트 사이즈 */
@@ -198,7 +229,7 @@ table th, table td {
 
 
 
- .search-box label,
+ 	.search-box label,
     .search-box input,
     .search-box select,
     .search-box button {
@@ -253,3 +284,176 @@ table th, table td {
       font-size: 12px;
       margin-left: 5px;
     }
+    
+      .total-count-wrap {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 6px;
+      margin-bottom: 10px;
+    }
+
+    .action-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .action-buttons button,
+    .action-top > button {
+      background-color: #26c6da;
+      color: white;
+      padding: 4px 12px;
+      border: none;
+      border-radius: 3px;
+      font-size: 13px;
+      cursor: pointer;
+      margin-right: 4px;
+    }
+
+    .action-buttons button:last-child,
+    .action-top > button:last-child {
+      margin-right: 0;
+    }
+    
+      .pagination {
+	  margin-top: 20px;
+	  text-align: center;
+	  display: flex;
+      justify-content: center;
+	}
+	.pagination button {
+	  margin: 0 3px;
+	  padding: 6px 10px;
+	  border: 1px solid #ccc;
+	  background-color: #e2e2e2;
+	  cursor: pointer;
+	}
+	
+	.pagination button[style*="bold"] {
+	  background-color: #007bff;
+	  color: white;
+	  font-weight: bold;
+	  border-color: #007bff;
+	}
+	
+	.modal-footer button {
+ 	 background-color: #26c6da;
+	  color: white;
+	  border: none;
+	  padding: 8px 20px;
+	  border-radius: 4px;
+	  font-size: 14px;
+	  cursor: pointer;
+	}
+    
+    /* ---------------- categoryCreate / style.css --------------*/
+    
+      .category-section {
+      border: 1px solid #ccc;
+      padding: 10px;
+      margin-bottom: 20px;
+    }
+
+    .category-row {
+      margin-bottom: 10px;
+    }
+
+    .category-row.inline {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .category-row label {
+      font-size: 14px;
+    }
+
+    .search-input {
+      width: 180px;
+      padding: 4px;
+      font-size: 13px;
+    }
+
+    .category-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .category-table th, .category-table td {
+      border: 1px solid #ccc;
+      padding: 6px;
+      font-size: 13px;
+      text-align: center;
+    }
+
+    .category-table th {
+      background: #e0e6ed;
+    }
+
+    .category-table input[type="text"],
+    .category-table select {
+      width: 90%;
+      padding: 4px;
+    }
+
+    .category-table input[type="checkbox"] {
+      transform: scale(1.2);
+    }
+
+    .btn-save, .btn-file, .btn-up, .btn-down {
+      background-color: #26c6da;
+      color: white;
+      padding: 5px 12px;
+      border: none;
+      border-radius: 3px;
+      font-size: 13px;
+      cursor: pointer;
+    }
+
+    .sort-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 4px;
+    }
+
+    .file-label {
+      margin-left: 10px;
+      font-size: 13px;
+      color: #333;
+    }
+
+    .category-count {
+      font-size: 14px;
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+    
+    .btn-file {
+	  background-color: #ddd;
+	  padding: 5px 10px;
+	  border: 1px solid #aaa;
+	  border-radius: 3px;
+	  cursor: pointer;
+	  position: relative;
+	  overflow: hidden;
+	  font-size: 13px;
+	}
+	
+	.btn-file input[type="file"] {
+	  position: absolute;
+	  left: 0;
+	  top: 0;
+	  opacity: 0;
+	  cursor: pointer;
+	  height: 100%;
+	  width: 100%;
+	}	
+	
+	.category-section {
+	  display: flex;
+	  flex-direction: column;
+	  gap: 10px;
+	}

@@ -11,53 +11,11 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <link rel="stylesheet" href="${pageContext.request.contextPath}/CSS/Admin/common.css">
   <style>
-    .action-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 10px;
-      margin-bottom: 10px;
-    }
-
-    .action-buttons button {
-      background-color: #26c6da;
-      color: white;
-      padding: 4px 12px;
-      border: none;
-      border-radius: 3px;
-      font-size: 13px;
-      cursor: pointer;
-      margin-right: 4px;
-    }
-
-    .action-buttons button:last-child {
-      margin-right: 0;
-    }
-
-    .total-count-wrap {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid #ccc;
-      padding-bottom: 6px;
-      margin-bottom: 10px;
-    }
-
-    .total-count {
-      font-weight: bold;
-    }
 
      .modal-overlay {
       display: block;
     }
 
-/*     .modal {
-      background-color: white;
-      padding: 20px;
-      border-radius: 5px;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-    }
- */
     .modal-body table {
       width: 100%;
       border-spacing: 0;
@@ -89,11 +47,11 @@
   <%@ include file="header.jsp" %>
   <div class="container">
     <aside>
-      <h3>FAQ</h3>
+      <h3 style='font-size: 19px;font-weight: bold;'>FAQ</h3>
       <div class="menu inactive"><a href="faqCategory" style="color: inherit; text-decoration: none;">FAQ 분류</a></div>
       <div class="menu active"><a href="faqCreate" style="color: inherit; text-decoration: none;">FAQ 등록</a></div>
       <div style="height: 10px;"></div>
-      <h3>공지사항</h3>
+      <h3 style='font-size: 19px;font-weight: bold;'>공지사항</h3>
       <div class="menu inactive"><a href="announceList" style="color: inherit; text-decoration: none;">공지사항 등록</a></div>
     </aside>
 
@@ -259,7 +217,7 @@
 		        data: { "no[]": noList }, // 서버는 "no[]" 파라미터로 받음
 		        success: function (result) {
 		            if (result.success) {
-		                alert("삭제 완료");
+		                // alert("삭제 완료");
 		                location.reload(); // 페이지 새로고침
 		            } else {
 		                alert("삭제 실패");
@@ -341,7 +299,7 @@
 	  	    contentType: false,
 	  	    success: function (res) {
 	  	      if (res.success) {
-	  	        alert("수정 완료");
+	  	        // alert("수정 완료");
 	  	        location.reload();
 	  	      } else {
 	  	        alert("수정 실패: " + (res.message || ""));

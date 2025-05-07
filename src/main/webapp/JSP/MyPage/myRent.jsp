@@ -108,20 +108,22 @@
 	  left: 0;
 	  top: 0;
 	  width: 100%;
-	  height: 300px;
+	  height: 100%;
 	  overflow: auto; /* 스크롤 가능 */
 	  background-color: rgba(0, 0, 0, 0.5); /* 반투명 배경 */
 	}
 	
 	/* 모달 내부 박스 */
 	.rmodal-content {
-	  background-color: #fff;
+	  background-color: #fffefe;
 	  margin: 10% auto;
-	  padding: 20px;
-	  border: 2px solid #aaa;
+	  padding: 24px;
 	  width: 400px;
 	  border-radius: 10px;
 	  position: relative;
+	  font-size: 15px;
+	  font-weight: 600;
+  	  color: #333;
 	  text-align: center;
 	}
 
@@ -134,11 +136,52 @@
 	  font-weight: bold;
 	  cursor: pointer;
 	}
-	
 	.rclose:hover {
 	  color: black;
 	}
 	
+	/* input 영역 */
+	.input-row {
+	  display: flex;
+	  flex-direction: column;
+	  gap: 6px;
+	  margin-bottom: 16px;
+	}
+	.input-row label {
+	  font-weight: 600;
+	  color: #333;
+	}
+	.input-row input[type="text"] {
+	  padding: 10px;
+	  border: 1px solid #ccc; /* 👈 연회색 테두리 */
+	  border-radius: 8px;
+	  font-size: 15px;
+	  font-weight: normal;
+	  outline: none;
+	  transition: border-color 0.2s ease;
+	}
+	.input-row input[type="text"]:focus {
+	  border-color: #aaa; /* 포커스 시 더 진한 회색 */
+	}
+	
+	/* 송장번호입력 등록 버튼 */
+	#submitInvoiceBtn {
+	  background-color: #4caf50;
+	  color: white;
+	  padding: 10px 20px;
+	  margin-top: 12px;
+	  border: none;
+	  border-radius: 10px;
+	  font-size: 15px;
+	  font-weight: bold;
+	  cursor: pointer;
+	  transition: background-color 0.3s ease;
+	  width: 100%;
+	}
+	
+	#submitInvoiceBtn:hover {
+	  background-color: #43a047;
+	}	
 
 </style>
 <link rel="stylesheet" href="${contextPath}/CSS/mypage/myRent.css">
@@ -163,7 +206,7 @@
 			</c:when>
 			<c:otherwise>
 			
-	          <!-- 드롭다운 메뉴 영역 -->
+	          <!-- 드롭다운 메뉴 영역 
 	          <div class="filter-section">
 	            <select class="filter-dropdown" name="period">
 	              <option value="">조회 기간 선택</option>
@@ -183,6 +226,7 @@
 	              <option value="cancelled">주문취소</option>
 	            </select>
 	          </div>
+	          -->
 	
 	          <!-- 상품 카드 -->
 	          <c:forEach var="item" items="${rentList}">
@@ -285,10 +329,12 @@
     <form>
       <input type="hidden" id="orderNo" />
       <input type="hidden" id="redirectUrl" />
+      <div class="input-row">
       <label for="reDeliveryComp">택배사</label>
-      <input type="text" id="reDeliveryComp" required />
+      <input type="text" id="reDeliveryComp" required /></div>
+      <div class="input-row">
       <label for="reInvoiceNo">송장번호</label>
-      <input type="text" id="reInvoiceNo" required />
+      <input type="text" id="reInvoiceNo" required /></div>
       <button type="button" id="submitInvoiceBtn">등록</button>
     </form>
   </div>

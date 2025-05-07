@@ -7,41 +7,7 @@
   <meta charset="UTF-8">
   <title>관리자 정보 확인</title>
   <link rel="stylesheet" href="${pageContext.request.contextPath}/CSS/Admin/common.css">
-  <style>
 
-    .admin-info-table {
-      width: 40%;  
-      margin-bottom: 30px;
-      border-collapse: collapse;
-    }
-
-    .admin-info-table th, .admin-info-table td {
-      padding: 10px;
-      border: 1px solid #ccc;
-      text-align: left;
-    }
-
-    .admin-info-table th {
-      background-color: #f0f0f0;
-      font-weight: bold;
-    }
-
-    .save-button {
-    display: flex; 
-  	justify-content: flex-start; /* 왼쪽 정렬 */
-    margin-top: 20px;
-    }
-
-    .save-button button {
-      background-color: #26c6da;
-      color: white;
-      padding: 8px 20px;
-      border: none;
-      border-radius: 3px;
-      cursor: pointer;
-      font-size: 14px;
-    }
-  </style>
 </head>
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script> 
 <script>
@@ -98,9 +64,9 @@ $(document).ready(function () {
 	    </tr>
 	  </table>
 	
-	  <div class="save-button">
+	  <div class="save-button admin-info-save">
 	    <button type="button" id="updateAdmin">저장</button>
-	  </div>
+	</div>
 	</form>
   </main>
 </div>

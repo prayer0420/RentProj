@@ -14,5 +14,9 @@ public interface SettlementService {
     void insertSettlementByOrderNo(int orderNo) throws Exception;
     // /정산 완료 시간 조회
     String getCompletedAt(int settlementNo) throws Exception;
+    // 총 개수 조회 추가 (페이징)
+    int getSettlementCount(Map<String, Object> searchMap) throws Exception;
+    // 검색 조건에 맞는 모든 정산건의 총 수수료 금액
+    int getTotalFeeAmount(Map<String, Object> searchMap) throws Exception;
     
 }

@@ -9,24 +9,10 @@
   <title>전체주문조회</title>
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/CSS/Admin/common.css">
   <style>
-   
-
 
     .search-box .row:last-child {
       margin-bottom: 0;
     }
-
-
-    .total-count {
-      font-size: 14px;
-      margin: 10px 0;
-    }
-    
-    b {
-      font-size: 13px;
- 	  font-family: 'Pretendard', 'Noto Sans KR', sans-serif;
-	}
-
 
   </style>
 </head>
@@ -67,9 +53,9 @@
       </div>
       </form>
 
-<c:if test="${not empty orderList}">
+
 		<div style="margin-bottom:10px; font-weight:bold;">
-		    🔍 검색된 총 주문 수: <span style="color:#007bff;">${pageInfo.totalCount}</span>건
+		    🔍 검색된 총 주문 수: <span style="color:#007bff;">${pageInfo.totalCount != null ? pageInfo.totalCount : 0}</span>건
 		</div>
 
    <table>
@@ -80,7 +66,6 @@
       <th rowspan="2">구매자</th>
       <th rowspan="2">판매자</th>
       <th rowspan="2">거래유형</th>
-      <th rowspan="2">배송유형</th>
       <th colspan="2">거래일자</th>
       <th colspan="3">결제금액</th>
       <th rowspan="2">결제수단</th>
@@ -95,6 +80,7 @@
     </tr>
   </thead>
 	<tbody>
+	<c:if test="${not empty orderList}">
 	  <c:forEach var="order" items="${orderList}">
 	    <tr>
 	      <td>${order.orderNo}</td>
@@ -102,7 +88,6 @@
 	      <td>${order.buyerId}</td>   <!-- member.id (구매자) -->
 	      <td>${order.sellerId}</td>  <!-- member.id (판매자) -->
 	      <td>${order.orderType}</td>
-	      <td>${order.deliveryComp}</td>
 	      <td><fmt:formatDate value="${order.startDate}" pattern="yyyy-MM-dd" /></td>
 	      <td><fmt:formatDate value="${order.endDate}" pattern="yyyy-MM-dd" /></td>
 	      <td><fmt:formatNumber value="${order.price != null ? order.price : 0}" pattern="#,##0" /></td>
@@ -112,9 +97,15 @@
 	      <td>${order.orderStatus}</td>
 	    </tr>
 	  </c:forEach>
+	  </c:if>
+	 <c:if test="${empty orderList}">
+      <tr>
+        <td colspan="12" style="text-align:center;">데이터가 없습니다.</td>
+      </tr>
+    </c:if>
 	</tbody>
 </table>
-</c:if>
+
       <div class="info-note">
       ※주문번호 및 상품명 선택 시, 해당 상품 게시글로 화면 이동
     </div>

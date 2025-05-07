@@ -5,51 +5,12 @@
   <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
-<style>
-	.modal {
-	  display: none;
-	  position: fixed;
-	  z-index: 9999;
-	  top: 0; left: 0;
-	  width: 100%;
-	  height: 100%;
-	  background: rgba(0, 0, 0, 0.5);
-	}
-	
-	.modal-content {
-	  background-color: white;
-	  margin: 10% auto;
-	  padding: 20px;
-	  width: 400px;
-	  border: 1px solid #888;
-	  border-radius: 6px;
-	  position: relative;
-	}
-	
-	.modal-title {
-	  text-align: center;
-	  font-weight: bold;
-	  font-size: 18px;
-	  margin-bottom: 15px;
-	}
-	
-	.modal-close {
-	  text-align: right;
-	  margin-bottom: 10px;
-	}
-	
-	.modal-close button {
-	  background-color: #26c6da;
-	  color: white;
-	  border: none;
-	  padding: 6px 12px;
-	  border-radius: 4px;
-	  cursor: pointer;
-</style>
+
 <head>
   <meta charset="UTF-8">
   <title>대여지연조회</title>
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/CSS/Admin/common.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/CSS/Admin/modal.css">
 
 </head>
 <body>
@@ -75,7 +36,7 @@
         </label>
             <input type="text" name="keyword" value="${param.keyword}" />
         <br><br>
-        	<b>거래일자:</b>&nbsp;&nbsp;
+        	<b style="font-size: 13px;">거래일자:</b>&nbsp;&nbsp;
 		    <input type="date" name="start_date" value="${param.start_date}" />
 		    <span>~</span>
 		    <input type="date" name="end_date" value="${param.end_date}" />	
@@ -98,10 +59,8 @@
       <th rowspan="2">상품명</th>
       <th rowspan="2">구매자</th>
       <th rowspan="2">판매자</th>
-      <th rowspan="2">거래유형</th>
       <th colspan="2">거래일자</th>
       <th colspan="3">결제금액</th>
-      <th rowspan="2">결제수단</th>
       <th rowspan="2">거래상태</th>
       <th rowspan="2">알림</th>
       
@@ -115,6 +74,7 @@
     </tr>
   </thead>
 		<tbody>
+		<c:if test="${not empty orderList}">
 		  <c:forEach var="order" items="${orderList}" varStatus="status">
 		    <tr>		    
 		      <td>${status.index + 1}</td> <!-- 해당 리스트 넘버링 -->
@@ -123,22 +83,26 @@
 		      <td><a href="${pageContext.request.contextPath}/productDetail?no=${order.productNo}">${order.productName}</a></td> <!-- product.title -->
 		      <td><a href="javascript:void(0);" onclick="openMemberDetail('${order.buyerId}')">${order.buyerId}</a></td>   <!-- member.id (구매자) -->
 		      <td><a href="javascript:void(0);" onclick="openMemberDetail('${order.sellerId}')">${order.sellerId}</a></td>  <!-- member.id (판매자) -->
-		      <td>${order.orderType}</td>
 		      <td><fmt:formatDate value="${order.startDate}" pattern="yyyy-MM-dd" /></td>
 		      <td><fmt:formatDate value="${order.endDate}" pattern="yyyy-MM-dd" /></td>
 		      <td><fmt:formatNumber value="${order.price}" pattern="#,##0" /></td>
 		      <td><fmt:formatNumber value="${order.deliveryPrice}" pattern="#,##0" /></td>
 		      <td><fmt:formatNumber value="${order.secPrice}" pattern="#,##0" /></td>
-		      <td>${order.paymentType}</td>
 		      <td>${order.orderStatus}</td>
-		      <td><botton>알림전송</botton></td>
+		      <td><button>알림전송</button></td>
 		    </tr>
 		  </c:forEach>
+		  </c:if>
+		  <c:if test="${empty orderList}">
+		      <tr>
+		        <td colspan="13" style="text-align:center;">데이터가 없습니다.</td>
+		      </tr>
+		  </c:if>
 		</tbody>
 	</table>	
 
-    <div class="notice">
-      * 구매자/판매자 선택 시 각 회원의 상세 정보 페이지 제공
+    <div class="info-note">
+      ※구매자/판매자 선택 시 각 회원의 상세 정보 페이지 제공
     </div>
     
     <!-- 모달 HTML -->

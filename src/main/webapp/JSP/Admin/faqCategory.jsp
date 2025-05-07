@@ -69,7 +69,7 @@
     <div class="breadcrumb">HOME &gt; 고객지원 &gt; FAQ</div>
 
     <div class="category-box">
-      <label>분류명 <input type="text" id="categoryName"></label>
+      <label><b>분류명</b>&nbsp;&nbsp;<input type="text" id="categoryName"></label>
       <button onclick="addCategory()">추가</button>
     </div>
 
@@ -115,7 +115,7 @@
     .then(res => res.json())
     .then(data => {
       if (data.success) {
-        alert("카테고리가 추가되었습니다.");
+        // alert("카테고리가 추가되었습니다.");
         document.getElementById("categoryName").value = "";
         refreshCategoryList(); // 새로 불러옴
       } else {

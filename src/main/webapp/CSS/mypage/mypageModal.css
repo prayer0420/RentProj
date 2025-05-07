@@ -15,17 +15,88 @@
 	
 	/* 모달 내부 박스 */
 	.modal-content {
-	  background-color: #fff;
+	  background-color: #fffefe;
 	  margin: 10% auto;
-	  padding: 20px;
-	  border: 2px solid #aaa;
+	  padding: 32px 24px;
 	  width: 400px;
-	  border-radius: 10px;
+	  border-radius: 12px;
 	  position: relative;
+	  font-size: 15px;
+	  font-weight: 600;
+  	  color: #333;
 	  text-align: center;
 	}
-
 	
+	.modal-content p {
+	  margin-bottom: 24px; /* 👈 질문과 버튼 간격 늘림 */
+	}	
+	
+	.modal-content button {
+	  background-color: #4caf50;
+	  color: white;
+	  padding: 10px 24px;
+	  margin: 0 8px;
+	  border: none; /* 👈 테두리 제거 */
+	  border-radius: 8px;
+	  font-size: 15px;
+	  font-weight: bold;
+	  cursor: pointer;
+	  transition: background-color 0.3s ease;
+	}
+	
+	.modal-content button:hover {
+	  background-color: #43a047;
+	}	
+	
+	/* 상품삭제 버튼 */		
+	#confirmDelete {
+	  background-color: #4caf50;
+	}
+	
+	#cancelDelete {
+	  background-color: #999;
+	}
+	
+	#cancelDelete:hover {
+	  background-color: #777;
+	}
+
+	/* 상품숨기기 버튼 */
+	#confirmHide {
+	  background-color: #4caf50;
+	}
+	
+	#cancelHide {
+	  background-color: #999;
+	}
+	
+	#cancelHide:hover {
+	  background-color: #777;
+	}	
+	
+	/* 구매확인 버튼*/
+	#confirmYesBtn {
+	  background-color: #4caf50;
+	}
+	
+	/* 빌리기확인 버튼 */
+	#confirmRent {
+	  background-color: #4caf50;
+	}
+	
+	/* 상품반납확인 버튼 */
+	#confirmReturn {
+	  background-color: #4caf50;
+	}
+	
+	#cancelReturn {
+	  background-color: #999;
+	}
+	
+	#cancelReturn:hover {
+	  background-color: #777;
+	}	
+		
 	/* 닫기 버튼 (X) */
 	.close {
 	  color: #aaa;

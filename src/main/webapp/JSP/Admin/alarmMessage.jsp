@@ -9,47 +9,12 @@
   <title>알림 등록</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="${pageContext.request.contextPath}/CSS/Admin/common.css"> 
-  <style>
-    .total-count-wrap {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid #ccc;
-      padding-bottom: 6px;
-      margin-bottom: 10px;
-    }
-
-    .action-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 10px;
-    }
-
-    .action-buttons button,
-    .action-top > button {
-      background-color: #26c6da;
-      color: white;
-      padding: 4px 12px;
-      border: none;
-      border-radius: 3px;
-      font-size: 13px;
-      cursor: pointer;
-      margin-right: 4px;
-    }
-
-    .action-buttons button:last-child,
-    .action-top > button:last-child {
-      margin-right: 0;
-    }
-
-  </style>
 </head>
 <body>
 	<%@ include file="header.jsp" %>
   <div class="container">
     <aside>
-      <h3>알림관리</h3>
+      <h3 style='font-size: 19px;font-weight: bold;'>알림관리</h3>
       <div class="menu active"><a href="alarmMessage" style="color: inherit; text-decoration: none;">알림등록</a></div>
     </aside>
 	<script src="https://code.jquery.com/jquery-3.7.1.js"></script> 
@@ -211,7 +176,7 @@
 	      },
 	      success: function (result) {
 	        if (result === "true") {
-	          alert("저장 완료");
+	          //alert("저장 완료");
 	          location.reload();
 	        } else {
 	          alert("저장 실패");
@@ -245,7 +210,7 @@
 		    data: { no: noList }, // 서버는 "no" 파라미터로 받음
 		    success: function (result) {
 		      if (result === "true") {
-		        alert("삭제 완료");
+		        //alert("삭제 완료");
 		        location.reload();
 		      } else {
 		        alert("삭제 실패");
