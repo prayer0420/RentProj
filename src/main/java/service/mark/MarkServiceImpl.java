@@ -37,8 +37,8 @@ public class MarkServiceImpl implements MarkService {
         Map<String, Object> param = new HashMap<>();
         param.put("memberNo", memberNo);
         System.out.println("memberNo"+memberNo);
-        param.put("startRow", (pageInfo.getCurPage() - 1) * pageInfo.getPageSize());
-        param.put("pageSize", pageInfo.getPageSize()); // 페이지당 6개
+        param.put("offset", (pageInfo.getCurPage() - 1) * pageInfo.getPageSize());
+        param.put("limit", pageInfo.getPageSize()); // 페이지당 6개
 
         return markDAO.selectMyMarkList(param);
         }

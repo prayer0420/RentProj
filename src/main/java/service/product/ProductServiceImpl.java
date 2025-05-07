@@ -47,47 +47,60 @@ public class ProductServiceImpl implements ProductService {
 	public List<Product> getProducts(String searchText, Integer categoryNo, String tradeType, String sort,
 	                                 PageInfo pageInfo, Double userLat, Double userLng) {
 
-		String safeSearch = (searchText != null && !searchText.trim().isEmpty()) ? searchText.trim() : null;
-		String safeTrade = (tradeType != null && !tradeType.trim().isEmpty()) ? tradeType.trim() : null;
-		String safeSort = (sort == null || sort.isEmpty()) ? "latest" : sort;
-		Integer safeCategory = (categoryNo != null && categoryNo == 0) ? null : categoryNo;
+	    String safeSearch = (searchText != null && !searchText.trim().isEmpty()) ? searchText.trim() : null;
+	    String safeTrade = (tradeType != null && !tradeType.trim().isEmpty()) ? tradeType.trim() : null;
+	    String safeSort = (sort == null || sort.isEmpty()) ? "latest" : sort;
+	    Integer safeCategory = (categoryNo != null && (categoryNo == 0 || categoryNo == 1)) ? null : categoryNo;
 
-		int offset = (pageInfo.getCurPage() - 1) * pageInfo.getPageSize();
-		int limit = pageInfo.getPageSize();
+	    int offset = (pageInfo.getCurPage() - 1) * pageInfo.getPageSize();
+	    int limit = pageInfo.getPageSize();
 
-		Map<String, Object> params = new HashMap<>();
-		params.put("searchText", safeSearch);
-		params.put("categoryNo", safeCategory);
-		params.put("tradeType", safeTrade);
-		params.put("offset", offset);
-		params.put("limit", limit);
-		params.put("isHide", 1);
-		params.put("deleted", "N");
+	    Map<String, Object> params = new HashMap<>();
+	    params.put("searchText", safeSearch);
+	    params.put("categoryNo", safeCategory);
+	    params.put("tradeType", safeTrade);
+	    params.put("isHide", 1);
+	    params.put("deleted", "N");
 
-		long t1 = System.currentTimeMillis();
+	    // 거리순 정렬인 경우: 전체 불러와서 Java에서 거리 계산 + 수동 페이징
+	    if ("distance".equals(safeSort) && userLat != null && userLng != null) {
+	        params.put("offset", null);
+	        params.put("limit", null);
 
-		// 거리순 정렬
-		if ("distance".equals(safeSort) && userLat != null && userLng != null) {
+	        List<Product> allProducts = productDAO.selectProducts(params);
+	        System.out.println("🧭 거리 정렬 시작: 기준 좌표 = " + userLat + ", " + userLng);
 
-			List<Product> products = productDAO.selectProducts(params);
-			for (Product p : products) {
-				if (p.getLatitude() != null && p.getLongitude() != null) {
-					double d = getDistance(userLat, userLng, p.getLatitude(), p.getLongitude());
-					p.setDistance(d);
-				} else {
-					p.setDistance(Double.MAX_VALUE); // 거리 없음 처리
-				}
-			}
-			products.sort(Comparator.comparingDouble(Product::getDistance));
-			return products;
-		}
+	        for (Product p : allProducts) {
+	            if (p.getLatitude() != null && p.getLongitude() != null) {
+	                double d = getDistance(userLat, userLng, p.getLatitude(), p.getLongitude());
+	                p.setDistance(d);
+	                System.out.println("상품 " + p.getNo() + " 거리 = " + d);
+	            } else {
+	                p.setDistance(Double.MAX_VALUE);
+	                System.out.println("상품 " + p.getNo() + " 좌표 없음 처리됨");
+	            }
+	        }
 
-		// 기본 정렬
-		params.put("sort", safeSort);
-		List<Product> result = productDAO.selectProducts(params);
+	        // 정렬 먼저
+	        allProducts.sort(Comparator.comparingDouble(Product::getDistance));
 
-		return result;
+	        // ✨ 정확한 offset 기반 subList
+	        int start = (pageInfo.getCurPage() - 1) * pageInfo.getPageSize();
+	        int end = Math.min(start + pageInfo.getPageSize(), allProducts.size());
+
+	        if (start > allProducts.size()) return Collections.emptyList();
+
+	        return allProducts.subList(start, end);
+	    }
+
+	    // 일반 정렬
+	    params.put("offset", offset);
+	    params.put("limit", limit);
+	    params.put("sort", safeSort);
+
+	    return productDAO.selectProducts(params);
 	}
+
 
 	@Override
 	public List<Category> getAllCategories() {
@@ -109,9 +122,9 @@ public class ProductServiceImpl implements ProductService {
 		if (searchText != null && !searchText.isBlank()) {
 			totalRecord = productDAO.countByName(searchText, tradeType);
 			System.out.println("🔢 [PageInfo] countByName result: " + totalRecord);
-		} else if (categoryNo != null && !categoryNo.isBlank() && !"0".equals(categoryNo)) {
-			totalRecord = productDAO.countByCategory(Integer.parseInt(categoryNo), tradeType);
-			System.out.println("🔢 [PageInfo] countByCategory result: " + totalRecord);
+		} else if (categoryNo != null && !categoryNo.isBlank() && !"0".equals(categoryNo) && !"1".equals(categoryNo)) {
+		    totalRecord = productDAO.countByCategory(Integer.parseInt(categoryNo), tradeType);
+		    System.out.println("🔢 [PageInfo] countBCategory result: " + totalRecord);
 		} else {
 			totalRecord = productDAO.countAll(tradeType);
 			System.out.println("🔢 [PageInfo] countAll result: " + totalRecord);
@@ -126,8 +139,6 @@ public class ProductServiceImpl implements ProductService {
 
 		return pageInfo;
 	}
-
-
 
 	@Override
 	public Product selectProductOne(Integer no) throws Exception {

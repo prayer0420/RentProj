@@ -112,13 +112,19 @@
 	    END ASC,
 	    COALESCE(salePrice, rentPrice) DESC
 	</when>
-
-      <otherwise>
+	
+	<when test="sort == 'distance'">
+      <!-- 거리 정렬은 Java에서 하므로 ORDER BY 생략 -->
+    </when>
+    <otherwise>
         ORDER BY createDate DESC
-      </otherwise>
-    </choose>
-    LIMIT #{offset}, #{limit}
-  </select>
+    </otherwise>
+  </choose>
+    
+  	<if test="offset != null and limit != null and sort != 'distance'">
+    		LIMIT #{offset}, #{limit}
+  	</if>  
+</select>
 
   <!-- 인기 상품 (조회수 기준) -->
   <select id="selectPopularProducts" resultMap="productMap" parameterType="int">

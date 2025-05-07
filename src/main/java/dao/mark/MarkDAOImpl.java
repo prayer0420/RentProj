@@ -14,28 +14,35 @@ import utils.PageInfo;
 		SqlSession session = MybatisSqlSessionFactory.getSqlSessionFactory().openSession();
 		@Override
 		public boolean existsMark(Integer memberNo,Integer productNo) throws Exception {
-			Mark mark = new Mark();
-			mark.setMemberNo(memberNo);
-			mark.setProductNo(productNo);
-			boolean existsMark = session.selectOne("mapper.mark.existsMark",mark);
-			return existsMark != false ? existsMark : false;
+		    try (SqlSession session = MybatisSqlSessionFactory.getSqlSessionFactory().openSession()) {
+		        Mark mark = new Mark();
+		        mark.setMemberNo(memberNo);
+		        mark.setProductNo(productNo);
+		        return session.selectOne("mapper.mark.existsMark", mark);
+		    }
 		}
 	
 		@Override
 		public void insertMark(Mark mark) throws Exception {
-			session.insert("mapper.mark.insertMark",mark);
-			session.commit();
+		    try (SqlSession session = MybatisSqlSessionFactory.getSqlSessionFactory().openSession()) {
+		        session.insert("mapper.mark.insertMark", mark);
+		        session.commit();
+		    }
 		}
 	
 		@Override
 		public void deleteMark(Mark mark) throws Exception {
-			session.delete("mapper.mark.deleteMark",mark);
-			session.commit();
+		    try (SqlSession session = MybatisSqlSessionFactory.getSqlSessionFactory().openSession()) {
+		        session.delete("mapper.mark.deleteMark", mark);
+		        session.commit();
+		    }
 		}
 		
 	    @Override
 	    public List<Map<String, Object>> selectMyMarkList(Map<String, Object> param) throws Exception {
-	        return session.selectList("mapper.mark.selectMyMarkList", param);
+	        try (SqlSession session = MybatisSqlSessionFactory.getSqlSessionFactory().openSession()) {
+	            return session.selectList("mapper.mark.selectMyMarkList", param);
+	        }
 	    }
 
 	    @Override

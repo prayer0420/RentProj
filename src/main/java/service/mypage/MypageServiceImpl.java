@@ -206,9 +206,22 @@ public class MypageServiceImpl implements MypageService {
 	@Override
 	public boolean confirmReturn(Integer orderNo) throws Exception {
 		
-		return mypageDao.updateRentCompleted(orderNo) >0;
-	}
+	    Integer updateCount = mypageDao.updateRentCompleted(orderNo);
+		// 상품반납확인 시, 거래완료로 상태 업데이트 
+	    boolean result = updateCount != null && updateCount > 0;
+	    // 상태 업데이트 성공 시, settlement insert
+	    if (result) {
+	        try {
+	            SettlementService settlementService = new SettlementServiceImpl();
+	            settlementService.insertSettlementByOrderNo(orderNo);
+	        } catch (Exception e) {
+	            System.err.println("[정산 데이터 생성 실패] orderNo=" + orderNo);
+	            e.printStackTrace();
+	        }
+	    }
 
+	    return result;
+	}
 
 
 }
