@@ -50,7 +50,7 @@ public class ProductServiceImpl implements ProductService {
 		String safeSearch = (searchText != null && !searchText.trim().isEmpty()) ? searchText.trim() : null;
 		String safeTrade = (tradeType != null && !tradeType.trim().isEmpty()) ? tradeType.trim() : null;
 		String safeSort = (sort == null || sort.isEmpty()) ? "latest" : sort;
-		Integer safeCategory = (categoryNo != null && categoryNo == 0) ? null : categoryNo;
+		Integer safeCategory = (categoryNo != null && (categoryNo == 0 || categoryNo == 1)) ? null : categoryNo;
 
 		int offset = (pageInfo.getCurPage() - 1) * pageInfo.getPageSize();
 		int limit = pageInfo.getPageSize();
@@ -109,9 +109,9 @@ public class ProductServiceImpl implements ProductService {
 		if (searchText != null && !searchText.isBlank()) {
 			totalRecord = productDAO.countByName(searchText, tradeType);
 			System.out.println("🔢 [PageInfo] countByName result: " + totalRecord);
-		} else if (categoryNo != null && !categoryNo.isBlank() && !"0".equals(categoryNo)) {
-			totalRecord = productDAO.countByCategory(Integer.parseInt(categoryNo), tradeType);
-			System.out.println("🔢 [PageInfo] countByCategory result: " + totalRecord);
+		} else if (categoryNo != null && !categoryNo.isBlank() && !"0".equals(categoryNo) && !"1".equals(categoryNo)) {
+		    totalRecord = productDAO.countByCategory(Integer.parseInt(categoryNo), tradeType);
+		    System.out.println("🔢 [PageInfo] countBCategory result: " + totalRecord);
 		} else {
 			totalRecord = productDAO.countAll(tradeType);
 			System.out.println("🔢 [PageInfo] countAll result: " + totalRecord);
@@ -126,8 +126,6 @@ public class ProductServiceImpl implements ProductService {
 
 		return pageInfo;
 	}
-
-
 
 	@Override
 	public Product selectProductOne(Integer no) throws Exception {
