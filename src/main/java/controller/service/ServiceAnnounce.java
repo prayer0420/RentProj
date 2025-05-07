@@ -39,6 +39,7 @@ public class ServiceAnnounce extends HttpServlet {
 		AnnounceService service = new AnnounceServiceImpl();
 		try {
 			Announce announce = service.announceSelectOne(no);
+			
 			request.setAttribute("announce", announce);
 			System.out.println("Announce: " + announce);
 			request.getRequestDispatcher("/JSP/Service/serviceAnnounce.jsp").forward(request, response);

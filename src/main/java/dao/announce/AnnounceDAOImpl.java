@@ -15,7 +15,7 @@ public class AnnounceDAOImpl implements AnnounceDAO {
 	}
 	@Override
 	public Announce selectOne(Integer no) throws Exception {
-		return session.selectOne("mapper.announce.announceSelectOne");
+		return session.selectOne("mapper.announce.announceSelectOne",no);
 	}
 
 	@Override

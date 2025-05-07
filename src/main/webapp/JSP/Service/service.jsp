@@ -49,7 +49,6 @@
                 <div class="notice-section">
                     <div class="section-title">
                         <span>공지사항</span>
-                        <a href="serviceAnnounce.jsp">더보기 ></a>
                     </div>
                     <ul class="notice-list">
                     <c:forEach var="announce" items="${announceList}">
