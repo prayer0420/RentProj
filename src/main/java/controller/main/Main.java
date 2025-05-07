@@ -11,8 +11,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import dto.Alarm;
+import dto.Member;
 import dto.Product;
 import service.alarm.FcmServiceImpl;
+import service.member.MemberService;
+import service.member.MemberServiceImpl;
 import service.product.ProductService;
 import service.product.ProductServiceImpl;
 import utils.PageInfo;
@@ -36,24 +39,28 @@ public class Main extends HttpServlet {
 		
 		Double lat = null;
 		Double lng = null;
+		
+		if (id != null) {
+			// MemberService를 통해 DB에서 회원 정보를 조회
+			MemberService memberService = new MemberServiceImpl();
+			Member member;
+			try {
+				member = memberService.getMemberById(id);
+				if (member != null) {
+					lat = member.getLatitude();
+					lng = member.getLongitude();
 
-		if (id != null && request.getCookies() != null) {
-		    for (Cookie cookie : request.getCookies()) {
-		        if (cookie.getName().equals("latitude_" + id)) {
-		            try {
-		                lat = Double.valueOf(cookie.getValue());
-		            } catch (NumberFormatException e) {
-		                e.printStackTrace();
-		            }
-		        }
-		        if (cookie.getName().equals("longitude_" + id)) {
-		            try {
-		                lng = Double.valueOf(cookie.getValue());
-		            } catch (NumberFormatException e) {
-		                e.printStackTrace();
-		            }
-		        }
-		    }
+					// DB에서 조회한 위도/경도를 세션에 저장
+					request.getSession().setAttribute("latitude", lat);
+					request.getSession().setAttribute("longitude", lng);
+				} else {
+					System.out.println("DB에 해당 멤버 정보가 없습니다: " + id);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else {
+			System.out.println("로그인 상태가 아닙니다.");
 		}
 
 		if (lat == null || lng == null) {
