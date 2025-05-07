@@ -64,7 +64,7 @@ public class Main extends HttpServlet {
 		}
 
 		if (lat == null || lng == null) {
-		    System.out.println("쿠키에 위도/경도 없음");
+		    System.out.println("세션에 위도/경도 없음");
 		}
 
 

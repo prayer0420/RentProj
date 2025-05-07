@@ -32,8 +32,8 @@
         <property name="url"                          value="jdbc:mariadb://localhost:3306/rentdb"/>
         <property name="username"                     value="root"/>
         <property name="password"                     value="7564"/>
-        <property name="poolMaximumActiveConnections" value="50"/>
-        <property name="poolMaximumIdleConnections" value="50"/>
+        <property name="poolMaximumActiveConnections" value="500"/>
+        <property name="poolMaximumIdleConnections" value="500"/>
         <property name="poolPingQuery"                 value="SELECT 1"/>
         <property name="poolPingEnabled"               value="true"/>
         <property name="poolPingConnectionsNotUsedFor" value="0"/>

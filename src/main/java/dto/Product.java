@@ -31,6 +31,14 @@ public class Product {
 	private Double longitude;
 	private Double distance; 
 	
+	public String getFormattedDistance() {
+	    if (distance == null) return "";
+	    if (distance < 1.0) {
+	        return "(" + Math.round(distance * 1000) + "m)";
+	    } else {
+	        return "(" + String.format("%.1f", distance) + "km)";
+	    }
+	}
 	
 	public Double getDistance() {
 	    return distance;

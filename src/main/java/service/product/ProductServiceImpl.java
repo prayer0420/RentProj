@@ -66,7 +66,9 @@ public class ProductServiceImpl implements ProductService {
 	    if ("distance".equals(safeSort) && userLat != null && userLng != null) {
 	        params.put("offset", null);
 	        params.put("limit", null);
-
+	        
+	        
+	        
 	        List<Product> allProducts = productDAO.selectProducts(params);
 	        System.out.println("🧭 거리 정렬 시작: 기준 좌표 = " + userLat + ", " + userLng);
 
@@ -74,7 +76,7 @@ public class ProductServiceImpl implements ProductService {
 	            if (p.getLatitude() != null && p.getLongitude() != null) {
 	                double d = getDistance(userLat, userLng, p.getLatitude(), p.getLongitude());
 	                p.setDistance(d);
-	                System.out.println("상품 " + p.getNo() + " 거리 = " + d);
+	                System.out.println("→ 표시용 거리 문자열: " + p.getFormattedDistance());
 	            } else {
 	                p.setDistance(Double.MAX_VALUE);
 	                System.out.println("상품 " + p.getNo() + " 좌표 없음 처리됨");

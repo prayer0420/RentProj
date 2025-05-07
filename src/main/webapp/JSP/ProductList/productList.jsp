@@ -55,7 +55,7 @@
 
 		
 		<!--직거래지역 -->
-        <div class="product-location">${p.deliveryAddr}</div>
+        <div class="product-location">${p.deliveryAddr} ${p.formattedDistance}</div>
 
         <!-- 업로드된 시간 표시 -->
         <div class="product-meta">${p.timeAgo}</div>

@@ -244,13 +244,7 @@ System.out.println("세션 userId: " + userId);
 			<div class="tab-content">
 				<div class="tab-pane show" id="info">
 					<div class="description">
-						<!-- 색상 컬러 : 실버<br> 모델명/품번 : SM-R630N<br> 제조자/수입자 : 삼성전자(주)<br>
-						유닛형태 : 커널형<br> 노이즈캔슬링 여부 : 액티브노이즈캔슬링(ANC)<br> 블루투스 버전 :
-						블루투스 5.0 이상<br> 유무선 여부 : 무선<br> 내장마이크 탑재여부 : 내장마이크<br>
-						<br> 이 상품은 개봉하지 않은 미사용 상품입니다. 상품은 새상품이며 직거래만 가능합니다.<br>
-						거래지역은 사당역, 서울대벤처타운역, 신림역 등 서울대 근처 우선이며, 직거래만 가능합니다.<br>
-						현금/계좌이체 모두 가능하며, 제가 직접 대중교통을 이용해 거래합니다. -->
-						${product.content }
+						${product.content}
 					</div>
 				</div>
 			</div>
