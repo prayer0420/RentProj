@@ -30,12 +30,12 @@
           <option value="2">의류/팩션/악세사리</option>
           <option value="3">PC/디지털</option>
           <option value="4">가전제품</option>
-          <option value="5">비트미/미용</option>
-          <option value="6">칼피는/스포츠</option>
+          <option value="5">뷰티/미용</option>
+          <option value="6">캠핑/스포츠</option>
           <option value="7">생활/주방</option>
           <option value="8">가구/인터리어</option>
           <option value="9">유아/출산</option>
-          <option value="10">애와도움</option>
+          <option value="10">애완동물용품</option>
           <option value="11">기타</option>
         </select>
       </section>
