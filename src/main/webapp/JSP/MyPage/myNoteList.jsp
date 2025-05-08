@@ -58,7 +58,7 @@
                 <div class="note-actions">
                   <a href="${contextPath}/productDetail?no=${note.productNo}" class="btn-detail">상품 보러가기</a>
                   <button type="button" class="btn-reply"
-                    onclick="event.stopPropagation(); openNoteModal(${note.memberNo}, '${note.senderNickname}', ${note.productNo}, '${note.productTitle}')">답장</button>
+                    onclick="event.stopPropagation(); openNoteModal(${note.senderNo}, '${note.senderNickname}', ${note.productNo}, '${note.productTitle}')">답장</button>
                 </div>
               </div>
             </div>

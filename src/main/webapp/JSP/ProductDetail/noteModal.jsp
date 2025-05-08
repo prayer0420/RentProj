@@ -5,7 +5,7 @@
 
 <!-- 쪽지 보내기 모달 -->
 <div class="modal-overlay" id="messageModal" style="display:none;">
-  <form id="messageForm" action="${contextPath}/noteSend" method="post">
+<form id="messageForm" action="${contextPath}/noteSend" onsubmit="return sendNoteAjax();">
     <input type="hidden" name="origin" value="myNoteList" /> <!-- 출처 전송 -->
     <div class="modal">
       <div class="modal-title">쪽지 보내기</div>
@@ -42,5 +42,33 @@
 <script>
 function closeMessageModal() {
   document.getElementById("messageModal").style.display = "none";
+}
+</script>
+
+<script>
+function sendNoteAjax() {
+  const form = document.getElementById("messageForm");
+  const formData = new FormData(form);
+
+  fetch(form.action || '${contextPath}/noteSend', {
+    method: "POST",
+    body: formData
+  })
+  .then(response => response.json())
+  .then(result => {
+    if (result.result === "success") {
+      alert("쪽지를 성공적으로 보냈습니다.");
+      closeMessageModal();
+      form.reset(); // 내용 초기화
+    } else {
+      alert("쪽지 전송 실패: " + (result.error || "알 수 없는 오류"));
+    }
+  })
+  .catch(error => {
+    console.error("쪽지 전송 오류:", error);
+    alert("쪽지 전송 중 문제가 발생했습니다.");
+  });
+
+  return false; // 기본 submit 막기
 }
 </script>

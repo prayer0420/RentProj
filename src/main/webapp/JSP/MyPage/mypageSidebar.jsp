@@ -21,9 +21,9 @@
       </c:when>
       <c:otherwise>
         <img src="${contextPath}/img/tiger.png" alt="사용자 이미지" />
-        <div class="user-id"><span><b>${sessionScope.id}</b></span>&nbsp;<span>님</span></div>
-        <div class="membership"><span>${session.gradeName}</span>&nbsp;<span>회원</span></div>
-        <div class="total-count">총 거래 수: ${session.orderCount}회</div>
+        <div class="user-id"><span><b>${sessionScope.nickname}</b></span>&nbsp;<span>님</span></div>
+        <div class="membership"><span>${sessionScope.gradeName}</span>&nbsp;<span>회원</span></div>
+        <div class="total-count"><span>총 거래 수:</span><span>${sessionScope.orderCount}회</span></div>
       </c:otherwise>
     </c:choose>
   </div>

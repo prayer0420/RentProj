@@ -40,6 +40,7 @@ public class KakaoLogin extends HttpServlet {
 			//최초 로그인인지 확인 용
             if (result.isFirstLogin()) {
                 session.setAttribute("firstLogin", true);
+                
             }			
 			
 			//알림을 로그인에서 각각?

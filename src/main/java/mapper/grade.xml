@@ -19,4 +19,10 @@
 	  WHERE gradeNo = #{gradeNo}
 	</update>
 
+<select id="selectGradeNameById" parameterType="int" resultType="string">
+    SELECT gradeName FROM grade WHERE gradeNo = #{gradeId}
+</select>
+
+
+
 </mapper>

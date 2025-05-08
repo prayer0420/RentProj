@@ -10,12 +10,12 @@
 
 <!-- 카테고리 UI 렌더링 -->
 <section class="categories">
-<c:forEach var="i" begin="0" end="10">
-  <a href="${pageContext.request.contextPath}/list?categoryNo=${i + 1}"
-     class="category-item ${param.categoryNo == (i + 1) ? 'active' : ''}" data-categoryNo="${i + 1}">
-    <img src="${pageContext.request.contextPath}/${categoryIcons[i]}" alt="${categoryNames[i]} 아이콘" loading="lazy" />
-    <span>${categoryNames[i]}</span>
-  </a>
-</c:forEach>
-
+  <c:forEach var="category" items="${categoryList}">
+    <a href="${pageContext.request.contextPath}/list?categoryNo=${category.no}"
+       class="category-item ${param.categoryNo == category.no ? 'active' : ''}"
+       data-categoryNo="${category.no}">
+      <img src="${pageContext.request.contextPath}/${category.imgFilename}" alt="${category.name} 아이콘" loading="lazy" />
+      <span>${category.name}</span>
+    </a>
+  </c:forEach>
 </section>

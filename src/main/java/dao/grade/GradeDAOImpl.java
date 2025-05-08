@@ -22,5 +22,10 @@ public class GradeDAOImpl implements GradeDAO {
 		sqlSession.commit();
 
 	}
+	
+    @Override
+    public String selectGradeNameById(int gradeId) {
+    	return sqlSession.selectOne("mapper.grade.selectGradeNameById", gradeId);
+    }
 
 }

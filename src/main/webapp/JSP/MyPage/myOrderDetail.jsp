@@ -33,7 +33,7 @@
 			
           <div class="section product-box">
                 <a href="${contextPath }/productDetail?no=${myOrderDetail.no}">
-                <img src="https://via.placeholder.com/120x100?text=🚲" alt="자전거"></a>
+                <!-- <img src="https://via.placeholder.com/120x100?text=🚲" alt="자전거"></a> -->
                 <div class="product-info">
                     <div style="font-size: 13px; color: gray;">
                     	<a href="${contextPath }/productDetail?no=${myOrderDetail.no}">상품번호: ${myOrderDetail.productNo }</a></div>

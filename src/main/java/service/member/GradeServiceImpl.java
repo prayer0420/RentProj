@@ -24,5 +24,10 @@ public class GradeServiceImpl implements GradeService {
         gradeDAO.updateGrade(grade);
 
 	}
+	
+    @Override
+    public String getGradeNameById(int gradeId) {
+        return gradeDAO.selectGradeNameById(gradeId);
+    }
 
 }

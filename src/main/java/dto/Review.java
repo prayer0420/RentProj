@@ -13,14 +13,14 @@ public class Review {
 	Integer productNo;
 	String memberNickname;
 	
-	String img1;
+	String img;
 	
 	
 	public String getImg() {
-		return img1;
+		return img;
 	}
 	public void setImg(String img) {
-		this.img1 = img;
+		this.img = img;
 	}
 	public Review(){}
 	public Review(Integer memberNo,String contents,Integer score,Integer productNo,String memberNickname){

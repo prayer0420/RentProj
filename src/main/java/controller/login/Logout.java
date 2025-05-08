@@ -30,6 +30,12 @@ public class Logout extends HttpServlet {
 		session.removeAttribute("longitude");
 		session.removeAttribute("nickname");
 		session.removeAttribute("alarms");
+		session.removeAttribute("gradeName");
+		session.removeAttribute("address1");
+		session.removeAttribute("address2");
+		session.removeAttribute("address3");
+		session.removeAttribute("phone");
+		session.removeAttribute("orderCount");
 		
 		response.sendRedirect("main");
 

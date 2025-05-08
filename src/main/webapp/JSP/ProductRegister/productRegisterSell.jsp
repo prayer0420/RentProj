@@ -12,7 +12,7 @@
 <body>
   <jsp:include page="../Header/header.jsp" />
   <main class="form-wrapper">
-    <h1 class="form-title">상품 판매 등록</h1>
+    <h1 class="form-title">판매 등록</h1>
     <form id="registerForm" action="<%=request.getContextPath()%>/sell" method="post" enctype="multipart/form-data">
       <input type="hidden" name="tradeType" value="판매" />
 

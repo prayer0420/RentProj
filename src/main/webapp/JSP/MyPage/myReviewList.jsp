@@ -46,7 +46,8 @@
             <div class="review-grid">
               <c:forEach var="item" items="${list}">
                 <div class="review-card" onclick="location.href='${contextPath}/productDetail?no=${item.productNo}'">
-                  <img src="${item.img}" alt="상품 이미지" class="product-img" />
+                  <img src="${contextPath}/upload/${item.img}" alt="상품 이미지" class="product-img" />
+                  
                   <div class="product-info">
                     <h3 class="product-title">${item.title}</h3>
 

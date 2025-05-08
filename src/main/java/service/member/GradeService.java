@@ -8,5 +8,7 @@ public interface GradeService {
 	// 등급 전체 조회
     List<Grade> getAllGrades() throws Exception;      
     // 등급 수정
-    void updateGrade(Grade grade) throws Exception;   
+    void updateGrade(Grade grade) throws Exception;
+    
+    public String getGradeNameById(int gradeId);
 }

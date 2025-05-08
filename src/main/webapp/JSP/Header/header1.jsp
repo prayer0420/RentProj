@@ -50,7 +50,7 @@
       <c:choose>
         <c:when test="${fn:indexOf(cookieLocation, '구') >= 0}">
           <c:set var="guIndex" value="${fn:indexOf(cookieLocation, '구')}" />
-          <c:set var="guLocation" value="${fn:substring(cookieLocation, 0, guIndex + 1)}" />
+          <c:set var="guLocation" value="${fn:substring(cookieLocation, 0, guIndex + 3)}" />
           <c:choose>
             <c:when test="${fn:startsWith(guLocation, '서울')}">
               현재 위치: 서울시 ${fn:substring(guLocation, 2, fn:length(guLocation))}

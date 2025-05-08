@@ -258,9 +258,7 @@ System.out.println("세션 userId: " + userId);
 
 			<div class="tab-content">
 				<div class="tab-pane show" id="info">
-					<div class="description">
-						${product.content}
-					</div>
+					<div class="description">${product.content}</div>
 				</div>
 			</div>
 		</c:if>

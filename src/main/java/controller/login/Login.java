@@ -14,6 +14,8 @@ import javax.servlet.http.HttpSession;
 import dto.Alarm;
 import dto.Member;
 import service.alarm.FcmServiceImpl;
+import service.member.GradeService;
+import service.member.GradeServiceImpl;
 import service.member.MemberService;
 import service.member.MemberServiceImpl;
 
@@ -67,10 +69,17 @@ public class Login extends HttpServlet {
 			session.setAttribute("address2", member.getAddress2());//null일 수 있음
 			session.setAttribute("address3", member.getAddress3());//null일 수 있음
 			session.setAttribute("phone",member.getPhone());
+			session.setAttribute("gradeName", member.getGradeId());
 			session.setAttribute("nickname",member.getNickname());
 			session.setAttribute("latitude", lat);  // null일 수도 있음
 			session.setAttribute("longitude", lng); // null일 수도 있음
 			session.setAttribute("adminNo",member.getAdminNo());
+			session.setAttribute("orderCount",member.getOrderCount());
+			
+			GradeService gradeService = new GradeServiceImpl();
+			String gradeName = gradeService.getGradeNameById(member.getGradeId());
+			session.setAttribute("gradeName", gradeName);
+
 			
 			//로그인시 알림리스트 세션에 저장
 			List<Alarm> alarmList = new FcmServiceImpl().getAlarmList(id);
