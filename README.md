@@ -60,19 +60,26 @@
 ### 1) 관리자 대시보드
 | 회원관리 | 카테고리관리 | 상품관리 |
 | :------: | :----------: | :------: |
-| ![회원](./docs/images/admin_member.png) | ![카테고리](./docs/images/admin_category.png) | ![상품](./docs/images/admin_product.png) |
+| ![회원관리-관리자](https://github.com/user-attachments/assets/a9abbf7b-f046-40fc-b045-a719a4782489)
+  |![카테고리관리-관리자](https://github.com/user-attachments/assets/4c54d027-8f5b-4d92-bec5-f3c0be71c03c)
+| ![상품관리-관리자](https://github.com/user-attachments/assets/79b636dc-ae29-4088-9e82-6b55c42fe058)
+|
 
-| 주문/정산 | 고객지원 | 알림관리 |
-| :--------: | :------: | :------: |
-| ![정산](./docs/images/admin_order.png) | ![FAQ](./docs/images/admin_faq.png) | ![알림](./docs/images/admin_notify.png) |
+| 주문/정산 | 고객지원 및 알림관리 |
+| :--------: | :------------: |
+| ![정산](./docs/images/admin_order.png) |![고객지원,알림관리-관리자](https://github.com/user-attachments/assets/81a25248-664d-4385-a0df-0ed48abc7a75)
+  | ![알림](./docs/images/admin_notify.png) |
 
 ### 2) 사용자 화면
 
-| 메인 피드 | 상품 상세 | 렌탈 신청 |
+| 메인 피드 | 상품 상세 | 대여하기 프로세스 |
 | :--------: | :--------: | :--------: |
-| ![홈](./docs/images/user_home.png) | ![상세](./docs/images/user_product_detail.png) | ![렌탈](./docs/images/user_rent.png) |
+| ![메인피드](https://github.com/user-attachments/assets/4649130e-1266-4cd7-92c6-004667985f31)
+ | ![상품상세](https://github.com/user-attachments/assets/36826158-f354-4822-a2bb-fd12673075da)
+) |![대여하기](https://github.com/user-attachments/assets/1e904cc4-58e6-4401-bf12-2396a5cfcf1e)
+ |
 
-| 마이페이지 | 찜/리뷰 |
+| 마이페이지 | 찜/신고/쪽지 | |구매/리뷰|
 | :--------: | :-----: |
 | ![프로필](./docs/images/user_profile.png) | ![찜](./docs/images/user_wishlist.png) |
 
