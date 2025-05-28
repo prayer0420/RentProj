@@ -14,10 +14,9 @@
 - [3. 개발 환경](#3)
 - [4. 기능 시연](#4)
 - [5. 주요 기능 상세 및 트러블슈팅](#5)
-- [6. 화면 설계](#6)
-- [7. 일정 관리 협업](#7)
+- [6. 일정 관리 협업](#6)
+- [7. 화면 설계](#7)
 - [8. 데이터베이스 설계](#8)
-- [9. JSP 정의서](#9)
 
 ---
 
@@ -177,25 +176,20 @@
 </details>
 
 ---
+## <span id="6">6. 일정 관리 협업</span>
 
-## <span id="6">6. 화면 설계</span>
-
-![화면설계](./docs/images/screen_figma.png)
+![image](https://github.com/user-attachments/assets/eb62f907-2d02-418b-85d2-9374bf1768f4)
 
 ---
+## <span id="7">7. 화면 설계</span>
 
-## <span id="7">7. 일정 관리 협업</span>
+![image](https://github.com/user-attachments/assets/47a9b03b-bd99-4849-811d-6ae612ceda2d)
 
-![일정관리](./docs/images/schedule_notion.png)
 
 ---
 
 ## <span id="8">8. 데이터베이스 설계</span>
 
-![ERD](./docs/images/database_erd.png)
+![image](https://github.com/user-attachments/assets/f0c3d6c3-5a0c-4a7b-8abd-95f494ab843d)
 
 ---
-
-## <span id="9">9. JSP 정의서</span>
-
-![JSP정의서](./docs/images/jsp_definition.png)
