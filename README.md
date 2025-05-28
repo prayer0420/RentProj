@@ -98,6 +98,8 @@
 <summary><strong>💳 결제 및 트러블슈팅</strong></summary>
 
 **결제 흐름**
+![image](https://github.com/user-attachments/assets/fcd9b5d2-0bb2-4a55-8d38-884d4aeaba5a)
+
 1. 상품 상세에서 구매 클릭 → 결제창 호출
 2. 결제 완료 시 Toss API와 연동 → DB 저장 및 알림 전송
 
@@ -112,6 +114,8 @@
 <summary><strong>🔁 환불 및 트러블슈팅</strong></summary>
 
 **환불 흐름**
+![image](https://github.com/user-attachments/assets/e1c8121d-19b6-4597-8bc8-8885cfeb0603)
+
 1. 마이페이지에서 환불 요청 → 사유 입력 및 전달
 2. Toss API 연동 → 환불 완료 후 상태 전환
 
@@ -137,13 +141,21 @@
 
 **적용 기능 요약**
 - FCM 알림 백그라운드 수신 및 UI 표시
+- ![image](https://github.com/user-attachments/assets/b3556d38-5a23-4289-a99f-a27ce03aa63b)
+
 - 카카오맵 기반 위치 추적 및 자동 주소 변환
+- ![image](https://github.com/user-attachments/assets/d7ce744b-2daa-4114-bad8-6592c8e0cb60)
+
 - 카카오/네이버 소셜 로그인
+- ![image](https://github.com/user-attachments/assets/b8832e17-96a2-44d7-92b5-08eff4c26bc0)
+
 - 다음 우편번호 API로 배송지 자동입력
+- ![image](https://github.com/user-attachments/assets/0a9e5020-f0aa-4fae-834f-360d4d35c797)
+
 
 **트러블슈팅 사례**
 - 소셜 로그인 후 알림 전송 실패 → Authorization Code 재사용 오류 → 최초 로그인 여부 세션으로 판단 처리
-- 추후 보완: JWT 기반 인증 및 Redis 스케줄러 도입 예정
+- 추후 보완: JWT 기반 인증 및 Redis 스케줄러를 이용하여 반납기간에 대한 자동 알림 예정
 
 </details>
 
@@ -151,6 +163,8 @@
 <summary><strong>📁 마이페이지 흐름 및 오류 처리</strong></summary>
 
 **마이페이지 처리 흐름 요약**
+![image](https://github.com/user-attachments/assets/518c4b50-a6e6-4beb-9abf-6fc896a9c74a)
+
 - 주문상태(orderStatus) 기반 구매/대여 상태 구분
 - 각 단계별 버튼 제어 (예: 구매확정, 반납입력 등)
 
@@ -163,6 +177,7 @@
 
 <details>
 <summary><strong>💵 정산 기능 자동화</strong></summary>
+![image](https://github.com/user-attachments/assets/434c30a4-38c2-4b21-bf2b-919d58446be8)
 
 **정산 처리 흐름 요약**
 - 관리자 페이지에서 Read + Update 수행
