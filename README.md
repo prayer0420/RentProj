@@ -56,34 +56,30 @@
 ---
 
 ## <span id="4">4. 기능 시연</span>
-
 ### 1) 관리자 대시보드
-| 회원관리 | 카테고리관리 | 상품관리 |
-| :------: | :----------: | :------: |
-| ![회원관리-관리자](https://github.com/user-attachments/assets/a9abbf7b-f046-40fc-b045-a719a4782489)
-  |![카테고리관리-관리자](https://github.com/user-attachments/assets/4c54d027-8f5b-4d92-bec5-f3c0be71c03c)
-| ![상품관리-관리자](https://github.com/user-attachments/assets/79b636dc-ae29-4088-9e82-6b55c42fe058)
-|
 
-| 주문/정산 | 고객지원 및 알림관리 |
-| :--------: | :------------: |
-| ![정산](./docs/images/admin_order.png) |![고객지원,알림관리-관리자](https://github.com/user-attachments/assets/81a25248-664d-4385-a0df-0ed48abc7a75)
-  | ![알림](./docs/images/admin_notify.png) |
+| **기능**               | **스크린샷**                                                                                                                                                 |
+|:---------------------:|:-----------------------------------------------------------------------------------------------------------------------------------------------------------:|
+| **회원관리**           | <img src="https://github.com/user-attachments/assets/a9abbf7b-f046-40fc-b045-a719a4782489.png" alt="회원관리.png" width="600px" />                              |
+| **카테고리 관리**      | <img src="https://github.com/user-attachments/assets/4c54d027-8f5b-4d92-bec5-f3c0be71c03c.png" alt="카테고리관리.png" width="600px" />                           |
+| **상품관리**           | <img src="https://github.com/user-attachments/assets/79b636dc-ae29-4088-9e82-6b55c42fe058.png" alt="상품관리.png" width="600px" />                              |
+| **카카오 로그인/알람**  | <img src="https://github.com/user-attachments/assets/827dc498-d699-4206-af67-79a32818536a.gif" alt="카카오로그인-알람.gif" width="600px" />                        |
+| **주문/정산**           | <img src="./docs/images/admin_order.png"                                            alt="정산.png"                             width="600px" />                              |
+| **고객지원/알림관리**    | <img src="https://github.com/user-attachments/assets/81a25248-664d-4385-a0df-0ed48abc7a75.png" alt="고객지원-알림관리.png" width="600px" />  |
+
+---
 
 ### 2) 사용자 화면
 
-| 메인 피드 | 상품 상세 | 대여하기 프로세스 |
-| :--------: | :--------: | :--------: |
-| ![메인피드](https://github.com/user-attachments/assets/4649130e-1266-4cd7-92c6-004667985f31)
- | ![상품상세](https://github.com/user-attachments/assets/36826158-f354-4822-a2bb-fd12673075da)
-) |![대여하기](https://github.com/user-attachments/assets/1e904cc4-58e6-4401-bf12-2396a5cfcf1e)
- |
-
-| 마이페이지 | 찜/신고/쪽지 | |구매/리뷰|
-| :--------: | :-----: |
-| ![프로필](./docs/images/user_profile.png) | ![찜](./docs/images/user_wishlist.png) |
-
----
+| **기능**               | **스크린샷**                                                                                                                                                 |
+|:---------------------:|:-----------------------------------------------------------------------------------------------------------------------------------------------------------:|
+| **메인 피드**           | <img src="https://github.com/user-attachments/assets/4649130e-1266-4cd7-92c6-004667985f31.gif" alt="메인피드.gif" width="600px" />                             |
+| **상품 상세**           | <img src="https://github.com/user-attachments/assets/36826158-f354-4822-a2bb-fd12673075da.jpg" alt="상품상세.jpg" width="600px" />                            |
+| **대여하기 프로세스**    | <img src="https://github.com/user-attachments/assets/1e904cc4-58e6-4401-bf12-2396a5cfcf1e.gif" alt="대여하기프로세스.gif" width="600px" />                   |
+| **회원가입**            | <img src="https://github.com/user-attachments/assets/15363c8b-977f-47bd-a505-aa0d7dd1091c.png" alt="회원가입.png" width="600px" />                            |
+| **마이페이지**           | *이미지 준비 중*                                                                                                                                            |
+| **찜/신고/쪽지**         | <img src="https://github.com/user-attachments/assets/cccb8165-c2c6-4bfd-ab71-8117329d1bd7.png" alt="찜신고쪽지.png" width="600px" />                           |
+| **구매/리뷰**            | *이미지 준비 중*                                                                                                                                            |
 
 ## <span id="5">5. 주요 기능 상세 및 트러블슈팅</span>
 
