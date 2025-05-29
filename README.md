@@ -102,10 +102,6 @@ _상품 정보, 리뷰, 판매자 프로필 확인_
 _대여 기간 선택 후 신청_  
 <img src="./docs/images/대여하기2.gif" alt="대여하기2.gif" width="1000px" />
 
-**회원가입**  
-_아이디·비밀번호·배송지 입력_  
-<img src="./docs/images/회원가입.png" alt="회원가입.png" width="1000px" />
-
 **마이페이지**  
 _개인정보·주문내역·리뷰 관리_  
 <img src="./docs/images/배송지관리 개인정보수정.gif" alt="배송지관리 개인정보수정.gif" width="1000px" />
@@ -114,7 +110,9 @@ _개인정보·주문내역·리뷰 관리_
 _찜하기, 신고하기, 쪽지 보내기 기능_  
 <img src="./docs/images/찜,신고,쪽지.gif" alt="찜,신고,쪽지.gif" width="1000px" />
 
-
+**회원가입**  
+_아이디·비밀번호·배송지 입력_  
+<img src="./docs/images/회원가입.png" alt="회원가입.png" width="1000px" />
 
 ## <span id="5">5. 주요 기능 상세 및 트러블슈팅</span>
 
