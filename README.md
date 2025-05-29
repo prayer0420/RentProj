@@ -5,6 +5,7 @@
 > 🎥 **시연 영상** :  
 > [![Re:NT 시연 영상](https://img.youtube.com/vi/bUWwLhEa6u8/0.jpg)](https://www.youtube.com/watch?v=bUWwLhEa6u8)
 
+> 🔗 **노션 링크** : https://www.notion.so/RE-NT-1c2aaacb929980ba863de5dc39c508d8
 ---
 
 ## 🚚 목차
@@ -56,30 +57,71 @@
 ---
 
 ## <span id="4">4. 기능 시연</span>
+
 ### 1) 관리자 대시보드
 
-| **기능**               | **스크린샷**                                                                                                                                                 |
-|:---------------------:|:-----------------------------------------------------------------------------------------------------------------------------------------------------------:|
-| **회원관리**           | <img src="https://github.com/user-attachments/assets/a9abbf7b-f046-40fc-b045-a719a4782489.png" alt="회원관리.png" width="600px" />                              |
-| **카테고리 관리**      | <img src="https://github.com/user-attachments/assets/4c54d027-8f5b-4d92-bec5-f3c0be71c03c.png" alt="카테고리관리.png" width="600px" />                           |
-| **상품관리**           | <img src="https://github.com/user-attachments/assets/79b636dc-ae29-4088-9e82-6b55c42fe058.png" alt="상품관리.png" width="600px" />                              |
-| **카카오 로그인/알람**  | <img src="https://github.com/user-attachments/assets/827dc498-d699-4206-af67-79a32818536a.gif" alt="카카오로그인-알람.gif" width="600px" />                        |
-| **주문/정산**           | <img src="./docs/images/admin_order.png"                                            alt="정산.png"                             width="600px" />                              |
-| **고객지원/알림관리**    | <img src="https://github.com/user-attachments/assets/81a25248-664d-4385-a0df-0ed48abc7a75.png" alt="고객지원-알림관리.png" width="600px" />  |
+### 1) 관리자 대시보드
+
+### 1) 관리자 대시보드
+
+### 1) 관리자 대시보드
+
+**회원관리**  
+_가입된 회원 목록 조회 및 등급 변경_  
+<img src="./docs/images/회원관리-관리자.gif" alt="회원관리-관리자.gif" width="700px" />
+
+**카테고리 관리**  
+_상품 카테고리 추가/수정/삭제_  
+<img src="./docs/images/카테고리관리-관리자.gif" alt="카테고리관리-관리자.gif" width="700px" />
+
+**상품관리**  
+_전체 상품 목록 확인 및 관리_  
+<img src="./docs/images/상품관리-관리자.gif" alt="상품관리-관리자.gif" width="700px" />
+
+**카카오 로그인/알람**  
+_카카오 소셜 로그인 & 알림 설정_  
+<img src="./docs/images/카카오로그인-알람.gif" alt="카카오로그인-알람.gif" width="700px" />
+
+**주문/정산**  
+_주문 내역 확인 및 정산 처리_  
+<img src="./docs/images/정산관리-관리자.gif" alt="정산관리-관리자.gif" width="700px" />
+
+**고객지원/알림관리**  
+_고객문의 처리 및 알림 발송_  
+<img src="./docs/images/고객지원,알림관리-관리자.gif" alt="고객지원,알림관리-관리자.gif" width="700px" />
 
 ---
 
 ### 2) 사용자 화면
 
-| **기능**               | **스크린샷**                                                                                                                                                 |
-|:---------------------:|:-----------------------------------------------------------------------------------------------------------------------------------------------------------:|
-| **메인 피드**           | <img src="https://github.com/user-attachments/assets/4649130e-1266-4cd7-92c6-004667985f31.gif" alt="메인피드.gif" width="600px" />                             |
-| **상품 상세**           | <img src="https://github.com/user-attachments/assets/36826158-f354-4822-a2bb-fd12673075da.jpg" alt="상품상세.jpg" width="600px" />                            |
-| **대여하기 프로세스**    | <img src="https://github.com/user-attachments/assets/1e904cc4-58e6-4401-bf12-2396a5cfcf1e.gif" alt="대여하기프로세스.gif" width="600px" />                   |
-| **회원가입**            | <img src="https://github.com/user-attachments/assets/15363c8b-977f-47bd-a505-aa0d7dd1091c.png" alt="회원가입.png" width="600px" />                            |
-| **마이페이지**           | *이미지 준비 중*                                                                                                                                            |
-| **찜/신고/쪽지**         | <img src="https://github.com/user-attachments/assets/cccb8165-c2c6-4bfd-ab71-8117329d1bd7.png" alt="찜신고쪽지.png" width="600px" />                           |
-| **구매/리뷰**            | *이미지 준비 중*                                                                                                                                            |
+**메인 피드**  
+_오늘의 인기·카테고리별 상품 피드 보기_  
+<img src="./docs/images/목록필터정렬.gif" alt="목록필터정렬.gif" width="700px" />
+
+**상품 상세**  
+_상품 정보, 리뷰, 판매자 프로필 확인_  
+<img src="./docs/images/대여등록하기.gif" alt="대여등록하기.gif" width="700px" />
+
+**대여하기 프로세스**  
+_대여 기간 선택 후 신청_  
+<img src="./docs/images/대여하기2.gif" alt="대여하기2.gif" width="700px" />
+
+**회원가입**  
+_아이디·비밀번호·배송지 입력_  
+<img src="./docs/images/회원가입.png" alt="회원가입.png" width="700px" />
+
+**마이페이지**  
+_개인정보·주문내역·리뷰 관리_  
+<img src="./docs/images/배송지관리 개인정보수정.gif" alt="배송지관리 개인정보수정.gif" width="700px" />
+
+**찜/신고/쪽지**  
+_찜하기, 신고하기, 쪽지 보내기 기능_  
+<img src="./docs/images/찜,신고,쪽지.gif" alt="찜,신고,쪽지.gif" width="700px" />
+
+**구매/리뷰**  
+_구매 내역 확인 및 상품 리뷰 작성_  
+*이미지 준비 중*  
+
 
 ## <span id="5">5. 주요 기능 상세 및 트러블슈팅</span>
 
