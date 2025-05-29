@@ -1,1 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.mark">
+
+	<select id="existsMark" parameterType="Mark" resultType="boolean">
+		select count(*) > 0 from mark where memberNo=#{memberNo} and productNo=#{productNo}
+	</select>
+
+	<!-- 찜 등록 -->
+    <insert id="insertMark" parameterType="Mark">
+        INSERT INTO mark (productNo, memberNo) VALUES (#{productNo}, #{memberNo})
+    </insert>
+	
+	<delete id="deleteMark" parameterType="Mark">
+		delete from mark where memberNo=#{memberNo} and productNo=#{productNo}
+	</delete>
+	
+	<select id="selectMyMarkList" parameterType="map" resultType="map" flushCache="true">
+		SELECT 
+			m.no,
+			m.productNo,
+			p.title AS productTitle,
+			p.salePrice AS salePrice,
+			p.secPrice As secPrice,
+			p.rentPrice As rentPrice,
+			p.img1 AS productImage,
+			p.deliveryAddr AS productLocation
+		FROM mark m
+		JOIN product p ON m.productNo = p.no
+		WHERE m.memberNo = #{memberNo}
+		ORDER BY m.no DESC
+		LIMIT #{offset}, #{limit}
+	</select>
+
+
+    <select id="selectMarkCount" parameterType="int" resultType="int">
+        SELECT COUNT(*) FROM mark WHERE memberNo = #{memberNo}
+    </select>
+
+	<select id="countMarkProduct" parameterType="int" resultType="int">
+		select count(*) from mark where productNo=#{productNo}
+	</select>
+
+</mapper>

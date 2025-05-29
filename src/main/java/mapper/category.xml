@@ -1,1 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace = "mapper.category"> 
+
+	<select id="selectCategoryList" resultType="category">
+		select * from category order by sortOrder	
+	</select>
+	
+	<update id="updateCategory" parameterType="category">
+		update category set name=#{name}, sortOrder=#{sortOrder}, isActive=#{isActive} , imgFilename = #{imgFilename} where no=#{no}
+	</update>
+	
+	<insert id="insertCategory" parameterType="category" useGeneratedKeys="true" keyProperty="no">
+		insert into category (name, sortOrder, imgFilename) values (#{name}, #{sortOrder}, #{imgFilename})
+	</insert>
+	
+	<select id="categoryMaxNo" resultType="Integer">
+		select max(no) from category
+	</select>
+	
+	
+</mapper>

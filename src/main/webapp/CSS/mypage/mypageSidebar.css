@@ -1,0 +1,130 @@
+/*────────────────────────────────────────────
+  라벤더 파스텔 변수
+────────────────────────────────────────────*/
+:root {
+  --sb-bg:      #F8F7FC;   /* 연한 라벤더 백그라운드 */
+  --sb-hover:   #EDEBFA;   /* 호버 시 살짝 진한 연보라 */
+  --sb-active:  #CE93D8;   /* 강조 라벤더 */
+  --sb-text:    #37474F;   /* 진한 그레이 */
+  --sb-sub:     #5E548E;   /* 보조 라벤더 딥톤 */
+  --sb-border:  #E1D7F0;   /* 연회색 경계 */
+  --radius-sb:  8px;       /* 둥근 모서리 */
+  --shadow-sb:  0 2px 6px rgba(0,0,0,0.05);
+}
+
+/*────────────────────────────────────────────
+  사이드바 컨테이너
+────────────────────────────────────────────*/
+.sidebar {
+  width: 180px;
+  background-color: var(--sb-bg);
+  border-radius: var(--radius-sb);
+  padding: 20px;
+  box-shadow: var(--shadow-sb);
+  margin-top: 20px;
+}
+
+/*────────────────────────────────────────────
+  프로필 섹션
+────────────────────────────────────────────*/
+.profile-section {
+  text-align: center;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--sb-border);
+}
+
+.profile-section img {
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 10px;
+  border: 2px solid var(--sb-active);
+}
+
+.profile-section .user-id,
+.profile-section .membership,
+.profile-section .total-count {
+  color: var(--sb-text);
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+
+/*────────────────────────────────────────────
+  메뉴 아이템
+────────────────────────────────────────────*/
+.menu-item,
+.simple-item {
+  margin-bottom: 10px;
+  border-radius: var(--radius-sb);
+}
+
+/* ── 클릭 영역 & 트랜지션 설정 ── */
+.menu-title,
+.simple-item a {
+  display: block;
+  padding: 10px 12px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--sb-text);
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background-color 0.3s ease,
+    color            0.3s ease,
+    transform        0.2s ease,
+    box-shadow       0.2s ease;
+}
+
+/* ── 호버 & 리프트 효과 ── */
+.menu-title:hover,
+.simple-item a:hover {
+  background-color: var(--sb-hover);
+  color:            var(--sb-active);
+  transform:        translateY(-4px);
+  box-shadow:       0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* ── 활성 상태 ── */
+.menu-item.active .menu-title {
+  background-color: var(--sb-active);
+  color:            white;
+}
+
+/*────────────────────────────────────────────
+  서브메뉴
+────────────────────────────────────────────*/
+.submenu {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+  margin-left: 8px;
+}
+
+.menu-item.active .submenu {
+  max-height: 200px;
+}
+
+.submenu-item a {
+  display: block;
+  padding: 8px 12px;
+  font-size: 13px;
+  color: var(--sb-sub);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.submenu-item a:hover {
+  color: var(--sb-active);
+}
+
+/* submenu 자동 열기 */
+.menu-item.hover-expand:hover .submenu {
+  max-height: 200px !important;
+}
+
+/* transition을 자연스럽게 유지 */
+.menu-item.hover-expand .submenu {
+  transition: max-height 0.8s ease;
+}

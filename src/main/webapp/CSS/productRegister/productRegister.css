@@ -1,0 +1,94 @@
+@charset "UTF-8";
+
+/* 컨테이너 정렬 */
+.container {
+    max-width: 1000px;
+    margin: 80px auto;
+    text-align: center;
+    padding: 0 20px;
+}
+
+.container h2 {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 40px;
+    color: #333;
+}
+
+/* 버튼 그룹 */
+.type-filter {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 40px;
+}
+
+/* 카드 스타일 */
+.type-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 200px;
+    height: 220px;
+    padding: 20px;
+    border-radius: 20px;
+    text-decoration: none;
+    color: #333;
+    font-weight: 600;
+    font-size: 18px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    transition: all 0.25s ease-in-out;
+    background-color: #fff;
+    position: relative;
+}
+
+.type-link:hover {
+    transform: translateY(-6px) scale(1.02);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+}
+
+/* 아이콘 스타일 */
+.type-link img.type-icon {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 15px;
+    object-fit: contain;
+}
+
+/* 유형별 배경 */
+.type-sell {
+    background-color: #ffe6cc;
+}
+
+.type-rent {
+    background-color: #ccf1e4;
+}
+
+.type-both {
+    background-color: #ede4fb;
+}
+
+.type-free {
+    background-color: #d5ebff;
+}
+
+/* 텍스트 */
+.type-link span {
+    font-size: 20px;
+    margin-top: 10px;
+}
+
+/* 반응형 (선택사항) */
+@media (max-width: 600px) {
+    .type-link {
+        width: 160px;
+        height: 190px;
+        font-size: 16px;
+    }
+
+    .type-link img.type-icon {
+        width: 50px;
+        height: 50px;
+    }
+}

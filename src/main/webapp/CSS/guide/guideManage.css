@@ -1,0 +1,47 @@
+@charset "UTF-8";
+/*container*/
+h2 {
+	margin-top: 50px;
+	margin-bottom: 10px;
+	text-align: center;
+}
+
+.container {
+	background-color: rgb(242, 242, 242);
+	width: 600px;
+	height: 100%;
+	margin: 0 auto;
+	padding-top: 5px;
+	padding-bottom: 50px;
+}
+
+.container hr {
+	width: 500px;
+}
+
+.container img {
+	width: 500px;
+	height: 200px;
+	background-color: white;
+	margin: 30px auto auto auto;
+}
+
+.text {
+	width: 400px;
+	margin: 0 auto;
+	text-align: center;
+}
+
+.button-list button {
+	width: 150px;
+	height: 50px;
+	padding: 10px;
+	text-align: center;
+	border: 1px solid rgb(228, 242, 220);
+	margin-bottom: 50px;
+	background-color: white;
+}
+
+.button-list {
+	text-align: center;
+}

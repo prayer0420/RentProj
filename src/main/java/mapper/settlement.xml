@@ -1,1 +1,193 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="mapper.settlement">
+
+	
+	<!-- 회원 정보 조회 -->
+	<select id="selectMemberInfo" parameterType="int" resultType="dto.Member">
+	    SELECT
+	        no AS memberNo,
+	        gradeId,
+	        orderCount
+	    FROM member
+	    WHERE no = #{memberNo}
+	</select>
+	
+	<!-- 등급별 orderCount 기준 조회 -->
+	<select id="selectGradeCount" parameterType="int" resultType="int">
+	    SELECT gradeCount
+	    FROM grade
+	    WHERE gradeNo = #{gradeNo}
+	</select>	
+	
+	<!-- 회원 등급 변경 -->
+	<update id="updateMemberGradeNo" parameterType="map">
+	    UPDATE member
+	    SET gradeId = #{gradeNo}
+	    WHERE no = #{memberNo}
+	</update>
+		
+	<!-- 정산 상세 조회 (판매가, 보증금, 배송비, 수수료) -->
+	<select id="selectSettlementInfo" resultType="dto.Settlement">
+	    SELECT 
+	        s.orderNo,  
+	        o.price,
+	        o.secPrice,
+	        o.orderType,
+	        o.deliveryPrice,
+	        s.feeAmount
+	    FROM settlement s
+	    INNER JOIN `order` o ON s.orderNo = o.orderNo
+	    WHERE s.settlementNo = #{settlementNo}
+	</select>
+	
+	<!-- 최종 정산 금액 업데이트 -->
+	<update id="updateFinalSettleAmount">
+	    UPDATE settlement
+	    SET finalSettleAmount = #{finalAmount}
+	    WHERE settlementNo = #{settlementNo}
+	</update>
+		
+	
+	<!-- settlement insert -->
+	<insert id="insertSettlement" parameterType="dto.Settlement">
+	    INSERT INTO settlement (
+	        orderNo, memberNo, productNo, revenueType, 
+	        feeAmount, finalSettleAmount, feeStatus
+	    ) VALUES (
+	        #{orderNo}, #{memberNo}, #{productNo}, #{revenueType},
+	        #{feeAmount}, #{finalSettleAmount},
+	        #{feeStatus}
+	    )
+	</insert>
+	
+	<!-- 정산 리스트 검색 (searchMap 기준) -->
+	<select id="selectSettlementList" parameterType="map" resultType="dto.Settlement">
+	    SELECT 
+	        s.settlementNo,
+	        s.orderNo,
+	        p.memberNo AS sellerMemberNo, 
+	        o.memberNo AS buyerMemberNo,
+	        s.productNo,
+	        p.title as productTitle,
+	        o.price,
+	        o.deliveryPrice,
+	        o.secPrice,
+	        g.gradeRate,
+	        s.feeAmount,
+	        s.finalSettleAmount,
+	        s.revenueType,
+       		s.settlementCompletedAt,
+	        o.orderDate AS payTime,
+	        s.feeStatus
+	    FROM settlement s
+	    LEFT JOIN `order` o ON s.orderNo = o.orderNo
+	    LEFT JOIN `product` p ON o.productNo = p.no
+	    LEFT JOIN member m ON p.memberNo = m.no
+	    LEFT JOIN grade g ON m.gradeId = g.gradeNo
+	    WHERE 1=1
+
+	    <if test="searchRevenueType != null &amp;&amp; searchRevenueType != ''">
+	        AND s.revenueType = #{searchRevenueType}
+	    </if>
+	    <if test="searchFeeStatus != null &amp;&amp; searchFeeStatus != ''">
+	        AND s.feeStatus = #{searchFeeStatus}
+	    </if>
+	    <if test="completedStart != null and completedStart != ''">
+		  AND s.settlementCompletedAt &gt;= #{completedStart}
+		</if>
+		<if test="completedEnd != null and completedEnd != ''">
+		  AND s.settlementCompletedAt &lt;= #{completedEnd}
+		</if>	
+	    ORDER BY o.orderDate DESC
+	    LIMIT #{row}, #{size}
+	</select>
+
+	<!-- 주문 정보 조회 -->	
+	<select id="selectOrderInfo" parameterType="int" resultType="dto.Order">
+	    SELECT
+	        orderNo,
+	        memberNo,
+	        productNo,
+	        price,
+	        deliveryPrice,
+	        secPrice,
+	        orderType AS revenueType
+	    FROM `order`
+	    WHERE orderNo = #{orderNo}
+	</select>	
+	
+	<!-- 등급 수수료율 조회 -->
+	<select id="selectGradeRate" parameterType="int" resultType="double">
+	    SELECT gradeRate
+	    FROM grade
+	    WHERE gradeNo = #{gradeId}
+	</select>		
+	
+	<!-- 정산완료시간 업데이트 -->
+	<update id="updateSettlementCompletedAt" parameterType="int">
+    UPDATE settlement
+    SET settlementCompletedAt = NOW()
+    WHERE settlementNo = #{settlementNo}
+	</update>						
+	
+	<update id="updateSettlementStatus" parameterType="int">
+	  UPDATE settlement
+	  SET feeStatus = 'COMPLETE'
+	  WHERE settlementNo = #{settlementNo}
+	</update>			
+	
+	<select id="selectCompletedAt" parameterType="int" resultType="string">
+    SELECT DATE_FORMAT(settlementCompletedAt, '%Y-%m-%d %H:%i:%s')
+    FROM settlement
+    WHERE settlementNo = #{settlementNo}
+	</select>
+	
+	<select id="selectProductInfo" parameterType="int" resultType="Product">
+    SELECT * FROM product WHERE no = #{productNo}
+	</select>
+	
+	<select id="selectSettlementCount" parameterType="map" resultType="int">
+    SELECT COUNT(*)
+    FROM settlement s
+    LEFT JOIN `order` o ON s.orderNo = o.orderNo
+    LEFT JOIN product p ON o.productNo = p.no
+    WHERE 1=1
+    <if test="searchRevenueType != null and searchRevenueType != ''">
+        AND s.revenueType = #{searchRevenueType}
+    </if>
+    <if test="searchFeeStatus != null and searchFeeStatus != ''">
+        AND s.feeStatus = #{searchFeeStatus}
+    </if>
+    <if test="completedStart != null and completedStart != ''">
+        AND s.settlementCompletedAt &gt;= #{completedStart}
+    </if>
+    <if test="completedEnd != null and completedEnd != ''">
+        AND s.settlementCompletedAt &lt;= #{completedEnd}
+    </if>
+	</select>
+	
+	<select id="selectTotalFeeAmount" parameterType="map" resultType="int">
+    SELECT IFNULL(SUM(s.feeAmount), 0)
+    FROM settlement s
+    LEFT JOIN `order` o ON s.orderNo = o.orderNo
+    LEFT JOIN product p ON o.productNo = p.no
+    WHERE 1=1
+    <if test="searchRevenueType != null and searchRevenueType != ''">
+        AND s.revenueType = #{searchRevenueType}
+    </if>
+    <if test="searchFeeStatus != null and searchFeeStatus != ''">
+        AND s.feeStatus = #{searchFeeStatus}
+    </if>
+    <if test="completedStart != null and completedStart != ''">
+        AND s.settlementCompletedAt &gt;= #{completedStart}
+    </if>
+    <if test="completedEnd != null and completedEnd != ''">
+        AND s.settlementCompletedAt &lt;= #{completedEnd}
+    </if>
+	</select>
+	
+	</mapper>

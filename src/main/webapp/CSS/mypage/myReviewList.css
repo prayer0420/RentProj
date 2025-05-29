@@ -1,0 +1,158 @@
+/* ----- 전체 틀 ----- */
+.wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.container {
+  display: flex;
+}
+
+.content {
+  flex: 1;
+  margin-left: 30px;
+}
+
+/* 제목 */
+.title {
+  font-size: 26px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #6A5D55; /* 톤 다운된 브라운 */
+}
+
+/* 구분선 */
+.divider {
+  height: 2px;
+  background-color: #f3ebe7; /* 연살구 베이지 */
+  margin: 10px 0 30px 0;
+}
+
+/* 탭 버튼 */
+.review-tabs {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
+  margin-top:10px;
+}
+
+.tab-button {
+  padding: 6px 14px;               /* 높이/너비 ↓ */
+  border: 1px solid #F2CFC2;
+  background: #FFF6F2;
+  color: #A67C6B;
+  font-weight: bold;
+  border-radius: 8px;
+  font-size: 13px;                 /* 글씨 크기 ↓ */
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.tab-button.active {
+  background: #F2CFC2;
+  color: white;
+  border: none;
+}
+
+.tab-button:hover {
+  background: #FFE8DF;
+}
+
+/* 탭 내용 컨테이너 */
+.tab-content-container {
+  margin-top: 20px;
+}
+
+/* 리뷰 카드 그리드 */
+.review-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+/* 리뷰 카드 */
+.review-card {
+  background: #ffffff;
+  border: 1px solid #f1e7e3;      /* 연한 테두리 */
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
+  cursor: pointer;
+}
+
+.review-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+/* 이미지 */
+.product-img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 12px;
+}
+
+/* 상품 정보 */
+.product-info {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.product-title {
+  font-size: 18px;
+  font-weight: bold;
+  color: #444;
+}
+
+.order-date,
+.review-contents,
+.review-score {
+  font-size: 14px;
+  color: #777;
+}
+
+/* 페이징 */
+.paging {
+  margin-top: 30px;
+  text-align: center;
+}
+
+.page-btn {
+  display: inline-block;
+  margin: 0 4px;
+  padding: 8px 14px;
+  font-size: 14px;
+  border: 1px solid #e8dcd6;
+  background: #fff;
+  color: #444;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.page-btn:hover {
+  background-color: #fff1ec;
+}
+
+.page-btn.active {
+  background-color: #F2CFC2;
+  color: white;
+  border: none;
+}
+
+/* 빈 내용 텍스트 */
+.empty-text {
+  text-align: center;
+  font-size: 16px;
+  color: #bba9a0;
+  margin-top: 30px;
+}

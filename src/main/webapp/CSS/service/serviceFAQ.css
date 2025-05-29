@@ -1,0 +1,97 @@
+@charset "UTF-8";
+/*container*/
+        .container {
+            width: 800px;
+            margin: 0 auto;
+        }
+
+        .container h2 {
+            text-align: left;
+            margin-top: 50px;
+            margin-bottom: 10px;
+        }
+
+        .tabs {
+            display: flex;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .tab {
+            padding: 10px 15px;
+            border: 1px solid #ccc;
+            background-color: white;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            text-align: center;
+            width: 130px;
+        }
+
+        .tab:hover {
+            background-color: #f2f2f2;
+        }
+
+        .search-bar {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 20px;
+        }
+
+        .search-bar input {
+            width: 300px;
+            padding: 8px 12px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .faq-count {
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .faq-item {
+            border-top: 1px solid #ccc;
+            padding: 15px 0;
+        }
+
+        .faq-question {
+            font-weight: bold;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease, opacity 0.5s ease;
+            opacity: 0;
+            background-color: #e0f5f3;
+            padding: 0 20px;
+            border-radius: 8px;
+        }
+
+        .faq-answer img {
+            width: 100px;
+            height: 100px;
+            background-color: #ccc;
+            float: left;
+            margin-right: 20px;
+        }
+
+        .faq-answer p {
+            margin: 0;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* 펼쳐진 상태 표시 */
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+            /* 최대 높이 여유있게 */
+            opacity: 1;
+            padding: 20px;
+
+        }

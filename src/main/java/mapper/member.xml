@@ -1,1 +1,121 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.member">
+
+<!--null허용이 되는값이라면 모든 파라미터를 지정-->
+<!--넘어온 Member객체의 getter메서드를 자동 호출하여 값 가져옴-->
+	<insert id="insertMember" parameterType="member">
+		Insert Into member (id,password,name,nickname,phone,address1,address2,address3,location,profileImage,adminNo,fcmToken) 
+		values(#{id},#{password},#{name},#{nickname},#{phone},#{address1},#{address2},#{address3},#{location},#{profileImage},#{adminNo}, #{fcmToken})	
+	</insert>
+	
+	<select id="selectMember" parameterType="String" resultType="member">
+		select * from member where id=#{id}
+	</select>
+	
+	<update id="updateMember" parameterType="member">
+		 UPDATE member
+    SET 
+        gradeId = #{gradeId}, password = #{password}, name=#{name},nickname = #{nickname},
+        phone = #{phone},address1 = #{address1},address2 = #{address2},
+        address3 = #{address3},location=#{location}, profileImage = #{profileImage},
+        orderCount = #{orderCount},adminNo = #{adminNo}, fcmToken=#{fcmToken}
+    WHERE id = #{id}
+	</update>
+	
+	<!-- 관리자 전용 - 회원 검색 + 페이징 처리 -->
+	<!-- 조건: 검색 대상(type), 검색어(word), 회원등급(gradeId) -->
+  <select id="searchMembersWithPaging" parameterType="map" resultType="member">
+	  SELECT * FROM member
+	  <where>
+	    <choose>
+	      <when test="type != null and type == 'id' and word != null and word != ''">
+	        id = #{word}
+	      </when>
+	      <when test="type != null and type == 'name' and word != null and word != ''">
+	        name = #{word}
+	      </when>
+	      <when test="type != null and type == 'phone' and word != null and word != ''">
+	        phone = #{word}
+	      </when>
+	    </choose>
+	    <if test="gradeId != null">
+	      AND gradeId = #{gradeId}
+	    </if>
+	  </where>
+	  ORDER BY no DESC
+	  LIMIT #{row}, #{size}
+ </select>
+
+	<!-- 관리자 전용 - 총 회원 수 조회 (검색 조건 반영) -->
+	<select id="selectMembersCountWithFilter" parameterType="map" resultType="Integer">
+	  SELECT COUNT(*) FROM member
+	  <where>
+	    <choose>
+	      <when test="type != null and type == 'id' and word != null and word != ''">
+	        id = #{word}
+	      </when>
+	      <when test="type != null and type == 'name' and word != null and word != ''">
+	        name = #{word}
+	      </when>
+	      <when test="type != null and type == 'phone' and word != null and word != ''">
+	        phone = #{word}
+	      </when>
+	    </choose>
+	    <if test="gradeId != null">
+	      AND gradeId = #{gradeId}
+	    </if>
+	  </where>
+	</select>
+  
+    <!-- 관리자 정보 조회 (adminNo가 1인 계정)-->
+	<select id="selectAdmin" resultType="member">
+  		SELECT * FROM member
+ 		 WHERE adminNo = 1
+	</select>
+	
+	<!-- 관리자 정보 수정 (제한된 필드만: 비밀번호, 이름, 닉네임) -->
+	<update id="updateAdminBasicInfo" parameterType="member">
+	  UPDATE member
+	  SET 
+	    password = #{password},
+	    name = #{name},
+	    nickname = #{nickname}
+	  WHERE id = #{id}
+	</update>
+
+	<!-- 회원 위치 업데이트 -->
+	<update id="updateLocation" parameterType="map">
+  		UPDATE	member
+   		SET 
+     			latitude = #{lat},
+       			longitude = #{lng},
+         		location = #{location}
+   		WHERE	no = #{no}
+	</update>
+
+	<!--배송지 정보 가져오기 -->
+	<select id="selectRawAddressList" parameterType="int"
+		resultType="string">
+		SELECT address FROM address
+		WHERE memberNo = #{memberNo}
+	</select>
+	
+	
+	<update id="updateFcmToken" parameterType="map">
+	  UPDATE member
+	  SET fcmToken = #{fcmToken}
+	  WHERE id = #{id}
+	</update>
+	
+	<!--정산 시, 주문수 +1처리 -->
+	<update id="updateOrderCountPlusOne" parameterType="int">
+    UPDATE member
+    SET orderCount = orderCount + 1
+    WHERE no = #{memberNo}
+</update>
+	
+</mapper>

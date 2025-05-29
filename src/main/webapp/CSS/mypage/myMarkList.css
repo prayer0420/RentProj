@@ -1,0 +1,192 @@
+/* ----- 전체 틀 ----- */
+.wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.container {
+  display: flex;
+}
+
+.content {
+  flex: 1;
+  margin-left: 30px;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.divider {
+  height: 2px;
+  background-color: #eee;
+  margin-bottom: 25px;
+}
+
+.action-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  margin-top : 20px;
+  /* padding-top :5px; */
+}
+
+/* 전체선택 라벨 */
+.left-action label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #8C6E5D;  /* 부드러운 브라운 */
+}
+
+/* 선택삭제 버튼 (살구톤) */
+.delete-selected-btn {
+  margin-left: 10px;
+  padding: 5px 10px;
+  background: #FFF6F2;
+  color: #8C6E5D;
+  font-weight: 600;
+  border: 1px solid #F2CFC2;
+  border-radius: 6px;
+  font-size: 12px;
+  transition: background-color 0.2s, transform 0.2s;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+}
+
+.delete-selected-btn:hover {
+  background: #FFE8DF;
+  transform: translateY(-2px);
+}
+
+
+
+/* ----- 찜한 상품 카드 그리드 ----- */
+.marklist-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 2개씩 */
+  gap: 20px;
+}
+
+.marklist-card {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 15px;
+  min-height: 160px;
+  height: 180px; /* 고정 높이 */
+  overflow: hidden; 
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  position: relative;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.marklist-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.check-item {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+}
+
+/* 상품 이미지 */
+.product-img {
+  width: 120px;
+  height: 120px;
+  overflow: hidden;
+  flex-shrink: 0;
+  border-radius: 8px;
+  margin-left: 45px;
+  cursor: default;  /* 클릭 시 커서 변경을 없앰 */
+}
+
+.product-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.product-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 6px;
+  margin-left: 30px;
+  text-align: left;
+}
+
+.product-no {
+  font-size: 12px;
+  color: gray;
+}
+
+.product-title {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.product-price,
+.product-location {
+  font-size: 14px;
+}
+
+/* 판매가 빨간색 */
+.product-price.sale {
+  color: #e53935;
+  font-weight: bold;
+}
+
+/* 대여가 파란색 */
+.product-price.rent {
+  color: #2196f3;
+  font-weight: bold;
+}
+
+/* 보증금은 회색 */
+.product-price.deposit {
+  color: #777;
+}
+
+/* ----- 페이징 ----- */
+.paging {
+  margin-top: 30px;
+  text-align: center;
+}
+
+.page-btn {
+  margin: 0 5px;
+  padding: 5px 10px;
+  background: #FFF6F2;
+  border: 1px solid #F2CFC2;
+  border-radius: 6px;
+  text-decoration: none;
+  color: #8C6E5D;
+  font-size: 13px;
+  transition: background-color 0.2s;
+}
+
+.page-btn:hover {
+  background: #FFE8DF;
+}
+
+.page-btn.active {
+  background: #F2CFC2;
+  color: white;
+  font-weight: bold;
+  border: none;
+}
+
+.page-btn.disabled {
+  color: #c4b2aa;
+  pointer-events: none;
+}

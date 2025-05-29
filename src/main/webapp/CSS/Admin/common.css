@@ -1,0 +1,459 @@
+/* common-style.css */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/* Layout */
+.container {
+  display: flex;
+  max-width: 100%;
+  overflow-x: hidden;
+  justify-content: flex-start; /* 왼쪽 정렬 */
+}
+
+
+aside {
+  width: 200px;
+  border-right: 1px solid #ccc;
+  background: #f9f9f9;
+  flex-shrink: 0;
+}
+
+aside h3 {
+  background: #e8e8e8;
+  padding: 10px;
+  margin: 0;
+}
+
+.leftMenu {
+  background: #e8e8e8;
+  padding: 10px;
+  margin: 0;
+}
+
+.menu {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.menu a {
+  display: block;
+  width: 100%;
+  text-decoration: none !important;
+  color: inherit !important;
+}
+
+.menu.active {
+  background: #26c6da;
+  color: white;
+  font-weight: bold;
+  
+}
+
+.menu.inactive {
+  background: #e0e0e0;
+  color: #777;
+}
+
+main {
+  padding: 20px;
+  flex: 1;
+  min-width: 0;
+  align-self: flex-start; 
+}
+
+.breadcrumb {
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+/* Search Box */
+.search-box {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+.search-box select,
+.search-box input{
+  margin-right: 5px;
+}
+
+.search-box button {
+  width: auto !important;      /* 기본은 auto */
+  min-width: 60px !important;  /* 너무 작아지지 않도록 최소 너비 설정 */
+  padding: 4px 10px !important;
+}
+
+    b {
+      font-size: 13px; 
+ 	  font-family: 'Pretendard', 'Noto Sans KR', sans-serif; 
+	} 
+
+/* Table */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 10px;
+  table-layout: fixed;
+  word-break: break-word;
+}
+
+th, td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: center;
+  font-size: 13px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+th {
+  background: #e0e6ed;
+  font-weight: bold;
+}
+
+td a {
+  display: inline-block;
+  max-width: 120px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+    .admin-info-table {
+      width: auto;  
+   	  max-width: 600px; 
+      width: 40%;  
+      margin-bottom: 30px;
+      border-collapse: collapse;
+    }
+
+    .admin-info-table th, .admin-info-table td {
+      padding: 10px;
+      border: 1px solid #ccc;
+      text-align: left;
+    }
+
+    .admin-info-table th {
+      background-color: #f0f0f0;
+      font-weight: bold;
+    }
+
+
+/* Inputs */
+input[type="text"],
+input[type="password"] {
+  width: 140px !important;
+  padding: 4px;
+  font-size: 13px;
+  text-align: left;
+}
+
+select {
+  padding: 4px;
+}
+
+/* Note Text */
+.info-note {
+  font-size: 12px;
+  color: #555;
+  margin-top: 10px;
+}
+
+/* Save Button */
+.save-button {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+/* adminInfo.jsp 전용 저장 버튼 왼쪽 정렬 */
+.admin-info-save {
+    justify-content: flex-start;
+}
+
+.save-button button {
+  background-color: #26c6da;
+  color: white;
+  padding: 8px 20px;
+  border: none;
+  border-radius: 3px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+/* Total count */
+.total-count {
+  margin: 10px 0;
+  font-weight: bold;
+}
+
+    .section-title {
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    .info-note {
+      font-size: 12px;
+      color: #555;
+      margin-top: 10px;
+    }
+/* 버튼 덮어쓰기 */
+button, .btn-action {
+  background-color: #26c6da;
+  color: white;
+  border: none; 
+  font-size: 13px;
+  padding: 6px 12px;
+}
+
+/* 라디오 버튼 및 폰트 사이즈 */
+input[type="radio"] {
+  transform: scale(1.2);
+  margin-right: 4px;
+}
+
+/* 테이블 폰트 크기 및 정렬 덮어쓰기 */
+table th, table td {
+  font-size: 13px !important;
+  text-align: center !important;
+}
+
+
+
+ 	.search-box label,
+    .search-box input,
+    .search-box select,
+    .search-box button {
+      margin-right: 6px;
+      font-size: 13px;
+    }
+    .search-box input[type="text"] {
+      padding: 3px 6px;
+      width: 120px; /* 날짜 포맷에 맞게 줄임 */
+    }
+    .search-box .radio-group {
+      display: inline-block;
+      margin: 0 10px;
+    }
+    .tab {
+      margin-bottom: 10px;
+    }
+    .tab button {
+      padding: 6px 12px;
+      border: 1px solid #ccc;
+      background: #f0f0f0;
+      cursor: pointer;
+      margin-right: 5px;
+    }
+    .tab button.active {
+      background: #26c6da;
+      color: white;
+    }
+    .total-count {
+      font-size: 14px;
+      margin: 10px 0;
+    }
+    .report-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .report-table th, .report-table td {
+      border: 1px solid #ccc;
+      padding: 6px;
+      font-size: 13px;
+      text-align: center;
+    }
+    .report-table th {
+      background: #e0e6ed; 
+    }
+
+    .badge {
+      background: red;
+      color: white;
+      border-radius: 50%;
+      padding: 0 6px;
+      font-size: 12px;
+      margin-left: 5px;
+    }
+    
+      .total-count-wrap {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 6px;
+      margin-bottom: 10px;
+    }
+
+    .action-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .action-buttons button,
+    .action-top > button {
+      background-color: #26c6da;
+      color: white;
+      padding: 4px 12px;
+      border: none;
+      border-radius: 3px;
+      font-size: 13px;
+      cursor: pointer;
+      margin-right: 4px;
+    }
+
+    .action-buttons button:last-child,
+    .action-top > button:last-child {
+      margin-right: 0;
+    }
+    
+      .pagination {
+	  margin-top: 20px;
+	  text-align: center;
+	  display: flex;
+      justify-content: center;
+	}
+	.pagination button {
+	  margin: 0 3px;
+	  padding: 6px 10px;
+	  border: 1px solid #ccc;
+	  background-color: #e2e2e2;
+	  cursor: pointer;
+	}
+	
+	.pagination button[style*="bold"] {
+	  background-color: #007bff;
+	  color: white;
+	  font-weight: bold;
+	  border-color: #007bff;
+	}
+	
+	.modal-footer button {
+ 	 background-color: #26c6da;
+	  color: white;
+	  border: none;
+	  padding: 8px 20px;
+	  border-radius: 4px;
+	  font-size: 14px;
+	  cursor: pointer;
+	}
+    
+    /* ---------------- categoryCreate / style.css --------------*/
+    
+      .category-section {
+      border: 1px solid #ccc;
+      padding: 10px;
+      margin-bottom: 20px;
+    }
+
+    .category-row {
+      margin-bottom: 10px;
+    }
+
+    .category-row.inline {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .category-row label {
+      font-size: 14px;
+    }
+
+    .search-input {
+      width: 180px;
+      padding: 4px;
+      font-size: 13px;
+    }
+
+    .category-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .category-table th, .category-table td {
+      border: 1px solid #ccc;
+      padding: 6px;
+      font-size: 13px;
+      text-align: center;
+    }
+
+    .category-table th {
+      background: #e0e6ed;
+    }
+
+    .category-table input[type="text"],
+    .category-table select {
+      width: 90%;
+      padding: 4px;
+    }
+
+    .category-table input[type="checkbox"] {
+      transform: scale(1.2);
+    }
+
+    .btn-save, .btn-file, .btn-up, .btn-down {
+      background-color: #26c6da;
+      color: white;
+      padding: 5px 12px;
+      border: none;
+      border-radius: 3px;
+      font-size: 13px;
+      cursor: pointer;
+    }
+
+    .sort-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 4px;
+    }
+
+    .file-label {
+      margin-left: 10px;
+      font-size: 13px;
+      color: #333;
+    }
+
+    .category-count {
+      font-size: 14px;
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+    
+    .btn-file {
+	  background-color: #ddd;
+	  padding: 5px 10px;
+	  border: 1px solid #aaa;
+	  border-radius: 3px;
+	  cursor: pointer;
+	  position: relative;
+	  overflow: hidden;
+	  font-size: 13px;
+	}
+	
+	.btn-file input[type="file"] {
+	  position: absolute;
+	  left: 0;
+	  top: 0;
+	  opacity: 0;
+	  cursor: pointer;
+	  height: 100%;
+	  width: 100%;
+	}	
+	
+	.category-section {
+	  display: flex;
+	  flex-direction: column;
+	  gap: 10px;
+	}

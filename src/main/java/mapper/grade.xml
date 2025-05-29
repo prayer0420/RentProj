@@ -1,1 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="mapper.grade">
+
+  <!-- 등급 전체 조회 -->
+  <select id="selectAllGrades" resultType="grade">
+    SELECT * FROM grade
+    ORDER BY gradeNo ASC
+  </select>
+
+  <!-- 등급 정보 수정 -->
+	<update id="updateGrade" parameterType="grade">
+	  UPDATE grade
+	  SET 
+	    gradeName = #{gradeName},
+	    gradeRate = #{gradeRate}
+	  WHERE gradeNo = #{gradeNo}
+	</update>
+
+<select id="selectGradeNameById" parameterType="int" resultType="string">
+    SELECT gradeName FROM grade WHERE gradeNo = #{gradeId}
+</select>
+
+
+
+</mapper>

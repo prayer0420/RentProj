@@ -1,0 +1,123 @@
+@charset "UTF-8";
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal {
+  background: #fffdf9;
+  border-radius: 16px;
+  width: 480px;
+  max-width: 90%;
+  padding: 28px 32px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+  border: 1px solid #e6e6e6;
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.modal-title {
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.modal-sub {
+  font-size: 13px;
+  text-align: center;
+  color: #999;
+  margin-bottom: 24px;
+}
+
+.info-box {
+  background-color: #fff;
+  border: 1px solid #eee;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 20px;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+.info-row .label {
+  color: #666;
+  font-weight: 500;
+}
+
+.info-row .value {
+  color: #222;
+  font-weight: 500;
+}
+
+.textarea-box label {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  display: block;
+}
+
+textarea {
+  width: 100%;
+  height: 120px;
+  padding: 12px;
+  font-size: 14px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  resize: none;
+}
+
+textarea::placeholder {
+  color: #aaa;
+}
+
+.modal-actions {
+  margin-top: 24px;
+  text-align: center;
+}
+
+.modal-actions button {
+  padding: 10px 24px;
+  font-size: 15px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  margin: 0 6px;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+ }
+ 
+ .modal-actions button:hover {
+  transform: translateY(-2px);
+}
+
+.btn-submit {
+  background-color: #1C9B66;
+  color: white;
+}
+
+.btn-submit:hover {
+  background-color: #178a59;
+}
+
+.btn-close {
+  background-color: #e5e5e5;
+  color: #333;
+}
+
+.btn-close:hover {
+  background-color: #ccc;
+}

@@ -1,1 +1,81 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.faq">
+
+	<!-- FAQ Category 관련 -->
+	<!-- FAQ 카테고리 전체 조회 -->
+	<select id="selectFaqCategoryList" resultType="faqCategory">
+		SELECT * FROM
+		faq_category ORDER BY no ASC
+	</select>
+
+	<!-- FAQ 카테고리 생성 -->
+	<insert id="insertFaqCategory" parameterType="faqCategory"
+		useGeneratedKeys="true" keyProperty="no">
+		INSERT INTO faq_category (name)
+		VALUES (#{name})
+	</insert>
+
+	<!-- FAQ 관련 -->
+	<!-- FAQ 전체 조회 (카테고리 이름 조인 포함) -->
+	<select id="selectFaqList" resultType="faq">
+		SELECT
+		f.no,
+		f.categoryNo,
+		c.name AS categoryName,
+		f.title,
+		f.content,
+		f.createdAt,
+		f.updatedAt,
+		f.imgUrl
+		FROM faq f
+		LEFT JOIN faq_category c ON f.categoryNo = c.no
+		ORDER BY f.createdAt DESC
+	</select>
+
+	<select id="selectAllFaq" resultType="faq">
+		select * from faq
+	</select>
+
+    <!-- FAQ 등록 -->
+    <insert id="insertFaq" parameterType="faq" useGeneratedKeys="true" keyProperty="no">
+        INSERT INTO faq (categoryNo, title, content, imgUrl)
+        VALUES (#{categoryNo}, #{title}, #{content}, #{imgUrl})
+    </insert>
+    
+    <!-- FAQ 수정 -->
+    <update id="updateFaq" parameterType="faq">
+        UPDATE faq
+        SET 
+            categoryNo = #{categoryNo},
+            title = #{title},
+            content = #{content},
+            imgUrl = #{imgUrl},
+            updatedAt = now()
+        WHERE no = #{no}
+    </update>
+    
+     <!-- FAQ 다건 삭제 -->
+    <delete id="deleteFaqList" parameterType="map">
+        DELETE FROM faq
+        WHERE no IN
+        <foreach collection="faqNos" item="no" separator="," open="(" close=")">
+            #{no}
+        </foreach>
+    </delete>
+    
+        <!-- 특정 FAQ 조회 -->
+    <select id="selectFaqByNo" resultType="dto.Faq">
+        SELECT f.no, f.categoryNo, f.title, f.content, f.imgUrl, f.createdAt, f.updatedAt
+        FROM faq f
+        WHERE f.no = #{no}
+    </select>
+	<select id="faqSelectOne" parameterType="int" resultType="faq">
+		select
+		* from faq where no=#{no}
+	</select>
+
+
+</mapper>

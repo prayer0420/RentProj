@@ -1,0 +1,472 @@
+@charset "UTF-8";
+
+:root {
+  --bg: #fffdfd;
+  --card: #fffefe;
+  --peach: #fcdcd2;
+  --accent: #f7bfa5;
+  --border: #f2cec3;
+  --text: #5c443d;
+  --gray: #998782;
+}
+
+/* 기본 세팅 */
+body {
+  font-family: 'Noto Sans KR', 'Segoe UI', sans-serif;
+  margin: 0;
+  background-color: var(--bg);
+  color: var(--text);
+}
+
+/* 메인 컨테이너 */
+.container {
+  max-width: 1000px;
+  margin: 40px auto;
+  background: var(--card);
+  border-radius: 16px;
+  padding: 30px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  border: 1px solid var(--border);
+}
+
+/* 상품 전체 레이아웃 */
+.product-layout {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center; /* ✅ 이거 추가! 수직 가운데 정렬 */
+  
+  gap: 24px;
+}
+
+/* 상품 이미지 */
+.product-image {
+  flex: 1 1 40%;
+  min-width: 300px;
+  
+}
+
+.product-image img {
+  width: 100%;
+  border-radius: 16px;
+  object-fit: cover;
+}
+
+/* 디테일 정보 */
+.product-details {
+  flex: 1 1 55%;
+  position: relative;
+  font-size: 18px;
+  line-height: 2;
+}
+
+/* 상단 아이콘 버튼 */
+.top-icons {
+  position: absolute;
+    margin-right: 8px;  /* 모든 아이콘 간 동일한 간격으로 */
+  top: 0;
+  right: 0;
+  display: flex;
+  gap: 14px;
+}
+
+.top-icons button:last-child {
+  margin-right: 0; /* 마지막 아이콘은 여백 없음 */
+}
+
+.top-icons img {
+  width: 28px;
+  height: 28px;
+  vertical-align: middle;
+}
+
+.top-icons button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  transition: transform 0.2s;
+  color: var(--gray);
+}
+
+.top-icons button:hover {
+  transform: scale(1.1);
+  color: var(--accent);
+}
+
+/* 카테고리/고유번호 */
+.category, .product-id {
+  font-size: 13px;
+  color: var(--gray);
+  margin-top: 10px;
+}
+
+/* 제목 */
+.title {
+  font-size: 30px;
+  font-weight: bold;
+  margin-top: 20px;
+}
+
+/* 가격 표시 */
+.rent-price, .sale-price, .sec-price {
+  margin-top: 10px;
+  font-weight: bold;
+  font-size: 22px;
+}
+
+.rent-price, .sale-price {
+  color: #e86e58;
+}
+
+.sec-price {
+  color: #388e3c;
+}
+
+/* 판매자 정보 */
+.seller-profile {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+  gap: 12px;
+}
+
+.avatar img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  /* border: 2px solid var(--border); */
+}
+
+.profile-info {
+  display: flex;
+  flex-direction: column;
+}
+
+/* 별점 */
+.seller-rating .score {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.stars {
+  color: gold;
+}
+
+/* 좋아요/조회수 */
+.likes-views {
+  display: flex;
+  gap: 18px;
+  font-size: 16px;
+  margin-top: 16px;
+  color: var(--gray);
+}
+
+/* 버튼 박스 */
+.btn-box {
+  display: flex;
+  gap: 14px;
+  margin-top: 20px;
+}
+
+.btn {
+  padding: 10px 18px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 16px;
+  background: var(--accent);
+  color: white;
+  transition: background 0.3s ease;
+}
+
+.btn:hover {
+  background: #f49b79;
+}
+
+.btn-message {
+  background: #f0f0f0;
+  color: var(--text);
+}
+
+.btn-message:hover {
+  background: #e0e0e0;
+}
+
+/* 찜 버튼 */
+.btn-wish {
+  font-size: 30px;
+  background: none;
+  border: none;
+  color: #ff6b6b;
+  transition: color 0.3s;
+}
+
+.btn-wish:hover {
+  color: #ff3b3b;
+}
+
+.btn-wish:focus {
+  outline: none;
+}
+
+/* 탭 메뉴 */
+.tab-menu {
+  display: flex;
+  margin-top: 30px;
+  border-bottom: 2px solid var(--border);
+}
+
+.tab-menu .tab-item {
+  flex: 1;
+  text-align: center;
+  padding: 12px 0;
+  font-weight: bold;
+  cursor: pointer;
+  color: var(--gray);
+}
+
+.tab-menu .active {
+  border-bottom: 4px solid var(--accent);
+  color: var(--accent);
+}
+
+/* 탭 내용 */
+.tab-pane {
+  display: none;
+}
+
+.tab-pane.show {
+  display: block;
+}
+
+/* 설명 */
+.description {
+  background: #fcfcfc;
+  padding: 24px;
+  font-size: 15px;
+  line-height: 1.7;
+  border-radius: 10px;
+  margin-top: 16px;
+  white-space: pre-wrap;
+  border: 1px solid var(--border);
+}
+
+/* 슬라이더 */
+.slider {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background: var(--peach);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.slide-image {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.slide-image.active {
+  opacity: 1;
+  z-index: 1;
+}
+
+/* 슬라이더 버튼 */
+.slide-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  color: #4d4b4b;
+  border: none;
+  font-size: 28px;
+  cursor: pointer;
+  z-index: 10;
+  padding: 0;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.slider:hover .slide-btn {
+  opacity: 1;
+}
+
+.slide-btn:hover {
+  color: var(--accent);
+}
+
+#prevBtn {
+  left: 10px;
+}
+
+#nextBtn {
+  right: 10px;
+}
+
+/* 슬라이드 카운터 */
+.slide-counter {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  background: rgba(0,0,0,0.6);
+  color: white;
+  padding: 6px 12px;
+  font-size: 14px;
+  border-radius: 20px;
+}
+
+/* 리뷰 */
+.review-section {
+  padding: 30px;
+  margin-top: 40px;
+  background: white;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+}
+
+/* 리뷰 상단 */
+.review-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.review-top h3 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: bold;
+  color: var(--accent);
+}
+
+/* 별점 표시 */
+.rating-display {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 18px;
+  color: gold;
+}
+
+/* 리뷰쓰기 버튼 */
+.btn-review-write {
+  background-color: var(--accent);
+  color: white;
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-bottom: 10px;
+  transition: background 0.3s;
+}
+
+.btn-review-write:hover {
+  background-color: #f49b79;
+}
+
+/* 리뷰 폼 */
+.review-form {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  margin-top: 20px;
+  border: 1px solid var(--border);
+}
+
+.review-input-row {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.review-input-row textarea {
+  resize: vertical;
+  min-height: 100px;
+  padding: 12px;
+  font-size: 15px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.rating-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.rating-box select {
+  padding: 8px;
+  font-size: 14px;
+  border-radius: 6px;
+}
+
+/* 제출 버튼 */
+.btn-review-submit {
+  align-self: flex-end;
+  background-color: #3498db;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.btn-review-submit:hover {
+  background-color: #2980b9;
+}
+
+/* 리뷰 항목 */
+.review-list .review-item {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 16px;
+}
+
+/* 리뷰 내용 */
+.review-item-content {
+  font-size: 16px;
+  line-height: 1.6;
+  margin-top: 10px;
+  color: #555;
+}
+
+/* 작성자 + 별점 */
+.review-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+/* 수정/삭제 */
+.review-edit, .review-del {
+  background: none;
+  border: none;
+  font-size: 14px;
+  cursor: pointer;
+  color: var(--gray);
+  margin-left: 8px;
+}
+
+.review-edit:hover, .review-del:hover {
+  color: var(--accent);
+  text-decoration: underline;
+}
+
+
+/* 구매 버튼 강조 색상 (초록) */
+.btn-sell {
+  background: #4caf50;
+  color: white;
+}
+.btn-sell:hover {
+  background: #43a047;
+}

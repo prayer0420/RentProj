@@ -1,1 +1,197 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.product">
+
+  <!-- 테스트 -->
+  <select id="test" resultType="int">
+    SELECT 1
+  </select>
+
+  <!-- 상품 등록 -->
+  <insert id="insertProductSell" parameterType="product" useGeneratedKeys="true" keyProperty="no">
+    INSERT INTO product (no, categoryNo, title, content, state, img1,img2,img3,img4,img5,
+      deliveryAddr, deliveryPrice, tradeType, memberNo, salePrice, deliveryStatus, latitude, longitude)
+    VALUES (#{no}, #{categoryNo}, #{title}, #{content}, #{state}, #{img1},#{img2},#{img3},#{img4},#{img5},
+      #{deliveryAddr}, #{deliveryPrice}, #{tradeType}, #{memberNo}, #{salePrice}, #{deliveryStatus}, #{latitude}, #{longitude})
+  </insert>
+
+  <insert id="insertProductRent" parameterType="product" useGeneratedKeys="true" keyProperty="no">
+    INSERT INTO product (no, categoryNo, title, content, state, img1,img2,img3,img4,img5,
+      deliveryAddr, deliveryPrice, tradeType, secPrice, memberNo, startDate, endDate,
+      rentPrice, deliveryStatus, latitude, longitude)
+    VALUES (#{no}, #{categoryNo}, #{title}, #{content}, #{state}, #{img1},#{img2},#{img3},#{img4},#{img5},
+      #{deliveryAddr}, #{deliveryPrice}, #{tradeType}, #{secPrice}, #{memberNo}, #{startDate}, #{endDate},
+      #{rentPrice}, #{deliveryStatus}, #{latitude}, #{longitude})
+  </insert>
+
+  <insert id="insertProductRentSell" parameterType="product" useGeneratedKeys="true" keyProperty="no">
+    INSERT INTO product (no, categoryNo, title, content, state, img1,img2,img3,img4,img5,
+      deliveryAddr, deliveryPrice, tradeType, secPrice, memberNo, salePrice, startDate, endDate,
+      rentPrice, deliveryStatus, latitude, longitude)
+    VALUES (#{no}, #{categoryNo}, #{title}, #{content}, #{state}, #{img1},#{img2},#{img3},#{img4},#{img5},
+      #{deliveryAddr}, #{deliveryPrice}, #{tradeType}, #{secPrice}, #{memberNo}, #{salePrice}, #{startDate},
+      #{endDate}, #{rentPrice}, #{deliveryStatus}, #{latitude}, #{longitude})
+  </insert>
+
+  <insert id="insertProductFree" parameterType="product" useGeneratedKeys="true" keyProperty="no">
+    INSERT INTO product (no, categoryNo, title, content, img1,img2,img3,img4,img5,
+      deliveryAddr, tradeType, memberNo, latitude, longitude)
+    VALUES (#{no}, #{categoryNo}, #{title}, #{content}, #{img1},#{img2},#{img3},#{img4},#{img5},
+      #{deliveryAddr}, #{tradeType}, #{memberNo}, #{latitude}, #{longitude})
+  </insert>
+
+  <!-- 상품 상세 검색 -->
+  <select id="selectProductOne" parameterType="Integer" resultType="product">
+    SELECT p.*, m.nickname
+    FROM product p
+    JOIN member m ON p.memberNo = m.no
+    WHERE p.no = #{no}
+  </select>
+
+  <!-- 카드용 product resultMap -->
+  <resultMap id="productMap" type="dto.Product">
+    <id property="no" column="no" />
+    <result property="title" column="title" />
+    <result property="img1" column="img1" />
+    <result property="salePrice" column="salePrice" />
+    <result property="rentPrice" column="rentPrice" />
+    <result property="secPrice" column="secPrice" />
+    <result property="tradeType" column="tradeType" />
+    <result property="createDate" column="createDate" />
+    <result property="latitude" column="latitude" />
+    <result property="longitude" column="longitude" />
+    <result property="deliveryAddr" column="deliveryAddr" />
+  </resultMap>
+
+  <!-- 검색, 카테고리, 필터, 정렬 -->
+  <select id="selectProducts" resultMap="productMap" parameterType="map">
+    SELECT no, title, img1, salePrice, rentPrice, secPrice, tradeType, createDate,
+           latitude, longitude, deliveryAddr
+    FROM product
+    <where>
+      isHide = 1 AND deleted = 'N'
+      <if test="searchText != null and searchText != ''">
+        AND title LIKE CONCAT('%', #{searchText}, '%')
+      </if>
+      <if test="categoryNo != null and categoryNo != 1">
+ 		AND categoryNo = #{categoryNo}
+		</if>
+      <if test="tradeType != null">
+        AND tradeType = #{tradeType}
+      </if>
+      <if test="isHide != null">
+	  AND isHide = #{isHide}
+	  </if>
+	  <if test="deleted != null">
+	  AND deleted = #{deleted}
+	  </if>
+    </where>
+    <choose>
+      <when test="sort == 'priceAsc'">
+	  ORDER BY
+	    CASE
+	      WHEN tradeType = '판매' THEN 1
+	      WHEN tradeType = '대여' THEN 2
+	      WHEN tradeType = '판매/대여' THEN 3
+	      WHEN tradeType = '나눔' THEN 4
+	      ELSE 5
+	    END ASC,
+	    COALESCE(salePrice, rentPrice) ASC
+	</when>
+	
+	<when test="sort == 'priceDesc'">
+	  ORDER BY
+	    CASE
+	      WHEN tradeType = '판매' THEN 1
+	      WHEN tradeType = '대여' THEN 2
+	      WHEN tradeType = '판매/대여' THEN 3
+	      WHEN tradeType = '나눔' THEN 4
+	      ELSE 5
+	    END ASC,
+	    COALESCE(salePrice, rentPrice) DESC
+	</when>
+	
+	<when test="sort == 'distance'">
+      <!-- 거리 정렬은 Java에서 하므로 ORDER BY 생략 -->
+    </when>
+    <otherwise>
+        ORDER BY createDate DESC
+    </otherwise>
+  </choose>
+    
+  	<if test="offset != null and limit != null and sort != 'distance'">
+    		LIMIT #{offset}, #{limit}
+  	</if>  
+</select>
+
+  <!-- 인기 상품 (조회수 기준) -->
+  <select id="selectPopularProducts" resultMap="productMap" parameterType="int">
+    SELECT no, title, img1, salePrice, rentPrice, secPrice, tradeType, deliveryAddr
+    FROM product
+    WHERE isHide = 1 AND deleted = 'N'
+    ORDER BY view_cnt DESC
+    LIMIT #{limit}
+  </select>
+
+  <!-- 전체 상품 조회 -->
+  <select id="selectAll" resultMap="productMap">
+    SELECT * FROM product
+    WHERE isHide = 1 AND deleted = 'N'
+  </select>
+
+  <!-- 총 상품 수 -->
+  <select id="countAll" parameterType="map" resultType="int">
+    SELECT COUNT(*) FROM product
+    <where>
+      isHide = 1
+      AND deleted = 'N'
+      <if test="tradeType != null">
+        AND tradeType = #{tradeType}
+      </if>
+    </where>
+  </select>
+
+  <!-- 검색어 포함 상품 수 -->
+  <select id="countByName" parameterType="map" resultType="int">
+    SELECT COUNT(*) FROM product
+    WHERE isHide = 1
+      AND deleted = 'N'
+      AND title LIKE CONCAT('%', #{searchText}, '%')
+    <if test="tradeType != null">
+      AND tradeType = #{tradeType}
+    </if>
+  </select>
+
+  <!-- 카테고리별 상품 수 -->
+  <select id="countByCategory" parameterType="map" resultType="int">
+    SELECT COUNT(*) FROM product
+    WHERE isHide = 1
+      AND deleted = 'N'
+      AND categoryNo = #{categoryNo}
+    <if test="tradeType != null">
+      AND tradeType = #{tradeType}
+    </if>
+  </select>
+
+  <!-- 조회수 증가 -->
+  <update id="incrementViewCount" parameterType="int">
+    UPDATE product
+    SET view_cnt = view_cnt + 1
+    WHERE no = #{no}
+  </update>
+
+  <select id="selectViewCount" parameterType="int" resultType="int">
+    SELECT view_cnt FROM product WHERE no = #{no}
+  </select>
+  
+  <select id="selectSellerIdByProductNo" parameterType="int" resultType="string">
+    SELECT m.id
+    FROM product p
+    JOIN member m ON p.memberNo = m.no
+    WHERE p.no = #{productNo}
+  </select>
+  
+
+</mapper>

@@ -1,0 +1,125 @@
+@charset "UTF-8";
+
+/* 공통 스타일 */
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+  background-color: #fafafa;
+  margin: 0;
+  padding: 0;
+}
+
+/* 뱃지 영역 (판매/대여/...) */
+.badge {
+  padding: 6px 14px;
+  font-size: 14px;
+  border-radius: 20px;
+  border: 1px solid #ddd;
+  cursor: pointer;
+  background-color: #f4f4f4;
+  color: #555;
+  transition: all 0.3s ease;
+}
+
+.badge:hover {
+  background-color: #e0e0e0;
+}
+
+/* 색상 우선순위가 확실하게 적용되도록 순서 자유롭게 대응 */
+.badge.badge_sell.active,
+.badge.active.badge_sell {
+  background-color: #f5a623;
+  color: #fff;
+  border-color: #f5a623;
+}
+
+.badge.badge_rent.active,
+.badge.active.badge_rent {
+  background-color: #2196f3;
+  color: #fff;
+  border-color: #2196f3;
+}
+
+.badge.badge_sell_rent.active,
+.badge.active.badge_sell_rent {
+  background-color: #2ecc71;
+  color: #fff;
+  border-color: #2ecc71;
+}
+
+.badge.badge_free.active,
+.badge.active.badge_free {
+  background-color: #e91e63;
+  color: #fff;
+  border-color: #e91e63;
+}
+
+.badge.badge_total.active,
+.badge.active.badge_total {
+  background-color: #666;
+  color: #fff;
+  border-color: #666;
+}
+
+/* 정렬 옵션 (추천순, 최신순 등) */
+.sort-options {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 10px 20px;
+  background-color: #fff;
+  border-bottom: 1px solid #eee;
+}
+
+.sort-options span {
+  font-size: 14px;
+  cursor: pointer;
+  color: #666;
+  transition: all 0.3s ease;
+}
+
+.sort-options span:hover {
+  color: #111;
+}
+
+.sort-options span.active {
+  color: #f5a623;
+  font-weight: 600;
+  border-bottom: 2px solid #f5a623;
+  padding-bottom: 2px;
+}
+
+/* 상품 목록 placeholder (AJAX 결과 위치) */
+#productList {
+  padding: 20px;
+}
+
+/* 페이징 영역 */
+#paging {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  margin: 30px 0;
+}
+
+#paging a {
+  padding: 6px 12px;
+  border: 1px solid #ddd;
+  background-color: white;
+  color: #333;
+  text-decoration: none;
+  font-size: 14px;
+  border-radius: 4px;
+  transition: all 0.2s ease-in-out;
+}
+
+#paging a:hover {
+  background-color: #f1f1f1;
+}
+
+#paging a.select {
+  background-color: #2f855a;
+  color: #fff;
+  border-color: #2f855a;
+  font-weight: bold;
+}
