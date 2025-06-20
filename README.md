@@ -110,10 +110,6 @@ _개인정보·주문내역·리뷰 관리_
 _찜하기, 신고하기, 쪽지 보내기 기능_  
 <img src="./docs/images/찜,신고,쪽지.gif" alt="찜,신고,쪽지.gif" width="1000px" />
 
-**회원가입**  
-_아이디·비밀번호·배송지 입력_  
-<img src="./docs/images/회원가입.png" alt="회원가입.png" width="1000px" />
-
 ## <span id="5">5. 주요 기능 상세 및 트러블슈팅</span>
 
 <details>
